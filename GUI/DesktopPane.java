@@ -10,6 +10,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JInternalFrame;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("serial")
 public class DesktopPane extends JFrame {
@@ -36,15 +38,32 @@ public class DesktopPane extends JFrame {
 	 		
 	 			public void actionPerformed(ActionEvent e) {
 	 				
-	 				JInternalFrame internal = new JInternalFrame("Open", true, true, true, true);
+	 				final JInternalFrame internal = new JInternalFrame("Open", true, true, true, true);
 					JFileChooser fileChooser = new JFileChooser();
+					FileFilter fileFilter = new FileNameExtensionFilter("SVG files",".svg");
 					fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					fileChooser.setFileFilter(fileFilter);
+					
 					internal.add(fileChooser, BorderLayout.CENTER);
 					internal.pack();
 					desktopPane.add(internal);
 					internal.setVisible(true);
+					
+					fileChooser.addActionListener(
+						
+						new ActionListener() {
+							
+							public void actionPerformed(ActionEvent e) {
+								
+								if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
+
+									internal.setVisible(false);
+									internal.dispose();
+								}
+							}
+						}
+					);
 				}	
-	 			
 	 		}
 		);
 	}
