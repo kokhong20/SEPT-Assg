@@ -1,7 +1,7 @@
 package Controller;
 
 import GUI.DesktopPane;
-import Model.XMLReader;
+import Model.SVGReader;
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -53,7 +53,7 @@ public class MenuAction implements ActionListener
 							
 							internal.setVisible(false);
 							internal.dispose();
-							XMLReader reader = new XMLReader(selectedFile);
+							SVGReader reader = new SVGReader();
 						}
 					}
 			);
