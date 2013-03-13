@@ -11,6 +11,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.w3c.dom.Document;
 
 public class MenuAction implements ActionListener 
 {
@@ -54,6 +55,12 @@ public class MenuAction implements ActionListener
 							internal.setVisible(false);
 							internal.dispose();
 							SVGReader reader = new SVGReader();
+							
+							Document doc = null;
+							
+							doc =reader.isSVG(selectedFile.getName());
+							
+							
 						}
 					}
 			);

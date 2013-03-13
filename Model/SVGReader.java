@@ -67,19 +67,19 @@ public class SVGReader
 		Rectangles rect = new Rectangles(null, 0, 0, 0, 0, 0);
 		return rect;
 	}
-	
+	*/
 	// Called from main controller to create a new circle
 	public Circles createCircle(Node node)
 	{
-		Circles circle = new Circles(null, 0, 0, 0, 0, 0);
+		Circles circle = new Circles(node);
 		return circle;
 	}
-	*/
+	
 	
 	// Called from main controller to create a new line
 	public Lines createLine(Node node)
 	{
-		Lines line = new Lines(null, 0, 0, 0, 0, 0);
+		Lines line = new Lines(node);
 		return line;
 	}
 	

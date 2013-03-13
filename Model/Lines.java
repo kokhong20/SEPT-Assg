@@ -1,5 +1,6 @@
 package Model;
-import java.awt.*;
+import org.w3c.dom.Node;
+
 
 public class Lines extends Drawings
 {
@@ -9,13 +10,10 @@ public class Lines extends Drawings
 	private double y1;
 	private double y2;
 	
-	public Lines(Color colorStroke, double width, double x1, double x2, double y1, double y2) {
+	public Lines(Node node) 
+	{
 		// TODO Auto-generated constructor stub
-		super(colorStroke, width);
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
+		super(node);
 	}
 	
 	public void setX1(double x1)

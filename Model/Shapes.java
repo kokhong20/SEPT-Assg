@@ -1,24 +1,26 @@
 package Model;
 import java.awt.*;
+import org.w3c.dom.Node;
 
 public abstract class Shapes extends Drawings
 {
 
 	private Color fill;
 	
-	public Shapes(Color colorStroke, double width, Color fillColor) {
+	public Shapes(Node node) 
+	{
 		// TODO Auto-generated constructor stub
-		super(colorStroke, width);
-		this.fill = fillColor;
+		super(node);
 	}
 	
-	public void setFill(Color a)
+	public void setFill(Color fill)
 	{
-		fill = a;
+		this.fill = fill;
 	}
 
 	public Color getFill()
 	{
 		return fill;
 	}
+
 }

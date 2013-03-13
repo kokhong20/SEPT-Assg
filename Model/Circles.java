@@ -1,6 +1,6 @@
 package Model;
 
-import java.awt.Color;
+import org.w3c.dom.Node;
 
 public class Circles extends Shapes
 {
@@ -9,27 +9,25 @@ public class Circles extends Shapes
 	private double cy;
 	private double r;
 	
-	public Circles(Color colorStroke, double width, Color fillColor,double cx, double cy, double r) {
+	public Circles(Node node) 
+	{
 		// TODO Auto-generated constructor stub
-		super(colorStroke,width,fillColor);
-		this.cx = cx;
-		this.cy = cy;
-		this.r = r;
+		super(node);
 	}
 	
-	public void setCX(double length)
+	public void setCX(double cx)
 	{
-		cx = length;
+		this.cx = cx;
 	}
 
-	public void setCY(double length)
+	public void setCY(double cy)
 	{
-		cy = length;
+		this.cy = cy;
 	}
 
-	public void setR(double length)
+	public void setR(double r)
 	{
-		r = length;
+		this.r = r;
 	}
 	
 	public double getCX()
@@ -46,6 +44,8 @@ public class Circles extends Shapes
 	{
 		return r;
 	}
+	
+	
 	
 
 }
