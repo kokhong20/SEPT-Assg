@@ -2,7 +2,8 @@ package Model;
 
 import java.awt.Color;
 
-public class Circles extends Shapes{
+public class Circles extends Shapes
+{
 
 	private double cx;
 	private double cy;
@@ -16,17 +17,17 @@ public class Circles extends Shapes{
 		this.r = r;
 	}
 	
-	private void setCX(double length)
+	public void setCX(double length)
 	{
 		cx = length;
 	}
 
-	private void setCY(double length)
+	public void setCY(double length)
 	{
 		cy = length;
 	}
 
-	private void setR(double length)
+	public void setR(double length)
 	{
 		r = length;
 	}

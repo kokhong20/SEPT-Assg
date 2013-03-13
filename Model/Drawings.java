@@ -13,7 +13,7 @@ public abstract class Drawings {
 		this.strokeWidth = width;
 	}
 	
-	private void setStrokeColor(Color color)
+	public void setStrokeColor(Color color)
 	{
 		stroke = color;
 	}
@@ -23,7 +23,7 @@ public abstract class Drawings {
 		return stroke;
 	}
 
-	private void setStrokeWidth(double width)
+	public void setStrokeWidth(double width)
 	{
 		strokeWidth = width;
 	}

@@ -17,22 +17,22 @@ public class Lines extends Drawings{
 		this.y2 = y2;
 	}
 	
-	private void setX1(double x1)
+	public void setX1(double x1)
 	{
 		this.x1 = x1;
 	}
 
-	private void setX2(double x2)
+	public void setX2(double x2)
 	{
 		this.x2 = x2;
 	}
 
-	private void setY1(double y1)
+	public void setY1(double y1)
 	{
 		this.y1 = y1;
 	}
 
-	private void setY2(double y2)
+	public void setY2(double y2)
 	{
 		this.y2 = y2;
 	}

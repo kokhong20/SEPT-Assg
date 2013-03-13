@@ -1,7 +1,8 @@
 package Model;
 import java.awt.*;
 
-public abstract class Shapes extends Drawings{
+public abstract class Shapes extends Drawings
+{
 
 	private Color fill;
 	
@@ -11,7 +12,7 @@ public abstract class Shapes extends Drawings{
 		this.fill = fillColor;
 	}
 	
-	private void setFill(Color fillColor)
+	public void setFill(Color fillColor)
 	{
 		fill = fillColor;
 	}
