@@ -6,7 +6,8 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-public class XMLReader {
+public class XMLReader 
+{
 	
 	private File openedFile;
 	

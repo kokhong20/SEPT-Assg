@@ -12,7 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class MenuAction implements ActionListener {
+public class MenuAction implements ActionListener 
+{
 
 	public void actionPerformed(ActionEvent e) {
 		

@@ -1,7 +1,8 @@
 package Model;
 import java.awt.*;
 
-public abstract class Drawings {
+public abstract class Drawings 
+{
 
 	private Color stroke;
 	private double strokeWidth;

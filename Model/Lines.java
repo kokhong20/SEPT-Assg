@@ -1,7 +1,8 @@
 package Model;
 import java.awt.*;
 
-public class Lines extends Drawings{
+public class Lines extends Drawings
+{
 
 	private double x1;
 	private double x2;

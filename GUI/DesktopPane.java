@@ -8,7 +8,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 @SuppressWarnings("serial")
-public class DesktopPane extends JFrame {
+public class DesktopPane extends JFrame 
+{
 	
 	public static JMenuItem openItem;
 	public static JDesktopPane desktopPane;
