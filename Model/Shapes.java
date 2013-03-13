@@ -12,9 +12,9 @@ public abstract class Shapes extends Drawings
 		this.fill = fillColor;
 	}
 	
-	public void setFill(Color fillColor)
+	public void setFill(Color a)
 	{
-		fill = fillColor;
+		fill = a;
 	}
 
 	public Color getFill()
