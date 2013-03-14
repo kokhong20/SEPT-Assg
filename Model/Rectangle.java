@@ -54,4 +54,11 @@ public class Rectangle extends Shapes
 	{
 		return this.height;
 	}
+
+	@Override
+	public void readAttributes() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

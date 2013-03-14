@@ -58,7 +58,6 @@ public class Circles extends Shapes
 		if (getNode().getNodeType() == Node.ELEMENT_NODE) 
 		{
  			
- 
 		}
 	
 			
@@ -76,13 +75,37 @@ public class Circles extends Shapes
 		{
 			System.out.println("Got cx attributes");
 			//check format of attributeTag
+			String attribute = element.getAttribute(attributeTag);
+			String[] splitedAttribute = new String[2];
+			splitedAttribute = splitString(attribute);
 			
-			return 1;
+			// if attribute is empty or attribute is equal to " "
+			if((attribute.length()==0)||((splitedAttribute[0]=="")&&(splitedAttribute[1]=="")))
+				return 0.0;
+			
+			switch(splitedAttribute[1])
+			{
+				case "px" :
+							return Double.parseDouble(splitedAttribute[0]);
+				
+				case "pt" :
+					
+				case "pc" :
+				
+				case "mm" :
+				
+				case "cm" :
+				
+				case "in" :
+				
+				default   : return 0;
+						
+			}			
 		}
 		else
 		{
 			System.out.println("No this attribute tag.Default is 0");
-			return 0;
+			return 0.0;
 		}
 		
 	}
