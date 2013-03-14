@@ -2,14 +2,14 @@ package Model;
 
 import org.w3c.dom.Node;
 
-public class Rectangle extends Shapes
+public class Rectangles extends Shapes
 {
 	private double x;
 	private double y;
 	private double width;
 	private double height;
 
-	public Rectangle(Node node) 
+	public Rectangles(Node node) 
 	{
 		super(node);
 		// TODO Auto-generated constructor stub

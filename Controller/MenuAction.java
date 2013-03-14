@@ -59,7 +59,7 @@ public class MenuAction implements ActionListener
 							Document doc = null;
 							
 							doc =reader.isSVG(selectedFile.getName());
-							
+							reader.getRects(doc);
 							
 						}
 					}
