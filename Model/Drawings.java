@@ -10,8 +10,10 @@ public abstract class Drawings
 	private double strokeWidth;
 	private Node node;
 	
-	public Drawings(Node node) {
+	public Drawings(Node node) 
+	{
 		// TODO Auto-generated constructor stub
+		this.node = node;
 	}
 	
 	public void setStrokeColor(Color color)
@@ -53,7 +55,7 @@ public abstract class Drawings
 	 * -If either string is empty means the inputString contain either no numeric character or alphabetic character
 	 * -If both strings are empty means there only contain character " "
 	 * 
-	 * empty string can be checked by if(string="")
+	 * empty string can be checked by if(string.equals(""))
 	 */
 	public String[] splitString(String inputString)
 	{
@@ -116,12 +118,18 @@ public abstract class Drawings
 					break;
 				}
 			}
+			
+			stringIndex++;
 		}
 		
 		//creating 1st string which contain only integer or double
 		temp1=inputString.substring(0,stringIndex);
 		//creating 2nd string which contain only non-numeric character
-		temp2=inputString.substring(stringIndex);
+		//if(stringIndex ==0) means that the string only contain numeric number
+		if(stringIndex==0)
+			temp2="";
+		else
+			temp2=inputString.substring(stringIndex);
 		
 		return new String[]{temp1,temp2};
 	}

@@ -52,15 +52,15 @@ public class Circles extends Shapes
 	public void readAttributes()
 	{
 		// TODO Auto-generated method stub
-		String attributeTag;
-		System.out.println("\nCurrent Element :" + getNode().getNodeName());
-		 
-		if (getNode().getNodeType() == Node.ELEMENT_NODE) 
-		{
- 			
-		}
-	
+		double cx = getAttributeUnit("cx");
+		double cy = getAttributeUnit("cy");
+		double r = getAttributeUnit("r");
 			
+		setCX(cx);
+		setCY(cy);
+		setR(r);
+		
+		System.out.println("Set cx, cy and r");
 	}
 	
 	//Check,validate and get attribute tag's unit
@@ -70,18 +70,24 @@ public class Circles extends Shapes
 	{
 		
 		Element element = (Element) getNode();
-		
 		if(element.hasAttribute(attributeTag))
 		{
-			System.out.println("Got cx attributes");
+			System.out.println("Got attributes");
 			//check format of attributeTag
 			String attribute = element.getAttribute(attributeTag);
 			String[] splitedAttribute = new String[2];
 			splitedAttribute = splitString(attribute);
 			
+			System.out.println("String 1 is"+splitedAttribute[0]);
+			
+			System.out.println("string 2 is"+splitedAttribute[1]);
 			// if attribute is empty or attribute is equal to " "
-			if((attribute.length()==0)||((splitedAttribute[0]=="")&&(splitedAttribute[1]=="")))
+			if((attribute.length()==0)||((splitedAttribute[0].equals(""))&&(splitedAttribute[1].equals(""))))
+			{
+				System.out.println("exit");
 				return 0.0;
+			}
+			
 			
 			switch(splitedAttribute[1])
 			{
@@ -97,8 +103,10 @@ public class Circles extends Shapes
 				case "cm" :
 				
 				case "in" :
+					
+				case ""   : return Double.parseDouble(splitedAttribute[0]);
 				
-				default   : return 0;
+				default   : return 0.0;
 						
 			}			
 		}

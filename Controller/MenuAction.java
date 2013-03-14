@@ -1,6 +1,7 @@
 package Controller;
 
 import GUI.DesktopPane;
+import Model.Circles;
 import Model.SVGReader;
 import java.io.File;
 import java.awt.BorderLayout;
@@ -12,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class MenuAction implements ActionListener 
 {
@@ -59,8 +62,24 @@ public class MenuAction implements ActionListener
 							Document doc = null;
 							
 							doc =reader.isSVG(selectedFile.getName());
-							reader.getRects(doc);
+							//reader.getRects(doc);
 							
+							// Testing purposes for circle 
+							NodeList circleList = reader.getCircles(doc);
+							
+							Circles circle;
+							
+							for(int i =0;i<circleList.getLength();i++)
+							{
+								Node circleNode = circleList.item(i);
+								System.out.println("\nCurrent Element :" + circleNode.getNodeName());
+								
+								circle =reader.createCircle(circleNode);
+								circle.readAttributes();
+								System.out.println("CX is"+circle.getCX());
+								System.out.println("gao tim");
+							}
+							///////////////////////////////////////
 						}
 					}
 			);
