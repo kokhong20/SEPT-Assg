@@ -1,4 +1,4 @@
-package speed;
+package Model;
 
 import java.util.HashMap;
 
