@@ -56,4 +56,10 @@ public class Lines extends Drawings
 		return this.y2;
 	}
 
+	@Override
+	public void readAttributes() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -44,4 +44,6 @@ public abstract class Drawings
 		return node;
 	}
 	
+	public abstract void readAttributes();
+	
 }
