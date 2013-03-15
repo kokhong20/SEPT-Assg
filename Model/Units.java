@@ -8,7 +8,7 @@ public class Units
 	{
 			if(!att.isEmpty())
 			{
-				if(Pattern.matches("(\\d+.\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att) || Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
+				if(Pattern.matches("(\\d+\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att) || Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
 				{
 					switch(att.substring(att.length() - 2))
 					{

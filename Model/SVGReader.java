@@ -85,20 +85,23 @@ public class SVGReader
 			}
 			
 			// Testing purposes for circle 
-			/*NodeList circleList = this.getCircles(doc);
-			
-			Circles circle;
-			
+			NodeList circleList = this.getCircles(doc);			
 			for(int i =0; i<circleList.getLength(); i++)
 			{
 				Node circleNode = circleList.item(i);
-				System.out.println("\nCurrent Element :" + circleNode.getNodeName());
-				
-				circle = this.createCircle(circleNode);
-				circle.readAttributes();
-				System.out.println("CX is"+circle.getCX());
-				System.out.println("gao tim");
-			}*/
+				if(circleNode.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Circles newCircle = new Circles(circleNode);
+					//Testing
+					System.out.println("stroke = " + newCircle.getStrokeColor());
+					System.out.println("stroke-width = " + newCircle.getStrokeWidth());
+					System.out.println("fill = " + newCircle.getFill());
+					System.out.println("cx = " + newCircle.getCX());
+					System.out.println("cy = " + newCircle.getCY());
+					System.out.println("r = " + newCircle.getR());
+					//Testing
+				}
+			}
 			
 			// Testing Rectangle
 			

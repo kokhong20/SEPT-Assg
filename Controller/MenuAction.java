@@ -17,7 +17,30 @@ public class MenuAction implements ActionListener
 
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == DesktopPane.openItem) {
+		// Teach user basic functions on how to use program
+		if (e.getSource() == DesktopPane.helpItem) {
+		
+		}
+		// About software : version and etc
+		else if (e.getSource() == DesktopPane.aboutItem) {
+				
+		}
+		// Save SVG
+		else if (e.getSource() == DesktopPane.saveItem) {
+		
+		}
+		// Exit software
+		else if (e.getSource() == DesktopPane.exitItem) {
+			Object[] choices = {"Yes", "No"};
+			int dialogButton = JOptionPane.showOptionDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, 
+				JOptionPane.PLAIN_MESSAGE, null, choices, "Yes");
+			if(dialogButton == 0)
+			{
+                System.exit(0);
+			}
+		}
+		// Open new SVG
+		else if (e.getSource() == DesktopPane.openItem) {
 			
 			final JInternalFrame internal = new JInternalFrame("Open", true, true, true, true);
 			final JFileChooser fileChooser = new JFileChooser();
