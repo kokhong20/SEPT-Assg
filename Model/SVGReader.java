@@ -24,7 +24,7 @@ public class SVGReader
 	// set Document with dir from MenuAction.
 	public void setDoc(String dir)
 	{
-
+		long startTime = System.nanoTime();
 		try
 		{
 			fXmlFile = new File(dir);
@@ -40,6 +40,8 @@ public class SVGReader
 			doc = dBuilder.parse(fXmlFile);
 			
 			doc.getDocumentElement().normalize();
+			long endTime = System.nanoTime();
+			System.out.println((endTime - startTime)/1000);
 		}
 		
 		catch(Exception e)
