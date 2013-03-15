@@ -43,7 +43,6 @@ public class SVGReader
 	// else return NodeList containing all rect tags 
 	public NodeList getRects(Document doc)
 	{
-		System.out.println("get");
 		return doc.getElementsByTagName("rect");
 	}
 

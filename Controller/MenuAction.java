@@ -2,16 +2,20 @@ package Controller;
 
 import GUI.DesktopPane;
 import Model.Circles;
+import Model.Lines;
 import Model.SVGReader;
+
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -61,25 +65,44 @@ public class MenuAction implements ActionListener
 							
 							Document doc = null;
 							
-							doc =reader.isSVG(selectedFile.getName());
-							//reader.getRects(doc);
+							doc = reader.isSVG(selectedFile.getName());
 							
-							// Testing purposes for circle 
-							NodeList circleList = reader.getCircles(doc);
-							
-							Circles circle;
-							
-							for(int i =0;i<circleList.getLength();i++)
+							if(doc != null)
 							{
-								Node circleNode = circleList.item(i);
-								System.out.println("\nCurrent Element :" + circleNode.getNodeName());
+								//reader.getRects(doc);
+								NodeList lineList = reader.getLines(doc);
+								for(int i = 0; i < lineList.getLength(); i++)
+								{
+									Node lineNode = lineList.item(i);
+									if(lineNode.getNodeType() == Node.ELEMENT_NODE)
+									{
+										Lines newLine = new Lines(lineNode);
+										//Testing
+										System.out.println("x1 = " + newLine.getX1());
+										System.out.println("x2 = " + newLine.getX2());
+										System.out.println("y1 = " + newLine.getY1());
+										System.out.println("y2 = " + newLine.getY2());
+										//Testing
+									}
+								}
 								
-								circle =reader.createCircle(circleNode);
-								circle.readAttributes();
-								System.out.println("CX is"+circle.getCX());
-								System.out.println("gao tim");
+								// Testing purposes for circle 
+								NodeList circleList = reader.getCircles(doc);
+								
+								Circles circle;
+								
+								for(int i =0;i<circleList.getLength();i++)
+								{
+									Node circleNode = circleList.item(i);
+									System.out.println("\nCurrent Element :" + circleNode.getNodeName());
+									
+									circle =reader.createCircle(circleNode);
+									circle.readAttributes();
+									System.out.println("CX is"+circle.getCX());
+									System.out.println("gao tim");
+								}
+								///////////////////////////////////////
 							}
-							///////////////////////////////////////
 						}
 					}
 			);
