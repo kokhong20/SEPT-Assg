@@ -187,7 +187,6 @@ public class Coloring {
 		colorMap.put("whitesmoke", new Color(245, 245, 245));
 		colorMap.put("yellow", new Color(255, 255, 0));
 		colorMap.put("yellowgreen", new Color(154, 205, 50));
-		System.out.println(colorMap.size());
 
 	}
 }

@@ -24,26 +24,20 @@ public class SVGReader
 	// set Document with dir from MenuAction.
 	public void setDoc(String dir)
 	{
-		long startTime = System.nanoTime();
+
 		try
 		{
 			fXmlFile = new File(dir);
 
-			dbFactory.setNamespaceAware(true);
-
-			
-			
+			dbFactory.setNamespaceAware(true);		
 			
 			dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
 			dbFactory.setFeature("http://xml.org/sax/features/validation", false);
 			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-		//	dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
-			
-			long endTime = System.nanoTime();
-			System.out.println(endTime - startTime);
 			
 			doc.getDocumentElement().normalize();
 		}

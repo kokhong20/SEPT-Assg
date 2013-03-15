@@ -69,8 +69,6 @@ public class MenuAction implements ActionListener
 								path +=  "\\" + selectedFile.getName();
 							}
 							
-							
-							System.out.println(path);
 							SVGReader reader = new SVGReader();
 							reader.setDoc(path);
 						}
