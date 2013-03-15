@@ -36,6 +36,8 @@ public class MenuAction implements ActionListener
 						
 						public void actionPerformed(ActionEvent e) {
 							
+							String path;
+							
 							if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
 
 								internal.setVisible(false);
@@ -47,6 +49,7 @@ public class MenuAction implements ActionListener
 							if ((selectedFile == null)||(selectedFile.getName().equals(""))) {
 								
 								//internal.setVisible(false);
+								
 								internal.dispose();
 								JOptionPane.showInternalMessageDialog(internal, "Invalid Name", "Invalid Name", JOptionPane.ERROR_MESSAGE);
 							}
@@ -54,8 +57,22 @@ public class MenuAction implements ActionListener
 							internal.setVisible(false);
 							internal.dispose();
 							
+
+							path = fileChooser.getCurrentDirectory().toString() ;
+							
+							if(path.endsWith(":\\"))
+							{
+								path += selectedFile.getName();
+							}
+							else
+							{
+								path +=  "\\" + selectedFile.getName();
+							}
+							
+							
+							System.out.println(path);
 							SVGReader reader = new SVGReader();
-							reader.setDoc(selectedFile.getName());
+							reader.setDoc(path);
 						}
 					}
 			);
