@@ -66,7 +66,17 @@ public class MenuAction implements ActionListener
 							}
 							else
 							{
-								path +=  "\\" + selectedFile.getName();
+								String nameOS = "os.name";
+								
+								if (System.getProperty(nameOS).equals("Mac OS X"))
+								{
+									path +=  "//" + selectedFile.getName();
+								}
+								
+								else
+								{
+									path +=  "\\" + selectedFile.getName();
+								}
 							}
 							
 							SVGReader reader = new SVGReader();
