@@ -92,7 +92,20 @@ public class SVGReader
 			NodeList rectList = this.getRects(doc);
 			for (int i=0; i<rectList.getLength(); i++)
 			{
-				this.createRect(rectList.item(i));
+				Node rectNode = rectList.item(i);
+				if(rectNode.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Rectangles newRect = new Rectangles(rectNode);
+					//Testing
+					System.out.println("stroke = " + newRect.getStrokeColor());
+					System.out.println("stroke-width = " + newRect.getStrokeWidth());
+					System.out.println("fill = " + newRect.getFill());
+					System.out.println("x = " + newRect.getX());
+					System.out.println("y = " + newRect.getY());
+					System.out.println("width = " + newRect.getWidth());
+					System.out.println("height = " + newRect.getHeight());
+					//Testing
+				}
 			}
 		}
 	}
@@ -119,7 +132,7 @@ public class SVGReader
 	}
 	
 	// Called from main controller to create a new rect
-	public Rectangles createRect(Node node)
+	/*public Rectangles createRect(Node node)
 	{
 		Rectangles rect = new Rectangles(node);
 		rect.readAttributes();
@@ -139,6 +152,6 @@ public class SVGReader
 	{
 		Lines line = new Lines(node);
 		return line;
-	}
+	}*/
 	
 }

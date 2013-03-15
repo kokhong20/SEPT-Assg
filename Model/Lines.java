@@ -16,10 +16,10 @@ public class Lines extends Drawings
 		// TODO Auto-generated constructor stub
 		super(node);
 		
-		this.x1 = readAttributes((Element)node, "x1");
-		this.x2 = readAttributes((Element)node, "x2");
-		this.y1 = readAttributes((Element)node, "y1");
-		this.y2 = readAttributes((Element)node, "y2");
+		this.x1 = Units.setUnit(((Element)node).getAttribute("x1"));
+		this.x2 = Units.setUnit(((Element)node).getAttribute("x2"));
+		this.y1 = Units.setUnit(((Element)node).getAttribute("y1"));
+		this.y2 = Units.setUnit(((Element)node).getAttribute("y2"));
 	}
 	
 	public void setX1(double x1)

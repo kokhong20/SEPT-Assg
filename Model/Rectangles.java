@@ -16,10 +16,10 @@ public class Rectangles extends Shapes
 		super(node);
 		//this.node = node;
 
-		this.x = readAttributes((Element)node, "x");
-		this.y = readAttributes((Element)node, "y");
-		this.width = readAttributes((Element)node, "width");
-		this.height = readAttributes((Element)node, "height");
+		this.x = Units.setUnit(((Element)node).getAttribute("x"));
+		this.y = Units.setUnit(((Element)node).getAttribute("y"));
+		this.width = Units.setUnit(((Element)node).getAttribute("width"));
+		this.height = Units.setUnit(((Element)node).getAttribute("height"));
 		// TODO Auto-generated constructor stub
 	}
 	
