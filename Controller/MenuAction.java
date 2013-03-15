@@ -1,24 +1,16 @@
 package Controller;
 
 import GUI.DesktopPane;
-import Model.Circles;
-import Model.Lines;
 import Model.SVGReader;
-
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class MenuAction implements ActionListener 
 {
@@ -64,10 +56,6 @@ public class MenuAction implements ActionListener
 							
 							SVGReader reader = new SVGReader();
 							reader.setDoc(selectedFile.getName());
-							/*
-							Document doc = null;
-							
-							*/
 						}
 					}
 			);

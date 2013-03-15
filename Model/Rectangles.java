@@ -1,5 +1,6 @@
 package Model;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class Rectangles extends Shapes
@@ -8,10 +9,12 @@ public class Rectangles extends Shapes
 	private double y;
 	private double width;
 	private double height;
+	private Node node;
 
 	public Rectangles(Node node) 
 	{
 		super(node);
+		this.node = node;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -59,6 +62,16 @@ public class Rectangles extends Shapes
 	public void readAttributes() 
 	{
 		// TODO Auto-generated method stub
-		
+		if (this.node.getNodeType() == Node.ELEMENT_NODE)
+		{
+			Element element = (Element) this.node;
+			
+			setX(convert.checkUnit(element.getAttribute("x")));
+			System.out.println("haha");
+			System.out.println(getX());
+			System.out.println("haha");
+		}
 	}
+	
+	
 }

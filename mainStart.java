@@ -1,5 +1,3 @@
-import java.util.regex.Pattern;
-
 import GUI.DesktopPane;
 
 public class mainStart 

@@ -3,14 +3,14 @@ package Model;
 public class convert
 {
 
-	public double convertPX(String bConvert)
+	public static double convertPX(String bConvert)
 	{
 		String[] parts = bConvert.split("px");
 		double back = Double.parseDouble(parts[0]);
 		return back;
 	}
 
-	public double convertPT(String bConvert)
+	public static double convertPT(String bConvert)
 	{
 		String[] parts = bConvert.split("pt");
 		double back = Double.parseDouble(parts[0]);
@@ -18,7 +18,7 @@ public class convert
 		return back;
 	}
 
-	public double convertPC(String bConvert)
+	public static double convertPC(String bConvert)
 	{
 		String[] parts = bConvert.split("pc");
 		double back = Double.parseDouble(parts[0]);
@@ -26,7 +26,7 @@ public class convert
 		return back;
 	}
 
-	public double convertMM(String bConvert)
+	public static double convertMM(String bConvert)
 	{
 		String[] parts = bConvert.split("mm");
 		double back = Double.parseDouble(parts[0]);
@@ -34,7 +34,7 @@ public class convert
 		return back;
 	}
 
-	public double convertCM(String bConvert)
+	public static double convertCM(String bConvert)
 	{
 		String[] parts = bConvert.split("cm");
 		double back = Double.parseDouble(parts[0]);
@@ -42,7 +42,7 @@ public class convert
 		return back;
 	}
 
-	public double convertIN(String bConvert)
+	public static double convertIN(String bConvert)
 	{
 		String[] parts = bConvert.split("in");
 		double back = Double.parseDouble(parts[0]);
@@ -50,7 +50,7 @@ public class convert
 		return back;
 	}
 
-	public double checkUnit(String check)
+	public static double checkUnit(String check)
 	{
 		int count = 0;
 		double answer = 0;

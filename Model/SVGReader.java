@@ -5,7 +5,6 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 import java.io.File;
 
 public class SVGReader 
@@ -53,8 +52,8 @@ public class SVGReader
 	{
 		if(doc != null)
 		{
-			//reader.getRects(doc);
-			NodeList lineList = this.getLines(doc);
+			// Testing Line 
+			/*NodeList lineList = this.getLines(doc);
 			for(int i = 0; i < lineList.getLength(); i++)
 			{
 				Node lineNode = lineList.item(i);
@@ -68,10 +67,10 @@ public class SVGReader
 					System.out.println("y2 = " + newLine.getY2());
 					//Testing
 				}
-			}
+			}*/
 			
 			// Testing purposes for circle 
-			NodeList circleList = this.getCircles(doc);
+			/*NodeList circleList = this.getCircles(doc);
 			
 			Circles circle;
 			
@@ -84,8 +83,15 @@ public class SVGReader
 				circle.readAttributes();
 				System.out.println("CX is"+circle.getCX());
 				System.out.println("gao tim");
+			}*/
+			
+			// Testing Rectangle
+			
+			NodeList rectList = this.getRects(doc);
+			for (int i=0; i<rectList.getLength(); i++)
+			{
+				this.createRect(rectList.item(i));
 			}
-			///////////////////////////////////////
 		}
 	}
 
@@ -114,6 +120,7 @@ public class SVGReader
 	public Rectangles createRect(Node node)
 	{
 		Rectangles rect = new Rectangles(node);
+		rect.readAttributes();
 		return rect;
 	}
 	
