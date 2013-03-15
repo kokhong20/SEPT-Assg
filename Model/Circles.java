@@ -5,15 +5,20 @@ import org.w3c.dom.Node;
 
 public class Circles extends Shapes
 {
-
 	private double cx;
 	private double cy;
 	private double r;
-	
+
+	// Constructor which receives a node
+	// Call setUnit method to set value 
 	public Circles(Node node) 
 	{
 		// TODO Auto-generated constructor stub
 		super(node);
+		
+		this.cx = Units.setUnit(((Element)node).getAttribute("cx"));
+		this.cy = Units.setUnit(((Element)node).getAttribute("cy"));
+		this.r = Units.setUnit(((Element)node).getAttribute("r"));
 	}
 	
 	public void setCX(double cx)
@@ -46,7 +51,7 @@ public class Circles extends Shapes
 		return r;
 	}
 	
-	
+	/*
 	//Read and process attributes
 	@Override
 	public void readAttributes()
@@ -116,7 +121,7 @@ public class Circles extends Shapes
 			return 0.0;
 		}
 		
-	}
+	}*/
 	
 	
 

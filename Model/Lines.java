@@ -10,7 +10,9 @@ public class Lines extends Drawings
 	private double x2;
 	private double y1;
 	private double y2;
-	
+
+	// Constructor which receives a node
+	// Call setUnit method to set value 
 	public Lines(Node node) 
 	{
 		// TODO Auto-generated constructor stub
@@ -61,10 +63,10 @@ public class Lines extends Drawings
 	{
 		return this.y2;
 	}
-
+/*
 	@Override
 	public void readAttributes() {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 }

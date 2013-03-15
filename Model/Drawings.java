@@ -9,12 +9,12 @@ public abstract class Drawings
 
 	private Color stroke;
 	private double strokeWidth;
-	private Node node;
 	
+	// Constructor which receives a node
+	// Call setColor and setUnit method to set value 
 	public Drawings(Node node) 
 	{
 		// TODO Auto-generated constructor stub
-		this.node = node;
 		
 		this.stroke = Coloring.setColor(((Element)node).getAttribute("stroke"));
 		this.strokeWidth = Units.setUnit(((Element)node).getAttribute("stroke-width"));
@@ -40,17 +40,7 @@ public abstract class Drawings
 		return strokeWidth;
 	}
 	
-	public void setNode(Node node)
-	{
-		this.node = node;
-	}
-	
-	public Node getNode()
-	{
-		return node;
-	}
-	
-	public abstract void readAttributes();
+	//public abstract void readAttributes();
 	/*
 	 * This function take one string as parameter and split the string into array of string
 	 * which contain two new string with the splited contain.
@@ -61,7 +51,7 @@ public abstract class Drawings
 	 * 
 	 * empty string can be checked by if(string.equals(""))
 	 */
-	public String[] splitString(String inputString)
+	/*public String[] splitString(String inputString)
 	{
 		char ch;
 		int stringIndex=0;
@@ -136,5 +126,5 @@ public abstract class Drawings
 			temp2=inputString.substring(stringIndex);
 		
 		return new String[]{temp1,temp2};
-	}
+	}*/
 }

@@ -66,7 +66,7 @@ public class Units
 	{
 		return Double.parseDouble(bConvert) * 90;
 	}
-
+/*
 	public static double checkUnit(String check)
 	{
 		int count = 0;
@@ -124,5 +124,5 @@ public class Units
 
 		return answer;
 	}
-
+*/
 }

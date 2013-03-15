@@ -9,18 +9,16 @@ public class Rectangles extends Shapes
 	private double y;
 	private double width;
 	private double height;
-	private Node node;
 
 	public Rectangles(Node node) 
 	{
+		// TODO Auto-generated constructor stub
 		super(node);
-		//this.node = node;
 
 		this.x = Units.setUnit(((Element)node).getAttribute("x"));
 		this.y = Units.setUnit(((Element)node).getAttribute("y"));
 		this.width = Units.setUnit(((Element)node).getAttribute("width"));
 		this.height = Units.setUnit(((Element)node).getAttribute("height"));
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setX(double x)
@@ -62,7 +60,7 @@ public class Rectangles extends Shapes
 	{
 		return this.height;
 	}
-
+/*
 	@Override
 	public void readAttributes() 
 	{
@@ -77,6 +75,6 @@ public class Rectangles extends Shapes
 			System.out.println("haha");
 		}
 	}
-	
+	*/
 	
 }

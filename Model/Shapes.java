@@ -6,9 +6,10 @@ import org.w3c.dom.Node;
 
 public abstract class Shapes extends Drawings
 {
-
 	private Color fill;
-	
+
+	// Constructor which receives a node
+	// Call setColor method to set value 
 	public Shapes(Node node) 
 	{
 		// TODO Auto-generated constructor stub
