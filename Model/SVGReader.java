@@ -41,7 +41,7 @@ public class SVGReader
 			
 			doc.getDocumentElement().normalize();
 			long endTime = System.nanoTime();
-			System.out.println("Time: "(endTime - startTime)/1000000);
+			System.out.println("Time: " + (endTime - startTime)/1000000);
 		}
 		
 		catch(Exception e)
