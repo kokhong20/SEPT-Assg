@@ -53,7 +53,7 @@ public class SVGReader
 		if(doc != null)
 		{
 			// Testing Line 
-			/*NodeList lineList = this.getLines(doc);
+			NodeList lineList = this.getLines(doc);
 			for(int i = 0; i < lineList.getLength(); i++)
 			{
 				Node lineNode = lineList.item(i);
@@ -61,13 +61,15 @@ public class SVGReader
 				{
 					Lines newLine = new Lines(lineNode);
 					//Testing
+					System.out.println("stroke = " + newLine.getStrokeColor());
+					System.out.println("stroke-width = " + newLine.getStrokeWidth());
 					System.out.println("x1 = " + newLine.getX1());
 					System.out.println("x2 = " + newLine.getX2());
 					System.out.println("y1 = " + newLine.getY1());
 					System.out.println("y2 = " + newLine.getY2());
 					//Testing
 				}
-			}*/
+			}
 			
 			// Testing purposes for circle 
 			/*NodeList circleList = this.getCircles(doc);

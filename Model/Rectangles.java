@@ -14,7 +14,12 @@ public class Rectangles extends Shapes
 	public Rectangles(Node node) 
 	{
 		super(node);
-		this.node = node;
+		//this.node = node;
+
+		this.x = readAttributes((Element)node, "x");
+		this.y = readAttributes((Element)node, "y");
+		this.width = readAttributes((Element)node, "width");
+		this.height = readAttributes((Element)node, "height");
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -66,7 +71,7 @@ public class Rectangles extends Shapes
 		{
 			Element element = (Element) this.node;
 			
-			setX(convert.checkUnit(element.getAttribute("x")));
+			setX(Units.checkUnit(element.getAttribute("x")));
 			System.out.println("haha");
 			System.out.println(getX());
 			System.out.println("haha");

@@ -1,53 +1,53 @@
 package Model;
 
-public class convert
+public class Units
 {
 
 	public static double convertPX(String bConvert)
 	{
-		String[] parts = bConvert.split("px");
-		double back = Double.parseDouble(parts[0]);
-		return back;
+		/*String[] parts = bConvert.split("px");
+		double back = Double.parseDouble(parts[0]);*/
+		return Double.parseDouble(bConvert);
 	}
 
 	public static double convertPT(String bConvert)
 	{
-		String[] parts = bConvert.split("pt");
+		/*String[] parts = bConvert.split("pt");
 		double back = Double.parseDouble(parts[0]);
-		back = back * 1.25;
-		return back;
+		back = back * 1.25;*/
+		return Double.parseDouble(bConvert) * 1.25;
 	}
 
 	public static double convertPC(String bConvert)
 	{
-		String[] parts = bConvert.split("pc");
+		/*String[] parts = bConvert.split("pc");
 		double back = Double.parseDouble(parts[0]);
-		back = back * 15;
-		return back;
+		back = back * 15;*/
+		return Double.parseDouble(bConvert) * 15;
 	}
 
 	public static double convertMM(String bConvert)
 	{
-		String[] parts = bConvert.split("mm");
+		/*String[] parts = bConvert.split("mm");
 		double back = Double.parseDouble(parts[0]);
-		back = back * 3.543307;
-		return back;
+		back = back * 3.543307;*/
+		return Double.parseDouble(bConvert) * 3.543307;
 	}
 
 	public static double convertCM(String bConvert)
 	{
-		String[] parts = bConvert.split("cm");
+		/*String[] parts = bConvert.split("cm");
 		double back = Double.parseDouble(parts[0]);
-		back = back * 35.43307;
-		return back;
+		back = back * 35.43307;*/
+		return Double.parseDouble(bConvert) * 35.43307;
 	}
 
 	public static double convertIN(String bConvert)
 	{
-		String[] parts = bConvert.split("in");
+		/*String[] parts = bConvert.split("in");
 		double back = Double.parseDouble(parts[0]);
-		back = back * 90;
-		return back;
+		back = back * 90;*/
+		return Double.parseDouble(bConvert) * 90;
 	}
 
 	public static double checkUnit(String check)

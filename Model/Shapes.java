@@ -1,5 +1,7 @@
 package Model;
 import java.awt.*;
+
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public abstract class Shapes extends Drawings
@@ -11,6 +13,8 @@ public abstract class Shapes extends Drawings
 	{
 		// TODO Auto-generated constructor stub
 		super(node);
+
+		this.fill = Coloring.setColor(((Element)node).getAttribute("fill"));
 	}
 	
 	public void setFill(Color fill)
