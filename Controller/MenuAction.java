@@ -61,48 +61,13 @@ public class MenuAction implements ActionListener
 							
 							internal.setVisible(false);
 							internal.dispose();
-							SVGReader reader = new SVGReader();
 							
+							SVGReader reader = new SVGReader();
+							reader.setDoc(selectedFile.getName());
+							/*
 							Document doc = null;
 							
-							doc = reader.isSVG(selectedFile.getName());
-							
-							if(doc != null)
-							{
-								//reader.getRects(doc);
-								NodeList lineList = reader.getLines(doc);
-								for(int i = 0; i < lineList.getLength(); i++)
-								{
-									Node lineNode = lineList.item(i);
-									if(lineNode.getNodeType() == Node.ELEMENT_NODE)
-									{
-										Lines newLine = new Lines(lineNode);
-										//Testing
-										System.out.println("x1 = " + newLine.getX1());
-										System.out.println("x2 = " + newLine.getX2());
-										System.out.println("y1 = " + newLine.getY1());
-										System.out.println("y2 = " + newLine.getY2());
-										//Testing
-									}
-								}
-								
-								// Testing purposes for circle 
-								NodeList circleList = reader.getCircles(doc);
-								
-								Circles circle;
-								
-								for(int i =0;i<circleList.getLength();i++)
-								{
-									Node circleNode = circleList.item(i);
-									System.out.println("\nCurrent Element :" + circleNode.getNodeName());
-									
-									circle =reader.createCircle(circleNode);
-									circle.readAttributes();
-									System.out.println("CX is"+circle.getCX());
-									System.out.println("gao tim");
-								}
-								///////////////////////////////////////
-							}
+							*/
 						}
 					}
 			);

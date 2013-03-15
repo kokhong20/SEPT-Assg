@@ -10,33 +10,83 @@ import java.io.File;
 
 public class SVGReader 
 {
+	private File fXmlFile;
+	private Document doc;
+	private DocumentBuilderFactory dbFactory;
 
 	// Empty Constructor
 	public SVGReader()
 	{
+		doc = null;
+		fXmlFile = null;
+		dbFactory = DocumentBuilderFactory.newInstance();
 	}
-
-	// Called from main controller to determine
-	// whether file is valid or not, return null if not valid
-	// else, return the whole doc
-	public Document isSVG(String dir)
+	
+	// set Document with dir from MenuAction.
+	public void setDoc(String dir)
 	{
-		Document doc = null;
 		try
 		{
-			File fXmlFile = new File(dir);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			fXmlFile = new File(dir);
 			dbFactory.setNamespaceAware(true);
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
 		}
+		
 		catch(Exception e)
 		{
 			
 		}
 		
+		this.processFile();
+	}
+	
+	public Document getDoc()
+	{
 		return doc;
+	}
+	
+	// process whole .svg file and get tag name
+	// to create instance object.
+	public void processFile()
+	{
+		if(doc != null)
+		{
+			//reader.getRects(doc);
+			NodeList lineList = this.getLines(doc);
+			for(int i = 0; i < lineList.getLength(); i++)
+			{
+				Node lineNode = lineList.item(i);
+				if(lineNode.getNodeType() == Node.ELEMENT_NODE)
+				{
+					Lines newLine = new Lines(lineNode);
+					//Testing
+					System.out.println("x1 = " + newLine.getX1());
+					System.out.println("x2 = " + newLine.getX2());
+					System.out.println("y1 = " + newLine.getY1());
+					System.out.println("y2 = " + newLine.getY2());
+					//Testing
+				}
+			}
+			
+			// Testing purposes for circle 
+			NodeList circleList = this.getCircles(doc);
+			
+			Circles circle;
+			
+			for(int i =0; i<circleList.getLength(); i++)
+			{
+				Node circleNode = circleList.item(i);
+				System.out.println("\nCurrent Element :" + circleNode.getNodeName());
+				
+				circle = this.createCircle(circleNode);
+				circle.readAttributes();
+				System.out.println("CX is"+circle.getCX());
+				System.out.println("gao tim");
+			}
+			///////////////////////////////////////
+		}
 	}
 
 	// If no line, return NodeList with 0 length, 
