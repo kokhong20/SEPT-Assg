@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class SVGReader 
 {
@@ -42,6 +43,11 @@ public class SVGReader
 			doc.getDocumentElement().normalize();
 			long endTime = System.nanoTime();
 			System.out.println("Time: " + (endTime - startTime)/1000000);
+		}
+		
+		catch(FileNotFoundException e)
+		{
+			//JOptionPane.showInternalMessageDialog(desktopPane, "File Not Found", "File Not Found", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		catch(Exception e)

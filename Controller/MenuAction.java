@@ -1,7 +1,6 @@
 package Controller;
 
 import GUI.DesktopPane;
-import Model.SVGReader;
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -69,41 +68,19 @@ public class MenuAction implements ActionListener
 							
 							File selectedFile = fileChooser.getSelectedFile();
 							
-							if ((selectedFile == null)||(selectedFile.getName().equals(""))) {
+							/*if ((selectedFile == null)||(selectedFile.getName().equals(""))) {
 								
 								//internal.setVisible(false);
 								
 								internal.dispose();
 								JOptionPane.showInternalMessageDialog(internal, "Invalid Name", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-							}
+							}*/
 							
 							internal.setVisible(false);
 							internal.dispose();
 							
-
 							path = fileChooser.getCurrentDirectory().toString() ;
-							
-							if(path.endsWith(":\\"))
-							{
-								path += selectedFile.getName();
-							}
-							else
-							{
-								String nameOS = "os.name";
-								
-								if (System.getProperty(nameOS).equals("Mac OS X"))
-								{
-									path +=  "//" + selectedFile.getName();
-								}
-								
-								else
-								{
-									path +=  "\\" + selectedFile.getName();
-								}
-							}
-							
-							SVGReader reader = new SVGReader();
-							reader.setDoc(path);
+							FileHandle.menuOpen(path, selectedFile);
 						}
 					}
 			);
