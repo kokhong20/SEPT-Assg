@@ -71,7 +71,7 @@ public class SVGReader
 	{
 		if(doc != null)
 		{
-			// Testing Line 
+			/*// Testing Line 
 			NodeList lineList = this.getLines(doc);
 			for(int i = 0; i < lineList.getLength(); i++)
 			{
@@ -126,6 +126,27 @@ public class SVGReader
 					System.out.println("y = " + newRect.getY());
 					System.out.println("width = " + newRect.getWidth());
 					System.out.println("height = " + newRect.getHeight());
+					//Testing
+				}
+			}*/
+			
+			NodeList nList = doc.getChildNodes();
+			NodeList sList = nList.item(0).getChildNodes();
+			for (int i=0; i<sList.getLength(); i++)
+			{
+				//System.out.println(sList.item(i).getNodeName());
+				if (sList.item(i).getNodeName().equals("rect"))
+				{
+					Rectangles newRect = new Rectangles(sList.item(i));
+					//Testing
+					System.out.println("stroke = " + newRect.getStrokeColor());
+					System.out.println("stroke-width = " + newRect.getStrokeWidth());
+					System.out.println("fill = " + newRect.getFill());
+					System.out.println("x = " + newRect.getX());
+					System.out.println("y = " + newRect.getY());
+					System.out.println("width = " + newRect.getWidth());
+					System.out.println("height = " + newRect.getHeight());
+					System.out.println("\n");
 					//Testing
 				}
 			}
