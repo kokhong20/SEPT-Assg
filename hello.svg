@@ -2,4 +2,12 @@
   <circle cy="5.02.02px" cx="100cm" r="aa40" stroke="black"
   stroke-width="2" fill="red"/>
   <rect x="10cm" y="20cm" width="30cm" height="10cm" fill="rgb(0,0,255)" stroke-width="1" stroke="rgb(0,0,0)"/>
+  <circle cy="5.02.02px" cx="100cm" r="aa40" stroke="black"
+  stroke-width="2" fill="red"/>
+  <rect x="10cm" y="20cm" width="30cm" height="10cm" fill="rgb(0,0,255)" stroke-width="1" stroke="rgb(0,0,0)"/>
+  <g>
+  	<circle cy="5.02.02px" cx="100cm" r="aa40" stroke="black"
+    stroke-width="2" fill="red"/>
+    <rect x="10cm" y="20cm" width="30cm" height="10cm" fill="rgb(0,0,255)" stroke-width="1" stroke="rgb(0,0,0)"/>
+  </g>
 </svg>
