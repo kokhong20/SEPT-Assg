@@ -19,6 +19,7 @@ public class SVGReader
 	private DocumentBuilderFactory dbFactory;
 	public static LinkedList <Rectangle2D.Double> rectShapeList = new LinkedList<Rectangle2D.Double>();
 	public static LinkedList <Ellipse2D.Double> circleShapeList = new LinkedList<Ellipse2D.Double>();
+	public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
 
 
 	// Empty Constructor
@@ -88,8 +89,8 @@ public class SVGReader
 					case "rect":
 						Rectangles newRect = new Rectangles(drawList.item(index));
 						//Add new rectangle object to Shapes and put into linked list
-						Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
-						rectShapeList.add(rectShape);
+						//Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
+						drawingCollection.add(newRect);
 						//Testing
 						System.out.println("stroke = " + newRect.getStrokeColor());
 						System.out.println("stroke-width = " + newRect.getStrokeWidth());
@@ -104,9 +105,9 @@ public class SVGReader
 					case "circle":
 						Circles newCircle = new Circles(drawList.item(index));
 						//Add new circle object to Shapes and put into linked List
-						Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
+						//Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 						System.out.println("x is"+newCircle.getEllipse2DX());
-						circleShapeList.add(circleShape);
+						drawingCollection.add(newCircle);
 						//Testing
 						System.out.println("stroke = " + newCircle.getStrokeColor());
 						System.out.println("stroke-width = " + newCircle.getStrokeWidth());
@@ -139,8 +140,8 @@ public class SVGReader
 								case "rect":
 									Rectangles gRect = new Rectangles(gList.item(gIndex));
 									//Add new rectangle object to Shapes and put into linked list
-									Rectangle2D.Double rectGShape = new Rectangle2D.Double(gRect.getX(),gRect.getY(),gRect.getWidth(),gRect.getHeight());
-									rectShapeList.add(rectGShape);
+									//Rectangle2D.Double rectGShape = new Rectangle2D.Double(gRect.getX(),gRect.getY(),gRect.getWidth(),gRect.getHeight());
+									drawingCollection.add(gRect);
 
 									//Testing
 									System.out.println("stroke = " + gRect.getStrokeColor());
@@ -156,8 +157,8 @@ public class SVGReader
 								case "circle":
 									Circles gCircle = new Circles(gList.item(gIndex));
 									//Add new circle object to Shapes and put into linked List
-									Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getEllipse2DX(),gCircle.getEllipse2DY(),gCircle.getR()*2,gCircle.getR()*2);
-									circleShapeList.add(circleGShape);
+									//Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getEllipse2DX(),gCircle.getEllipse2DY(),gCircle.getR()*2,gCircle.getR()*2);
+									drawingCollection.add(gCircle);
 									//Testing
 									System.out.println("stroke = " + gCircle.getStrokeColor());
 									System.out.println("stroke-width = " + gCircle.getStrokeWidth());

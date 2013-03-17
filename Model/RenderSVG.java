@@ -27,22 +27,50 @@ public class RenderSVG extends JPanel
 		//for anti-aliasing for better output.
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		if(!SVGReader.rectShapeList.isEmpty())
+		if(!SVGReader.drawingCollection.isEmpty())
 		{
-			for(int i=0;i<SVGReader.rectShapeList.size() ; i++)
+			for(int i =0 ;i<SVGReader.drawingCollection.size();i++)
 			{
-				System.out.println(SVGReader.rectShapeList.get(i));
-				g2d.draw(SVGReader.rectShapeList.get(i));
+				
+				if(SVGReader.drawingCollection.get(i) instanceof Circles)
+				{
+					// creating 2D Shapes object 
+					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) SVGReader.drawingCollection.get(i)).getEllipse2DX(),
+							((Circles) SVGReader.drawingCollection.get(i)).getEllipse2DY(),((Circles) SVGReader.drawingCollection.get(i)).getR()*2
+							,((Circles) SVGReader.drawingCollection.get(i)).getR()*2);
+					
+					g2d.setColor(((Shapes) SVGReader.drawingCollection.get(i)).getFill());
+					g2d.fill(circleShape);
+				}
+				else if(SVGReader.drawingCollection.get(i) instanceof Rectangles)
+				{
+					// creating 2D Shapes object 
+					Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) SVGReader.drawingCollection.get(i)).getX(),
+							((Rectangles) SVGReader.drawingCollection.get(i)).getY(),((Rectangles) SVGReader.drawingCollection.get(i)).getWidth()
+							,((Rectangles) SVGReader.drawingCollection.get(i)).getHeight());
+					
+					g2d.draw(rectShape);
+					g2d.setColor(((Shapes) SVGReader.drawingCollection.get(i)).getFill());
+					g2d.fill(rectShape);
+				}
 			}
 		}
-		
-		if(!SVGReader.circleShapeList.isEmpty())
-		{
-			for(int i=0;i<SVGReader.circleShapeList.size() ; i++)
-			{
-				System.out.println(SVGReader.circleShapeList.get(i));
-				g2d.fill(SVGReader.circleShapeList.get(i));
-			}
-		}
+//		if(!SVGReader.rectShapeList.isEmpty())
+//		{
+//			for(int i=0;i<SVGReader.rectShapeList.size() ; i++)
+//			{
+//				System.out.println(SVGReader.rectShapeList.get(i));
+//				g2d.draw(SVGReader.rectShapeList.get(i));
+//			}
+//		}
+//		
+//		if(!SVGReader.circleShapeList.isEmpty())
+//		{
+//			for(int i=0;i<SVGReader.circleShapeList.size() ; i++)
+//			{
+//				System.out.println(SVGReader.circleShapeList.get(i));
+//				g2d.fill(SVGReader.circleShapeList.get(i));
+//			}
+//		}
 	}
 }
