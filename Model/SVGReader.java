@@ -78,66 +78,7 @@ public class SVGReader
 	{
 		if(doc != null)
 		{
-			/*// Testing Line 
-			NodeList lineList = this.getLines(doc);
-			for(int i = 0; i < lineList.getLength(); i++)
-			{
-				Node lineNode = lineList.item(i);
-				if(lineNode.getNodeType() == Node.ELEMENT_NODE)
-				{
-					Lines newLine = new Lines(lineNode);
-					//Testing
-					System.out.println("stroke = " + newLine.getStrokeColor());
-					System.out.println("stroke-width = " + newLine.getStrokeWidth());
-					System.out.println("x1 = " + newLine.getX1());
-					System.out.println("x2 = " + newLine.getX2());
-					System.out.println("y1 = " + newLine.getY1());
-					System.out.println("y2 = " + newLine.getY2());
-					//Testing
-				}
-			}
-			
-			// Testing purposes for circle 
-			NodeList circleList = this.getCircles(doc);			
-			for(int i =0; i<circleList.getLength(); i++)
-			{
-				Node circleNode = circleList.item(i);
-				if(circleNode.getNodeType() == Node.ELEMENT_NODE)
-				{
-					Circles newCircle = new Circles(circleNode);
-					//Testing
-					System.out.println("stroke = " + newCircle.getStrokeColor());
-					System.out.println("stroke-width = " + newCircle.getStrokeWidth());
-					System.out.println("fill = " + newCircle.getFill());
-					System.out.println("cx = " + newCircle.getCX());
-					System.out.println("cy = " + newCircle.getCY());
-					System.out.println("r = " + newCircle.getR());
-					//Testing
-				}
-			}
-			
-			// Testing Rectangle
-			
-			NodeList rectList = this.getRects(doc);
-			for (int i=0; i<rectList.getLength(); i++)
-			{
-				Node rectNode = rectList.item(i);
-				if(rectNode.getNodeType() == Node.ELEMENT_NODE)
-				{
-					Rectangles newRect = new Rectangles(rectNode);
-					//Testing
-					System.out.println("stroke = " + newRect.getStrokeColor());
-					System.out.println("stroke-width = " + newRect.getStrokeWidth());
-					System.out.println("fill = " + newRect.getFill());
-					System.out.println("x = " + newRect.getX());
-					System.out.println("y = " + newRect.getY());
-					System.out.println("width = " + newRect.getWidth());
-					System.out.println("height = " + newRect.getHeight());
-					//Testing
-				}
-			}*/
-			
-			Node svg = doc.getChildNodes().item(0);
+			Node svg = doc.getElementsByTagName("svg").item(0);
 			NodeList drawList = svg.getChildNodes();
 			System.out.println(drawList.getLength());
 			for (int index = 0; index < drawList.getLength(); index++)
