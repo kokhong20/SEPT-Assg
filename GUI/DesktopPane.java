@@ -8,7 +8,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 
 
@@ -23,6 +27,12 @@ public class DesktopPane extends JFrame
 		
 		super("Assignment");
 		
+		addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		JMenu aboutMenu = new JMenu("About");

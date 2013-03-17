@@ -1,6 +1,9 @@
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import Controller.FileHandle;
 import GUI.DesktopPane;
-import Model.SVGReader;
 
 public class mainStart 
 {
@@ -8,9 +11,12 @@ public class mainStart
 	
 	public static void main(String args [])
 	{
+		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+		Dimension dim = toolkit.getScreenSize();
+		  
 		DesktopPane dp = new DesktopPane();
 		dp.setVisible(true);
-		dp.setSize(600,600);
+		dp.setSize(dim.width,dim.height);
 		
 		if (args.length != 0)
 		{

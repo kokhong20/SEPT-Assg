@@ -1,9 +1,6 @@
 package Model;
 
-import java.awt.Font;
 import java.util.regex.Pattern;
-
-import javax.swing.UIManager;
 
 public class Units
 {
@@ -15,12 +12,12 @@ public class Units
 				{
 					switch(att.substring(att.length() - 2))
 					{
-						case "em": // Assumption made based on default of browsers(Firefox, IE, Chrome)
-							return Double.parseDouble(att.replace("em", "")) * 16; 
-						case "ex": // Assumption made based on default of browsers(Firefox, IE, Chrome)
-							return Double.parseDouble(att.replace("ex", "")) * 7.1111;
+						case "em": 
+							return convertEM(att.replace("em", "")); 
+						case "ex": 
+							return convertEX(att.replace("ex", ""));
 						case "px":
-							return Double.parseDouble(att.replace("px", ""));
+							return convertPX(att.replace("px", ""));
 						case "in":
 							return convertIN(att.replace("in", ""));
 						case "cm":
@@ -39,6 +36,18 @@ public class Units
 				}	
 			}
 		return 0;
+	}
+	
+	// Assumption made based on default of browsers(Firefox, IE, Chrome)
+	public final static double convertEM(String bConvert)
+	{
+		return Double.parseDouble(bConvert) * 16;
+	}
+	
+	// Assumption made based on default of browsers(Firefox, IE, Chrome)
+	public final static double convertEX(String bConvert)
+	{
+		return Double.parseDouble(bConvert) * 7.1111;
 	}
 
 	public final static double convertPX(String bConvert)

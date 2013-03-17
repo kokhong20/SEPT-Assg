@@ -7,6 +7,7 @@ import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MenuAction implements ActionListener 
 {
-
+	
 	public void actionPerformed(ActionEvent e) {
 		
 		// Teach user basic functions on how to use program
@@ -84,8 +85,7 @@ public class MenuAction implements ActionListener
 							path = fileChooser.getCurrentDirectory().toString() ;
 							FileHandle.menuOpen(path, selectedFile);
 							
-							JInternalFrame svgInternal = new JInternalFrame("Open", true, true, true, true);
-							svgInternal.add(new RenderSVG(),BorderLayout.CENTER);
+							JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
 							svgInternal.pack();
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);
