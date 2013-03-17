@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -23,6 +24,8 @@ public class RenderSVG extends JPanel
 	{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
+		//for anti-aliasing for better output.
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		if(!SVGReader.rectShapeList.isEmpty())
 		{

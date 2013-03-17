@@ -104,7 +104,8 @@ public class SVGReader
 					case "circle":
 						Circles newCircle = new Circles(drawList.item(index));
 						//Add new circle object to Shapes and put into linked List
-						Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getCX(),newCircle.getCY(),newCircle.getR(),newCircle.getR());
+						Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
+						System.out.println("x is"+newCircle.getEllipse2DX());
 						circleShapeList.add(circleShape);
 						//Testing
 						System.out.println("stroke = " + newCircle.getStrokeColor());
@@ -155,7 +156,7 @@ public class SVGReader
 								case "circle":
 									Circles gCircle = new Circles(gList.item(gIndex));
 									//Add new circle object to Shapes and put into linked List
-									Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getCX(),gCircle.getCY(),gCircle.getR(),gCircle.getR());
+									Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getEllipse2DX(),gCircle.getEllipse2DY(),gCircle.getR()*2,gCircle.getR()*2);
 									circleShapeList.add(circleGShape);
 									//Testing
 									System.out.println("stroke = " + gCircle.getStrokeColor());

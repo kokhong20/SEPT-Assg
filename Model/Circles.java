@@ -51,6 +51,18 @@ public class Circles extends Shapes
 		return r;
 	}
 	
+	public double getEllipse2DX()
+	{
+		return (this.getCX()-this.getR());
+		//return (this.getCX()-(Math.cos(Math.PI/4)*this.getR()));
+	}
+	
+	public double getEllipse2DY()
+	{
+		return (this.getCY()-this.getR());
+		//return (this.getCY()-(Math.cos(Math.PI/4)*this.getR()));
+	}
+	
 	/*
 	//Read and process attributes
 	@Override
