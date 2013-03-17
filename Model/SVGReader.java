@@ -17,8 +17,6 @@ public class SVGReader
 	private File fXmlFile;
 	private Document doc;
 	private DocumentBuilderFactory dbFactory;
-	public static LinkedList <Rectangle2D.Double> rectShapeList = new LinkedList<Rectangle2D.Double>();
-	public static LinkedList <Ellipse2D.Double> circleShapeList = new LinkedList<Ellipse2D.Double>();
 	public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
 
 
@@ -120,6 +118,7 @@ public class SVGReader
 						break;
 					case "line":
 						Lines newLine = new Lines(drawList.item(index));
+						drawingCollection.add(newLine);
 						//Testing
 						System.out.println("stroke = " + newLine.getStrokeColor());
 						System.out.println("stroke-width = " + newLine.getStrokeWidth());

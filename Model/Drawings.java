@@ -8,7 +8,7 @@ public abstract class Drawings
 {
 
 	private Color stroke;
-	private double strokeWidth;
+	private float strokeWidth;
 	
 	// Constructor which receives a node
 	// Call setColor and setUnit method to set value 
@@ -17,7 +17,7 @@ public abstract class Drawings
 		// TODO Auto-generated constructor stub
 		
 		this.stroke = Coloring.setColor(((Element)node).getAttribute("stroke"));
-		this.strokeWidth = Units.setUnit(((Element)node).getAttribute("stroke-width"));
+		this.strokeWidth = (float) Units.setUnit(((Element)node).getAttribute("stroke-width"));
 	}
 	
 	public void setStrokeColor(Color color)
@@ -30,12 +30,12 @@ public abstract class Drawings
 		return stroke;
 	}
 
-	public void setStrokeWidth(double width)
+	public void setStrokeWidth(float width)
 	{
 		strokeWidth = width;
 	}
 	
-	public double getStrokeWidth()
+	public float getStrokeWidth()
 	{
 		return strokeWidth;
 	}
