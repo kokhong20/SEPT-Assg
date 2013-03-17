@@ -130,14 +130,103 @@ public class SVGReader
 				}
 			}*/
 			
-			NodeList nList = doc.getChildNodes();
-			NodeList sList = nList.item(0).getChildNodes();
-			for (int i=0; i<sList.getLength(); i++)
+			Node svg = doc.getChildNodes().item(0);
+			NodeList drawList = svg.getChildNodes();
+			for (int index = 0; index < drawList.getLength(); index++)
 			{
-				//System.out.println(sList.item(i).getNodeName());
-				if (sList.item(i).getNodeName().equals("rect"))
+				switch(drawList.item(index).getNodeName())
 				{
-					Rectangles newRect = new Rectangles(sList.item(i));
+					case "rect":
+						Rectangles newRect = new Rectangles(drawList.item(index));
+						//Testing
+						System.out.println("stroke = " + newRect.getStrokeColor());
+						System.out.println("stroke-width = " + newRect.getStrokeWidth());
+						System.out.println("fill = " + newRect.getFill());
+						System.out.println("x = " + newRect.getX());
+						System.out.println("y = " + newRect.getY());
+						System.out.println("width = " + newRect.getWidth());
+						System.out.println("height = " + newRect.getHeight());
+						System.out.println("\n");
+						//Testing
+						break;
+					case "circle":
+						Circles newCircle = new Circles(drawList.item(index));
+						//Testing
+						System.out.println("stroke = " + newCircle.getStrokeColor());
+						System.out.println("stroke-width = " + newCircle.getStrokeWidth());
+						System.out.println("fill = " + newCircle.getFill());
+						System.out.println("cx = " + newCircle.getCX());
+						System.out.println("cy = " + newCircle.getCY());
+						System.out.println("r = " + newCircle.getR());
+						System.out.println("\n");
+						//Testing
+						break;
+					case "line":
+						Lines newLine = new Lines(drawList.item(index));
+						//Testing
+						System.out.println("stroke = " + newLine.getStrokeColor());
+						System.out.println("stroke-width = " + newLine.getStrokeWidth());
+						System.out.println("x1 = " + newLine.getX1());
+						System.out.println("x2 = " + newLine.getX2());
+						System.out.println("y1 = " + newLine.getY1());
+						System.out.println("y2 = " + newLine.getY2());
+						System.out.println("\n");
+						//Testing
+						break;
+					case "g":
+						NodeList gList = drawList.item(index).getChildNodes();
+						System.out.println("<g>");
+						for(int gIndex = 0; gIndex < gList.getLength(); gIndex++)
+						{
+							switch(gList.item(gIndex).getNodeName())
+							{
+								case "rect":
+									Rectangles gRect = new Rectangles(gList.item(gIndex));
+									//Testing
+									System.out.println("stroke = " + gRect.getStrokeColor());
+									System.out.println("stroke-width = " + gRect.getStrokeWidth());
+									System.out.println("fill = " + gRect.getFill());
+									System.out.println("x = " + gRect.getX());
+									System.out.println("y = " + gRect.getY());
+									System.out.println("width = " + gRect.getWidth());
+									System.out.println("height = " + gRect.getHeight());
+									System.out.println("\n");
+									//Testing
+									break;
+								case "circle":
+									Circles gCircle = new Circles(gList.item(gIndex));
+									//Testing
+									System.out.println("stroke = " + gCircle.getStrokeColor());
+									System.out.println("stroke-width = " + gCircle.getStrokeWidth());
+									System.out.println("fill = " + gCircle.getFill());
+									System.out.println("cx = " + gCircle.getCX());
+									System.out.println("cy = " + gCircle.getCY());
+									System.out.println("r = " + gCircle.getR());
+									System.out.println("\n");
+									//Testing
+									break;
+								case "line":
+									Lines gLine = new Lines(gList.item(gIndex));
+									//Testing
+									System.out.println("stroke = " + gLine.getStrokeColor());
+									System.out.println("stroke-width = " + gLine.getStrokeWidth());
+									System.out.println("x1 = " + gLine.getX1());
+									System.out.println("x2 = " + gLine.getX2());
+									System.out.println("y1 = " + gLine.getY1());
+									System.out.println("y2 = " + gLine.getY2());
+									System.out.println("\n");
+									//Testing
+									break;
+							}
+						}
+						System.out.println("</g>");
+						break;
+				}
+				//System.out.println(sList.item(i).getNodeName());
+				/*
+				if (drawList.item(index).getNodeName().equals("rect"))
+				{
+					Rectangles newRect = new Rectangles(drawList.item(index));
 					//Testing
 					System.out.println("stroke = " + newRect.getStrokeColor());
 					System.out.println("stroke-width = " + newRect.getStrokeWidth());
@@ -148,7 +237,7 @@ public class SVGReader
 					System.out.println("height = " + newRect.getHeight());
 					System.out.println("\n");
 					//Testing
-				}
+				}*/
 			}
 		}
 	}
