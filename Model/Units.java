@@ -1,6 +1,9 @@
 package Model;
 
+import java.awt.Font;
 import java.util.regex.Pattern;
+
+import javax.swing.UIManager;
 
 public class Units
 {
@@ -12,9 +15,10 @@ public class Units
 				{
 					switch(att.substring(att.length() - 2))
 					{
-						case "em":
-						case "ex":
-							return 0;
+						case "em": // Assumption made based on default of browsers(Firefox, IE, Chrome)
+							return Double.parseDouble(att.replace("em", "")) * 16; 
+						case "ex": // Assumption made based on default of browsers(Firefox, IE, Chrome)
+							return Double.parseDouble(att.replace("ex", "")) * 7.1111;
 						case "px":
 							return Double.parseDouble(att.replace("px", ""));
 						case "in":
