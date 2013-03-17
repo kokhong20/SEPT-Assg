@@ -1,6 +1,8 @@
 package Controller;
 
 import GUI.DesktopPane;
+import Model.RenderSVG;
+
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -81,6 +83,13 @@ public class MenuAction implements ActionListener
 							
 							path = fileChooser.getCurrentDirectory().toString() ;
 							FileHandle.menuOpen(path, selectedFile);
+							
+							JInternalFrame svgInternal = new JInternalFrame("Open", true, true, true, true);
+							svgInternal.add(new RenderSVG(),BorderLayout.CENTER);
+							svgInternal.pack();
+							DesktopPane.desktopPane.add(svgInternal);
+							svgInternal.setVisible(true);
+							svgInternal.setSize(400,400);
 						}
 					}
 			);
