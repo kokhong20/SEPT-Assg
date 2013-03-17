@@ -16,7 +16,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MenuAction implements ActionListener 
 {
-	
 	public void actionPerformed(ActionEvent e) {
 		
 		// Teach user basic functions on how to use program
@@ -86,6 +85,7 @@ public class MenuAction implements ActionListener
 							FileHandle.menuOpen(path, selectedFile);
 							
 							JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
+							svgInternal.add(new RenderSVG(),BorderLayout.CENTER);
 							svgInternal.pack();
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);
