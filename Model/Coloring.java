@@ -21,6 +21,13 @@ public class Coloring {
 			{
 				return Color.decode(color);
 			}
+			else if(color.startsWith("rgb"))
+			{
+				color = color.replace("rgb(", ")");
+				color = color.replace(")", "");
+				String[] rgb = color.split(",");
+				return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+			}
 			else
 			{
 				if(colorMap.isEmpty())

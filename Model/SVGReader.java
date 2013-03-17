@@ -6,18 +6,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
+//import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 public class SVGReader 
 {
 	private File fXmlFile;
 	private Document doc;
 	private DocumentBuilderFactory dbFactory;
-	public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
+	//public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
+	public static LinkedHashSet <Drawings> drawingCollection = new LinkedHashSet<Drawings>();
 
 
 	// Empty Constructor
@@ -185,22 +185,6 @@ public class SVGReader
 						System.out.println("</g>");
 						break;
 				}
-				//System.out.println(sList.item(i).getNodeName());
-				/*
-				if (drawList.item(index).getNodeName().equals("rect"))
-				{
-					Rectangles newRect = new Rectangles(drawList.item(index));
-					//Testing
-					System.out.println("stroke = " + newRect.getStrokeColor());
-					System.out.println("stroke-width = " + newRect.getStrokeWidth());
-					System.out.println("fill = " + newRect.getFill());
-					System.out.println("x = " + newRect.getX());
-					System.out.println("y = " + newRect.getY());
-					System.out.println("width = " + newRect.getWidth());
-					System.out.println("height = " + newRect.getHeight());
-					System.out.println("\n");
-					//Testing
-				}*/
 			}
 		}
 	}
@@ -225,28 +209,4 @@ public class SVGReader
 	{
 		return doc.getElementsByTagName("line");
 	}
-	
-	// Called from main controller to create a new rect
-	/*public Rectangles createRect(Node node)
-	{
-		Rectangles rect = new Rectangles(node);
-		rect.readAttributes();
-		return rect;
-	}
-	
-	// Called from main controller to create a new circle
-	public Circles createCircle(Node node)
-	{
-		Circles circle = new Circles(node);
-		return circle;
-	}
-	
-	
-	// Called from main controller to create a new line
-	public Lines createLine(Node node)
-	{
-		Lines line = new Lines(node);
-		return line;
-	}*/
-	
 }
