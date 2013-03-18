@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-<line stroke="blue" stroke-width="50mm" x1="5cm" x2="10cm" y1="32px" y2="10pt"/>
-<line stroke="red" stroke-width="50mm" x1="5cm" x2="10cm" y1="2em" y2="10pt"/>
+<line stroke="rgb(25%, 75%, 100%)" stroke-width="50mm" x1="5cm" x2="10cm" y1="32px" y2="10pt"/>
+<line stroke="#F00" stroke-width="50mm" x1="5cm" x2="10cm" y1="2em" y2="10pt"/>
 <line stroke="yellow" stroke-width="50mm" x1="5cm" x2="10cm" y1="4.5ex" y2="10pt"/>
 </svg>

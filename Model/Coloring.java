@@ -19,14 +19,32 @@ public class Coloring {
 		{
 			if(color.startsWith("#") || color.startsWith("0x"))
 			{
-				return Color.decode(color);
+				if(color.length() > 6)
+					return Color.decode(color);
+				else
+				{
+					return Color.decode("#" + color.substring(color.length() - 3, color.length() - 2) + color.substring(color.length() - 3, color.length() - 2) + 
+							color.substring(color.length() - 2, color.length() - 1) + color.substring(color.length() - 2, color.length() - 1) +
+							color.substring(color.length() - 1) + color.substring(color.length() - 1));
+				}
 			}
 			else if(color.startsWith("rgb"))
 			{
-				color = color.replace("rgb(", ")");
+				color = color.replace("rgb(", "");
 				color = color.replace(")", "");
-				String[] rgb = color.split(",");
-				return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+				color = color.replace(" ", "");
+				
+				if(color.contains("%"))
+				{
+					color = color.replace("%", "");
+					String[] rgb = color.split(",");
+					return new Color((int) Math.round((Integer.parseInt(rgb[0]) * 2.55)), (int) Math.round((Integer.parseInt(rgb[1])) * 2.55), (int) Math.round((Integer.parseInt(rgb[2]) * 2.55)));
+				}
+				else
+				{
+					String[] rgb = color.split(",");
+					return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+				}
 			}
 			else
 			{
@@ -39,6 +57,7 @@ public class Coloring {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 		}
 		
 		return Color.black;

@@ -30,6 +30,29 @@ public class Units
 							return convertPC(att.replace("pc", ""));
 					}
 				}
+				else if(Pattern.matches("(\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att))
+				{
+					att = "0" + att;
+					switch(att.substring(att.length() - 2))
+					{
+						case "em": 
+							return convertEM(att.replace("em", "")); 
+						case "ex": 
+							return convertEX(att.replace("ex", ""));
+						case "px":
+							return convertPX(att.replace("px", ""));
+						case "in":
+							return convertIN(att.replace("in", ""));
+						case "cm":
+							return convertCM(att.replace("cm", ""));
+						case "mm":
+							return convertMM(att.replace("mm", ""));
+						case "pt":
+							return convertPT(att.replace("pt", ""));
+						case "pc":
+							return convertPC(att.replace("pc", ""));
+					}
+				}
 				else if(Pattern.matches("(\\d+)", att) || Pattern.matches("(\\d+.\\d+)", att))
 				{
 					return Double.parseDouble(att);
