@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Dimension;
 //import java.awt.Shape;
 //import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -28,7 +29,6 @@ public class SVGRender extends JPanel
 		this.reader.setDoc(path);
 		
 		this.setBackground(Color.white);
-		this.setSize(500, 500);
 	}
 	
 	public void paintComponent(Graphics g)
@@ -130,5 +130,10 @@ public class SVGRender extends JPanel
 				}
 			}*/
 		}
+	}
+	
+	public Dimension getPreferredSize()
+	{
+		return new Dimension((int)this.reader.getWidth(),(int)this.reader.getHeight());
 	}
 }

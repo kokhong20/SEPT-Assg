@@ -5,7 +5,7 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-
+import org.w3c.dom.Element;
 import java.io.File;
 import java.io.FileNotFoundException;
 //import java.util.LinkedList;
@@ -18,9 +18,9 @@ public class SVGReader
 	private DocumentBuilderFactory dbFactory;
 	//public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
 	private LinkedHashSet <Drawings> drawingCollection;
+	private double svgWidth;
+	private double svgHeight;
 
-
-	// Empty Constructor
 	public SVGReader()
 	{
 		doc = null;
@@ -79,6 +79,7 @@ public class SVGReader
 		if(doc != null)
 		{
 			Node svg = doc.getElementsByTagName("svg").item(0);
+			this.setSize(((Element) svg).getAttribute("width"), ((Element) svg).getAttribute("height"));
 			NodeList drawList = svg.getChildNodes();
 			System.out.println("Length : " + drawList.getLength());
 			for (int index = 0; index < drawList.getLength(); index++)
@@ -190,6 +191,22 @@ public class SVGReader
 				}
 			}
 		}
+	}
+	
+	public void setSize(String width, String height)
+	{
+		this.svgWidth = Units.setUnit(width);
+		this.svgHeight = Units.setUnit(height);
+	}
+	
+	public double getWidth()
+	{
+		return this.svgWidth;
+	}
+	
+	public double getHeight()
+	{
+		return this.svgHeight;
 	}
 
 	// If no line, return NodeList with 0 length, 
