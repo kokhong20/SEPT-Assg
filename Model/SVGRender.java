@@ -16,9 +16,10 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-public class RenderSVG extends JPanel
+@SuppressWarnings("serial")
+public class SVGRender extends JPanel
 {
-	public RenderSVG()
+	public SVGRender()
 	{
 		this.setBackground(Color.white);
 		this.setSize(500, 500);

@@ -1,7 +1,8 @@
 package Controller;
 
 import GUI.DesktopPane;
-import Model.RenderSVG;
+import Model.SVGRender;
+import Model.SVGReader;
 
 import java.io.File;
 import java.awt.BorderLayout;
@@ -60,6 +61,8 @@ public class MenuAction implements ActionListener
 						
 						public void actionPerformed(ActionEvent e) {
 							
+							SVGReader.drawingCollection.clear();
+							
 							String path;
 							
 							if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
@@ -85,7 +88,7 @@ public class MenuAction implements ActionListener
 							FileHandle.menuOpen(path, selectedFile);
 							
 							JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-							svgInternal.add(new RenderSVG(),BorderLayout.CENTER);
+							svgInternal.add(new SVGRender(),BorderLayout.CENTER);
 							svgInternal.pack();
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);
