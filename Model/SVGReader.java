@@ -17,7 +17,7 @@ public class SVGReader
 	private Document doc;
 	private DocumentBuilderFactory dbFactory;
 	//public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
-	public static LinkedHashSet <Drawings> drawingCollection = new LinkedHashSet<Drawings>();
+	private LinkedHashSet <Drawings> drawingCollection;
 
 
 	// Empty Constructor
@@ -26,6 +26,7 @@ public class SVGReader
 		doc = null;
 		fXmlFile = null;
 		dbFactory = DocumentBuilderFactory.newInstance();
+		this.drawingCollection = new LinkedHashSet<Drawings>();
 	}
 	
 	// set Document with dir from MenuAction.
@@ -79,16 +80,17 @@ public class SVGReader
 		{
 			Node svg = doc.getElementsByTagName("svg").item(0);
 			NodeList drawList = svg.getChildNodes();
-			System.out.println(drawList.getLength());
+			System.out.println("Length : " + drawList.getLength());
 			for (int index = 0; index < drawList.getLength(); index++)
 			{
+				System.out.println("Node Name : " + drawList.item(index).getNodeName());
 				switch(drawList.item(index).getNodeName())
 				{
 					case "rect":
 						Rectangles newRect = new Rectangles(drawList.item(index));
 						//Add new rectangle object to Shapes and put into linked list
 						//Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
-						drawingCollection.add(newRect);
+						this.drawingCollection.add(newRect);
 						//Testing
 						System.out.println("stroke = " + newRect.getStrokeColor());
 						System.out.println("stroke-width = " + newRect.getStrokeWidth());
@@ -105,7 +107,7 @@ public class SVGReader
 						//Add new circle object to Shapes and put into linked List
 						//Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 						System.out.println("x is"+newCircle.getEllipse2DX());
-						drawingCollection.add(newCircle);
+						this.drawingCollection.add(newCircle);
 						//Testing
 						System.out.println("stroke = " + newCircle.getStrokeColor());
 						System.out.println("stroke-width = " + newCircle.getStrokeWidth());
@@ -118,7 +120,7 @@ public class SVGReader
 						break;
 					case "line":
 						Lines newLine = new Lines(drawList.item(index));
-						drawingCollection.add(newLine);
+						this.drawingCollection.add(newLine);
 						//Testing
 						System.out.println("stroke = " + newLine.getStrokeColor());
 						System.out.println("stroke-width = " + newLine.getStrokeWidth());
@@ -140,7 +142,7 @@ public class SVGReader
 									Rectangles gRect = new Rectangles(gList.item(gIndex));
 									//Add new rectangle object to Shapes and put into linked list
 									//Rectangle2D.Double rectGShape = new Rectangle2D.Double(gRect.getX(),gRect.getY(),gRect.getWidth(),gRect.getHeight());
-									drawingCollection.add(gRect);
+									this.drawingCollection.add(gRect);
 
 									//Testing
 									System.out.println("stroke = " + gRect.getStrokeColor());
@@ -157,7 +159,7 @@ public class SVGReader
 									Circles gCircle = new Circles(gList.item(gIndex));
 									//Add new circle object to Shapes and put into linked List
 									//Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getEllipse2DX(),gCircle.getEllipse2DY(),gCircle.getR()*2,gCircle.getR()*2);
-									drawingCollection.add(gCircle);
+									this.drawingCollection.add(gCircle);
 									//Testing
 									System.out.println("stroke = " + gCircle.getStrokeColor());
 									System.out.println("stroke-width = " + gCircle.getStrokeWidth());
@@ -170,6 +172,7 @@ public class SVGReader
 									break;
 								case "line":
 									Lines gLine = new Lines(gList.item(gIndex));
+									this.drawingCollection.add(gLine);
 									//Testing
 									System.out.println("stroke = " + gLine.getStrokeColor());
 									System.out.println("stroke-width = " + gLine.getStrokeWidth());
@@ -208,5 +211,11 @@ public class SVGReader
 	public NodeList getLines(Document doc)
 	{
 		return doc.getElementsByTagName("line");
+	}
+	
+	public LinkedHashSet<Drawings> getDrawings()
+	{
+		System.out.println("Returned Length : " + this.drawingCollection.size());
+		return this.drawingCollection;
 	}
 }

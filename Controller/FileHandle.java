@@ -37,4 +37,29 @@ public class FileHandle
 		SVGReader reader = new SVGReader();
 		reader.setDoc(path);
 	}
+	
+
+	public static String setPath(String path, File selectedFile)
+	{	
+		if(path.endsWith(":\\"))
+		{
+			path += selectedFile.getName();
+		}
+		else
+		{
+			String nameOS = "os.name";
+			
+			if (System.getProperty(nameOS).equals("Mac OS X"))
+			{
+				path +=  "//" + selectedFile.getName();
+			}
+			
+			else
+			{
+				path +=  "\\" + selectedFile.getName();
+			}
+		}
+
+		return path;
+	}
 }

@@ -61,8 +61,6 @@ public class MenuAction implements ActionListener
 						
 						public void actionPerformed(ActionEvent e) {
 							
-							SVGReader.drawingCollection.clear();
-							
 							String path;
 							
 							if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
@@ -85,10 +83,10 @@ public class MenuAction implements ActionListener
 							internal.dispose();
 							
 							path = fileChooser.getCurrentDirectory().toString() ;
-							FileHandle.menuOpen(path, selectedFile);
+							//FileHandle.menuOpen(path, selectedFile);
 							
 							JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-							svgInternal.add(new SVGRender(),BorderLayout.CENTER);
+							svgInternal.add(new SVGRender(new SVGReader(), FileHandle.setPath(path, selectedFile)), BorderLayout.CENTER);
 							svgInternal.pack();
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);

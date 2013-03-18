@@ -13,14 +13,20 @@ import java.awt.geom.Line2D;
 //import java.util.LinkedList;
 
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class SVGRender extends JPanel
 {
-	public SVGRender()
+	private SVGReader reader;
+	
+	public SVGRender(SVGReader read, String path)
 	{
+		this.reader = read;
+		this.reader.setDoc(path);
+		
 		this.setBackground(Color.white);
 		this.setSize(500, 500);
 	}
@@ -32,9 +38,11 @@ public class SVGRender extends JPanel
 		//for anti-aliasing for better output.
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		if(!SVGReader.drawingCollection.isEmpty())
+		LinkedHashSet<Drawings> drawCollection = this.reader.getDrawings();
+		
+		if(!drawCollection.isEmpty())
 		{
-			Iterator<Drawings> it = SVGReader.drawingCollection.iterator();
+			Iterator<Drawings> it = drawCollection.iterator();
 			while(it.hasNext())
 			{
 				Drawings drawItem = it.next();
