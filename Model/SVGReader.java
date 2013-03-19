@@ -326,7 +326,6 @@ public class SVGReader
 	
 	public LinkedHashSet<Drawings> getDrawings()
 	{
-		System.out.println("Returned Length : " + this.drawingCollection.size());
 		return this.drawingCollection;
 	}
 }

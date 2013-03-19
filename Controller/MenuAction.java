@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -105,6 +106,14 @@ public class MenuAction implements ActionListener
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);
 							svgInternal.setSize(500,500);
+							try 
+							{
+								svgInternal.setMaximum(true);
+							} 
+							catch (PropertyVetoException pve) {
+								// TODO Auto-generated catch block
+								pve.printStackTrace();
+							}
 						}
 					}
 			);
