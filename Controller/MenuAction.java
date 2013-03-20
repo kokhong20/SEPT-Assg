@@ -8,6 +8,7 @@ import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -105,14 +106,24 @@ public class MenuAction implements ActionListener
 							svgInternal.pack();
 							DesktopPane.desktopPane.add(svgInternal);
 							svgInternal.setVisible(true);
-							svgInternal.setSize(500,500);
-							try 
+							svgInternal.setSize(render.getPreferredSize());
+							
+							Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+							if((toolkit.getScreenSize().height <= render.getPreferredSize().height)
+									|| (toolkit.getScreenSize().width <= render.getPreferredSize().width))
 							{
-								svgInternal.setMaximum(true);
-							} 
-							catch (PropertyVetoException pve) {
-								// TODO Auto-generated catch block
-								pve.printStackTrace();
+								try 
+								{
+									svgInternal.setMaximum(true);
+								} 
+								catch (PropertyVetoException pve) {
+									// TODO Auto-generated catch block
+									pve.printStackTrace();
+								}
+							}
+							else if(svgInternal.getSize().equals(new Dimension(0,0)))
+							{
+								svgInternal.setSize(500,500);
 							}
 						}
 					}
