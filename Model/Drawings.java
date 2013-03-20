@@ -40,7 +40,7 @@ public abstract class Drawings
 		return strokeWidth;
 	}
 	
-	//public abstract void readAttributes();
+	public abstract void readAttributes();
 	/*
 	 * This function take one string as parameter and split the string into array of string
 	 * which contain two new string with the splited contain.

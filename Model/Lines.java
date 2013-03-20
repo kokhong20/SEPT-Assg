@@ -10,6 +10,7 @@ public class Lines extends Drawings
 	private double x2;
 	private double y1;
 	private double y2;
+	private Node node;
 
 	// Constructor which receives a node
 	// Call setUnit method to set value 
@@ -18,10 +19,7 @@ public class Lines extends Drawings
 		// TODO Auto-generated constructor stub
 		super(node);
 		
-		this.x1 = Units.setUnit(((Element)node).getAttribute("x1"));
-		this.x2 = Units.setUnit(((Element)node).getAttribute("x2"));
-		this.y1 = Units.setUnit(((Element)node).getAttribute("y1"));
-		this.y2 = Units.setUnit(((Element)node).getAttribute("y2"));
+		this.node = node;
 	}
 	
 	public void setX1(double x1)
@@ -63,10 +61,19 @@ public class Lines extends Drawings
 	{
 		return this.y2;
 	}
-/*
+
 	@Override
-	public void readAttributes() {
+	public void readAttributes() 
+	{
 		// TODO Auto-generated method stub
-		
-	}*/
+		if (this.node.getNodeType() == Node.ELEMENT_NODE)
+		{
+			Element eNode = (Element) node;
+			
+			this.setX1(Units.setUnit(eNode.getAttribute("x1")));
+			this.setX2(Units.setUnit(eNode.getAttribute("x2")));
+			this.setY1(Units.setUnit(eNode.getAttribute("y1")));
+			this.setY2(Units.setUnit(eNode.getAttribute("y2")));
+		}
+	}
 }

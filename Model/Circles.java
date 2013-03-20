@@ -8,6 +8,7 @@ public class Circles extends Shapes
 	private double cx;
 	private double cy;
 	private double r;
+	private Node node;
 
 	// Constructor which receives a node
 	// Call setUnit method to set value 
@@ -16,9 +17,7 @@ public class Circles extends Shapes
 		// TODO Auto-generated constructor stub
 		super(node);
 		
-		this.cx = Units.setUnit(((Element)node).getAttribute("cx"));
-		this.cy = Units.setUnit(((Element)node).getAttribute("cy"));
-		this.r = Units.setUnit(((Element)node).getAttribute("r"));
+		this.node = node;
 	}
 	
 	public void setCX(double cx)
@@ -63,23 +62,22 @@ public class Circles extends Shapes
 		//return (this.getCY()-(Math.cos(Math.PI/4)*this.getR()));
 	}
 	
-	/*
+	
 	//Read and process attributes
 	@Override
 	public void readAttributes()
 	{
 		// TODO Auto-generated method stub
-		double cx = getAttributeUnit("cx");
-		double cy = getAttributeUnit("cy");
-		double r = getAttributeUnit("r");
+		if (this.node.getNodeType() == Node.ELEMENT_NODE)
+		{
+			Element eNode = (Element) node;
 			
-		setCX(cx);
-		setCY(cy);
-		setR(r);
-		
-		System.out.println("Set cx, cy and r");
+			this.setCX(Units.setUnit(eNode.getAttribute("cx")));
+			this.setCY(Units.setUnit(eNode.getAttribute("cy")));
+			this.setR(Units.setUnit(eNode.getAttribute("r")));
+		}
 	}
-	
+	/*
 	//Check,validate and get attribute tag's unit
 	//return 0 if it doesn't contain the tag element or attribute tag format is invalid
 	//return its unit if the attribute tag format is valid
