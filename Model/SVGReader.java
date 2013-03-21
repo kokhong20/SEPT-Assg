@@ -19,7 +19,6 @@ public class SVGReader
 	private File fXmlFile;
 	private Document doc;
 	private DocumentBuilderFactory dbFactory;
-	//public static LinkedList <Drawings> drawingCollection = new LinkedList<Drawings>();
 	private LinkedHashSet <Drawings> drawingCollection;
 	private double svgWidth;
 	private double svgHeight;
