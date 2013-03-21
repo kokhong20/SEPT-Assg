@@ -231,6 +231,7 @@ public class SVGReader
 				{
 					case "rect":
 						Rectangles newRect = new Rectangles(gList.item(i));
+						newRect.readAttributes();
 						//Add new rectangle object to Shapes and put into linked list
 						//Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
 						if(newRect.getStrokeColor().equals(Color.BLACK) && stroke != null)
@@ -253,6 +254,7 @@ public class SVGReader
 						break;
 					case "circle":
 						Circles newCircle = new Circles(gList.item(i));
+						newCircle.readAttributes();
 						//Add new circle object to Shapes and put into linked List
 						//Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 						if(newCircle.getStrokeColor().equals(Color.BLACK) && stroke != null)
@@ -275,7 +277,8 @@ public class SVGReader
 						break;
 					case "line":
 						Lines newLine = new Lines(gList.item(i));
-
+						newLine.readAttributes();
+						
 						if(newLine.getStrokeColor().equals(Color.BLACK) && stroke != null)
 							newLine.setStrokeColor(stroke);
 
