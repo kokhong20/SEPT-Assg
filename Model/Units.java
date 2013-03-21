@@ -6,6 +6,7 @@ public class Units
 {
 	public final static double setUnit(String att)
 	{
+		att = att.toLowerCase();
 			if(!att.isEmpty())
 			{
 				if(Pattern.matches("(\\d+\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att) || Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
