@@ -32,9 +32,21 @@ public class MenuAction implements ActionListener
 		else if (e.getSource() == DesktopPane.aboutItem) {
 				
 		}
+		// About software : version and etc
+		else if (e.getSource() == DesktopPane.newItem) {
+				
+		}
+		// About software : version and etc
+		else if (e.getSource() == DesktopPane.editItem) {
+				
+		}
 		// Save SVG
 		else if (e.getSource() == DesktopPane.saveItem) {
 		
+		}
+		// Save as SVG
+		else if (e.getSource() == DesktopPane.saveAsItem) {
+
 		}
 		// Exit software
 		else if (e.getSource() == DesktopPane.exitItem) {
