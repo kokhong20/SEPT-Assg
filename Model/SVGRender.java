@@ -26,6 +26,12 @@ public class SVGRender extends JPanel
 	 */
 	private static final long serialVersionUID = 6848194504807933758L;
 	private SVGReader reader;
+
+	public SVGRender(SVGReader read) {
+		// TODO Auto-generated constructor stub
+		this.reader = read;
+		this.setBackground(Color.white);
+	}
 	
 	public SVGRender(SVGReader read, String path)
 	{
@@ -34,7 +40,7 @@ public class SVGRender extends JPanel
 		
 		this.setBackground(Color.white);
 	}
-	
+
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
@@ -95,6 +101,13 @@ public class SVGRender extends JPanel
 	
 	public Dimension getPreferredSize()
 	{
-		return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
+		try
+		{
+			return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
+		}
+		catch(Exception ex)
+		{
+			return new Dimension(500,500);
+		}
 	}
 }

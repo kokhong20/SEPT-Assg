@@ -1,14 +1,19 @@
 package Controller;
 
 import GUI.DesktopPane;
+import Model.SVGReader;
+import Model.SVGRender;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -38,15 +43,22 @@ public class MenuAction implements ActionListener
 		
 		// About software : version and etc
 		else if (e.getSource() == DesktopPane.aboutItem) 
-		{		
+		{
 		}
 		
-		// About software : version and etc
+		// Create new SVG
 		else if (e.getSource() == DesktopPane.newItem) 
 		{		
+			JScrollPane scrollPane = new JScrollPane(new SVGRender(new SVGReader()), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
+			svgInternal.add(scrollPane, BorderLayout.CENTER);
+			svgInternal.pack();
+			this.desktopPane.add(svgInternal);
+			svgInternal.setVisible(true);
+			svgInternal.setSize(500,500);	
 		}
 		
-		// About software : version and etc
+		// Edit/Select All SVG
 		else if (e.getSource() == DesktopPane.editItem) 
 		{		
 		}
