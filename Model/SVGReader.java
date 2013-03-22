@@ -39,11 +39,6 @@ public class SVGReader
 
 			dbFactory.setNamespaceAware(true);		
 
-			dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
-			dbFactory.setFeature("http://xml.org/sax/features/validation", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 

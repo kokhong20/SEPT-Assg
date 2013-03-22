@@ -9,52 +9,52 @@ public class Units
 		att = att.toLowerCase();
 			if(!att.isEmpty())
 			{
-				if(Pattern.matches("(\\d+\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att) || Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
+				if(Pattern.matches("(\\d+\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att.toLowerCase()) || Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att.toLowerCase()))
 				{
 					switch(att.substring(att.length() - 2))
 					{
 						case "em": 
-							return convertEM(att.replace("em", "")); 
+							return convertEM(att.replace(att.substring(att.length() - 2), "")); 
 						case "ex": 
-							return convertEX(att.replace("ex", ""));
+							return convertEX(att.replace(att.substring(att.length() - 2), ""));
 						case "px":
-							return convertPX(att.replace("px", ""));
+							return convertPX(att.replace(att.substring(att.length() - 2), ""));
 						case "in":
-							return convertIN(att.replace("in", ""));
+							return convertIN(att.replace(att.substring(att.length() - 2), ""));
 						case "cm":
-							return convertCM(att.replace("cm", ""));
+							return convertCM(att.replace(att.substring(att.length() - 2), ""));
 						case "mm":
-							return convertMM(att.replace("mm", ""));
+							return convertMM(att.replace(att.substring(att.length() - 2), ""));
 						case "pt":
-							return convertPT(att.replace("pt", ""));
+							return convertPT(att.replace(att.substring(att.length() - 2), ""));
 						case "pc":
-							return convertPC(att.replace("pc", ""));
+							return convertPC(att.replace(att.substring(att.length() - 2), ""));
 					}
 				}
-				else if(Pattern.matches("(\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att))
+				else if(Pattern.matches("(\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att.toLowerCase()))
 				{
 					att = "0" + att;
 					switch(att.substring(att.length() - 2))
 					{
 						case "em": 
-							return convertEM(att.replace("em", "")); 
+							return convertEM(att.replace(att.substring(att.length() - 2), "")); 
 						case "ex": 
-							return convertEX(att.replace("ex", ""));
+							return convertEX(att.replace(att.substring(att.length() - 2), ""));
 						case "px":
-							return convertPX(att.replace("px", ""));
+							return convertPX(att.replace(att.substring(att.length() - 2), ""));
 						case "in":
-							return convertIN(att.replace("in", ""));
+							return convertIN(att.replace(att.substring(att.length() - 2), ""));
 						case "cm":
-							return convertCM(att.replace("cm", ""));
+							return convertCM(att.replace(att.substring(att.length() - 2), ""));
 						case "mm":
-							return convertMM(att.replace("mm", ""));
+							return convertMM(att.replace(att.substring(att.length() - 2), ""));
 						case "pt":
-							return convertPT(att.replace("pt", ""));
+							return convertPT(att.replace(att.substring(att.length() - 2), ""));
 						case "pc":
-							return convertPC(att.replace("pc", ""));
+							return convertPC(att.replace(att.substring(att.length() - 2), ""));
 					}
 				}
-				else if(Pattern.matches("(\\d+)", att) || Pattern.matches("(\\d+.\\d+)", att))
+				else if(Pattern.matches("(\\d+)", att.toLowerCase()) || Pattern.matches("(\\d+.\\d+)", att.toLowerCase()))
 				{
 					return Double.parseDouble(att);
 				}	
@@ -103,4 +103,5 @@ public class Units
 	{
 		return Double.parseDouble(bConvert) * 90;
 	}
+
 }
