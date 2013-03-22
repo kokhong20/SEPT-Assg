@@ -11,7 +11,6 @@ import org.w3c.dom.Element;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.util.LinkedList;
 import java.util.LinkedHashSet;
 
 public class SVGReader 
@@ -20,8 +19,7 @@ public class SVGReader
 	private Document doc;
 	private DocumentBuilderFactory dbFactory;
 	private LinkedHashSet <Drawings> drawingCollection;
-	private double svgWidth;
-	private double svgHeight;
+	private SVGTag svgElement;
 
 	public SVGReader()
 	{
@@ -80,8 +78,11 @@ public class SVGReader
 	{
 		if(doc != null)
 		{
+			//Processing SVG tag
 			Node svg = doc.getElementsByTagName("svg").item(0);
-			this.setSize(((Element) svg).getAttribute("width"), ((Element) svg).getAttribute("height"));
+			svgElement = new SVGTag(svg);
+			svgElement.setSVGWidthAndHeight();
+			
 			NodeList drawList = svg.getChildNodes();
 			System.out.println("Length : " + drawList.getLength());
 			for (int index = 0; index < drawList.getLength(); index++)
@@ -149,60 +150,6 @@ public class SVGReader
 					case "g":
 						NodeList gList = drawList.item(index).getChildNodes();
 						createGroups(this.drawingCollection, gList, drawList.item(index), null, null);
-
-						/*NodeList gList = drawList.item(index).getChildNodes();
-						System.out.println("<g>");
-						for(int gIndex = 0; gIndex < gList.getLength(); gIndex++)
-						{
-							switch(gList.item(gIndex).getNodeName())
-							{
-								case "rect":
-									Rectangles gRect = new Rectangles(gList.item(gIndex));
-									//Add new rectangle object to Shapes and put into linked list
-									//Rectangle2D.Double rectGShape = new Rectangle2D.Double(gRect.getX(),gRect.getY(),gRect.getWidth(),gRect.getHeight());
-									this.drawingCollection.add(gRect);
-
-									//Testing
-									System.out.println("stroke = " + gRect.getStrokeColor());
-									System.out.println("stroke-width = " + gRect.getStrokeWidth());
-									System.out.println("fill = " + gRect.getFill());
-									System.out.println("x = " + gRect.getX());
-									System.out.println("y = " + gRect.getY());
-									System.out.println("width = " + gRect.getWidth());
-									System.out.println("height = " + gRect.getHeight());
-									System.out.println("\n");
-									//Testing
-									break;
-								case "circle":
-									Circles gCircle = new Circles(gList.item(gIndex));
-									//Add new circle object to Shapes and put into linked List
-									//Ellipse2D.Double circleGShape = new Ellipse2D.Double(gCircle.getEllipse2DX(),gCircle.getEllipse2DY(),gCircle.getR()*2,gCircle.getR()*2);
-									this.drawingCollection.add(gCircle);
-									//Testing
-									System.out.println("stroke = " + gCircle.getStrokeColor());
-									System.out.println("stroke-width = " + gCircle.getStrokeWidth());
-									System.out.println("fill = " + gCircle.getFill());
-									System.out.println("cx = " + gCircle.getCX());
-									System.out.println("cy = " + gCircle.getCY());
-									System.out.println("r = " + gCircle.getR());
-									System.out.println("\n");
-									//Testing
-									break;
-								case "line":
-									Lines gLine = new Lines(gList.item(gIndex));
-									this.drawingCollection.add(gLine);
-									//Testing
-									System.out.println("stroke = " + gLine.getStrokeColor());
-									System.out.println("stroke-width = " + gLine.getStrokeWidth());
-									System.out.println("x1 = " + gLine.getX1());
-									System.out.println("x2 = " + gLine.getX2());
-									System.out.println("y1 = " + gLine.getY1());
-									System.out.println("y2 = " + gLine.getY2());
-									System.out.println("\n");
-									//Testing
-									break;
-							}
-						}*/
 						System.out.println("</g>");
 						break;
 				}
@@ -297,21 +244,10 @@ public class SVGReader
 
 		}
 	}
-
-	public void setSize(String width, String height)
+	
+	public SVGTag getSVGElement()
 	{
-		this.svgWidth = Units.setUnit(width);
-		this.svgHeight = Units.setUnit(height);
-	}
-
-	public double getWidth()
-	{
-		return this.svgWidth;
-	}
-
-	public double getHeight()
-	{
-		return this.svgHeight;
+		return svgElement;
 	}
 
 	// If no line, return NodeList with 0 length, 

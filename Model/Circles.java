@@ -8,16 +8,12 @@ public class Circles extends Shapes
 	private double cx;
 	private double cy;
 	private double r;
-	private Node node;
 
 	// Constructor which receives a node
 	// Call setUnit method to set value 
 	public Circles(Node node) 
 	{
-		// TODO Auto-generated constructor stub
 		super(node);
-		
-		this.node = node;
 	}
 	
 	public void setCX(double cx)
@@ -68,71 +64,15 @@ public class Circles extends Shapes
 	public void readAttributes()
 	{
 		// TODO Auto-generated method stub
-		if (this.node.getNodeType() == Node.ELEMENT_NODE)
+		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
-			Element eNode = (Element) node;
+			Element eNode = (Element) this.getNode();
 			
 			this.setCX(Units.setUnit(eNode.getAttribute("cx")));
 			this.setCY(Units.setUnit(eNode.getAttribute("cy")));
 			this.setR(Units.setUnit(eNode.getAttribute("r")));
 		}
 	}
-	/*
-	//Check,validate and get attribute tag's unit
-	//return 0 if it doesn't contain the tag element or attribute tag format is invalid
-	//return its unit if the attribute tag format is valid
-	public double getAttributeUnit(String attributeTag)
-	{
-		
-		Element element = (Element) getNode();
-		if(element.hasAttribute(attributeTag))
-		{
-			System.out.println("Got attributes");
-			//check format of attributeTag
-			String attribute = element.getAttribute(attributeTag);
-			String[] splitedAttribute = new String[2];
-			splitedAttribute = splitString(attribute);
-			
-			System.out.println("String 1 is"+splitedAttribute[0]);
-			
-			System.out.println("string 2 is"+splitedAttribute[1]);
-			// if attribute is empty or attribute is equal to " "
-			if((attribute.length()==0)||((splitedAttribute[0].equals(""))&&(splitedAttribute[1].equals(""))))
-			{
-				System.out.println("exit");
-				return 0.0;
-			}
-			
-			
-			switch(splitedAttribute[1])
-			{
-				case "px" :
-							return Double.parseDouble(splitedAttribute[0]);
-				
-				case "pt" :
-					
-				case "pc" :
-				
-				case "mm" :
-				
-				case "cm" :
-				
-				case "in" :
-					
-				case ""   : return Double.parseDouble(splitedAttribute[0]);
-				
-				default   : return 0.0;
-						
-			}			
-		}
-		else
-		{
-			System.out.println("No this attribute tag.Default is 0");
-			return 0.0;
-		}
-		
-	}*/
-	
-	
+
 
 }

@@ -95,6 +95,6 @@ public class SVGRender extends JPanel
 	
 	public Dimension getPreferredSize()
 	{
-		return new Dimension((int)this.reader.getWidth(),(int)this.reader.getHeight());
+		return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
 	}
 }

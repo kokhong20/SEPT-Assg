@@ -9,14 +9,11 @@ public class Rectangles extends Shapes
 	private double y;
 	private double width;
 	private double height;
-	private Node node;
 
 	public Rectangles(Node node) 
 	{
 		// TODO Auto-generated constructor stub
 		super(node);
-
-		this.node = node;
 	}
 	
 	public void setX(double x)
@@ -63,9 +60,9 @@ public class Rectangles extends Shapes
 	public void readAttributes() 
 	{
 		// TODO Auto-generated method stub
-		if (this.node.getNodeType() == Node.ELEMENT_NODE)
+		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
-			Element eNode = (Element) node;
+			Element eNode = (Element) this.getNode();
 			
 			this.setX(Units.setUnit(eNode.getAttribute("x")));
 			this.setY(Units.setUnit(eNode.getAttribute("y")));
