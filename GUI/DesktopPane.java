@@ -9,6 +9,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import java.awt.Event;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,7 +22,7 @@ import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 public class DesktopPane extends JFrame 
 {
 	
-	public static JMenuItem openItem, saveItem, exitItem, helpItem, aboutItem;
+	public static JMenuItem openItem, saveItem, helpItem, aboutItem, newItem, saveAsItem, editItem, exitItem;
 	public static JDesktopPane desktopPane;
 	
 	public DesktopPane() {
@@ -37,20 +39,28 @@ public class DesktopPane extends JFrame
 		JMenu fileMenu = new JMenu("File");
 		JMenu aboutMenu = new JMenu("About");
 		openItem = new JMenuItem("Open...", KeyEvent.VK_O);
-		openItem.setAccelerator(KeyStroke.getKeyStroke('O', CTRL_DOWN_MASK));
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
 		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
-		saveItem.setAccelerator(KeyStroke.getKeyStroke('S', CTRL_DOWN_MASK));
-		exitItem = new JMenuItem("Exit", KeyEvent.VK_X);
-		exitItem.setAccelerator(KeyStroke.getKeyStroke('W', CTRL_DOWN_MASK));
+		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		saveAsItem = new JMenuItem("Save As...", KeyEvent.VK_S);
+		saveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK | Event.SHIFT_MASK));
+		newItem = new JMenuItem("New", KeyEvent.VK_N);
+		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+		editItem = new JMenuItem("Edit, Select All", KeyEvent.VK_A);
+		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
+		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
+		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, Event.CTRL_MASK));
 		helpItem = new JMenuItem("Help", KeyEvent.VK_H);
-		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', CTRL_DOWN_MASK));
+		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', Event.CTRL_MASK));
 		aboutItem = new JMenuItem("About", KeyEvent.VK_A);
-		aboutItem.setAccelerator(KeyStroke.getKeyStroke('A', CTRL_DOWN_MASK));
 		desktopPane = new JDesktopPane();
 		MenuAction action = new MenuAction();
-		
+
+		fileMenu.add(newItem);
 		fileMenu.add(openItem);
 		fileMenu.add(saveItem);
+		fileMenu.add(saveAsItem);
+		fileMenu.add(editItem);
 		fileMenu.add(exitItem);
 		aboutMenu.add(aboutItem);
 		aboutMenu.add(helpItem);
@@ -61,5 +71,8 @@ public class DesktopPane extends JFrame
 		openItem.addActionListener(action);
 		saveItem.addActionListener(action);
 		exitItem.addActionListener(action);
+		editItem.addActionListener(action);
+		saveAsItem.addActionListener(action);
+		newItem.addActionListener(action);
 	}
 }
