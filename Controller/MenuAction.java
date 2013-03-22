@@ -68,62 +68,54 @@ public class MenuAction implements ActionListener
 							
 							String path;
 							
-							if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) {
-
+							if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) 
+							{
 								internal.setVisible(false);
 								internal.dispose();
 							}
 							
-							File selectedFile = fileChooser.getSelectedFile();
-							
-							/*if ((selectedFile == null)||(selectedFile.getName().equals(""))) {
-								
-								//internal.setVisible(false);
-								
-								internal.dispose();
-								JOptionPane.showInternalMessageDialog(internal, "Invalid Name", "Invalid Name", JOptionPane.ERROR_MESSAGE);
-							}*/
-							
-							internal.setVisible(false);
-							internal.dispose();
-							
-							path = fileChooser.getCurrentDirectory().toString() ;
-							//FileHandle.menuOpen(path, selectedFile);
-							
-							/*JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-							svgInternal.add(new SVGRender(new SVGReader(), FileHandle.setPath(path, selectedFile)), BorderLayout.CENTER);
-							svgInternal.pack();
-							DesktopPane.desktopPane.add(svgInternal);
-							svgInternal.setVisible(true);
-							svgInternal.setSize(400,400);*/
-							
-							SVGRender render = new SVGRender(new SVGReader(), FileHandle.setPath(path, selectedFile));
-							JScrollPane scrollPane = new JScrollPane(render, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-							scrollPane.setBounds(new Rectangle(10,10,100,100));
-							render.setPreferredSize(render.getPreferredSize());
-							JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-							svgInternal.add(scrollPane, BorderLayout.CENTER);
-							svgInternal.pack();
-							DesktopPane.desktopPane.add(svgInternal);
-							svgInternal.setVisible(true);
-							svgInternal.setSize(render.getPreferredSize());
-							
-							Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-							if((toolkit.getScreenSize().height <= render.getPreferredSize().height)
-									|| (toolkit.getScreenSize().width <= render.getPreferredSize().width))
+							try
 							{
-								try 
+								File selectedFile = fileChooser.getSelectedFile();
+								path = fileChooser.getCurrentDirectory().toString() ;
+								
+								internal.setVisible(false);
+								internal.dispose();
+								
+								SVGRender render = new SVGRender(new SVGReader(), FileHandle.setPath(path, selectedFile));
+								JScrollPane scrollPane = new JScrollPane(render, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+								scrollPane.setBounds(new Rectangle(10,10,100,100));
+								render.setPreferredSize(render.getPreferredSize());
+								JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
+								svgInternal.add(scrollPane, BorderLayout.CENTER);
+								svgInternal.pack();
+								DesktopPane.desktopPane.add(svgInternal);
+								svgInternal.setVisible(true);
+								svgInternal.setSize(render.getPreferredSize());
+								
+								Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+								if((toolkit.getScreenSize().height <= render.getPreferredSize().height)
+										|| (toolkit.getScreenSize().width <= render.getPreferredSize().width))
 								{
-									svgInternal.setMaximum(true);
-								} 
-								catch (PropertyVetoException pve) {
-									// TODO Auto-generated catch block
-									pve.printStackTrace();
+									try 
+									{
+										svgInternal.setMaximum(true);
+									} 
+									catch (PropertyVetoException pve) {
+										// TODO Auto-generated catch block
+										pve.printStackTrace();
+									}
+								}
+								
+								else if(svgInternal.getSize().equals(new Dimension(0,0)))
+								{
+									svgInternal.setSize(500,500);
 								}
 							}
-							else if(svgInternal.getSize().equals(new Dimension(0,0)))
+							
+							catch (NullPointerException ex)
 							{
-								svgInternal.setSize(500,500);
+								System.out.println("Cancel Button");
 							}
 						}
 					}
