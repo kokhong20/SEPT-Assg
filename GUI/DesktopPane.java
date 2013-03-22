@@ -1,36 +1,33 @@
 package GUI;
 
 import Controller.MenuAction;
-
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
 import java.awt.Event;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
-
 
 @SuppressWarnings("serial")
 public class DesktopPane extends JFrame 
 {
 	
 	public static JMenuItem openItem, saveItem, helpItem, aboutItem, newItem, saveAsItem, editItem, exitItem;
-	public static JDesktopPane desktopPane;
+	JDesktopPane desktopPane;
 	
 	public DesktopPane() {
 		
 		super("Assignment");
 		
-		addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+		// move to controller
+		addWindowListener(new WindowAdapter() 
+		{
+            public void windowClosing(WindowEvent e) 
+            {
                 System.exit(0);
             }
         });
@@ -54,7 +51,7 @@ public class DesktopPane extends JFrame
 		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', Event.CTRL_MASK));
 		aboutItem = new JMenuItem("About", KeyEvent.VK_A);
 		desktopPane = new JDesktopPane();
-		MenuAction action = new MenuAction();
+		MenuAction action = new MenuAction(desktopPane);
 
 		fileMenu.add(newItem);
 		fileMenu.add(openItem);
@@ -68,6 +65,7 @@ public class DesktopPane extends JFrame
 		menuBar.add(aboutMenu);
 		setJMenuBar(menuBar);
 		add(desktopPane);
+		
 		openItem.addActionListener(action);
 		saveItem.addActionListener(action);
 		exitItem.addActionListener(action);
