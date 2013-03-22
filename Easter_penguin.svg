@@ -1,6 +1,8 @@
 <?xml version="1.0" standalone="no"?>
-
-<svg width="5cm" height="4cm">
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="5cm" height="4cm"
+xmlns="http://www.w3.org/2000/svg">
 <desc>Four separate rectangles
 </desc>
 <rect x="0.5cm" y="0.5cm" width="2cm" height="1cm"/>
