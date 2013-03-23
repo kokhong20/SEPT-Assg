@@ -12,6 +12,11 @@ public abstract class Drawings
 	private float strokeWidth;
 	private Node node;
 	
+	public Drawings()
+	{
+		
+	}
+	
 	// Constructor which receives a node
 	// Call setColor and setUnit method to set value 
 	public Drawings(Node node) 

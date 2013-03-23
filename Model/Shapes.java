@@ -8,6 +8,11 @@ public abstract class Shapes extends Drawings
 {
 	private Color fill;
 
+	public Shapes()
+	{
+		
+	}
+	
 	// Constructor which receives a node
 	// Call setColor method to set value 
 	public Shapes(Node node) 

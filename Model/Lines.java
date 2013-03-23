@@ -11,6 +11,11 @@ public class Lines extends Drawings
 	private double y1;
 	private double y2;
 
+	public Lines()
+	{
+		
+	}
+	
 	// Constructor which receives a node
 	// Call setUnit method to set value 
 	public Lines(Node node) 

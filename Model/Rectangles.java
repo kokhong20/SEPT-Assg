@@ -10,6 +10,10 @@ public class Rectangles extends Shapes
 	private double width;
 	private double height;
 
+	public Rectangles() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Rectangles(Node node) 
 	{
 		// TODO Auto-generated constructor stub

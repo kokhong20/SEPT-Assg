@@ -9,6 +9,11 @@ public class Circles extends Shapes
 	private double cy;
 	private double r;
 
+	public Circles()
+	{
+		
+	}
+	
 	// Constructor which receives a node
 	// Call setUnit method to set value 
 	public Circles(Node node) 

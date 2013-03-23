@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 //import java.awt.Shape;
 //import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -31,6 +33,8 @@ public class SVGRender extends JPanel
 		// TODO Auto-generated constructor stub
 		this.reader = read;
 		this.setBackground(Color.white);
+		
+		this.addMouseListener(new SVGMouseAction(this));
 	}
 	
 	public SVGRender(SVGReader read, String path)
@@ -39,6 +43,8 @@ public class SVGRender extends JPanel
 		this.reader.setDoc(path);
 		
 		this.setBackground(Color.white);
+		
+		this.addMouseListener(new SVGMouseAction(this));
 	}
 
 	public void paintComponent(Graphics g)
@@ -99,6 +105,24 @@ public class SVGRender extends JPanel
 		}
 	}
 	
+	public void paintComponent(Graphics g, Rectangles rectangles) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D)g;
+		//for anti-aliasing for better output.
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		Rectangle2D.Double rectShape = new Rectangle2D.Double(rectangles.getX(),
+				rectangles.getY(),rectangles.getWidth()
+				,rectangles.getHeight());
+		
+		g2d.setColor(rectangles.getFill());
+		g2d.fill(rectShape);
+		g2d.setColor(rectangles.getStrokeColor());
+		g2d.setStroke(new BasicStroke(rectangles.getStrokeWidth()));
+		g2d.draw(rectShape);		
+	}
+	
 	public Dimension getPreferredSize()
 	{
 		try
@@ -110,4 +134,38 @@ public class SVGRender extends JPanel
 			return new Dimension(500,500);
 		}
 	}
+
+	class SVGMouseAction implements MouseListener {
+		
+		private SVGRender render;
+		
+	public SVGMouseAction(SVGRender svgRender) {
+			// TODO Auto-generated constructor stub
+			this.render = svgRender; 
+		}
+
+	public void mousePressed(MouseEvent e) {
+	    }
+
+	    public void mouseReleased(MouseEvent e) {
+	    }
+
+	    public void mouseEntered(MouseEvent e) {
+	    }
+
+	    public void mouseExited(MouseEvent e) {
+	    }
+
+	    public void mouseClicked(MouseEvent e) {
+	    	Rectangles rect = new Rectangles();
+	    	rect.setFill(Color.blue);
+	    	rect.setHeight(100);
+	    	rect.setWidth(100);
+	    	rect.setX(e.getX());
+	    	rect.setY(e.getY());
+	    	this.render.paintComponent(getGraphics(), rect);
+	    	System.out.println("Clicked");
+	    }
+}
+
 }
