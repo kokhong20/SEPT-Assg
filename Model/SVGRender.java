@@ -30,6 +30,8 @@ public class SVGRender extends JPanel
 	private SVGReader reader;
 	private LinkedHashSet<Drawings> drawCollection;
 
+	private String path;
+	
 	public SVGRender() {
 		// TODO Auto-generated constructor stub
 		this.setBackground(Color.white);
@@ -42,6 +44,10 @@ public class SVGRender extends JPanel
 	{
 		this.reader = read;
 		this.reader.setDoc(path);
+		
+		//
+		this.path = path;
+		//
 		
 		this.setBackground(Color.white);
 		this.drawCollection = this.reader.getDrawings();
@@ -115,9 +121,20 @@ public class SVGRender extends JPanel
 			return new Dimension(500,500);
 		}
 	}
+	
+	public LinkedHashSet<Drawings> getDrawings()
+	{
+		return this.drawCollection;
+	}
+	
+	public String getPath()
+	{
+		return this.path;
+	}
 
 	class SVGMouseAction implements MouseListener {
 		
+
 		private SVGRender render;
 		
 	public SVGMouseAction(SVGRender svgRender) {
@@ -138,15 +155,19 @@ public class SVGRender extends JPanel
 	    }
 
 	    public void mouseClicked(MouseEvent e) {
+	    	//Testing
 	    	Rectangles rect = new Rectangles();
 	    	rect.setFill(Color.blue);
+	    	rect.setStrokeColor(Color.red);
+	    	rect.setStrokeWidth(5);
 	    	rect.setHeight(100);
 	    	rect.setWidth(100);
 	    	rect.setX(e.getX());
 	    	rect.setY(e.getY());
 	    	this.render.drawCollection.add(rect);
-	    	this.render.paintComponent(getGraphics());
+	    	repaint();
 	    	System.out.println("Clicked");
+	    	//Testing
 	    }
 }
 

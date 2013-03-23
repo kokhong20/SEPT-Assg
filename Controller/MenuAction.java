@@ -66,6 +66,7 @@ public class MenuAction implements ActionListener
 		// Save SVG
 		else if (e.getSource() == DesktopPane.saveItem) 
 		{
+			
 		}
 		
 		// Save as SVG
