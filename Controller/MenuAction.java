@@ -2,7 +2,6 @@ package Controller;
 
 import GUI.DesktopPane;
 import GUI.SVGRender;
-import Model.SVGReader;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -49,7 +48,7 @@ public class MenuAction implements ActionListener
 		// Create new SVG
 		else if (e.getSource() == DesktopPane.newItem) 
 		{		
-			JScrollPane scrollPane = new JScrollPane(new SVGRender(new SVGReader()), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			JScrollPane scrollPane = new JScrollPane(new SVGRender(), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
 			svgInternal.add(scrollPane, BorderLayout.CENTER);
 			svgInternal.pack();

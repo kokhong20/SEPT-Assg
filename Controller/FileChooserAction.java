@@ -60,6 +60,7 @@ public class FileChooserAction implements ActionListener
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			render.setPreferredSize(render.getPreferredSize());
 			JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
+			svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, render));
 			
 			//Determine Key Mask
 			if (System.getProperty("os.name").equals("Mac OS X"))
@@ -97,9 +98,6 @@ public class FileChooserAction implements ActionListener
 			zoomOut.addActionListener(zoomAction);
 			backOriginalSize.addActionListener(zoomAction);
 			backOrginalPosition.addActionListener(zoomAction);
-			
-			PanAction panAction = new PanAction(render);
-			render.addMouseListener(panAction);
 			
 			svgInternal.add(scrollPane, BorderLayout.CENTER);
 			svgInternal.pack();

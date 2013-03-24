@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 //import java.awt.Shape;
 //import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
@@ -19,6 +17,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
+
+import Controller.SVGMouseAction;
 import Model.Circles;
 import Model.Drawings;
 import Model.Lines;
@@ -41,23 +41,33 @@ public class SVGRender extends JPanel
 	private String path;
 	private LinkedHashSet<Drawings> drawCollection;
 
-	public SVGRender(SVGReader read) 
+	public SVGRender() 
 	{
 		// TODO Auto-generated constructor stub
-		this.reader = read;
+		this.drawCollection = new LinkedHashSet<Drawings>();
+
 		this.setBackground(Color.white);
+		this.zoomScale = 1;
+		this.xPosition = 0;
+		this.yPosition =0;
+		
 		this.addMouseListener(new SVGMouseAction(this));
+		//this.addMouseMotionListener(new SVGMouseAction(this));
 	}
 
 	public SVGRender(SVGReader read, String path)
 	{
 		this.reader = read;
 		this.reader.setDoc(path);
+		this.drawCollection = read.getDrawings();
+		this.path = path;
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
 		this.yPosition =0;
-		//this.addMouseListener(new SVGMouseAction(this));
+		
+		this.addMouseListener(new SVGMouseAction(this));
+		//this.addMouseMotionListener(new SVGMouseAction(this));
 	}
 
 	public void paintComponent(Graphics g)
@@ -66,8 +76,6 @@ public class SVGRender extends JPanel
 		Graphics2D g2d = (Graphics2D)g;
 		//for anti-aliasing for better output.
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		LinkedHashSet<Drawings> drawCollection = this.reader.getDrawings();
 
 		if(!drawCollection.isEmpty())
 		{
@@ -182,40 +190,4 @@ public class SVGRender extends JPanel
 	{
 		return this.path;
 	}
-	
-	// should separate it to controller!
-
-	class SVGMouseAction implements MouseListener {
-
-		private SVGRender render;
-
-		public SVGMouseAction(SVGRender svgRender) {
-			// TODO Auto-generated constructor stub
-			this.render = svgRender; 
-		}
-
-		public void mousePressed(MouseEvent e) {
-		}
-
-		public void mouseReleased(MouseEvent e) {
-		}
-
-		public void mouseEntered(MouseEvent e) {
-		}
-
-		public void mouseExited(MouseEvent e) {
-		}
-
-		public void mouseClicked(MouseEvent e) {
-			Rectangles rect = new Rectangles();
-			rect.setFill(Color.blue);
-			rect.setHeight(100);
-			rect.setWidth(100);
-			rect.setX(e.getX());
-			rect.setY(e.getY());
-			this.render.paintComponent(getGraphics(), rect);
-			System.out.println("Clicked");
-		}
-	}
-
 }

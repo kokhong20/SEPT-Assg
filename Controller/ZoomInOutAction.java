@@ -2,9 +2,7 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
 import GUI.SVGRender;
 
@@ -17,9 +15,9 @@ public class ZoomInOutAction implements ActionListener
 	private JMenuItem size;
 	private JMenuItem position;
 	
-	public ZoomInOutAction(JPanel panel,JMenuItem zoomIn, JMenuItem zoomOut,JMenuItem size,JMenuItem position)
+	public ZoomInOutAction(SVGRender panel,JMenuItem zoomIn, JMenuItem zoomOut,JMenuItem size,JMenuItem position)
 	{
-		this.svgRenderPanel = (SVGRender) panel;
+		this.svgRenderPanel = panel;
 		this.zoomIn = zoomIn;
 		this.zoomOut = zoomOut;
 		this.size = size;
