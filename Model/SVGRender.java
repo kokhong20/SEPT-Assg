@@ -29,15 +29,27 @@ public class SVGRender extends JPanel
 	 */
 	private static final long serialVersionUID = 6848194504807933758L;
 	private SVGReader reader;
+<<<<<<< HEAD
 	private double zoomScale;
 	private double xPosition;
 	private double yPosition;
 
 	public SVGRender(SVGReader read) 
 	{
+=======
+	private LinkedHashSet<Drawings> drawCollection;
+
+	private String path;
+	
+	public SVGRender() {
+>>>>>>> 019b8536711e2bce461b55a4a49cc69e0b703a2a
 		// TODO Auto-generated constructor stub
-		this.reader = read;
 		this.setBackground(Color.white);
+<<<<<<< HEAD
+=======
+		this.drawCollection = new LinkedHashSet<Drawings>();
+		
+>>>>>>> 019b8536711e2bce461b55a4a49cc69e0b703a2a
 		this.addMouseListener(new SVGMouseAction(this));
 	}
 	
@@ -45,30 +57,38 @@ public class SVGRender extends JPanel
 	{
 		this.reader = read;
 		this.reader.setDoc(path);
+<<<<<<< HEAD
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
 		this.yPosition =0;
 		//this.addMouseListener(new SVGMouseAction(this));
+=======
+		
+		//
+		this.path = path;
+		//
+		
+		this.setBackground(Color.white);
+		this.drawCollection = this.reader.getDrawings();
+		
+		this.addMouseListener(new SVGMouseAction(this));
+>>>>>>> 019b8536711e2bce461b55a4a49cc69e0b703a2a
 	}
 
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D)g;
-		//for anti-aliasing for better output.
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		LinkedHashSet<Drawings> drawCollection = this.reader.getDrawings();
-		
-		if(!drawCollection.isEmpty())
-		{
-			Iterator<Drawings> it = drawCollection.iterator();
-			while(it.hasNext())
+			Graphics2D g2d = (Graphics2D)g;
+			//for anti-aliasing for better output.
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	
+			if(!drawCollection.isEmpty())
 			{
-				Drawings drawItem = it.next();
-				if(drawItem instanceof Circles)
+				Iterator<Drawings> it = drawCollection.iterator();
+				while(it.hasNext())
 				{
+<<<<<<< HEAD
 					System.out.println("xpostion is "+xPosition);
 					// creating 2D Shapes object 
 					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()+xPosition,
@@ -110,23 +130,49 @@ public class SVGRender extends JPanel
 			
 		}
 	}
+=======
+					Drawings drawItem = it.next();
+					if(drawItem instanceof Circles)
+					{
+						// creating 2D Shapes object 
+						Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX(),
+								((Circles) drawItem).getEllipse2DY(),((Circles) drawItem).getR()*2
+								,((Circles) drawItem).getR()*2);
+>>>>>>> 019b8536711e2bce461b55a4a49cc69e0b703a2a
 	
-	public void paintComponent(Graphics g, Rectangles rectangles) {
-		// TODO Auto-generated method stub
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D)g;
-		//for anti-aliasing for better output.
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Rectangle2D.Double rectShape = new Rectangle2D.Double(rectangles.getX(),
-				rectangles.getY(),rectangles.getWidth()
-				,rectangles.getHeight());
-		
-		g2d.setColor(rectangles.getFill());
-		g2d.fill(rectShape);
-		g2d.setColor(rectangles.getStrokeColor());
-		g2d.setStroke(new BasicStroke(rectangles.getStrokeWidth()));
-		g2d.draw(rectShape);		
+						g2d.setColor(((Shapes) drawItem).getFill());
+						g2d.fill(circleShape);
+						g2d.setColor(((Drawings) drawItem).getStrokeColor());
+						g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+						g2d.draw(circleShape);
+					}
+					else if(drawItem instanceof Rectangles)
+					{
+						// creating 2D Shapes object 
+						Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) drawItem).getX(),
+								((Rectangles) drawItem).getY(),((Rectangles) drawItem).getWidth()
+								,((Rectangles) drawItem).getHeight());
+						
+						g2d.setColor(((Shapes) drawItem).getFill());
+						g2d.fill(rectShape);
+						g2d.setColor(((Drawings) drawItem).getStrokeColor());
+						g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+						g2d.draw(rectShape);
+					}
+					else if(drawItem instanceof Lines)
+					{
+						// creating 2D Shapes object 
+						
+						Line2D.Double lineShape = new Line2D.Double(((Lines) drawItem).getX1(),
+								((Lines) drawItem).getY1(),((Lines) drawItem).getX2(),
+								((Lines) drawItem).getY2());
+						
+						g2d.setColor(((Drawings) drawItem).getStrokeColor());
+						g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+						g2d.draw(lineShape);
+					}
+				}
+			}			
 	}
 	
 	public Dimension getPreferredSize()
@@ -139,6 +185,16 @@ public class SVGRender extends JPanel
 		{
 			return new Dimension(500,500);
 		}
+	}
+	
+	public LinkedHashSet<Drawings> getDrawings()
+	{
+		return this.drawCollection;
+	}
+	
+	public String getPath()
+	{
+		return this.path;
 	}
 
 	public void setZoomScale(double zoomScale)
@@ -167,6 +223,7 @@ public class SVGRender extends JPanel
 	
 	class SVGMouseAction implements MouseListener {
 		
+
 		private SVGRender render;
 		
 	public SVGMouseAction(SVGRender svgRender) {
@@ -187,14 +244,19 @@ public class SVGRender extends JPanel
 	    }
 
 	    public void mouseClicked(MouseEvent e) {
+	    	//Testing
 	    	Rectangles rect = new Rectangles();
 	    	rect.setFill(Color.blue);
+	    	rect.setStrokeColor(Color.red);
+	    	rect.setStrokeWidth(5);
 	    	rect.setHeight(100);
 	    	rect.setWidth(100);
 	    	rect.setX(e.getX());
 	    	rect.setY(e.getY());
-	    	this.render.paintComponent(getGraphics(), rect);
+	    	this.render.drawCollection.add(rect);
+	    	repaint();
 	    	System.out.println("Clicked");
+	    	//Testing
 	    }
 }
 
