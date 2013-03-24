@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-<line stroke="rgb(25%, 75%, 100%)" stroke-width="50mm" x1="5cm" x2="10cm" y1="32px" y2="10pt"/>
-<line stroke="#F00" stroke-width="50mm" x1="5cm" x2="10cm" y1="2em" y2="10pt"/>
-<line stroke="yellow" stroke-width="50mm" x1="5cm" x2="10cm" y1="4.5ex" y2="10pt"/>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg><line stroke="rgb(64,191,255)" stroke-width="177.16534" x1="177.16535" x2="354.3307" y1="32.0" y2="12.5"/><line stroke="rgb(255,0,0)" stroke-width="177.16534" x1="177.16535" x2="354.3307" y1="32.0" y2="12.5"/><line stroke="rgb(255,255,0)" stroke-width="177.16534" x1="177.16535" x2="354.3307" y1="31.999950000000002" y2="12.5"/><rect fill="rgb(0,0,255)" height="100.0" stroke="rgb(255,0,0)" stroke-width="2.0" width="100.0" x="226.0" y="187.0"/><rect fill="rgb(0,0,255)" height="100.0" stroke="rgb(255,0,0)" stroke-width="2.0" width="100.0" x="94.0" y="168.0"/><rect fill="rgb(0,0,255)" height="100.0" stroke="rgb(255,0,0)" stroke-width="2.0" width="100.0" x="291.0" y="89.0"/><rect fill="rgb(0,0,255)" height="100.0" stroke="rgb(255,0,0)" stroke-width="2.0" width="100.0" x="154.0" y="37.0"/><rect fill="rgb(0,0,255)" height="100.0" stroke="rgb(255,0,0)" stroke-width="2.0" width="100.0" x="23.0" y="25.0"/></svg>
