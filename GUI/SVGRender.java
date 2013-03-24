@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
+
+import Controller.SVGMouseAction;
 import Model.Circles;
 import Model.Drawings;
 import Model.Lines;
@@ -46,6 +48,7 @@ public class SVGRender extends JPanel
 		// TODO Auto-generated constructor stub
 		this.reader = read;
 		this.setBackground(Color.white);
+		this.drawCollection = this.reader.getDrawings();
 		this.addMouseListener(new SVGMouseAction(this));
 	}
 
@@ -53,11 +56,15 @@ public class SVGRender extends JPanel
 	{
 		this.reader = read;
 		this.reader.setDoc(path);
+		this.drawCollection = this.reader.getDrawings();
+		//
+		this.path = path;
+		//
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
 		this.yPosition =0;
-		//this.addMouseListener(new SVGMouseAction(this));
+		this.addMouseListener(new SVGMouseAction(this));
 	}
 
 	public void paintComponent(Graphics g)
@@ -67,8 +74,6 @@ public class SVGRender extends JPanel
 		//for anti-aliasing for better output.
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		LinkedHashSet<Drawings> drawCollection = this.reader.getDrawings();
-
 		if(!drawCollection.isEmpty())
 		{
 			Iterator<Drawings> it = drawCollection.iterator();
@@ -77,11 +82,10 @@ public class SVGRender extends JPanel
 				Drawings drawItem = it.next();
 				if(drawItem instanceof Circles)
 				{
-					System.out.println("xpostion is "+xPosition);
 					// creating 2D Shapes object 
-					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()+xPosition,
-							((Circles) drawItem).getEllipse2DY()+yPosition,((Circles) drawItem).getR()*2*zoomScale
-							,((Circles) drawItem).getR()*2*zoomScale);
+					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX(),
+							((Circles) drawItem).getEllipse2DY(),((Circles) drawItem).getR()*2
+							,((Circles) drawItem).getR()*2);
 
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(circleShape);
@@ -95,7 +99,7 @@ public class SVGRender extends JPanel
 					Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) drawItem).getX(),
 							((Rectangles) drawItem).getY(),((Rectangles) drawItem).getWidth()
 							,((Rectangles) drawItem).getHeight());
-
+					
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(rectShape);
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
@@ -105,36 +109,17 @@ public class SVGRender extends JPanel
 				else if(drawItem instanceof Lines)
 				{
 					// creating 2D Shapes object 
-
+					
 					Line2D.Double lineShape = new Line2D.Double(((Lines) drawItem).getX1(),
 							((Lines) drawItem).getY1(),((Lines) drawItem).getX2(),
 							((Lines) drawItem).getY2());
-
+					
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
 					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
 					g2d.draw(lineShape);
 				}
 			}
-
-		}
-	}
-
-	public void paintComponent(Graphics g, Rectangles rectangles) {
-		// TODO Auto-generated method stub
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D)g;
-		//for anti-aliasing for better output.
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Rectangle2D.Double rectShape = new Rectangle2D.Double(rectangles.getX(),
-				rectangles.getY(),rectangles.getWidth()
-				,rectangles.getHeight());
-
-		g2d.setColor(rectangles.getFill());
-		g2d.fill(rectShape);
-		g2d.setColor(rectangles.getStrokeColor());
-		g2d.setStroke(new BasicStroke(rectangles.getStrokeWidth()));
-		g2d.draw(rectShape);		
+		}			
 	}
 
 	public Dimension getPreferredSize()
@@ -182,40 +167,4 @@ public class SVGRender extends JPanel
 	{
 		return this.path;
 	}
-	
-	// should separate it to controller!
-
-	class SVGMouseAction implements MouseListener {
-
-		private SVGRender render;
-
-		public SVGMouseAction(SVGRender svgRender) {
-			// TODO Auto-generated constructor stub
-			this.render = svgRender; 
-		}
-
-		public void mousePressed(MouseEvent e) {
-		}
-
-		public void mouseReleased(MouseEvent e) {
-		}
-
-		public void mouseEntered(MouseEvent e) {
-		}
-
-		public void mouseExited(MouseEvent e) {
-		}
-
-		public void mouseClicked(MouseEvent e) {
-			Rectangles rect = new Rectangles();
-			rect.setFill(Color.blue);
-			rect.setHeight(100);
-			rect.setWidth(100);
-			rect.setX(e.getX());
-			rect.setY(e.getY());
-			this.render.paintComponent(getGraphics(), rect);
-			System.out.println("Clicked");
-		}
-	}
-
 }
