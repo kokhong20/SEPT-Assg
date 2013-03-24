@@ -1,8 +1,8 @@
 package Controller;
 
 import GUI.DesktopPane;
+import GUI.SVGRender;
 import Model.SVGReader;
-import Model.SVGRender;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

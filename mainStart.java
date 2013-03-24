@@ -1,9 +1,8 @@
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
-import Controller.FileHandle;
 import GUI.DesktopPane;
+import Model.modelMain;
 
 public class mainStart 
 {
@@ -21,7 +20,7 @@ public class mainStart
 		if (args.length != 0)
 		{
 			s = args;
-			FileHandle.cmdLine(s);
+			modelMain.cmdLine(s);
 		}
 	}
 

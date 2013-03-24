@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import Model.SVGRender;
+import GUI.SVGRender;
 public class PanAction extends MouseAdapter
 {
 	private SVGRender svgRenderPanel;

@@ -1,10 +1,14 @@
-package Controller;
+package Model;
 
 import java.io.File;
-import Model.SVGReader;
 
-public class FileHandle 
+public class modelMain
 {
+	public modelMain()
+	{
+
+	}
+
 	// handle command line argument
 	public static void cmdLine(String []s)
 	{

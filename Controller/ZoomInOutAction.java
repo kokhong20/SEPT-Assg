@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import Model.SVGRender;
+import GUI.SVGRender;
 
 
 public class ZoomInOutAction implements ActionListener

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -19,9 +18,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
-
+import GUI.SVGRender;
 import Model.SVGReader;
-import Model.SVGRender;
+import Model.modelMain;
 
 public class FileChooserAction implements ActionListener
 {
@@ -56,7 +55,7 @@ public class FileChooserAction implements ActionListener
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
 			
-			SVGRender render = new SVGRender(new SVGReader(), FileHandle.setPath(path, selectedFile));
+			SVGRender render = new SVGRender(new SVGReader(), modelMain.setPath(path, selectedFile));
 			JScrollPane scrollPane = new JScrollPane(render, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			render.setPreferredSize(render.getPreferredSize());
