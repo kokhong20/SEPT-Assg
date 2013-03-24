@@ -2,17 +2,23 @@ package Controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 
 import Model.SVGReader;
 import Model.SVGRender;
@@ -22,6 +28,7 @@ public class FileChooserAction implements ActionListener
 	private JDesktopPane desktopPane;
 	private JInternalFrame fcInternal;
 	private JFileChooser fileChooser;
+	private int keyMask;
 	
 	public FileChooserAction(JDesktopPane desktopPane, JInternalFrame fcInternal, JFileChooser fileChooser)
 	{
@@ -54,6 +61,47 @@ public class FileChooserAction implements ActionListener
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			render.setPreferredSize(render.getPreferredSize());
 			JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
+			
+			//Determine Key Mask
+			if (System.getProperty("os.name").equals("Mac OS X"))
+			{
+				// Mac OS command
+				keyMask = Event.META_MASK;
+			}
+			
+			// Window OS
+			else
+			{
+				keyMask = Event.CTRL_MASK;
+			}
+			
+			// Zoom In Zoom Out 
+			JMenuBar menuBar = new JMenuBar();
+			JMenu viewMenu = new JMenu("View");
+			JMenuItem zoomIn = new JMenuItem("Zoom In",KeyEvent.VK_EQUALS);
+			zoomIn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,keyMask));
+			JMenuItem zoomOut = new JMenuItem("Zoom Out",KeyEvent.VK_MINUS);
+			zoomOut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,keyMask));
+			JMenuItem backOriginalSize = new JMenuItem("Orginal Size",KeyEvent.VK_L);
+			backOriginalSize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,keyMask));
+			JMenuItem backOrginalPosition = new JMenuItem("Orginal Position",KeyEvent.VK_K);
+			backOrginalPosition.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,keyMask));
+			viewMenu.add(zoomIn);
+			viewMenu.add(zoomOut);
+			viewMenu.add(backOriginalSize);
+			viewMenu.add(backOrginalPosition);
+			menuBar.add(viewMenu);
+			svgInternal.setJMenuBar(menuBar);
+			
+			ZoomInOutAction zoomAction = new ZoomInOutAction(render,zoomIn,zoomOut,backOriginalSize,backOrginalPosition);
+			zoomIn.addActionListener(zoomAction);
+			zoomOut.addActionListener(zoomAction);
+			backOriginalSize.addActionListener(zoomAction);
+			backOrginalPosition.addActionListener(zoomAction);
+			
+			PanAction panAction = new PanAction(render);
+			render.addMouseListener(panAction);
+			
 			svgInternal.add(scrollPane, BorderLayout.CENTER);
 			svgInternal.pack();
 			this.desktopPane.add(svgInternal);

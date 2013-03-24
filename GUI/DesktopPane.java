@@ -18,8 +18,10 @@ public class DesktopPane extends JFrame
 	
 	public static JMenuItem openItem, saveItem, helpItem, aboutItem, newItem, saveAsItem, editItem, exitItem;
 	JDesktopPane desktopPane;
+	public int keyMask = 0;
 	
-	public DesktopPane() {
+	public DesktopPane() 
+	{
 		
 		super("Assignment");
 		
@@ -31,24 +33,38 @@ public class DesktopPane extends JFrame
                 System.exit(0);
             }
         });
-
+		
+		//Check whether is Mac OS or Window OS
+		if (System.getProperty("os.name").equals("Mac OS X"))
+		{
+			// Mac OS command
+			keyMask = Event.META_MASK;
+		}
+		
+		// Window OS
+		else
+		{
+			keyMask = Event.CTRL_MASK;
+		}
+		
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		JMenu aboutMenu = new JMenu("About");
+		
 		openItem = new JMenuItem("Open...", KeyEvent.VK_O);
-		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, keyMask));
 		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
-		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask));
 		saveAsItem = new JMenuItem("Save As...", KeyEvent.VK_S);
-		saveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK | Event.SHIFT_MASK));
+		saveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask | Event.SHIFT_MASK));
 		newItem = new JMenuItem("New", KeyEvent.VK_N);
-		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, keyMask));
 		editItem = new JMenuItem("Edit, Select All", KeyEvent.VK_A);
-		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
+		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
 		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
-		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, Event.CTRL_MASK));
+		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, keyMask));
 		helpItem = new JMenuItem("Help", KeyEvent.VK_H);
-		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', Event.CTRL_MASK));
+		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', keyMask));
 		aboutItem = new JMenuItem("About", KeyEvent.VK_A);
 		desktopPane = new JDesktopPane();
 		MenuAction action = new MenuAction(desktopPane);

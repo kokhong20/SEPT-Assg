@@ -21,6 +21,7 @@ import java.util.LinkedHashSet;
 import javax.swing.JPanel;
 
 
+
 public class SVGRender extends JPanel
 {
 	/**
@@ -28,12 +29,15 @@ public class SVGRender extends JPanel
 	 */
 	private static final long serialVersionUID = 6848194504807933758L;
 	private SVGReader reader;
+	private double zoomScale;
+	private double xPosition;
+	private double yPosition;
 
-	public SVGRender(SVGReader read) {
+	public SVGRender(SVGReader read) 
+	{
 		// TODO Auto-generated constructor stub
 		this.reader = read;
 		this.setBackground(Color.white);
-		
 		this.addMouseListener(new SVGMouseAction(this));
 	}
 	
@@ -41,10 +45,11 @@ public class SVGRender extends JPanel
 	{
 		this.reader = read;
 		this.reader.setDoc(path);
-		
 		this.setBackground(Color.white);
-		
-		this.addMouseListener(new SVGMouseAction(this));
+		this.zoomScale = 1;
+		this.xPosition = 0;
+		this.yPosition =0;
+		//this.addMouseListener(new SVGMouseAction(this));
 	}
 
 	public void paintComponent(Graphics g)
@@ -64,11 +69,12 @@ public class SVGRender extends JPanel
 				Drawings drawItem = it.next();
 				if(drawItem instanceof Circles)
 				{
+					System.out.println("xpostion is "+xPosition);
 					// creating 2D Shapes object 
-					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX(),
-							((Circles) drawItem).getEllipse2DY(),((Circles) drawItem).getR()*2
-							,((Circles) drawItem).getR()*2);
-
+					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()+xPosition,
+							((Circles) drawItem).getEllipse2DY()+yPosition,((Circles) drawItem).getR()*2*zoomScale
+							,((Circles) drawItem).getR()*2*zoomScale);
+					
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(circleShape);
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
@@ -135,6 +141,30 @@ public class SVGRender extends JPanel
 		}
 	}
 
+	public void setZoomScale(double zoomScale)
+	{
+		this.zoomScale = zoomScale;
+	}
+	
+	public double getZoomScale()
+	{
+		return zoomScale;
+	}
+	public double getYPosition() {
+		return yPosition;
+	}
+
+	public void setYPosition(double yPosition) {
+		this.yPosition = yPosition;
+	}
+	public double getXPosition() {
+		return xPosition;
+	}
+
+	public void setXPosition(double xPosition) {
+		this.xPosition = xPosition;
+	}
+	
 	class SVGMouseAction implements MouseListener {
 		
 		private SVGRender render;
