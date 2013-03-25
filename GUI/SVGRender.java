@@ -48,8 +48,6 @@ public class SVGRender extends JPanel
 
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
-		this.xPosition = 0;
-		this.yPosition =0;
 		
 		this.addMouseListener(new SVGMouseAction(this));
 		//this.addMouseMotionListener(new SVGMouseAction(this));
@@ -65,9 +63,10 @@ public class SVGRender extends JPanel
 		this.zoomScale = 1;
 		this.xPosition = 0;
 		this.yPosition =0;
-		
+		this.addMouseMotionListener(new SVGMouseAction(this));
 		this.addMouseListener(new SVGMouseAction(this));
-		//this.addMouseMotionListener(new SVGMouseAction(this));
+		this.setFocusable(true);
+		
 	}
 
 	public void paintComponent(Graphics g)
@@ -87,39 +86,39 @@ public class SVGRender extends JPanel
 				{
 					System.out.println("xpostion is "+xPosition);
 					// creating 2D Shapes object 
-					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()+xPosition,
-							((Circles) drawItem).getEllipse2DY()+yPosition,((Circles) drawItem).getR()*2*zoomScale
+					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()*zoomScale+xPosition,
+							((Circles) drawItem).getEllipse2DY()*zoomScale+yPosition,((Circles) drawItem).getR()*2*zoomScale
 							,((Circles) drawItem).getR()*2*zoomScale);
 
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(circleShape);
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
-					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()*((float)zoomScale)));
 					g2d.draw(circleShape);
 				}
 				else if(drawItem instanceof Rectangles)
 				{
 					// creating 2D Shapes object 
-					Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) drawItem).getX(),
-							((Rectangles) drawItem).getY(),((Rectangles) drawItem).getWidth()
-							,((Rectangles) drawItem).getHeight());
+					Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) drawItem).getX()*zoomScale+xPosition,
+							((Rectangles) drawItem).getY()*zoomScale+yPosition,((Rectangles) drawItem).getWidth()*zoomScale
+							,((Rectangles) drawItem).getHeight()*zoomScale);
 
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(rectShape);
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
-					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()*((float)zoomScale)));
 					g2d.draw(rectShape);
 				}
 				else if(drawItem instanceof Lines)
 				{
 					// creating 2D Shapes object 
 
-					Line2D.Double lineShape = new Line2D.Double(((Lines) drawItem).getX1(),
-							((Lines) drawItem).getY1(),((Lines) drawItem).getX2(),
-							((Lines) drawItem).getY2());
+					Line2D.Double lineShape = new Line2D.Double(((Lines) drawItem).getX1()*zoomScale+xPosition,
+							((Lines) drawItem).getY1()*zoomScale+yPosition,((Lines) drawItem).getX2()*zoomScale+xPosition,
+							((Lines) drawItem).getY2()*zoomScale+yPosition);
 
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
-					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()));
+					g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth()*((float)zoomScale)));
 					g2d.draw(lineShape);
 				}
 			}
@@ -166,18 +165,21 @@ public class SVGRender extends JPanel
 	{
 		return zoomScale;
 	}
-	public double getYPosition() {
+	public double getYPosition() 
+	{
 		return yPosition;
 	}
 
-	public void setYPosition(double yPosition) {
+	public void setYPosition(double yPosition) 
+	{
 		this.yPosition = yPosition;
 	}
 	public double getXPosition() {
 		return xPosition;
 	}
 
-	public void setXPosition(double xPosition) {
+	public void setXPosition(double xPosition) 
+	{
 		this.xPosition = xPosition;
 	}
 	

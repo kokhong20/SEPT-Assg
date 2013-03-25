@@ -10,6 +10,6 @@ xmlns="http://www.w3.org/2000/svg">
 <rect x="3cm" y="0.5cm" width="1.5cm" height="2cm"/>
 <rect x="3.5cm" y="3cm" width="1cm" height="0.5cm" />
 <!-- Show outline of canvas using 'rect' element -->
-<rect x=".01cm" y=".01cm" width="4.98cm" height="3.95cm" color="yellow"
+<rect x="1cm" y="1cm" width="1in" height="3in" color="yellow"
 fill="none" stroke="red" stroke-width=".02cm" />
 </svg>

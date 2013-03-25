@@ -139,6 +139,7 @@ public class Units
 	{
 		System.out.println("in = " + bConvert + " converted = "
 				+ Double.parseDouble(bConvert) * dpi);
+		System.out.println("res: " + res + " ratio: " + ratio + " height: " + height + " width: " + width);
 		return Double.parseDouble(bConvert) * dpi;
 	}
 
