@@ -81,7 +81,7 @@ public class Coloring {
 	// Filling the HashMap with all system colors of SVG available
 	public final static void fillList()
 	{
-		//colorMap.put("none", new Color(0, 0, 0, 0));
+		colorMap.put("none", new Color(0, 0, 0, 0));
 		colorMap.put("aliceblue", new Color(240, 248, 255));
 		colorMap.put("antiquewhite", new Color(250, 235, 215));
 		colorMap.put("aqua", new Color( 0, 255, 255));

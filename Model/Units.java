@@ -24,39 +24,54 @@ public class Units
 		if (!att.isEmpty())
 		{
 			// 10.10px or 10px or .10px are valid
-			if (Pattern.matches("(\\-?\\d+\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
-					|| Pattern.matches("(\\-?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
-					|| Pattern.matches("(\\-?\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
+			if (Pattern.matches("(\\-?\\d+\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\-?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\-?\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)", att))
 			{
 				switch (att.substring(att.length() - 2))
 				{
 				case "em":
-					return convertEM(removeUnits(att));
+					return convertEM(calculate(removeUnits(att)));
 				case "ex":
-					return convertEX(removeUnits(att));
+					return convertEX(calculate(removeUnits(att)));
 				case "px":
-					return convertPX(removeUnits(att));
+					return convertPX(calculate(removeUnits(att)));
 				case "in":
-					return convertIN(removeUnits(att));
+					return convertIN(calculate(removeUnits(att)));
 				case "cm":
-					return convertCM(removeUnits(att));
+					return convertCM(calculate(removeUnits(att)));
 				case "mm":
-					return convertMM(removeUnits(att));
+					return convertMM(calculate(removeUnits(att)));
 				case "pt":
-					return convertPT(removeUnits(att));
+					return convertPT(calculate(removeUnits(att)));
 				case "pc":
-					return convertPC(removeUnits(att));
+					return convertPC(calculate(removeUnits(att)));
 				}
 			}
 			// 10 or 10.10 or .10 are valid
-			else if (Pattern.matches("(\\-?\\d+)", att)
-					|| Pattern.matches("(\\-?\\d+.\\d+)", att)
-					|| Pattern.matches("(\\-?\\.?\\d+)", att))
+			else if (Pattern.matches("(\\-?\\d+[e]?\\d*)", att)
+					|| Pattern.matches("(\\-?\\d+.\\d+[e]?\\d*)", att)
+					|| Pattern.matches("(\\-?\\.?\\d+[e]?\\d*)", att))
 			{
-				return Double.parseDouble(att);
+				return Double.parseDouble(calculate(att));
 			}
 		}
 		return 0;
+	}
+	
+	private static String calculate(String att)
+	{
+		if(att.contains("e"))
+		{
+			int loop = Integer.parseInt(att.substring(att.indexOf("e") + 1));
+			double value = Double.parseDouble(att.substring(0, att.indexOf("e")));
+
+			value = value * Math.pow(10, loop);
+			
+			return String.valueOf(value);
+		}
+		
+		return att;
 	}
 	
 	// Remove the last 2 characters which are units
