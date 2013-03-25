@@ -1,11 +1,20 @@
 package Model;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.regex.Pattern;
 
 public class Units
 {
-	public static final int dpi = java.awt.Toolkit.getDefaultToolkit()
-			.getScreenResolution();
+	public static Dimension screen = Toolkit.getDefaultToolkit()
+			.getScreenSize();
+	public static int res = Toolkit.getDefaultToolkit().getScreenResolution();
+
+	public static double height = screen.getHeight();
+	public static double width = screen.getWidth();
+	public static double size = Math.sqrt((height * width));
+	public static double ratio = (res / size) + 1;
+	public static final double dpi = res * ratio;
 
 	public final static double setUnit(String att)
 	{
@@ -84,7 +93,7 @@ public class Units
 		return 0;
 	}
 
-	//Calculate based on 1 em = 12 pt 
+	// Calculate based on 1 em = 12 pt
 	public final static double convertEM(String bConvert)
 	{
 		return (Double.parseDouble(bConvert) * 12 * dpi / 72);
@@ -118,11 +127,18 @@ public class Units
 
 	public final static double convertCM(String bConvert)
 	{
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		System.out.println("cm =" + bConvert + "  converted = "
+				+ Double.parseDouble(bConvert) * dpi / 2.54);
+		System.out.println(screen);
 		return (Double.parseDouble(bConvert) * dpi / 2.54);
+
 	}
 
 	public final static double convertIN(String bConvert)
 	{
+		System.out.println("in = " + bConvert + " converted = "
+				+ Double.parseDouble(bConvert) * dpi);
 		return Double.parseDouble(bConvert) * dpi;
 	}
 
