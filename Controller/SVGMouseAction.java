@@ -16,6 +16,8 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 	private SVGRender render;
 	private static int initialMouseX;
 	private static int initialMouseY;
+	private int changeX = 0;
+	private int changeY = 0;
 
 
 	public SVGMouseAction(SVGRender svgRender) 
@@ -28,7 +30,7 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 	{
 		Point mousePoint = new Point();
 		mousePoint = e.getPoint();
-		initialMouseX =mousePoint.x;
+		initialMouseX = mousePoint.x;
 		initialMouseY = mousePoint.y;
 		this.render.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
@@ -60,10 +62,17 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		this.render.repaint();
 		System.out.println("Clicked");
 	}
-
+	
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
+		this.render.setXPosition((double)this.render.getXPosition() + changeX);
+		this.render.setYPosition((double)this.render.getYPosition() + changeY);
+		changeX = e.getX() - initialMouseX;
+		changeY = e.getY() - initialMouseY;
+		initialMouseX = e.getX();
+		initialMouseY = e.getY();
+		/*
 		if(e.getX()<initialMouseX) //Move from left to right
 		{
 			this.render.setXPosition((double)this.render.getXPosition()-5);
@@ -80,7 +89,7 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		else // move from up to btm
 		{
 			this.render.setYPosition((double)this.render.getYPosition()+5);
-		}
+		}*/
 		
 		this.render.repaint();
 	}

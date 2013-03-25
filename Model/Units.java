@@ -16,7 +16,7 @@ public class Units
 	// public static double size = Math.sqrt((height * width));
 	// public static double ratio = (res / size) + 1;
 	
-	public static final double dpi = res * (res / Math.sqrt((screen.getHeight() * screen.getWidth()))) + 1;
+	public static final double dpi = res * (res / Math.sqrt((screen.getHeight() * screen.getWidth())) + 1);
 
 	public final static double setUnit(String att)
 	{
@@ -111,7 +111,7 @@ public class Units
 	{
 		System.out.println("in = " + bConvert + " converted = "
 				+ Double.parseDouble(bConvert) * dpi);
-		System.out.println("res: " + res + " ratio: " + ratio + " height: " + height + " width: " + width);
+		//System.out.println("res: " + res + " ratio: " + ratio + " height: " + height + " width: " + width);
 		return Double.parseDouble(bConvert) * dpi;
 	}
 
