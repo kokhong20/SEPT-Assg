@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import java.awt.Event;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -88,5 +89,7 @@ public class DesktopPane extends JFrame
 		editItem.addActionListener(action);
 		saveAsItem.addActionListener(action);
 		newItem.addActionListener(action);
+		int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+		System.out.println("Your DPI is :" + dpi);
 	}
 }
