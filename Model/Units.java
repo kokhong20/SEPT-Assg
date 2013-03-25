@@ -24,9 +24,9 @@ public class Units
 		if (!att.isEmpty())
 		{
 			// 10.10px or 10px or .10px are valid
-			if (Pattern.matches("(\\d+\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
-					|| Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
-					|| Pattern.matches("(\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
+			if (Pattern.matches("(\\-?\\d+\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\-?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\-?\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
 			{
 				switch (att.substring(att.length() - 2))
 				{
@@ -49,9 +49,9 @@ public class Units
 				}
 			}
 			// 10 or 10.10 or .10 are valid
-			else if (Pattern.matches("(\\d+)", att)
-					|| Pattern.matches("(\\d+.\\d+)", att)
-					|| Pattern.matches("(\\.?\\d+)", att))
+			else if (Pattern.matches("(\\-?\\d+)", att)
+					|| Pattern.matches("(\\-?\\d+.\\d+)", att)
+					|| Pattern.matches("(\\-?\\.?\\d+)", att))
 			{
 				return Double.parseDouble(att);
 			}

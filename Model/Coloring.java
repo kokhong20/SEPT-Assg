@@ -37,8 +37,23 @@ public class Coloring {
 				if(color.contains("%"))
 				{
 					color = color.replace("%", "");
-					String[] rgb = color.split(",");
-					return new Color((int) Math.round((Integer.parseInt(rgb[0]) * 2.55)), (int) Math.round((Integer.parseInt(rgb[1])) * 2.55), (int) Math.round((Integer.parseInt(rgb[2]) * 2.55)));
+					String[] rgbString = color.split(",");
+					int[] rgb = {
+						Integer.parseInt(rgbString[0]),
+						Integer.parseInt(rgbString[1]),
+						Integer.parseInt(rgbString[2])
+					};
+					
+					for(int i = 0; i < rgb.length; i++)
+					{
+						if(rgb[i] < 0)
+							rgb[i] = 0;
+						
+						if(rgb[i] > 100)
+							rgb[i] = 100;
+					}
+					
+					return new Color((int) Math.round(rgb[0] * 2.55), (int) Math.round(rgb[1] * 2.55), (int) Math.round(rgb[2] * 2.55));
 				}
 				else
 				{
