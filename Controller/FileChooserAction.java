@@ -93,7 +93,7 @@ public class FileChooserAction implements ActionListener
 			menuBar.add(viewMenu);
 			svgInternal.setJMenuBar(menuBar);
 			
-			ZoomInOutAction zoomAction = new ZoomInOutAction(render,zoomIn,zoomOut,backOriginalSize,backOrginalPosition);
+			ZoomInOutAction zoomAction = new ZoomInOutAction(render, viewMenu);
 			zoomIn.addActionListener(zoomAction);
 			zoomOut.addActionListener(zoomAction);
 			backOriginalSize.addActionListener(zoomAction);
