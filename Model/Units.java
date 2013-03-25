@@ -10,89 +10,61 @@ public class Units
 			.getScreenSize();
 	public static int res = Toolkit.getDefaultToolkit().getScreenResolution();
 
-	public static double height = screen.getHeight();
-	public static double width = screen.getWidth();
-	public static double size = Math.sqrt((height * width));
-	public static double ratio = (res / size) + 1;
-	public static final double dpi = res * ratio;
+	// These static variables only used once, no need to create variable/memory location for them
+	// public static double height = screen.getHeight();
+	// public static double width = screen.getWidth();
+	// public static double size = Math.sqrt((height * width));
+	// public static double ratio = (res / size) + 1;
+	
+	public static final double dpi = res * (res / Math.sqrt((screen.getHeight() * screen.getWidth()))) + 1;
 
 	public final static double setUnit(String att)
 	{
 		att = att.toLowerCase();
 		if (!att.isEmpty())
 		{
-			if (Pattern.matches("(\\d+\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att)
-					|| Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
+			// 10.10px or 10px or .10px are valid
+			if (Pattern.matches("(\\d+\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att)
+					|| Pattern.matches("(\\.?\\d+)+(em|ex|px|in|cm|mm|pt|pc)", att))
 			{
 				switch (att.substring(att.length() - 2))
 				{
 				case "em":
-					return convertEM(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertEM(removeUnits(att));
 				case "ex":
-					return convertEX(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertEX(removeUnits(att));
 				case "px":
-					return convertPX(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertPX(removeUnits(att));
 				case "in":
-					return convertIN(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertIN(removeUnits(att));
 				case "cm":
-					return convertCM(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertCM(removeUnits(att));
 				case "mm":
-					return convertMM(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertMM(removeUnits(att));
 				case "pt":
-					return convertPT(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertPT(removeUnits(att));
 				case "pc":
-					return convertPC(att.replace(
-							att.substring(att.length() - 2), ""));
+					return convertPC(removeUnits(att));
 				}
 			}
-			else if (Pattern
-					.matches("(\\.?\\d)+(em|ex|px|in|cm|mm|pt|pc)", att))
-			{
-				att = "0" + att;
-				switch (att.substring(att.length() - 2))
-				{
-				case "em":
-					return convertEM(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "ex":
-					return convertEX(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "px":
-					return convertPX(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "in":
-					return convertIN(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "cm":
-					return convertCM(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "mm":
-					return convertMM(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "pt":
-					return convertPT(att.replace(
-							att.substring(att.length() - 2), ""));
-				case "pc":
-					return convertPC(att.replace(
-							att.substring(att.length() - 2), ""));
-				}
-			}
+			// 10 or 10.10 or .10 are valid
 			else if (Pattern.matches("(\\d+)", att)
-					|| Pattern.matches("(\\d+.\\d+)", att))
+					|| Pattern.matches("(\\d+.\\d+)", att)
+					|| Pattern.matches("(\\.?\\d+)", att))
 			{
 				return Double.parseDouble(att);
 			}
 		}
 		return 0;
 	}
-
+	
+	// Remove the last 2 characters which are units
+	private static String removeUnits(String att)
+	{
+		return att.replace(att.substring(att.length() - 2), "");
+	}
+	
 	// Calculate based on 1 em = 12 pt
 	public final static double convertEM(String bConvert)
 	{
