@@ -39,11 +39,7 @@ public class SVGRender {
 	{
 		// TODO Auto-generated constructor stub
 		this.drawCollection = new LinkedHashSet<Drawings>();
-	}
-
-	private void setPreferredSize(Dimension dimension) {
-		// TODO Auto-generated method stub
-		this.svgDimension = dimension;
+		this.setPreferredSize(new Dimension(500, 500));
 	}
 
 	public SVGRender(String path)
@@ -59,6 +55,12 @@ public class SVGRender {
 	public LinkedHashSet<Drawings> getDrawings()
 	{
 		return this.drawCollection;
+	}
+
+
+	private void setPreferredSize(Dimension dimension) {
+		// TODO Auto-generated method stub
+		this.svgDimension = dimension;
 	}
 
 	public Dimension getPreferredSize()

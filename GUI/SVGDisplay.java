@@ -42,7 +42,6 @@ public class SVGDisplay extends JPanel
 	{
 		// TODO Auto-generated constructor stub
 		this.render = new SVGRender();
-		
 		this.drawCollection = new LinkedHashSet<Drawings>();
 
 		this.setBackground(Color.white);
@@ -155,8 +154,13 @@ public class SVGDisplay extends JPanel
 		this.xPosition = xPosition;
 	}
 	
-	public void getDrawings(LinkedHashSet<Drawings> drawings)
+	public void setDrawings(LinkedHashSet<Drawings> drawings)
 	{
 		this.drawCollection = drawings;
+	}
+	
+	public SVGRender getRender()
+	{
+		return this.render;
 	}
 }

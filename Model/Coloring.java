@@ -28,9 +28,9 @@ public class Coloring {
 		}
 		else if(color.startsWith("rgb"))
 		{
+			color = color.replace(" ", "");
 			color = color.replace("rgb(", "");
 			color = color.replace(")", "");
-			color = color.replace(" ", "");
 			
 			if(color.contains("%"))
 			{
@@ -55,8 +55,22 @@ public class Coloring {
 			}
 			else
 			{
-				String[] rgb = color.split(",");
-				return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
+				String[] rgbString = color.split(",");
+				int[] rgb = {
+					Integer.parseInt(rgbString[0]),
+					Integer.parseInt(rgbString[1]),
+					Integer.parseInt(rgbString[2])
+				};
+					
+				for(int i = 0; i < rgb.length; i++)
+				{
+					if(rgb[i] < 0)
+						rgb[i] = 0;
+					
+					if(rgb[i] > 255)
+						rgb[i] = 255;
+				}
+				return new Color(rgb[0], rgb[1], rgb[2]);
 			}
 		}
 		else

@@ -5,18 +5,18 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import GUI.SVGDisplay;
-//import Model.SVGSaver;
+import Model.SVGSaver;
 
 public class InternalFrameAction implements InternalFrameListener
 {
 	private JInternalFrame internalFrame;
-	//private SVGDisplay display;
+	private SVGDisplay display;
 
 	public InternalFrameAction(JInternalFrame svgInternal, SVGDisplay display) 
 	{
 		// TODO Auto-generated constructor stub
 		this.internalFrame = svgInternal;
-		//this.display = display;	
+		this.display = display;	
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class InternalFrameAction implements InternalFrameListener
 		if (dialogButton == 0)
 		{
 			System.out.println("save");
-			//new SVGSaver(display.getDrawings(), display.getPath());
+			new SVGSaver(display.getRender().getDrawings(), display.getRender().getPath());
 			this.internalFrame.dispose();
 		}
 		

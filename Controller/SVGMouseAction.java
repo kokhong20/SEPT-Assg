@@ -1,6 +1,6 @@
 package Controller;
 
-//import java.awt.Color;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -8,9 +8,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import GUI.SVGDisplay;
-//import Model.Rectangles;
+import Model.Rectangles;
 
-public class SVGMouseAction implements MouseListener,MouseMotionListener 
+public class SVGMouseAction implements MouseListener, MouseMotionListener 
 {
 
 	private SVGDisplay display;
@@ -20,10 +20,10 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 	private int changeY = 0;
 
 
-	public SVGMouseAction(SVGDisplay svgRender) 
+	public SVGMouseAction(SVGDisplay svgDisplay) 
 	{
 		// TODO Auto-generated constructor stub
-		this.display = svgRender; 
+		this.display = svgDisplay; 
 	}
 
 	public void mousePressed(MouseEvent e) 
@@ -50,7 +50,7 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 
 	public void mouseClicked(MouseEvent e) 
 	{
-		/*Rectangles rect = new Rectangles();
+		Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -58,9 +58,9 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		rect.setWidth(100);
 		rect.setX(e.getX());
 		rect.setY(e.getY());
-		this.display.getDrawings().add(rect);
+		this.display.getRender().getDrawings().add(rect);
 		this.display.repaint();
-		System.out.println("Clicked");*/
+		System.out.println("Clicked");
 	}
 	
 	@Override
