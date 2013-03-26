@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.io.File;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -18,8 +19,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
+
 import GUI.SVGRender;
-import Model.SVGReader;
 import Model.modelMain;
 
 public class FileChooserAction implements ActionListener
@@ -45,17 +46,16 @@ public class FileChooserAction implements ActionListener
 		{
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
+			return;
 		}
 		
-		try
-		{
 			File selectedFile = this.fileChooser.getSelectedFile();
 			path = this.fileChooser.getCurrentDirectory().toString() ;
 			
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
 			
-			SVGRender render = new SVGRender(new SVGReader(), modelMain.setPath(path, selectedFile));
+			SVGRender render = new SVGRender(modelMain.setPath(path, selectedFile));
 			JScrollPane scrollPane = new JScrollPane(render, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			render.setPreferredSize(render.getPreferredSize());
@@ -103,31 +103,25 @@ public class FileChooserAction implements ActionListener
 			svgInternal.pack();
 			this.desktopPane.add(svgInternal);
 			svgInternal.setVisible(true);
-			svgInternal.setSize(render.getPreferredSize());
 			
 			Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 			if((toolkit.getScreenSize().height <= render.getPreferredSize().height)
 					|| (toolkit.getScreenSize().width <= render.getPreferredSize().width))
 			{
-				try 
-				{
-					svgInternal.setMaximum(true);
-				} 
-				catch (PropertyVetoException pve) {
-					// TODO Auto-generated catch block
-					pve.printStackTrace();
-				}
+					try {
+						svgInternal.setMaximum(true);
+					} catch (PropertyVetoException pve) {
+						// TODO Auto-generated catch block
+						pve.printStackTrace();
+					}
 			}
 			
 			else if(svgInternal.getSize().equals(new Dimension(0,0)))
 			{
 				svgInternal.setSize(500,500);
 			}
-		}
+			else
+				svgInternal.setSize(render.getPreferredSize());
 		
-		catch (NullPointerException ex)
-		{
-			System.out.println("Cancel Button");
-		}
 	}
 }

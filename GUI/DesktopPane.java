@@ -2,13 +2,16 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
-import java.awt.Toolkit;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-@SuppressWarnings("serial")
 public class DesktopPane extends JFrame 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 273712589857804924L;
 	JDesktopPane desktopPane;
 	public int keyMask = 0;
 	
@@ -30,8 +33,5 @@ public class DesktopPane extends JFrame
 		MenuBar menuBar = new MenuBar(desktopPane);
 		setJMenuBar(menuBar);
 		add(desktopPane);
-		
-		int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-		System.out.println("Your DPI is :" + dpi);
 	}
 }

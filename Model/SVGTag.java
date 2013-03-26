@@ -49,9 +49,15 @@ public class SVGTag
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setWidth(Units.setUnit(eNode.getAttribute("width")));
-			this.setHeight(Units.setUnit(eNode.getAttribute("height")));
-			System.out.println("inside svgggg");
+			if(eNode.hasAttribute("width"))
+				this.setWidth(Units.setUnit(eNode.getAttribute("width")));
+			else
+				this.setWidth(500);
+				
+			if(eNode.hasAttribute("height"))
+				this.setHeight(Units.setUnit(eNode.getAttribute("height")));
+			else
+				this.setHeight(500);
 		}
 	}
 

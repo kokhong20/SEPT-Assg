@@ -57,8 +57,13 @@ public class MenuAction implements ActionListener
 				fcInternal = new JInternalFrame("Open", true, true, true, true);
 				fileChooser = new JFileChooser();
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				FileFilter fileFilter = new FileNameExtensionFilter("SVG files","svg");
-				fileChooser.setFileFilter(fileFilter);
+				FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
+				FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
+				FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				fileChooser.setFileFilter(xmlFilter);
+				fileChooser.setFileFilter(svgFilter);
+				fileChooser.setFileFilter(allFilter);
 
 				fcInternal.add(fileChooser, BorderLayout.CENTER);
 				fcInternal.pack();

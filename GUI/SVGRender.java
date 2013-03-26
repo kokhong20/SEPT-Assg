@@ -50,14 +50,14 @@ public class SVGRender extends JPanel
 		this.zoomScale = 1;
 		
 		this.addMouseListener(new SVGMouseAction(this));
-		//this.addMouseMotionListener(new SVGMouseAction(this));
+		this.addMouseMotionListener(new SVGMouseAction(this));
 	}
-
-	public SVGRender(SVGReader read, String path)
+	
+	public SVGRender(String path)
 	{
-		this.reader = read;
+		this.reader = new SVGReader();
 		this.reader.setDoc(path);
-		this.drawCollection = read.getDrawings();
+		this.drawCollection = this.reader.getDrawings();
 		this.path = path;
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
@@ -146,14 +146,7 @@ public class SVGRender extends JPanel
 
 	public Dimension getPreferredSize()
 	{
-		try
-		{
-			return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
-		}
-		catch(Exception ex)
-		{
-			return new Dimension(500,500);
-		}
+		return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
 	}
 
 	public void setZoomScale(double zoomScale)

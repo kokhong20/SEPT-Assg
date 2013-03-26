@@ -15,66 +15,59 @@ public class Coloring {
 	// hexadecimal or octal is invalid format
 	public final static Color setColor(String color)
 	{
-		try
+		if(color.startsWith("#") || color.startsWith("0x"))
 		{
-			if(color.startsWith("#") || color.startsWith("0x"))
+			if(color.length() > 6)
+				return Color.decode(color);
+			else
 			{
-				if(color.length() > 6)
-					return Color.decode(color);
-				else
-				{
-					return Color.decode("#" + color.substring(color.length() - 3, color.length() - 2) + color.substring(color.length() - 3, color.length() - 2) + 
-							color.substring(color.length() - 2, color.length() - 1) + color.substring(color.length() - 2, color.length() - 1) +
-							color.substring(color.length() - 1) + color.substring(color.length() - 1));
-				}
+				return Color.decode("#" + color.substring(color.length() - 3, color.length() - 2) + color.substring(color.length() - 3, color.length() - 2) + 
+						color.substring(color.length() - 2, color.length() - 1) + color.substring(color.length() - 2, color.length() - 1) +
+						color.substring(color.length() - 1) + color.substring(color.length() - 1));
 			}
-			else if(color.startsWith("rgb"))
+		}
+		else if(color.startsWith("rgb"))
+		{
+			color = color.replace("rgb(", "");
+			color = color.replace(")", "");
+			color = color.replace(" ", "");
+			
+			if(color.contains("%"))
 			{
-				color = color.replace("rgb(", "");
-				color = color.replace(")", "");
-				color = color.replace(" ", "");
+				color = color.replace("%", "");
+				String[] rgbString = color.split(",");
+				int[] rgb = {
+					Integer.parseInt(rgbString[0]),
+					Integer.parseInt(rgbString[1]),
+					Integer.parseInt(rgbString[2])
+				};
+					
+				for(int i = 0; i < rgb.length; i++)
+				{
+					if(rgb[i] < 0)
+						rgb[i] = 0;
+					
+					if(rgb[i] > 100)
+						rgb[i] = 100;
+				}
 				
-				if(color.contains("%"))
-				{
-					color = color.replace("%", "");
-					String[] rgbString = color.split(",");
-					int[] rgb = {
-						Integer.parseInt(rgbString[0]),
-						Integer.parseInt(rgbString[1]),
-						Integer.parseInt(rgbString[2])
-					};
-					
-					for(int i = 0; i < rgb.length; i++)
-					{
-						if(rgb[i] < 0)
-							rgb[i] = 0;
-						
-						if(rgb[i] > 100)
-							rgb[i] = 100;
-					}
-					
-					return new Color((int) Math.round(rgb[0] * 2.55), (int) Math.round(rgb[1] * 2.55), (int) Math.round(rgb[2] * 2.55));
-				}
-				else
-				{
-					String[] rgb = color.split(",");
-					return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
-				}
+				return new Color((int) Math.round(rgb[0] * 2.55), (int) Math.round(rgb[1] * 2.55), (int) Math.round(rgb[2] * 2.55));
 			}
 			else
 			{
-				if(colorMap.isEmpty())
-					fillList();
-				
-				if(colorMap.containsKey(color.toLowerCase()))
-					return colorMap.get(color.toLowerCase());
+				String[] rgb = color.split(",");
+				return new Color(Integer.parseInt(rgb[0]), Integer.parseInt(rgb[1]), Integer.parseInt(rgb[2]));
 			}
 		}
-		catch(Exception ex)
+		else
 		{
-			ex.printStackTrace();
+			if(colorMap.isEmpty())
+				fillList();
+			
+			if(colorMap.containsKey(color.toLowerCase()))
+				return colorMap.get(color.toLowerCase());
 		}
-		
+
 		return Color.black;
 	}
 	

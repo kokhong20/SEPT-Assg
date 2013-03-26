@@ -114,18 +114,18 @@ public class Units
 
 	public final static double convertCM(String bConvert)
 	{
-		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		System.out.println("cm =" + bConvert + "  converted = "
-				+ Double.parseDouble(bConvert) * dpi / 2.54);
-		System.out.println(screen);
+		//Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		//System.out.println("cm =" + bConvert + "  converted = "
+		//		+ Double.parseDouble(bConvert) * dpi / 2.54);
+		//System.out.println(screen);
 		return (Double.parseDouble(bConvert) * dpi / 2.54);
 
 	}
 
 	public final static double convertIN(String bConvert)
 	{
-		System.out.println("in = " + bConvert + " converted = "
-				+ Double.parseDouble(bConvert) * dpi);
+		//System.out.println("in = " + bConvert + " converted = "
+		//		+ Double.parseDouble(bConvert) * dpi);
 		//System.out.println("res: " + res + " ratio: " + ratio + " height: " + height + " width: " + width);
 		return Double.parseDouble(bConvert) * dpi;
 	}

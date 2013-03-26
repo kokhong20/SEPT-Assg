@@ -10,7 +10,6 @@ import org.w3c.dom.Element;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.LinkedHashSet;
 
 public class SVGReader 
@@ -32,35 +31,26 @@ public class SVGReader
 	// set Document with dir from MenuAction.
 	public void setDoc(String dir)
 	{
-		long startTime = System.nanoTime();
-		try
-		{
 			fXmlFile = new File(dir);
 
 			dbFactory.setNamespaceAware(true);		
 
-			dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
-			dbFactory.setFeature("http://xml.org/sax/features/validation", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			//dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+			//dbFactory.setFeature("http://xml.org/sax/features/validation", false);
+			//dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+			//dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
+		
+		try
+		{
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
-
-			doc.getDocumentElement().normalize();
-			long endTime = System.nanoTime();
-			System.out.println("Time: " + (endTime - startTime)/1000000);
 		}
-
-		catch(FileNotFoundException e)
+		catch(Exception ex)
 		{
-			//JOptionPane.showInternalMessageDialog(desktopPane, "File Not Found", "File Not Found", JOptionPane.ERROR_MESSAGE);
+			ex.printStackTrace();
 		}
-
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		doc.getDocumentElement().normalize();
 
 		this.processFile();
 
@@ -84,13 +74,8 @@ public class SVGReader
 			svgElement.setSVGWidthAndHeight();
 			
 			NodeList drawList = svg.getChildNodes();
-			System.out.println("Length : " + drawList.getLength());
 			for (int index = 0; index < drawList.getLength(); index++)
 			{
-				System.out.println("Node Name : " + drawList.item(index).getNodeName());
-
-
-
 				switch(drawList.item(index).getNodeName())
 				{
 					case "rect":
@@ -100,16 +85,6 @@ public class SVGReader
 						//Add new rectangle object to Shapes and put into linked list
 						//Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
 						this.drawingCollection.add(newRect);
-						//Testing
-						System.out.println("stroke = " + newRect.getStrokeColor());
-						System.out.println("stroke-width = " + newRect.getStrokeWidth());
-						System.out.println("fill = " + newRect.getFill());
-						System.out.println("x = " + newRect.getX());
-						System.out.println("y = " + newRect.getY());
-						System.out.println("width = " + newRect.getWidth());
-						System.out.println("height = " + newRect.getHeight());
-						System.out.println("\n");
-						//Testing
 						break;
 
 					case "circle":
@@ -118,17 +93,8 @@ public class SVGReader
 
 						//Add new circle object to Shapes and put into linked List
 						//Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
-						System.out.println("x is"+newCircle.getEllipse2DX());
+						
 						this.drawingCollection.add(newCircle);
-						//Testing
-						System.out.println("stroke = " + newCircle.getStrokeColor());
-						System.out.println("stroke-width = " + newCircle.getStrokeWidth());
-						System.out.println("fill = " + newCircle.getFill());
-						System.out.println("cx = " + newCircle.getCX());
-						System.out.println("cy = " + newCircle.getCY());
-						System.out.println("r = " + newCircle.getR());
-						System.out.println("\n");
-						//Testing
 						break;
 
 					case "line":
@@ -136,21 +102,12 @@ public class SVGReader
 						newLine.readAttributes();
 
 						this.drawingCollection.add(newLine);
-						//Testing
-						System.out.println("stroke = " + newLine.getStrokeColor());
-						System.out.println("stroke-width = " + newLine.getStrokeWidth());
-						System.out.println("x1 = " + newLine.getX1());
-						System.out.println("x2 = " + newLine.getX2());
-						System.out.println("y1 = " + newLine.getY1());
-						System.out.println("y2 = " + newLine.getY2());
-						System.out.println("\n");
-						//Testing
 						break;
 
 					case "g":
 						NodeList gList = drawList.item(index).getChildNodes();
 						createGroups(this.drawingCollection, gList, drawList.item(index), null, null);
-						System.out.println("</g>");
+						
 						break;
 				}
 			}
@@ -187,16 +144,6 @@ public class SVGReader
 							newRect.setFill(fill);
 
 						collection.add(newRect);
-						//Testing
-						System.out.println("stroke = " + newRect.getStrokeColor());
-						System.out.println("stroke-width = " + newRect.getStrokeWidth());
-						System.out.println("fill = " + newRect.getFill());
-						System.out.println("x = " + newRect.getX());
-						System.out.println("y = " + newRect.getY());
-						System.out.println("width = " + newRect.getWidth());
-						System.out.println("height = " + newRect.getHeight());
-						System.out.println("\n");
-						//Testing
 						break;
 					case "circle":
 						Circles newCircle = new Circles(gList.item(i));
@@ -211,15 +158,6 @@ public class SVGReader
 
 						System.out.println("x is"+newCircle.getEllipse2DX());
 						collection.add(newCircle);
-						//Testing
-						System.out.println("stroke = " + newCircle.getStrokeColor());
-						System.out.println("stroke-width = " + newCircle.getStrokeWidth());
-						System.out.println("fill = " + newCircle.getFill());
-						System.out.println("cx = " + newCircle.getCX());
-						System.out.println("cy = " + newCircle.getCY());
-						System.out.println("r = " + newCircle.getR());
-						System.out.println("\n");
-						//Testing
 						break;
 					case "line":
 						Lines newLine = new Lines(gList.item(i));
@@ -229,15 +167,6 @@ public class SVGReader
 							newLine.setStrokeColor(stroke);
 
 						collection.add(newLine);
-						//Testing
-						System.out.println("stroke = " + newLine.getStrokeColor());
-						System.out.println("stroke-width = " + newLine.getStrokeWidth());
-						System.out.println("x1 = " + newLine.getX1());
-						System.out.println("x2 = " + newLine.getX2());
-						System.out.println("y1 = " + newLine.getY1());
-						System.out.println("y2 = " + newLine.getY2());
-						System.out.println("\n");
-						//Testing
 						break;
 				}
 			}

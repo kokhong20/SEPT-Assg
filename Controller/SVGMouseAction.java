@@ -72,24 +72,6 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		changeY = e.getY() - initialMouseY;
 		initialMouseX = e.getX();
 		initialMouseY = e.getY();
-		/*
-		if(e.getX()<initialMouseX) //Move from left to right
-		{
-			this.render.setXPosition((double)this.render.getXPosition()-5);
-		}
-		else // move from right to left
-		{
-			this.render.setXPosition((double)this.render.getXPosition()+5);
-		}
-		
-		if(e.getY()<initialMouseY) //move from btm to up
-		{
-			this.render.setYPosition((double)this.render.getYPosition()-5);
-		}
-		else // move from up to btm
-		{
-			this.render.setYPosition((double)this.render.getYPosition()+5);
-		}*/
 		
 		this.render.repaint();
 	}
