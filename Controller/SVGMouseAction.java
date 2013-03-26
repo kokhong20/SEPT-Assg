@@ -1,29 +1,29 @@
 package Controller;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import GUI.SVGRender;
-import Model.Rectangles;
+import GUI.SVGDisplay;
+//import Model.Rectangles;
 
 public class SVGMouseAction implements MouseListener,MouseMotionListener 
 {
 
-	private SVGRender render;
+	private SVGDisplay display;
 	private static int initialMouseX;
 	private static int initialMouseY;
 	private int changeX = 0;
 	private int changeY = 0;
 
 
-	public SVGMouseAction(SVGRender svgRender) 
+	public SVGMouseAction(SVGDisplay svgRender) 
 	{
 		// TODO Auto-generated constructor stub
-		this.render = svgRender; 
+		this.display = svgRender; 
 	}
 
 	public void mousePressed(MouseEvent e) 
@@ -32,12 +32,12 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		mousePoint = e.getPoint();
 		initialMouseX = mousePoint.x;
 		initialMouseY = mousePoint.y;
-		this.render.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.display.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 
 	public void mouseReleased(MouseEvent e) 
 	{
-		this.render.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		this.display.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
 	public void mouseEntered(MouseEvent e) 
@@ -50,7 +50,7 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 
 	public void mouseClicked(MouseEvent e) 
 	{
-		Rectangles rect = new Rectangles();
+		/*Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -58,22 +58,22 @@ public class SVGMouseAction implements MouseListener,MouseMotionListener
 		rect.setWidth(100);
 		rect.setX(e.getX());
 		rect.setY(e.getY());
-		this.render.getDrawings().add(rect);
-		this.render.repaint();
-		System.out.println("Clicked");
+		this.display.getDrawings().add(rect);
+		this.display.repaint();
+		System.out.println("Clicked");*/
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
-		this.render.setXPosition((double)this.render.getXPosition() + changeX);
-		this.render.setYPosition((double)this.render.getYPosition() + changeY);
+		this.display.setXPosition((double)this.display.getXPosition() + changeX);
+		this.display.setYPosition((double)this.display.getYPosition() + changeY);
 		changeX = e.getX() - initialMouseX;
 		changeY = e.getY() - initialMouseY;
 		initialMouseX = e.getX();
 		initialMouseY = e.getY();
 		
-		this.render.repaint();
+		this.display.repaint();
 	}
 
 	@Override

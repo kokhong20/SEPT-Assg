@@ -4,16 +4,16 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
-import GUI.SVGRender;
+import GUI.SVGDisplay;
 
 public class ZoomInOutAction implements ActionListener
 {
-	private SVGRender svgRenderPanel;
+	private SVGDisplay svgDisplayPanel;
 	private Component [] itemArray;
 	
-	public ZoomInOutAction(SVGRender panel, JMenu menu)
+	public ZoomInOutAction(SVGDisplay panel, JMenu menu)
 	{
-		this.svgRenderPanel = panel;
+		this.svgDisplayPanel = panel;
 		this.itemArray = menu.getMenuComponents();
 	}
 	
@@ -23,29 +23,29 @@ public class ZoomInOutAction implements ActionListener
 		
 		if(e.getSource() == itemArray[0])
 		{
-			svgRenderPanel.setZoomScale(svgRenderPanel.getZoomScale()*1.1);
+			svgDisplayPanel.setZoomScale(svgDisplayPanel.getZoomScale()*1.1);
 			System.out.println("zoom IN!");
-			svgRenderPanel.repaint();
+			svgDisplayPanel.repaint();
 		}
 		
 		else if (e.getSource() == itemArray[1])
 		{
-			svgRenderPanel.setZoomScale(svgRenderPanel.getZoomScale()*0.9);
+			svgDisplayPanel.setZoomScale(svgDisplayPanel.getZoomScale()*0.9);
 			System.out.println("zoom Out!");
-			svgRenderPanel.repaint();
+			svgDisplayPanel.repaint();
 		}
 		
 		else if(e.getSource() == itemArray[2])
 		{
-			svgRenderPanel.setZoomScale(1);
-			svgRenderPanel.repaint();
+			svgDisplayPanel.setZoomScale(1);
+			svgDisplayPanel.repaint();
 		}
 		
 		else if(e.getSource() == itemArray[3])
 		{
-			svgRenderPanel.setXPosition(0);
-			svgRenderPanel.setYPosition(0);
-			svgRenderPanel.repaint();
+			svgDisplayPanel.setXPosition(0);
+			svgDisplayPanel.setYPosition(0);
+			svgDisplayPanel.repaint();
 		}	
 	}
 }

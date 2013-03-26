@@ -20,7 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
-import GUI.SVGRender;
+import GUI.SVGDisplay;
 import Model.modelMain;
 
 public class FileChooserAction implements ActionListener
@@ -55,12 +55,12 @@ public class FileChooserAction implements ActionListener
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
 			
-			SVGRender render = new SVGRender(modelMain.setPath(path, selectedFile));
-			JScrollPane scrollPane = new JScrollPane(render, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			SVGDisplay display = new SVGDisplay(new SVGRender(modelMain.setPath(path, selectedFile)));
+			JScrollPane scrollPane = new JScrollPane(display, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
-			render.setPreferredSize(render.getPreferredSize());
+			display.setPreferredSize(display.getPreferredSize());
 			JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-			svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, render));
+			svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, display));
 			
 			//Determine Key Mask
 			if (System.getProperty("os.name").equals("Mac OS X"))
@@ -93,7 +93,7 @@ public class FileChooserAction implements ActionListener
 			menuBar.add(viewMenu);
 			svgInternal.setJMenuBar(menuBar);
 			
-			ZoomInOutAction zoomAction = new ZoomInOutAction(render, viewMenu);
+			ZoomInOutAction zoomAction = new ZoomInOutAction(display, viewMenu);
 			zoomIn.addActionListener(zoomAction);
 			zoomOut.addActionListener(zoomAction);
 			backOriginalSize.addActionListener(zoomAction);
@@ -105,8 +105,8 @@ public class FileChooserAction implements ActionListener
 			svgInternal.setVisible(true);
 			
 			Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-			if((toolkit.getScreenSize().height <= render.getPreferredSize().height)
-					|| (toolkit.getScreenSize().width <= render.getPreferredSize().width))
+			if((toolkit.getScreenSize().height <= display.getPreferredSize().height)
+					|| (toolkit.getScreenSize().width <= display.getPreferredSize().width))
 			{
 					try {
 						svgInternal.setMaximum(true);
@@ -121,7 +121,7 @@ public class FileChooserAction implements ActionListener
 				svgInternal.setSize(500,500);
 			}
 			else
-				svgInternal.setSize(render.getPreferredSize());
+				svgInternal.setSize(display.getPreferredSize());
 		
 	}
 }

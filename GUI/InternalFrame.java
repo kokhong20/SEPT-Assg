@@ -14,19 +14,19 @@ public class InternalFrame extends JInternalFrame
 	private static final long serialVersionUID = -4520525531144579091L;
 	
 	JDesktopPane desktopPane;
-	SVGRender svgPanel;
+	SVGDisplay svgPanel;
 	
 	/* Internal Frame Item */
 	JInternalFrame internalFrame;
 	
 	
-	public InternalFrame(JDesktopPane destopPane , String frameTitle)
+	public InternalFrame(JDesktopPane desktopPane , String frameTitle)
 	{
 		this.desktopPane = desktopPane;
 		initInternalFrame(frameTitle);
 	}
 	
-	public InternalFrame(JDesktopPane desktopPan, SVGRender svgPanel , String frameTitle)
+	public InternalFrame(JDesktopPane desktopPane, SVGDisplay svgPanel , String frameTitle)
 	{
 		this.desktopPane = desktopPane;
 		this.svgPanel = svgPanel;

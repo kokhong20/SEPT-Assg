@@ -8,6 +8,11 @@ public class SVGTag
 	private double height;
 	private Node node;
 	
+	public SVGTag()
+	{
+		
+	}
+	
 	public SVGTag(Node node)
 	{
 		this.node = node;

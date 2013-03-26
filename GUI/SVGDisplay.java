@@ -19,31 +19,30 @@ import java.util.LinkedHashSet;
 import javax.swing.JPanel;
 
 import Controller.SVGMouseAction;
+import Controller.SVGRender;
 import Model.Circles;
 import Model.Drawings;
 import Model.Lines;
 import Model.Rectangles;
-import Model.SVGReader;
 import Model.Shapes;
 
-
-
-public class SVGRender extends JPanel
+public class SVGDisplay extends JPanel
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6848194504807933758L;
-	private SVGReader reader;
+	private SVGRender render;
 	private double zoomScale;
 	private double xPosition;
 	private double yPosition;
-	private String path;
 	private LinkedHashSet<Drawings> drawCollection;
 
-	public SVGRender() 
+	public SVGDisplay() 
 	{
 		// TODO Auto-generated constructor stub
+		this.render = new SVGRender();
+		
 		this.drawCollection = new LinkedHashSet<Drawings>();
 
 		this.setBackground(Color.white);
@@ -53,12 +52,10 @@ public class SVGRender extends JPanel
 		this.addMouseMotionListener(new SVGMouseAction(this));
 	}
 	
-	public SVGRender(String path)
+	public SVGDisplay(SVGRender render)
 	{
-		this.reader = new SVGReader();
-		this.reader.setDoc(path);
-		this.drawCollection = this.reader.getDrawings();
-		this.path = path;
+		this.render = render;
+		this.drawCollection = this.render.getDrawings();
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
@@ -84,7 +81,6 @@ public class SVGRender extends JPanel
 				Drawings drawItem = it.next();
 				if(drawItem instanceof Circles)
 				{
-					System.out.println("xpostion is "+xPosition);
 					// creating 2D Shapes object 
 					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()*zoomScale+xPosition,
 							((Circles) drawItem).getEllipse2DY()*zoomScale+yPosition,((Circles) drawItem).getR()*2*zoomScale
@@ -126,27 +122,9 @@ public class SVGRender extends JPanel
 		}
 	}
 
-	public void paintComponent(Graphics g, Rectangles rectangles) {
-		// TODO Auto-generated method stub
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D)g;
-		//for anti-aliasing for better output.
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Rectangle2D.Double rectShape = new Rectangle2D.Double(rectangles.getX(),
-				rectangles.getY(),rectangles.getWidth()
-				,rectangles.getHeight());
-
-		g2d.setColor(rectangles.getFill());
-		g2d.fill(rectShape);
-		g2d.setColor(rectangles.getStrokeColor());
-		g2d.setStroke(new BasicStroke(rectangles.getStrokeWidth()));
-		g2d.draw(rectShape);		
-	}
-
 	public Dimension getPreferredSize()
 	{
-		return new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight());
+		return this.render.getPreferredSize();
 	}
 
 	public void setZoomScale(double zoomScale)
@@ -167,6 +145,7 @@ public class SVGRender extends JPanel
 	{
 		this.yPosition = yPosition;
 	}
+	
 	public double getXPosition() {
 		return xPosition;
 	}
@@ -176,13 +155,8 @@ public class SVGRender extends JPanel
 		this.xPosition = xPosition;
 	}
 	
-	public LinkedHashSet<Drawings> getDrawings()
+	public void getDrawings(LinkedHashSet<Drawings> drawings)
 	{
-		return this.drawCollection;
-	}
-	
-	public String getPath()
-	{
-		return this.path;
+		this.drawCollection = drawings;
 	}
 }
