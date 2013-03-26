@@ -3,10 +3,7 @@ package Controller;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
 import GUI.SVGRender;
 
 public class ZoomInOutAction implements ActionListener
@@ -24,7 +21,7 @@ public class ZoomInOutAction implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		
-		if(e.getSource()== itemArray[0])
+		if(e.getSource() == itemArray[0])
 		{
 			svgRenderPanel.setZoomScale(svgRenderPanel.getZoomScale()*1.1);
 			System.out.println("zoom IN!");
@@ -44,7 +41,7 @@ public class ZoomInOutAction implements ActionListener
 			svgRenderPanel.repaint();
 		}
 		
-		else if(e.getSource()== itemArray[3])
+		else if(e.getSource() == itemArray[3])
 		{
 			svgRenderPanel.setXPosition(0);
 			svgRenderPanel.setYPosition(0);

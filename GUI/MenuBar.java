@@ -135,6 +135,9 @@ public class MenuBar extends JMenuBar
 		saveAsItem.addActionListener(fileMenuAction);
 		editItem.addActionListener(fileMenuAction);
 		exitItem.addActionListener(fileMenuAction);
+		
+		MenuAction aboutMenuAction = new MenuAction(desktopPane, aboutMenu);
+		aboutItem.addActionListener(aboutMenuAction);
 	}
 
 	private void checkOS()

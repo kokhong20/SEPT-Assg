@@ -20,11 +20,13 @@ public class MenuAction implements ActionListener
 	private JFileChooser fileChooser;
 	private JInternalFrame fcInternal;
 	private JDesktopPane desktopPane;
+	private JMenu menu;
 	private Component [] itemArray;
 
 	public MenuAction(JDesktopPane desktopPane, JMenu menu)
 	{
 		this.desktopPane = desktopPane;
+		this.menu = menu;
 		this.itemArray = menu.getMenuComponents();
 	}
 
@@ -35,61 +37,72 @@ public class MenuAction implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		// Create new SVG
-		if (e.getSource() == itemArray[0]) 
-		{		
-			JScrollPane scrollPane = new JScrollPane(new SVGRender(), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
-			svgInternal.add(scrollPane, BorderLayout.CENTER);
-			svgInternal.pack();
-			this.desktopPane.add(svgInternal);
-			svgInternal.setVisible(true);
-			svgInternal.setSize(500,500);	
-		}
-
-		// Open new SVG
-		else if (e.getSource() == itemArray[1]) 
-		{	
-			fcInternal = new JInternalFrame("Open", true, true, true, true);
-			fileChooser = new JFileChooser();
-			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			FileFilter fileFilter = new FileNameExtensionFilter("SVG files","svg");
-			fileChooser.setFileFilter(fileFilter);
-
-			fcInternal.add(fileChooser, BorderLayout.CENTER);
-			fcInternal.pack();
-			this.desktopPane.add(fcInternal);
-			fcInternal.setVisible(true);
-			FileChooserAction fcAction = new FileChooserAction(this.desktopPane, this.fcInternal, this.fileChooser);
-			fileChooser.addActionListener(fcAction);
-		}
-
-		// Save SVG
-		else if (e.getSource() == itemArray[2]) 
+		if (menu.getText().equals("File"))
 		{
+			// Create new SVG
+			if (e.getSource() == itemArray[0]) 
+			{		
+				JScrollPane scrollPane = new JScrollPane(new SVGRender(), JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
+				svgInternal.add(scrollPane, BorderLayout.CENTER);
+				svgInternal.pack();
+				this.desktopPane.add(svgInternal);
+				svgInternal.setVisible(true);
+				svgInternal.setSize(500,500);	
+			}
 
-		}
+			// Open new SVG
+			else if (e.getSource() == itemArray[1]) 
+			{	
+				fcInternal = new JInternalFrame("Open", true, true, true, true);
+				fileChooser = new JFileChooser();
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				FileFilter fileFilter = new FileNameExtensionFilter("SVG files","svg");
+				fileChooser.setFileFilter(fileFilter);
 
-		// Edit/Select All SVG
-		else if (e.getSource() == itemArray[4]) 
-		{		
-		}
+				fcInternal.add(fileChooser, BorderLayout.CENTER);
+				fcInternal.pack();
+				this.desktopPane.add(fcInternal);
+				fcInternal.setVisible(true);
+				FileChooserAction fcAction = new FileChooserAction(this.desktopPane, this.fcInternal, this.fileChooser);
+				fileChooser.addActionListener(fcAction);
+			}
 
-		// Save as SVG
-		else if (e.getSource() == itemArray[3]) 
-		{
-		}
-
-		// Exit software
-		else if (e.getSource() == itemArray[6]) 
-		{
-			Object[] choices = {"Yes", "No"};
-			int dialogButton = JOptionPane.showOptionDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, 
-					JOptionPane.PLAIN_MESSAGE, null, choices, "Yes");
-
-			if (dialogButton == 0)
+			// Save SVG
+			else if (e.getSource() == itemArray[2]) 
 			{
-				System.exit(0);
+
+			}
+
+			// Edit/Select All SVG
+			else if (e.getSource() == itemArray[4]) 
+			{		
+			}
+
+			// Save as SVG
+			else if (e.getSource() == itemArray[3]) 
+			{
+			}
+
+			// Exit software
+			else if (e.getSource() == itemArray[6]) 
+			{
+				Object[] choices = {"Yes", "No"};
+				int dialogButton = JOptionPane.showOptionDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, 
+						JOptionPane.PLAIN_MESSAGE, null, choices, "Yes");
+
+				if (dialogButton == 0)
+				{
+					System.exit(0);
+				}
+			}
+		}
+		
+		else if (menu.getText().equals("About"))
+		{
+			if (e.getSource() == itemArray[0])
+			{
+				System.out.println("Hello");
 			}
 		}
 	}
