@@ -4,44 +4,23 @@ import java.util.LinkedHashSet;
 import java.awt.Dimension;
 import Model.SVGReader;
 import Model.Drawings;
-/*
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 
-import GUI.SVGDisplay;
-import Model.Circles;
-import Model.Drawings;
-import Model.Lines;
-import Model.Rectangles;
-import Model.SVGReader;
-import Model.Shapes;
-*/
 public class SVGRender {
 
 	private SVGReader reader;
-	//private double zoomScale;
-	//private double xPosition;
-	//private double yPosition;
 	private String path;
 	private Dimension svgDimension;
 	private LinkedHashSet<Drawings> drawCollection;
 
+	// Constructor is used when new SVG is created
 	public SVGRender() 
 	{
 		// TODO Auto-generated constructor stub
-		this.drawCollection = new LinkedHashSet<Drawings>();
 		this.setPreferredSize(new Dimension(500, 500));
+		this.drawCollection = new LinkedHashSet<Drawings>();
 	}
 
+	// Constructor is used when existing SVG is opened
 	public SVGRender(String path)
 	{
 		// TODO Auto-generated constructor stub
@@ -56,7 +35,6 @@ public class SVGRender {
 	{
 		return this.drawCollection;
 	}
-
 
 	private void setPreferredSize(Dimension dimension) {
 		// TODO Auto-generated method stub

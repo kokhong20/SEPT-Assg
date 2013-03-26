@@ -56,7 +56,7 @@ public class MenuAction implements ActionListener
 				SVGDisplay display = new SVGDisplay(new SVGRender());
 				JScrollPane scrollPane = new JScrollPane(display, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 				scrollPane.setBounds(new Rectangle(10,10,100,100));
-				display.setPreferredSize(display.getPreferredSize());
+				display.setPreferredSize(display.getRender().getPreferredSize());
 				JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
 				svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, display));
 				

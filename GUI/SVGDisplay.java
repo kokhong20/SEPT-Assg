@@ -5,13 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Dimension;
-//import java.awt.Shape;
-//import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Line2D;
-//import java.util.LinkedList;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -38,6 +34,7 @@ public class SVGDisplay extends JPanel
 	private double yPosition;
 	private LinkedHashSet<Drawings> drawCollection;
 
+	// Cosntructor is used when new SVG is created
 	public SVGDisplay() 
 	{
 		// TODO Auto-generated constructor stub
@@ -46,19 +43,24 @@ public class SVGDisplay extends JPanel
 
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
+		this.xPosition = 0;
+		this.yPosition =0;
 		
 		this.addMouseListener(new SVGMouseAction(this));
 		this.addMouseMotionListener(new SVGMouseAction(this));
 	}
 	
+	// Constructor is used when existing SVG is opened
 	public SVGDisplay(SVGRender render)
 	{
 		this.render = render;
 		this.drawCollection = this.render.getDrawings();
+		
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
 		this.yPosition =0;
+		
 		this.addMouseMotionListener(new SVGMouseAction(this));
 		this.addMouseListener(new SVGMouseAction(this));
 		this.setFocusable(true);
@@ -121,11 +123,6 @@ public class SVGDisplay extends JPanel
 		}
 	}
 
-	public Dimension getPreferredSize()
-	{
-		return this.render.getPreferredSize();
-	}
-
 	public void setZoomScale(double zoomScale)
 	{
 		this.zoomScale = zoomScale;
@@ -135,6 +132,7 @@ public class SVGDisplay extends JPanel
 	{
 		return zoomScale;
 	}
+	
 	public double getYPosition() 
 	{
 		return yPosition;
@@ -152,11 +150,6 @@ public class SVGDisplay extends JPanel
 	public void setXPosition(double xPosition) 
 	{
 		this.xPosition = xPosition;
-	}
-	
-	public void setDrawings(LinkedHashSet<Drawings> drawings)
-	{
-		this.drawCollection = drawings;
 	}
 	
 	public SVGRender getRender()
