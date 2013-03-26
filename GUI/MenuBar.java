@@ -18,7 +18,6 @@ public class MenuBar extends JMenuBar
 	
 	/* Menu */
 	JMenu fileMenu;
-	JMenu viewMenu;
 	JMenu aboutMenu;
 	
 	/* File's Menu Item */
@@ -29,15 +28,12 @@ public class MenuBar extends JMenuBar
 	JMenuItem editItem;
 	JMenuItem exitItem;
 	
-	/* View's Menu Item */
-	JMenuItem zoomInItem;
-	JMenuItem zoomOutItem;
-	JMenuItem oriSize;
-	JMenuItem oriPos;
-	
 	/* About's Menu Item*/
 	JMenuItem aboutItem;
 	JMenuItem helpItem;
+	
+	/* View's Menu init */
+	viewMenu view;
 
 	public MenuBar(JDesktopPane desktopPane)
 	{
@@ -55,7 +51,6 @@ public class MenuBar extends JMenuBar
 	{
 		/* init Menu */
 		fileMenu = new JMenu("File");
-		viewMenu = new JMenu("View");
 		aboutMenu = new JMenu("About");
 		
 		/* init File's Menu Item */
@@ -66,15 +61,12 @@ public class MenuBar extends JMenuBar
 		editItem = new JMenuItem("Edit, Select All", KeyEvent.VK_A);
 		exitItem = new JMenuItem("Exit", KeyEvent.VK_E);
 		
-		/* init View's Menu Item */
-		zoomInItem = new JMenuItem("Zoom In", KeyEvent.VK_EQUALS);
-		zoomOutItem = new JMenuItem("Zoom Out", KeyEvent.VK_MINUS);
-		oriSize = new JMenuItem("Orginal Size",KeyEvent.VK_L);
-		oriPos = new JMenuItem("Orginal Position",KeyEvent.VK_K);
-		
 		/* init About's Menu Item */
 		aboutItem = new JMenuItem("About", KeyEvent.VK_A);
 		helpItem = new JMenuItem("Help", KeyEvent.VK_H);
+		
+		/* init View Menu */
+		view = new viewMenu();
 	}
 	
 	private void addMenuItem()
@@ -87,12 +79,6 @@ public class MenuBar extends JMenuBar
 		fileMenu.add(editItem);
 		fileMenu.add(exitItem);
 		
-		/* add View's Menu Item */
-		viewMenu.add(zoomInItem);
-		viewMenu.add(zoomOutItem);
-		viewMenu.add(oriSize);
-		viewMenu.add(oriPos);
-		
 		/* add About's Menu Item */
 		aboutMenu.add(aboutItem);
 		aboutMenu.add(helpItem);
@@ -101,7 +87,7 @@ public class MenuBar extends JMenuBar
 	private void addMenu()
 	{
 		add(fileMenu);
-		add(viewMenu);
+		add(view);
 		add(aboutMenu);
 	}
 	
@@ -114,12 +100,6 @@ public class MenuBar extends JMenuBar
 		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, keyMask));
 		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, keyMask));
-		
-		/* add View's Menu Item Accelerator */
-		zoomInItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,keyMask));
-		zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,keyMask));
-		oriSize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,keyMask));
-		oriPos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,keyMask));
 		
 		/* add About's Menu Item Accelerator */
 		helpItem.setAccelerator(KeyStroke.getKeyStroke('H', keyMask));
