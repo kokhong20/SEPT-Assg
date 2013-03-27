@@ -5,8 +5,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import Controller.ZoomInOutAction;
 
-public class viewMenu extends JMenu
+public class ViewMenu extends JMenu
 {
 	private static final long serialVersionUID = -1993241072473133182L;
 	
@@ -18,13 +19,16 @@ public class viewMenu extends JMenu
 	JMenuItem oriSize;
 	JMenuItem oriPos;
 	
-	public viewMenu ()
+	ZoomInOutAction zoomAction;
+	
+	public ViewMenu ()
 	{
 		super("View");
 		this.checkOS();
 		this.initMenu();
 		this.addMenu();
 		this.addAcceleractor();
+		this.buttonAvail(false);
 	}
 	
 	private void initMenu()
@@ -67,5 +71,28 @@ public class viewMenu extends JMenu
 		{
 			keyMask = Event.CTRL_MASK;
 		}
+	}
+	
+	public void setActionListener(ZoomInOutAction ac)
+	{
+		zoomInItem.addActionListener(ac);
+		zoomOutItem.addActionListener(ac);
+		oriSize.addActionListener(ac);
+		oriPos.addActionListener(ac);
+		zoomAction = ac;
+	}
+	
+	public void buttonAvail(boolean boo)
+	{
+		System.out.println(boo);
+		zoomInItem.setEnabled(boo);
+		zoomOutItem.setEnabled(boo);
+		oriSize.setEnabled(boo);
+		oriPos.setEnabled(boo);
+	}
+	
+	public void setDisplay(SVGDisplay panel)
+	{
+		zoomAction.setParentPane(panel);
 	}
 }

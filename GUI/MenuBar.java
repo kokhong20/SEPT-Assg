@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import Controller.MenuAction;
+import Controller.ZoomInOutAction;
 
 public class MenuBar extends JMenuBar
 {
@@ -33,7 +34,8 @@ public class MenuBar extends JMenuBar
 	JMenuItem helpItem;
 	
 	/* View's Menu init */
-	viewMenu view;
+	ViewMenu view;
+	MenuAction fileMenuAction;
 
 	public MenuBar(JDesktopPane desktopPane)
 	{
@@ -45,6 +47,7 @@ public class MenuBar extends JMenuBar
 		this.addAcceleractor();
 		this.addMenu();
 		this.addActionListener();
+		this.fileMenuAction.setMenuParent(this);
 	}
 
 	private void initMenuBar()
@@ -66,7 +69,7 @@ public class MenuBar extends JMenuBar
 		helpItem = new JMenuItem("Help", KeyEvent.VK_H);
 		
 		/* init View Menu */
-		view = new viewMenu();
+		view = new ViewMenu();
 	}
 	
 	private void addMenuItem()
@@ -107,8 +110,7 @@ public class MenuBar extends JMenuBar
 	
 	private void addActionListener()
 	{
-		MenuAction fileMenuAction = new MenuAction(desktopPane, fileMenu);
-		//MenuAction aboutMenuAction = new MenuAction(desktopPane, aboutMenu);
+		fileMenuAction = new MenuAction(desktopPane, fileMenu);
 		newItem.addActionListener(fileMenuAction);
 		openItem.addActionListener(fileMenuAction);
 		saveItem.addActionListener(fileMenuAction);
@@ -118,6 +120,9 @@ public class MenuBar extends JMenuBar
 		
 		MenuAction aboutMenuAction = new MenuAction(desktopPane, aboutMenu);
 		aboutItem.addActionListener(aboutMenuAction);
+		
+		ZoomInOutAction viewMenuAction = new ZoomInOutAction(view);
+		view.setActionListener(viewMenuAction);
 	}
 
 	private void checkOS()
@@ -134,5 +139,10 @@ public class MenuBar extends JMenuBar
 		{
 			keyMask = Event.CTRL_MASK;
 		}
+	}
+	
+	public ViewMenu getViewMenu()
+	{
+		return this.view;
 	}
 }

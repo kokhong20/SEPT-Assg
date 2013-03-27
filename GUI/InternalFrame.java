@@ -2,12 +2,10 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
-
 import Controller.IFFocusListener;
 import Controller.InternalFrameAction;
 import Controller.MoveAction;
@@ -28,6 +26,7 @@ public class InternalFrame extends JInternalFrame
 	
 	/* JScrollPane Item */
 	JScrollPane scrollPane;
+	IFFocusListener IFFocusAction;
 	
 	public InternalFrame(JDesktopPane desktopPane , String frameTitle)
 	{
@@ -76,11 +75,22 @@ public class InternalFrame extends JInternalFrame
 	{
 		InternalFrameAction svgFrameAction= new InternalFrameAction(this,svgPanel);
 		this.addInternalFrameListener(svgFrameAction);
-		this.addFocusListener(new IFFocusListener(this));
+		IFFocusAction = new IFFocusListener(this);
+		this.addFocusListener(IFFocusAction);
 	}
 	
 	public String getFrameTitle()
 	{
 		return frameTitle;
+	}
+	
+	public void setViewMenu(ViewMenu viewMenu)
+	{
+		IFFocusAction.setViewMenu(viewMenu);
+	}
+
+	public SVGDisplay getDisplay()
+	{
+		return svgPanel;
 	}
 }
