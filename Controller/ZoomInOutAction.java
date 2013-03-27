@@ -1,9 +1,12 @@
 package Controller;
 
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
+
 import GUI.SVGDisplay;
 
 public class ZoomInOutAction implements ActionListener
@@ -43,6 +46,7 @@ public class ZoomInOutAction implements ActionListener
 		{
 			svgDisplayPanel.setXPosition(0);
 			svgDisplayPanel.setYPosition(0);
+			svgDisplayPanel.setLocation(new Point((int)svgDisplayPanel.getXPosition(), (int)svgDisplayPanel.getYPosition()));
 			svgDisplayPanel.repaint();
 		}	
 	} 

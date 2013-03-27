@@ -7,26 +7,22 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.JViewport;
-
 import GUI.SVGDisplay;
 //import Model.Rectangles;
 
 public class MoveAction implements MouseListener, MouseMotionListener, MouseWheelListener{
 
 	private SVGDisplay display;
-	private JViewport port;
 	
-	public MoveAction(JViewport port, SVGDisplay svgPanel) {
+	public MoveAction(SVGDisplay svgPanel) {
 		// TODO Auto-generated constructor stub
-		this.port = port;
 		this.display = svgPanel;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		this.port.setLocation(e.getX(), e.getY());
+		this.display.setLocation(e.getX(), e.getY());
 	}
 
 	@Override

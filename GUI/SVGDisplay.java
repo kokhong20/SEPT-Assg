@@ -11,8 +11,9 @@ import java.awt.geom.Line2D;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-import javax.swing.JPanel;
+import javax.swing.JViewport;
 
+import Controller.MoveAction;
 import Controller.SVGRender;
 import Model.Circles;
 import Model.Drawings;
@@ -20,7 +21,7 @@ import Model.Lines;
 import Model.Rectangles;
 import Model.Shapes;
 
-public class SVGDisplay extends JPanel
+public class SVGDisplay extends JViewport
 {
 	/**
 	 * 
@@ -42,10 +43,7 @@ public class SVGDisplay extends JPanel
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
-		this.yPosition =0;
-		
-		//this.addMouseListener(new SVGMouseAction(this));
-		//this.addMouseMotionListener(new SVGMouseAction(this));
+		this.yPosition = 0;
 	}
 	
 	// Constructor is used when existing SVG is opened
@@ -53,14 +51,16 @@ public class SVGDisplay extends JPanel
 	{
 		this.render = render;
 		this.drawCollection = this.render.getDrawings();
-		
+
+		this.addMouseListener(new MoveAction(this));
+		this.addMouseMotionListener(new MoveAction(this));
+		this.addMouseWheelListener(new MoveAction(this));
+				
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
-		this.yPosition =0;
+		this.yPosition = 0;
 		
-		//this.addMouseMotionListener(new SVGMouseAction(this));
-		//this.addMouseListener(new SVGMouseAction(this));
 		this.setFocusable(true);
 	}
 
