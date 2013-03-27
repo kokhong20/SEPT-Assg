@@ -156,4 +156,5 @@ public class SVGDisplay extends JPanel
 	{
 		return this.render;
 	}
+	
 }

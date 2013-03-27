@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
+import Controller.IFFocusListener;
 import Controller.InternalFrameAction;
 
 public class InternalFrame extends JInternalFrame 
@@ -15,6 +16,7 @@ public class InternalFrame extends JInternalFrame
 	
 	JDesktopPane desktopPane;
 	SVGDisplay svgPanel;
+	String frameTitle;
 	
 	/* Internal Frame Item */
 	JInternalFrame internalFrame;
@@ -23,6 +25,7 @@ public class InternalFrame extends JInternalFrame
 	public InternalFrame(JDesktopPane desktopPane , String frameTitle)
 	{
 		this.desktopPane = desktopPane;
+		this.frameTitle = frameTitle;
 		initInternalFrame(frameTitle);
 	}
 	
@@ -30,8 +33,13 @@ public class InternalFrame extends JInternalFrame
 	{
 		this.desktopPane = desktopPane;
 		this.svgPanel = svgPanel;
+		this.frameTitle = frameTitle;
 		initInternalFrame(frameTitle);
+		this.setFocusable(true);
+		this.requestFocus();
 		this.addActionListener();
+		this.addFocusListener(new IFFocusListener(this));
+		System.out.println("abccc");
 	}
 	
 	private void initInternalFrame(String frameTitle)
@@ -46,6 +54,10 @@ public class InternalFrame extends JInternalFrame
 		this.addInternalFrameListener(svgFrameAction);
 	}
 	
+	public String getFrameTitle()
+	{
+		return frameTitle;
+	}
 	
 	
 

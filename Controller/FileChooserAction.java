@@ -20,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
+import GUI.InternalFrame;
 import GUI.SVGDisplay;
 import Model.modelMain;
 
@@ -59,8 +60,7 @@ public class FileChooserAction implements ActionListener
 			JScrollPane scrollPane = new JScrollPane(display, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			display.setPreferredSize(display.getRender().getPreferredSize());
-			JInternalFrame svgInternal = new JInternalFrame(selectedFile.getName(), true, true, true, true);
-			svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, display));
+			InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
 			
 			//Determine Key Mask
 			if (System.getProperty("os.name").equals("Mac OS X"))

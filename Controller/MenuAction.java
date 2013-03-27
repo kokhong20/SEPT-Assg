@@ -1,5 +1,6 @@
 package Controller;
 
+import GUI.InternalFrame;
 import GUI.SVGDisplay;
 
 import java.awt.BorderLayout;
@@ -28,7 +29,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MenuAction implements ActionListener 
 {
 	private JFileChooser fileChooser;
-	private JInternalFrame fcInternal;
+	private InternalFrame fcInternal;
 	private JDesktopPane desktopPane;
 	private JMenu menu;
 	private int keyMask;
@@ -126,7 +127,7 @@ public class MenuAction implements ActionListener
 			// Open new SVG
 			else if (e.getSource() == itemArray[1]) 
 			{	
-				fcInternal = new JInternalFrame("Open", true, true, true, true);
+				fcInternal = new InternalFrame(this.desktopPane,"Open");
 				fileChooser = new JFileChooser();
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
