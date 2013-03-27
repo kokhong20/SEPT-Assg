@@ -1,12 +1,9 @@
 package Controller;
 
-import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyVetoException;
 import java.io.File;
 
 import javax.swing.JDesktopPane;
@@ -98,25 +95,5 @@ public class FileChooserAction implements ActionListener
 			svgInternal.pack();
 			this.desktopPane.add(svgInternal);
 			svgInternal.setVisible(true);
-			
-			Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-			if((toolkit.getScreenSize().height <= display.getPreferredSize().height)
-					|| (toolkit.getScreenSize().width <= display.getPreferredSize().width))
-			{
-					try {
-						svgInternal.setMaximum(true);
-					} catch (PropertyVetoException pve) {
-						// TODO Auto-generated catch block
-						pve.printStackTrace();
-					}
-			}
-			
-			else if(svgInternal.getSize().equals(new Dimension(0,0)))
-			{
-				svgInternal.setSize(500,500);
-			}
-			else
-				svgInternal.setSize(display.getPreferredSize());
-		
 	}
 }

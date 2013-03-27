@@ -1,4 +1,6 @@
 package Model;
+import java.awt.Color;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -6,6 +8,10 @@ public class SVGTag
 {
 	private double width;
 	private double height;
+	private Color stroke;
+	private Color fill;
+	private double strokeWidth;
+	
 	private Node node;
 	
 	public SVGTag()
@@ -28,6 +34,16 @@ public class SVGTag
 		return this.width;
 	}
 	
+	public void setStrokeWidth(double strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+	}
+	
+	public double getStrokeWidth()
+	{
+		return this.strokeWidth;
+	}
+	
 	public void setHeight(double height)
 	{
 		this.height = height;
@@ -36,6 +52,26 @@ public class SVGTag
 	public double getHeight()
 	{
 		return this.height;
+	}
+	
+	public Color getFill()
+	{
+		return this.fill;
+	}
+	
+	public void setFill(Color color)
+	{
+		this.fill = color;
+	}
+
+	public Color getStroke()
+	{
+		return this.stroke;
+	}
+	
+	public void setStroke(Color color)
+	{
+		this.stroke = color;
 	}
 	
 	public void setNode(Node node)
@@ -48,7 +84,7 @@ public class SVGTag
 		return this.node;
 	}
 	
-	public void setSVGWidthAndHeight()
+	public void setSVGAttr()
 	{
 		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
@@ -63,6 +99,10 @@ public class SVGTag
 				this.setHeight(Units.setUnit(eNode.getAttribute("height")));
 			else
 				this.setHeight(500);
+
+			this.setStrokeWidth(Units.setUnit(eNode.getAttribute("stroke-width")));
+			this.setFill(Coloring.setColor(eNode.getAttribute("fill")));
+			this.setStroke(Coloring.setColor(eNode.getAttribute("stroke")));
 		}
 	}
 

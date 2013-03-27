@@ -71,7 +71,7 @@ public class SVGReader
 			//Processing SVG tag
 			Node svg = doc.getElementsByTagName("svg").item(0);
 			svgElement = new SVGTag(svg);
-			svgElement.setSVGWidthAndHeight();
+			svgElement.setSVGAttr();
 			
 			NodeList drawList = svg.getChildNodes();
 			for (int index = 0; index < drawList.getLength(); index++)
