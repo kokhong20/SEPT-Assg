@@ -1,17 +1,11 @@
 package Controller;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-import javax.swing.JScrollPane;
 import GUI.InternalFrame;
 import GUI.SVGDisplay;
 import GUI.ViewMenu;
@@ -52,6 +46,7 @@ public class FileChooserAction implements ActionListener
 		SVGDisplay display = new SVGDisplay(new SVGRender(mMain.setPath(path, selectedFile)));
 		display.setPreferredSize(display.getRender().getPreferredSize());
 		InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
+		svgInternal.setViewMenu(viewMenu);
 	}
 	
 	public void setParentPane(JDesktopPane desktopPane)

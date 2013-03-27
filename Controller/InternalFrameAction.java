@@ -10,13 +10,13 @@ import GUI.SVGDisplay;
 public class InternalFrameAction implements InternalFrameListener
 {
 	private InternalFrame internalFrame;
-	private SVGDisplay display;
+	//private SVGDisplay display;
 
 	public InternalFrameAction(InternalFrame svgInternal, SVGDisplay display) 
 	{
 		// TODO Auto-generated constructor stub
 		this.internalFrame = svgInternal;
-		this.display = display;	
+		//this.display = display;	
 	}
 
 	@Override
