@@ -34,7 +34,7 @@ public class SVGDisplay extends JPanel
 	private double yPosition;
 	private LinkedHashSet<Drawings> drawCollection;
 
-	// Cosntructor is used when new SVG is created
+	// Constructor is used when new SVG is created
 	public SVGDisplay() 
 	{
 		// TODO Auto-generated constructor stub
