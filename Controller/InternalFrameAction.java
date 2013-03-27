@@ -1,18 +1,19 @@
 package Controller;
 
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+
+import GUI.InternalFrame;
 import GUI.SVGDisplay;
 import Model.SVGSaver;
 
 public class InternalFrameAction implements InternalFrameListener
 {
-	private JInternalFrame internalFrame;
+	private InternalFrame internalFrame;
 	private SVGDisplay display;
 
-	public InternalFrameAction(JInternalFrame svgInternal, SVGDisplay display) 
+	public InternalFrameAction(InternalFrame svgInternal, SVGDisplay display) 
 	{
 		// TODO Auto-generated constructor stub
 		this.internalFrame = svgInternal;

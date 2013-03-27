@@ -34,7 +34,7 @@ public class SVGReader
 		try
 		{
 			fXmlFile = new File(dir);
-
+			
 			dbFactory.setNamespaceAware(true);		
 
 			dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
@@ -177,27 +177,6 @@ public class SVGReader
 	public SVGTag getSVGElement()
 	{
 		return svgElement;
-	}
-
-	// If no line, return NodeList with 0 length, 
-	// else return NodeList containing all rect tags 
-	public NodeList getRects(Document doc)
-	{
-		return doc.getElementsByTagName("rect");
-	}
-
-	// If no line, return NodeList with 0 length, 
-	// else return NodeList containing all circle tags 
-	public NodeList getCircles(Document doc)
-	{
-		return doc.getElementsByTagName("circle");
-	}
-
-	// If no line, return NodeList with 0 length, 
-	// else return NodeList containing all line tags 
-	public NodeList getLines(Document doc)
-	{
-		return doc.getElementsByTagName("line");
 	}
 
 	public LinkedHashSet<Drawings> getDrawings()

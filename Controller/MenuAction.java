@@ -85,6 +85,9 @@ public class MenuAction implements ActionListener
 				viewMenu.add(backOrginalPosition);
 				menuBar.add(viewMenu);
 				svgInternal.setJMenuBar(menuBar);
+				svgInternal.pack();
+				svgInternal.setVisible(true);
+				this.desktopPane.add(svgInternal);
 
 				ZoomInOutAction zoomAction = new ZoomInOutAction(display, viewMenu);
 				zoomIn.addActionListener(zoomAction);

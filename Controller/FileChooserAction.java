@@ -53,7 +53,8 @@ public class FileChooserAction implements ActionListener
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
 			
-			SVGDisplay display = new SVGDisplay(new SVGRender(modelMain.setPath(path, selectedFile)));
+			modelMain mMain = new modelMain();
+			SVGDisplay display = new SVGDisplay(new SVGRender(mMain.setPath(path, selectedFile)));
 			display.setPreferredSize(display.getRender().getPreferredSize());
 			InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
 			

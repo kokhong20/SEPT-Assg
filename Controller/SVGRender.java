@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import Model.SVGReader;
 import Model.Drawings;
 
-public class SVGRender {
-
+public class SVGRender 
+{
 	private SVGReader reader;
 	private String path;
 	private Dimension svgDimension;
@@ -30,6 +30,8 @@ public class SVGRender {
 		this.drawCollection = this.reader.getDrawings();
 		this.path = path;
 	}
+	
+
 	
 	public LinkedHashSet<Drawings> getDrawings()
 	{

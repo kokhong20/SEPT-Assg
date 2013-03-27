@@ -46,7 +46,7 @@ public class InternalFrame extends JInternalFrame
 		initScrollPane(svgPanel);
 		this.setFocusable(true);
 		this.requestFocus();
-		this.addActionListener();
+		this.addActionListener(svgPanel);
 	}
 	
 	private void initInternalFrame(String frameTitle)
@@ -61,7 +61,7 @@ public class InternalFrame extends JInternalFrame
 		this.add(scrollPane, BorderLayout.CENTER);	
 	}
 	
-	private void addActionListener()
+	private void addActionListener(SVGDisplay svgPanel)
 	{
 		InternalFrameAction svgFrameAction= new InternalFrameAction(this,svgPanel);
 		this.addInternalFrameListener(svgFrameAction);

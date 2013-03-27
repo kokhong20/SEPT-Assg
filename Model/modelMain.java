@@ -4,19 +4,16 @@ import java.io.File;
 
 public class modelMain
 {
+	String cmdFileName;
+	
 	public modelMain()
 	{
 
 	}
 
 	// handle command line argument
-	public static void cmdLine(String []s)
-	{
-		SVGReader reader = new SVGReader();
-		reader.setDoc(s[0]);
-	}
 
-	public static String setPath(String path, File selectedFile)
+	public String setPath(String path, File selectedFile)
 	{	
 		if(path.endsWith(":\\"))
 		{
@@ -38,5 +35,17 @@ public class modelMain
 		}
 
 		return path;
+	}
+
+
+	// handle command line argument
+	public String getCmdFileName() 
+	{
+		return cmdFileName;
+	}
+
+	public void setCmdFileName(String cmdFileName) 
+	{
+		this.cmdFileName=cmdFileName;
 	}
 }

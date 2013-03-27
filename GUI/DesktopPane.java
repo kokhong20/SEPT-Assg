@@ -36,4 +36,9 @@ public class DesktopPane extends JFrame
 		setJMenuBar(menuBar);
 		add(desktopPane);
 	}
+	
+	public JDesktopPane getDesktopPane()
+	{
+		return desktopPane;
+	}
 }
