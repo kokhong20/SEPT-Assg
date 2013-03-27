@@ -40,6 +40,7 @@ public class SVGDisplay extends JPanel
 		// TODO Auto-generated constructor stub
 		this.render = new SVGRender();
 		this.drawCollection = new LinkedHashSet<Drawings>();
+
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
@@ -54,10 +55,6 @@ public class SVGDisplay extends JPanel
 	{
 		this.render = render;
 		this.drawCollection = this.render.getDrawings();
-
-		this.setSize(this.render.getPreferredSize());
-		this.setMinimumSize(this.render.getPreferredSize());
-		this.setMaximumSize(this.render.getPreferredSize());
 		
 		this.setBackground(Color.white);
 		this.zoomScale = 1;

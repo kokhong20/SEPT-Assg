@@ -100,9 +100,9 @@ public class SVGTag
 			else
 				this.setHeight(500);
 
-//			this.setStrokeWidth(Units.setUnit(eNode.getAttribute("stroke-width")));
-//			this.setFill(Coloring.setColor(eNode.getAttribute("fill")));
-//			this.setStroke(Coloring.setColor(eNode.getAttribute("stroke")));
+			this.setStrokeWidth(Units.setUnit(eNode.getAttribute("stroke-width")));
+			this.setFill(Coloring.setColor(eNode.getAttribute("fill")));
+			this.setStroke(Coloring.setColor(eNode.getAttribute("stroke")));
 		}
 	}
 
