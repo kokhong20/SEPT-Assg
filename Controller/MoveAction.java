@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JViewport;
 
 import GUI.SVGDisplay;
 import Model.Rectangles;
 
-public class MoveAction implements MouseListener, MouseMotionListener{
+public class MoveAction implements MouseListener, MouseMotionListener, MouseWheelListener{
 
 	private SVGDisplay display;
 	private JViewport port;
@@ -24,8 +26,7 @@ public class MoveAction implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		this.port.setLocation(e.getPoint());
-		System.out.println("dragging");
+		this.port.setLocation(e.getX(), e.getY());
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class MoveAction implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -77,4 +78,15 @@ public class MoveAction implements MouseListener, MouseMotionListener{
 		
 	}
 
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+		if(e.isControlDown())
+		{
+			if(e.getWheelRotation() < 0)
+				this.display.setZoomScale(this.display.getZoomScale() * 2);
+			else
+				this.display.setZoomScale( this.display.getZoomScale() * 0.5);
+		}
+	}
 }

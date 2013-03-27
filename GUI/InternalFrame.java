@@ -63,6 +63,7 @@ public class InternalFrame extends JInternalFrame
 		port.setView(svgPanel);
 		port.addMouseListener(new MoveAction(port, svgPanel));
 		port.addMouseMotionListener(new MoveAction(port, svgPanel));
+		port.addMouseWheelListener(new MoveAction(port, svgPanel));
 		//
 		
 		scrollPane = new JScrollPane(port, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

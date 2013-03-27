@@ -123,6 +123,7 @@ public class SVGDisplay extends JPanel
 	public void setZoomScale(double zoomScale)
 	{
 		this.zoomScale = zoomScale;
+		repaint();
 	}
 
 	public double getZoomScale()
