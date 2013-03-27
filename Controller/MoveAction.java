@@ -1,6 +1,6 @@
 package Controller;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -10,7 +10,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JViewport;
 
 import GUI.SVGDisplay;
-import Model.Rectangles;
+//import Model.Rectangles;
 
 public class MoveAction implements MouseListener, MouseMotionListener, MouseWheelListener{
 
@@ -41,7 +41,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		
 		// Testing that location point works even though svg is panned,
 		// earlier doesn't follow exact location point
-		Rectangles rect = new Rectangles();
+		/*Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -51,7 +51,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		rect.setY(e.getY());
 		this.display.getRender().getDrawings().add(rect);
 		this.display.repaint();
-		System.out.println("Clicked");
+		System.out.println("Clicked");*/
 		
 	}
 
