@@ -11,16 +11,14 @@ public class ZoomInOutAction implements ActionListener
 	private SVGDisplay svgDisplayPanel;
 	private Component [] itemArray;
 	
-	public ZoomInOutAction(SVGDisplay panel, JMenu menu)
+	public ZoomInOutAction(JMenu menu)
 	{
-		this.svgDisplayPanel = panel;
 		this.itemArray = menu.getMenuComponents();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		
 		if(e.getSource() == itemArray[0])
 		{
 			svgDisplayPanel.setZoomScale(svgDisplayPanel.getZoomScale()*1.1);
@@ -47,5 +45,10 @@ public class ZoomInOutAction implements ActionListener
 			svgDisplayPanel.setYPosition(0);
 			svgDisplayPanel.repaint();
 		}	
+	} 
+	
+	public void setParentPane(SVGDisplay panel)
+	{
+		this.svgDisplayPanel = panel;
 	}
 }

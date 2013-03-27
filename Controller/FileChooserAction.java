@@ -1,21 +1,20 @@
 package Controller;
 
-import java.awt.Event;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
+import javax.swing.JScrollPane;
 import GUI.InternalFrame;
 import GUI.SVGDisplay;
+import GUI.ViewMenu;
 import Model.modelMain;
 
 public class FileChooserAction implements ActionListener
@@ -23,77 +22,45 @@ public class FileChooserAction implements ActionListener
 	private JDesktopPane desktopPane;
 	private JInternalFrame fcInternal;
 	private JFileChooser fileChooser;
-	private int keyMask;
-	
-	public FileChooserAction(JDesktopPane desktopPane, JInternalFrame fcInternal, JFileChooser fileChooser)
+	private ViewMenu viewMenu;
+
+	public FileChooserAction(JInternalFrame fcInternal, JFileChooser fileChooser)
 	{
-		this.desktopPane = desktopPane;
 		this.fcInternal = fcInternal;
 		this.fileChooser = fileChooser;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		String path;
-		
+
 		if (e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION)) 
 		{
 			this.fcInternal.setVisible(false);
 			this.fcInternal.dispose();
 			return;
 		}
-		
-			File selectedFile = this.fileChooser.getSelectedFile();
-			path = this.fileChooser.getCurrentDirectory().toString() ;
-			
-			this.fcInternal.setVisible(false);
-			this.fcInternal.dispose();
-			
-			modelMain mMain = new modelMain();
-			SVGDisplay display = new SVGDisplay(new SVGRender(mMain.setPath(path, selectedFile)));
-			display.setPreferredSize(display.getRender().getPreferredSize());
-			InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
-			
-			//Determine Key Mask
-			if (System.getProperty("os.name").equals("Mac OS X"))
-			{
-				// Mac OS command
-				keyMask = Event.META_MASK;
-			}
-			
-			// Window OS
-			else
-			{
-				keyMask = Event.CTRL_MASK;
-			}
-			
-			// Zoom In Zoom Out 
-			JMenuBar menuBar = new JMenuBar();
-			JMenu viewMenu = new JMenu("View");
-			JMenuItem zoomIn = new JMenuItem("Zoom In",KeyEvent.VK_EQUALS);
-			zoomIn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS,keyMask));
-			JMenuItem zoomOut = new JMenuItem("Zoom Out",KeyEvent.VK_MINUS);
-			zoomOut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,keyMask));
-			JMenuItem backOriginalSize = new JMenuItem("Orginal Size",KeyEvent.VK_L);
-			backOriginalSize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L,keyMask));
-			JMenuItem backOrginalPosition = new JMenuItem("Orginal Position",KeyEvent.VK_K);
-			backOrginalPosition.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K,keyMask));
-			viewMenu.add(zoomIn);
-			viewMenu.add(zoomOut);
-			viewMenu.add(backOriginalSize);
-			viewMenu.add(backOrginalPosition);
-			menuBar.add(viewMenu);
-			svgInternal.setJMenuBar(menuBar);
-			
-			ZoomInOutAction zoomAction = new ZoomInOutAction(display, viewMenu);
-			zoomIn.addActionListener(zoomAction);
-			zoomOut.addActionListener(zoomAction);
-			backOriginalSize.addActionListener(zoomAction);
-			backOrginalPosition.addActionListener(zoomAction);
-			
-			svgInternal.pack();
-			this.desktopPane.add(svgInternal);
-			svgInternal.setVisible(true);
+
+		File selectedFile = this.fileChooser.getSelectedFile();
+		path = this.fileChooser.getCurrentDirectory().toString() ;
+
+		this.fcInternal.setVisible(false);
+		this.fcInternal.dispose();
+
+		modelMain mMain = new modelMain();
+		SVGDisplay display = new SVGDisplay(new SVGRender(mMain.setPath(path, selectedFile)));
+		display.setPreferredSize(display.getRender().getPreferredSize());
+		InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
+	}
+	
+	public void setParentPane(JDesktopPane desktopPane)
+	{
+		this.desktopPane = desktopPane;
+	}
+	
+	public void activeViewMenu(ViewMenu viewMenu)
+	{
+		this.viewMenu = viewMenu;
 	}
 }

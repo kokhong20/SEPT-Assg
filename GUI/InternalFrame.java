@@ -83,6 +83,4 @@ public class InternalFrame extends JInternalFrame
 	{
 		return frameTitle;
 	}
-	
-
 }
