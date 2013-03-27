@@ -7,7 +7,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +15,10 @@ import java.beans.PropertyVetoException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -55,25 +52,22 @@ public class MenuAction implements ActionListener
 			if (e.getSource() == itemArray[0]) 
 			{		
 				SVGDisplay display = new SVGDisplay(new SVGRender());
-				JScrollPane scrollPane = new JScrollPane(display, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				scrollPane.setBounds(new Rectangle(10,10,100,100));
 				display.setPreferredSize(display.getRender().getPreferredSize());
-				JInternalFrame svgInternal = new JInternalFrame("New", true, true, true, true);
-				svgInternal.addInternalFrameListener(new InternalFrameAction(svgInternal, display));
-				
+				InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,"New");
+
 				//Determine Key Mask
 				if (System.getProperty("os.name").equals("Mac OS X"))
 				{
 					// Mac OS command
 					keyMask = Event.META_MASK;
 				}
-				
+
 				// Window OS
 				else
 				{
 					keyMask = Event.CTRL_MASK;
 				}
-				
+
 				// Zoom In Zoom Out 
 				JMenuBar menuBar = new JMenuBar();
 				JMenu viewMenu = new JMenu("View");
@@ -91,37 +85,33 @@ public class MenuAction implements ActionListener
 				viewMenu.add(backOrginalPosition);
 				menuBar.add(viewMenu);
 				svgInternal.setJMenuBar(menuBar);
-				
+
 				ZoomInOutAction zoomAction = new ZoomInOutAction(display, viewMenu);
 				zoomIn.addActionListener(zoomAction);
 				zoomOut.addActionListener(zoomAction);
 				backOriginalSize.addActionListener(zoomAction);
 				backOrginalPosition.addActionListener(zoomAction);
-				
-				svgInternal.add(scrollPane, BorderLayout.CENTER);
-				svgInternal.pack();
-				this.desktopPane.add(svgInternal);
-				svgInternal.setVisible(true);
-				
+
+
 				Toolkit toolkit =  Toolkit.getDefaultToolkit ();
 				if((toolkit.getScreenSize().height <= display.getPreferredSize().height)
 						|| (toolkit.getScreenSize().width <= display.getPreferredSize().width))
 				{
-						try {
-							svgInternal.setMaximum(true);
-						} catch (PropertyVetoException pve) {
-							// TODO Auto-generated catch block
-							pve.printStackTrace();
-						}
+					try {
+						svgInternal.setMaximum(true);
+					} catch (PropertyVetoException pve) {
+						// TODO Auto-generated catch block
+						pve.printStackTrace();
+					}
 				}
-				
+
 				else if(svgInternal.getSize().equals(new Dimension(0,0)))
 				{
 					svgInternal.setSize(500,500);
 				}
 				else
 					svgInternal.setSize(display.getPreferredSize());
-			
+
 			}
 
 			// Open new SVG
@@ -130,9 +120,11 @@ public class MenuAction implements ActionListener
 				fcInternal = new InternalFrame(this.desktopPane,"Open");
 				fileChooser = new JFileChooser();
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
 				FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
 				FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
 				FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
+
 				fileChooser.setAcceptAllFileFilterUsed(false);
 				fileChooser.setFileFilter(xmlFilter);
 				fileChooser.setFileFilter(svgFilter);
@@ -175,7 +167,7 @@ public class MenuAction implements ActionListener
 				}
 			}
 		}
-		
+
 		else if (menu.getText().equals("About"))
 		{
 			if (e.getSource() == itemArray[0])

@@ -1,9 +1,7 @@
 package Controller;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +15,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
 import GUI.InternalFrame;
@@ -57,8 +54,6 @@ public class FileChooserAction implements ActionListener
 			this.fcInternal.dispose();
 			
 			SVGDisplay display = new SVGDisplay(new SVGRender(modelMain.setPath(path, selectedFile)));
-			JScrollPane scrollPane = new JScrollPane(display, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			scrollPane.setBounds(new Rectangle(10,10,100,100));
 			display.setPreferredSize(display.getRender().getPreferredSize());
 			InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
 			
@@ -99,7 +94,6 @@ public class FileChooserAction implements ActionListener
 			backOriginalSize.addActionListener(zoomAction);
 			backOrginalPosition.addActionListener(zoomAction);
 			
-			svgInternal.add(scrollPane, BorderLayout.CENTER);
 			svgInternal.pack();
 			this.desktopPane.add(svgInternal);
 			svgInternal.setVisible(true);

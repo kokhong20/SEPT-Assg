@@ -11,6 +11,8 @@ public class DesktopPane extends JFrame
 	/**
 	 * 
 	 */
+	
+	MenuBar menuBar;
 	private static final long serialVersionUID = 273712589857804924L;
 	JDesktopPane desktopPane;
 	public int keyMask = 0;

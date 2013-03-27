@@ -3,8 +3,6 @@ package Controller;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JInternalFrame;
-
 import GUI.InternalFrame;
 
 public class IFFocusListener implements FocusListener
