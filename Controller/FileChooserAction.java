@@ -47,6 +47,9 @@ public class FileChooserAction implements ActionListener
 		display.setPreferredSize(display.getRender().getPreferredSize());
 		InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,selectedFile.getName());
 		svgInternal.setViewMenu(viewMenu);
+		svgInternal.pack();
+		this.desktopPane.add(svgInternal);
+		svgInternal.setVisible(true);
 	}
 	
 	public void setParentPane(JDesktopPane desktopPane)
