@@ -51,7 +51,7 @@ public class MenuAction implements ActionListener
 			// Create new SVG
 			if (e.getSource() == itemArray[0]) 
 			{		
-				SVGDisplay display = new SVGDisplay(new SVGRender());
+				/*SVGDisplay display = new SVGDisplay(new SVGRender());
 				display.setPreferredSize(display.getRender().getPreferredSize());
 				InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,"New");
 
@@ -114,7 +114,7 @@ public class MenuAction implements ActionListener
 				}
 				else
 					svgInternal.setSize(display.getPreferredSize());
-
+				*/
 			}
 
 			// Open new SVG

@@ -6,7 +6,6 @@ import javax.swing.event.InternalFrameListener;
 
 import GUI.InternalFrame;
 import GUI.SVGDisplay;
-import Model.SVGSaver;
 
 public class InternalFrameAction implements InternalFrameListener
 {
@@ -45,7 +44,7 @@ public class InternalFrameAction implements InternalFrameListener
 		if (dialogButton == 0)
 		{
 			System.out.println("save");
-			new SVGSaver(display.getRender().getDrawings(), display.getRender().getPath());
+			//new SVGSaver(display.getRender().getDrawings(), display.getRender().getPath());
 			this.internalFrame.dispose();
 		}
 		

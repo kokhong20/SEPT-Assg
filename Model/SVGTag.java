@@ -8,9 +8,9 @@ public class SVGTag
 {
 	private double width;
 	private double height;
-	private Color stroke;
-	private Color fill;
-	private double strokeWidth;
+	//private Color stroke;
+	//private Color fill;
+	//private double strokeWidth;
 	
 	private Node node;
 	
@@ -34,7 +34,7 @@ public class SVGTag
 		return this.width;
 	}
 	
-	public void setStrokeWidth(double strokeWidth)
+	/*public void setStrokeWidth(double strokeWidth)
 	{
 		this.strokeWidth = strokeWidth;
 	}
@@ -42,7 +42,7 @@ public class SVGTag
 	public double getStrokeWidth()
 	{
 		return this.strokeWidth;
-	}
+	}*/
 	
 	public void setHeight(double height)
 	{
@@ -54,7 +54,7 @@ public class SVGTag
 		return this.height;
 	}
 	
-	public Color getFill()
+	/*public Color getFill()
 	{
 		return this.fill;
 	}
@@ -72,7 +72,7 @@ public class SVGTag
 	public void setStroke(Color color)
 	{
 		this.stroke = color;
-	}
+	}*/
 	
 	public void setNode(Node node)
 	{
@@ -100,9 +100,9 @@ public class SVGTag
 			else
 				this.setHeight(500);
 
-			this.setStrokeWidth(Units.setUnit(eNode.getAttribute("stroke-width")));
-			this.setFill(Coloring.setColor(eNode.getAttribute("fill")));
-			this.setStroke(Coloring.setColor(eNode.getAttribute("stroke")));
+			//this.setStrokeWidth(Units.setUnit(eNode.getAttribute("stroke-width")));
+			//this.setFill(Coloring.setColor(eNode.getAttribute("fill")));
+			//this.setStroke(Coloring.setColor(eNode.getAttribute("stroke")));
 		}
 	}
 
