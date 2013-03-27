@@ -21,7 +21,7 @@ public class mainStart
 		{
 			modelMain mMain = new modelMain();
 			mMain.setCmdFileName(args[0]);
-			CmdArgumentHandle cmdArgHandle = new CmdArgumentHandle(dp.getDesktopPane(),mMain);
+			CmdArgumentHandle cmdArgHandle = new CmdArgumentHandle(dp.getDesktopPane(),dp.getViewMenu(),mMain);
 			cmdArgHandle.initSVGDisplay();
 		}
 	}

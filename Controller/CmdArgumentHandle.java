@@ -8,25 +8,28 @@ import javax.swing.JDesktopPane;
 
 import GUI.InternalFrame;
 import GUI.SVGDisplay;
+import GUI.ViewMenu;
 import Model.modelMain;
 
 public class CmdArgumentHandle 
 {
 	private JDesktopPane desktopPane;
 	private modelMain mMain;
+	private ViewMenu viewMenu;
 	
-	public CmdArgumentHandle(JDesktopPane desktopPane,modelMain mMain)
+	public CmdArgumentHandle(JDesktopPane desktopPane,ViewMenu viewMenu,modelMain mMain)
 	{
 		this.desktopPane = desktopPane;
 		this.mMain = mMain;
+		this.viewMenu = viewMenu;
 	}
 	
 	public void initSVGDisplay()
 	{
-		System.out.println("abcadasd"+mMain.getCmdFileName());
 		SVGDisplay display = new SVGDisplay(new SVGRender(mMain.getCmdFileName()));
 		display.setPreferredSize(display.getRender().getPreferredSize());
 		InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,mMain.getCmdFileName());
+		svgInternal.setViewMenu(viewMenu);
 		svgInternal.pack();
 		this.desktopPane.add(svgInternal);
 		svgInternal.setVisible(true);

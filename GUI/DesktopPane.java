@@ -46,4 +46,9 @@ public class DesktopPane extends JFrame
 	{
 		return desktopPane;
 	}
+	
+	public ViewMenu getViewMenu()
+	{
+		return menuBar.getViewMenu();
+	}
 }
