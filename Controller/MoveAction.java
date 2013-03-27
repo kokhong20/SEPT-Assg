@@ -1,6 +1,8 @@
 package Controller;
 
-//import java.awt.Color;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -8,11 +10,15 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import GUI.SVGDisplay;
-//import Model.Rectangles;
+import Model.Rectangles;
 
 public class MoveAction implements MouseListener, MouseMotionListener, MouseWheelListener{
 
 	private SVGDisplay display;
+	private int initialMouseX;
+	private int initialMouseY;
+	private int changeX;
+	private int changeY;
 	
 	public MoveAction(SVGDisplay svgPanel) {
 		// TODO Auto-generated constructor stub
@@ -22,7 +28,16 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		this.display.setLocation(e.getX(), e.getY());
+		//this.display.setLocation(e.getX(), e.getY());		
+		this.display.setXPosition((double)this.display.getXPosition() + changeX);
+		this.display.setYPosition((double)this.display.getYPosition() + changeY);
+		this.display.setViewPosition(new Point((int)this.display.getXPosition(), (int)this.display.getYPosition()));
+		changeX = e.getX() - initialMouseX;
+		changeY = e.getY() - initialMouseY;
+		initialMouseX = e.getX();
+		initialMouseY = e.getY();
+		
+		this.display.repaint();
 	}
 
 	@Override
@@ -37,7 +52,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		
 		// Testing that location point works even though svg is panned,
 		// earlier doesn't follow exact location point
-		/*Rectangles rect = new Rectangles();
+		Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -47,7 +62,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		rect.setY(e.getY());
 		this.display.getRender().getDrawings().add(rect);
 		this.display.repaint();
-		System.out.println("Clicked");*/
+		System.out.println("Clicked");
 		
 	}
 
@@ -66,6 +81,9 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
+		initialMouseX = e.getX();
+		initialMouseY = e.getY();
+		this.display.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 
 	@Override

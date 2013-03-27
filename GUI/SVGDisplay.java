@@ -56,6 +56,10 @@ public class SVGDisplay extends JViewport
 		this.addMouseMotionListener(new MoveAction(this));
 		this.addMouseWheelListener(new MoveAction(this));
 				
+		//this.setScrollMode(JViewport.BLIT_SCROLL_MODE); 
+		//this.setScrollMode(JViewport.BACKINGSTORE_SCROLL_MODE); 
+		this.setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
+		
 		this.setBackground(Color.white);
 		this.zoomScale = 1;
 		this.xPosition = 0;
