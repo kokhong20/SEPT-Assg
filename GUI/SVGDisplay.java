@@ -8,13 +8,11 @@ import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Line2D;
-
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import javax.swing.JPanel;
 
-import Controller.SVGMouseAction;
 import Controller.SVGRender;
 import Model.Circles;
 import Model.Drawings;
@@ -46,8 +44,8 @@ public class SVGDisplay extends JPanel
 		this.xPosition = 0;
 		this.yPosition =0;
 		
-		this.addMouseListener(new SVGMouseAction(this));
-		this.addMouseMotionListener(new SVGMouseAction(this));
+		//this.addMouseListener(new SVGMouseAction(this));
+		//this.addMouseMotionListener(new SVGMouseAction(this));
 	}
 	
 	// Constructor is used when existing SVG is opened
@@ -61,10 +59,9 @@ public class SVGDisplay extends JPanel
 		this.xPosition = 0;
 		this.yPosition =0;
 		
-		this.addMouseMotionListener(new SVGMouseAction(this));
-		this.addMouseListener(new SVGMouseAction(this));
+		//this.addMouseMotionListener(new SVGMouseAction(this));
+		//this.addMouseListener(new SVGMouseAction(this));
 		this.setFocusable(true);
-		
 	}
 
 	public void paintComponent(Graphics g)

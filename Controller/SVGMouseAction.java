@@ -1,23 +1,23 @@
 package Controller;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Point;
+//import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import GUI.SVGDisplay;
-import Model.Rectangles;
+//import Model.Rectangles;
 
 public class SVGMouseAction implements MouseListener, MouseMotionListener 
 {
 
 	private SVGDisplay display;
-	private static int initialMouseX;
-	private static int initialMouseY;
-	private int changeX = 0;
-	private int changeY = 0;
+//	private static int initialMouseX;
+//	private static int initialMouseY;
+//	private int changeX = 0;
+//	private int changeY = 0;
 
 
 	public SVGMouseAction(SVGDisplay svgDisplay) 
@@ -28,11 +28,11 @@ public class SVGMouseAction implements MouseListener, MouseMotionListener
 
 	public void mousePressed(MouseEvent e) 
 	{
-		Point mousePoint = new Point();
+		/*Point mousePoint = new Point();
 		mousePoint = e.getPoint();
 		initialMouseX = mousePoint.x;
 		initialMouseY = mousePoint.y;
-		this.display.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this.display.setCursor(new Cursor(Cursor.HAND_CURSOR));*/
 	}
 
 	public void mouseReleased(MouseEvent e) 
@@ -50,7 +50,7 @@ public class SVGMouseAction implements MouseListener, MouseMotionListener
 
 	public void mouseClicked(MouseEvent e) 
 	{
-		Rectangles rect = new Rectangles();
+		/*Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -60,20 +60,20 @@ public class SVGMouseAction implements MouseListener, MouseMotionListener
 		rect.setY(e.getY());
 		this.display.getRender().getDrawings().add(rect);
 		this.display.repaint();
-		System.out.println("Clicked");
+		System.out.println("Clicked");*/
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) 
 	{
-		this.display.setXPosition((double)this.display.getXPosition() + changeX);
+		/*this.display.setXPosition((double)this.display.getXPosition() + changeX);
 		this.display.setYPosition((double)this.display.getYPosition() + changeY);
 		changeX = e.getX() - initialMouseX;
 		changeY = e.getY() - initialMouseY;
 		initialMouseX = e.getX();
 		initialMouseY = e.getY();
 		
-		this.display.repaint();
+		this.display.repaint();*/
 	}
 
 	@Override
