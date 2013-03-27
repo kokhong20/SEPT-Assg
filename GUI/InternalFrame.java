@@ -26,9 +26,6 @@ public class InternalFrame extends JInternalFrame
 	SVGDisplay svgPanel;
 	String frameTitle;
 	
-	/* Internal Frame Item */
-	JInternalFrame internalFrame;
-	
 	/* JScrollPane Item */
 	JScrollPane scrollPane;
 	
@@ -53,7 +50,11 @@ public class InternalFrame extends JInternalFrame
 	
 	private void initInternalFrame(String frameTitle)
 	{
-		internalFrame = new JInternalFrame(frameTitle,true,true,true,true);
+		this.setResizable(true);
+		this.setTitle(frameTitle);
+		this.setClosable(true);
+		this.setMaximizable(true);
+		this.setIconifiable(true);
 	}
 	
 	private void initScrollPane(SVGDisplay svgPanel)
@@ -82,7 +83,6 @@ public class InternalFrame extends JInternalFrame
 	{
 		return frameTitle;
 	}
-	
 	
 
 }
