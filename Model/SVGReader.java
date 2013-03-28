@@ -52,7 +52,7 @@ public class SVGReader
 			
 		try
 		{
-			if (Pattern.matches("([a-zA-Z0-9\\!\\@\\#\\$\\%\\^\\&\\(\\)\\-\\_\\=\\+\\{\\}\\[\\]\\;\\'\\,\\.\\`\\~])+(.svg|.xml)", splits[splits.length - 1]))
+			if (!Pattern.matches("([a-zA-Z0-9\\!\\@\\#\\$\\%\\^\\&\\(\\)\\-\\_\\=\\+\\{\\}\\[\\]\\;\\'\\,\\.\\`\\~])+(.svg|.xml)", splits[splits.length - 1]))
 			{
 				JOptionPane.showMessageDialog(null, "The file is not a SVG file.", "Not SVG File", JOptionPane.WARNING_MESSAGE);
 				this.errorDetect = false;
