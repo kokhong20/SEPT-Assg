@@ -43,14 +43,12 @@ public class InternalFrameAction implements InternalFrameListener
 
 		if (dialogButton == 0)
 		{
-			System.out.println("save");
 			//new SVGSaver(display.getRender().getDrawings(), display.getRender().getPath());
 			this.internalFrame.dispose();
 		}
 		
 		else if(dialogButton == 1)
 		{
-			System.out.println("don't save");
 			this.internalFrame.dispose();
 		}
 		

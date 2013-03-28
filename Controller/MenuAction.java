@@ -169,7 +169,7 @@ public class MenuAction implements ActionListener
 		{
 			if (e.getSource() == itemArray[0])
 			{
-				System.out.println("Hello");
+				
 			}
 		}
 	}

@@ -19,7 +19,6 @@ public class IFFocusListener implements FocusListener
 	@Override
 	public void focusGained(FocusEvent e) 
 	{
-		System.out.println(svgInternalFrame.getFrameTitle()+"Focus Gained");
 		viewMenu.buttonAvail(true);
 		viewMenu.setDisplay(svgInternalFrame.getDisplay());
 	}
@@ -27,7 +26,6 @@ public class IFFocusListener implements FocusListener
 	@Override
 	public void focusLost(FocusEvent e) 
 	{
-		System.out.println(svgInternalFrame.getFrameTitle()+"Focus Lost");
 		//viewMenu.buttonAvail(false);
 	}
 
