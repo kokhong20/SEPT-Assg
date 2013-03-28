@@ -52,7 +52,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		
 		// Testing that location point works even though svg is panned,
 		// earlier doesn't follow exact location point
-		Rectangles rect = new Rectangles();
+		/*Rectangles rect = new Rectangles();
 		rect.setStrokeColor(Color.red);
 		rect.setStrokeWidth(3);
 		rect.setFill(Color.blue);
@@ -62,7 +62,7 @@ public class MoveAction implements MouseListener, MouseMotionListener, MouseWhee
 		rect.setY(e.getY());
 		this.display.getRender().getDrawings().add(rect);
 		this.display.repaint();
-		System.out.println("Clicked");
+		System.out.println("Clicked");*/
 		
 	}
 
