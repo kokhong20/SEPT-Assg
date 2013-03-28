@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedHashSet;
+import java.util.regex.Pattern;
 
 public class SVGReader 
 {
@@ -35,23 +36,44 @@ public class SVGReader
 	// set Document with dir from MenuAction.
 	public void setDoc(String dir)
 	{
+		dir = dir.toLowerCase();
+		String nameOS = "os.name";
+		String[] splits;
+		
+		if (System.getProperty(nameOS).equals("Mac OS X"))
+		{
+			splits = dir.split("/");
+		}
+		
+		else
+		{
+			splits = dir.split("\\\\");
+		}
+			
 		try
 		{
-			fXmlFile = new File(dir);
+			if (!Pattern.matches("([a-zA-Z0-9\\-\\_])+(\\.svg)", splits[splits.length - 1]))
+			{
+				JOptionPane.showMessageDialog(null, "The file is not a SVG file.", "Not SVG File", JOptionPane.WARNING_MESSAGE);
+				this.errorDetect = false;
+			}
 			
-			dbFactory.setNamespaceAware(true);		
+			else
+			{
+				fXmlFile = new File(dir);
+				dbFactory.setNamespaceAware(true);		
 
-			dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
-			dbFactory.setFeature("http://xml.org/sax/features/validation", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-			dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-
-		
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			doc = dBuilder.parse(fXmlFile);
-			doc.getDocumentElement().normalize();
+				dbFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+				dbFactory.setFeature("http://xml.org/sax/features/validation", false);
+				dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+				dbFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 			
-			this.processFile();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				
+				this.processFile();
+			}
 		}
 		
 		catch(FileNotFoundException fNFE)
