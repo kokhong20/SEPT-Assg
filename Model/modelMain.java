@@ -11,8 +11,6 @@ public class modelMain
 
 	}
 
-	// handle command line argument
-
 	public String setPath(String path, File selectedFile)
 	{	
 		if(path.endsWith(":\\"))

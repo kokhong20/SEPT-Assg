@@ -47,7 +47,7 @@ public class InternalFrame extends JInternalFrame
 	
 	private void initInternalFrame(String frameTitle)
 	{
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setTitle(frameTitle);
 		this.setClosable(true);
 		this.setMaximizable(true);
