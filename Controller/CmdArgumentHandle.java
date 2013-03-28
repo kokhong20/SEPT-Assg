@@ -26,7 +26,8 @@ public class CmdArgumentHandle
 	
 	public void initSVGDisplay()
 	{
-		SVGDisplay display = new SVGDisplay(new SVGRender(mMain.getCmdFileName()));
+		SVGRender render = new SVGRender(mMain.getCmdFileName());
+		SVGDisplay display = new SVGDisplay(render);
 		display.setPreferredSize(display.getRender().getPreferredSize());
 		InternalFrame svgInternal = new InternalFrame(this.desktopPane,display,mMain.getCmdFileName());
 		svgInternal.setViewMenu(viewMenu);
@@ -51,10 +52,10 @@ public class CmdArgumentHandle
 		{
 			svgInternal.setSize(500,500);
 		}
-		else
-			svgInternal.setSize(display.getPreferredSize());
 		
+		else
+		{
+			svgInternal.setSize(display.getPreferredSize());	
+		}
 	}
-
-
 }

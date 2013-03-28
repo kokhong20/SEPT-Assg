@@ -84,7 +84,6 @@ public class ViewMenu extends JMenu
 	
 	public void buttonAvail(boolean boo)
 	{
-		System.out.println(boo);
 		zoomInItem.setEnabled(boo);
 		zoomOutItem.setEnabled(boo);
 		oriSize.setEnabled(boo);

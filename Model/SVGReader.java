@@ -1,5 +1,6 @@
 package Model;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
@@ -10,6 +11,7 @@ import org.w3c.dom.Element;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedHashSet;
 
 public class SVGReader 
@@ -19,6 +21,7 @@ public class SVGReader
 	private DocumentBuilderFactory dbFactory;
 	private LinkedHashSet <Drawings> drawingCollection;
 	private SVGTag svgElement;
+	private boolean errorDetect; 
 
 	public SVGReader()
 	{
@@ -26,6 +29,7 @@ public class SVGReader
 		fXmlFile = null;
 		dbFactory = DocumentBuilderFactory.newInstance();
 		this.drawingCollection = new LinkedHashSet<Drawings>();
+		this.errorDetect = true;
 	}
 
 	// set Document with dir from MenuAction.
@@ -46,15 +50,20 @@ public class SVGReader
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
+			
+			this.processFile();
 		}
+		
+		catch(FileNotFoundException fNFE)
+		{
+			JOptionPane.showMessageDialog(null, "File Not Found, Please check the file's directory is correct.", "File Not Found", JOptionPane.WARNING_MESSAGE);
+			this.errorDetect = false;
+		}
+		
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 		}
-
-		this.processFile();
-
-
 	}
 
 	public Document getDoc()
@@ -182,5 +191,10 @@ public class SVGReader
 	public LinkedHashSet<Drawings> getDrawings()
 	{
 		return this.drawingCollection;
+	}
+	
+	public boolean getError()
+	{
+		return this.errorDetect;
 	}
 }

@@ -11,6 +11,7 @@ public class SVGRender
 	private String path;
 	private Dimension svgDimension;
 	private LinkedHashSet<Drawings> drawCollection;
+	private boolean getError;
 
 	// Constructor is used when new SVG is created
 	public SVGRender() 
@@ -26,9 +27,14 @@ public class SVGRender
 		// TODO Auto-generated constructor stub
 		this.reader = new SVGReader();
 		this.reader.setDoc(path);
-		this.setPreferredSize(new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight()));
-		this.drawCollection = this.reader.getDrawings();
-		this.path = path;
+		this.getError = this.reader.getError();
+		
+		if (this.getError == true)
+		{
+			this.setPreferredSize(new Dimension((int)this.reader.getSVGElement().getWidth(),(int)this.reader.getSVGElement().getHeight()));
+			this.drawCollection = this.reader.getDrawings();
+			this.path = path;
+		}
 	}
 	
 
