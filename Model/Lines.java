@@ -72,10 +72,10 @@ public class Lines extends Drawings
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setX1(Units.setUnit(eNode.getAttribute("x1")));
-			this.setX2(Units.setUnit(eNode.getAttribute("x2")));
-			this.setY1(Units.setUnit(eNode.getAttribute("y1")));
-			this.setY2(Units.setUnit(eNode.getAttribute("y2")));
+			this.setX1(Units.setUnit(eNode.getAttribute("x1"),false));
+			this.setX2(Units.setUnit(eNode.getAttribute("x2"),false));
+			this.setY1(Units.setUnit(eNode.getAttribute("y1"),false));
+			this.setY2(Units.setUnit(eNode.getAttribute("y2"),false));
 		}
 	}
 }

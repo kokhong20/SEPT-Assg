@@ -152,7 +152,7 @@ public class MenuAction implements ActionListener
 			}
 
 			// Exit software
-			else if (e.getSource() == itemArray[6]) 
+			else if (e.getSource() == itemArray[5]) 
 			{
 				Object[] choices = {"Yes", "No"};
 				int dialogButton = JOptionPane.showOptionDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, 

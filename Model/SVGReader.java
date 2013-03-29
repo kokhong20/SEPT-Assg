@@ -151,9 +151,9 @@ public class SVGReader
 		//Color stroke = null;
 		//Color fill = null;
 		if(((Element) gNode).hasAttribute("stroke"))
-			stroke = Coloring.setColor(((Element) gNode).getAttribute("stroke"));
+			stroke = Coloring.setColor(((Element) gNode).getAttribute("stroke"),true);
 		if(((Element) gNode).hasAttribute("fill"))
-			fill = Coloring.setColor(((Element) gNode).getAttribute("fill"));
+			fill = Coloring.setColor(((Element) gNode).getAttribute("fill"),false);
 
 		for(int i = 0; i < gList.getLength(); i++)
 		{

@@ -2,8 +2,8 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JDesktopPane;
-import Model.Coloring;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -37,7 +37,7 @@ public class DesktopPane extends JFrame
 	
 	private void initDesktop()
 	{
-		this.setBackground(Coloring.setColor("white"));
+		this.setBackground(Color.WHITE);
 		this.desktopPane = new JDesktopPane();
 		this.menuBar = new MenuBar(desktopPane);
 	}

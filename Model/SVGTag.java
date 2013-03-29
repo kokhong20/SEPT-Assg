@@ -90,12 +90,12 @@ public class SVGTag
 			Element eNode = (Element) this.getNode();
 			
 			if(eNode.hasAttribute("width"))
-				this.setWidth(Units.setUnit(eNode.getAttribute("width")));
+				this.setWidth(Units.setUnit(eNode.getAttribute("width"),false));
 			else
 				this.setWidth(500);
 				
 			if(eNode.hasAttribute("height"))
-				this.setHeight(Units.setUnit(eNode.getAttribute("height")));
+				this.setHeight(Units.setUnit(eNode.getAttribute("height"),false));
 			else
 				this.setHeight(500);
 

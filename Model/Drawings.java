@@ -23,8 +23,8 @@ public abstract class Drawings
 	{
 		// TODO Auto-generated constructor stub
 		
-		this.stroke = Coloring.setColor(((Element)node).getAttribute("stroke"));
-		this.strokeWidth = (float) Units.setUnit(((Element)node).getAttribute("stroke-width"));
+		this.stroke = Coloring.setColor(((Element)node).getAttribute("stroke"),true);
+		this.strokeWidth = (float) Units.setUnit(((Element)node).getAttribute("stroke-width"),true);
 		this.node = node;
 	}
 	

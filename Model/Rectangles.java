@@ -68,10 +68,10 @@ public class Rectangles extends Shapes
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setX(Units.setUnit(eNode.getAttribute("x")));
-			this.setY(Units.setUnit(eNode.getAttribute("y")));
-			this.setWidth(Units.setUnit(eNode.getAttribute("width")));
-			this.setHeight(Units.setUnit(eNode.getAttribute("height")));
+			this.setX(Units.setUnit(eNode.getAttribute("x"),false));
+			this.setY(Units.setUnit(eNode.getAttribute("y"),false));
+			this.setWidth(Units.setUnit(eNode.getAttribute("width"),false));
+			this.setHeight(Units.setUnit(eNode.getAttribute("height"),false));
 		}
 	}
 }

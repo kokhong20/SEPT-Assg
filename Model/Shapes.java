@@ -20,7 +20,7 @@ public abstract class Shapes extends Drawings
 		// TODO Auto-generated constructor stub
 		super(node);
 
-		this.fill = Coloring.setColor(((Element)node).getAttribute("fill"));
+		this.fill = Coloring.setColor(((Element)node).getAttribute("fill"),false);
 	}
 	
 	public void setFill(Color fill)

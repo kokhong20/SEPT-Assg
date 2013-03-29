@@ -13,7 +13,7 @@ public class Coloring {
 	// if the keyword matches any in the default SVG system color list and return 
 	// the Color object. If neither works, return black Color. Exception is caught
 	// hexadecimal or octal is invalid format
-	public final static Color setColor(String color)
+	public final static Color setColor(String color , boolean isStroke)
 	{
 		if(color.startsWith("#") || color.startsWith("0x"))
 		{
@@ -81,8 +81,11 @@ public class Coloring {
 			if(colorMap.containsKey(color.toLowerCase()))
 				return colorMap.get(color.toLowerCase());
 		}
-
-		return Color.black;
+		
+		if(isStroke)
+			return new Color(0,0,0,0);
+		else
+			return Color.BLACK;
 	}
 	
 	// Filling the HashMap with all system colors of SVG available

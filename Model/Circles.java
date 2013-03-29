@@ -73,9 +73,9 @@ public class Circles extends Shapes
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setCX(Units.setUnit(eNode.getAttribute("cx")));
-			this.setCY(Units.setUnit(eNode.getAttribute("cy")));
-			this.setR(Units.setUnit(eNode.getAttribute("r")));
+			this.setCX(Units.setUnit(eNode.getAttribute("cx"),false));
+			this.setCY(Units.setUnit(eNode.getAttribute("cy"),false));
+			this.setR(Units.setUnit(eNode.getAttribute("r"),false));
 		}
 	}
 

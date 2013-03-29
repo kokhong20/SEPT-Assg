@@ -8,17 +8,17 @@ public class Units
 {
 	public static Dimension screen = Toolkit.getDefaultToolkit()
 			.getScreenSize();
-	public static int res = Toolkit.getDefaultToolkit().getScreenResolution();
-
+	//public static int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+	static double dpi = 96;
 	// These static variables only used once, no need to create variable/memory location for them
 	// public static double height = screen.getHeight();
 	// public static double width = screen.getWidth();
 	// public static double size = Math.sqrt((height * width));
 	// public static double ratio = (res / size) + 1;
 	
-	public static final double dpi = res * (res / Math.sqrt((screen.getHeight() * screen.getWidth())) + 1);
+	//public static final double dpi = res * (res / Math.sqrt((screen.getHeight() * screen.getWidth())) + 1);
 
-	public final static double setUnit(String att)
+	public final static double setUnit(String att , boolean isStrokeWidth)
 	{
 		att = att.toLowerCase();
 		if (!att.isEmpty())
@@ -56,7 +56,11 @@ public class Units
 				return Double.parseDouble(calculate(att));
 			}
 		}
-		return 0;
+		
+		if(isStrokeWidth)
+			return 1;
+		else 
+			return 0;
 	}
 	
 	private static String calculate(String att)
