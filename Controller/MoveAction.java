@@ -1,6 +1,5 @@
 package Controller;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -10,13 +9,12 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import GUI.SVGDisplay;
-import Model.Rectangles;
 
 public class MoveAction implements MouseListener, MouseMotionListener, MouseWheelListener{
 
 	private SVGDisplay display;
-	private int initialMouseX;
-	private int initialMouseY;
+	private static int initialMouseX;
+	private static int initialMouseY;
 	private int changeX;
 	private int changeY;
 	
