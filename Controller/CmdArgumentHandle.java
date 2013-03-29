@@ -1,9 +1,5 @@
 package Controller;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.beans.PropertyVetoException;
-
 import javax.swing.JDesktopPane;
 
 import GUI.InternalFrame;
@@ -36,26 +32,26 @@ public class CmdArgumentHandle
 		svgInternal.setVisible(true);
 		
 		
-		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
-		if((toolkit.getScreenSize().height <= display.getPreferredSize().height)
-				|| (toolkit.getScreenSize().width <= display.getPreferredSize().width))
-		{
-				try {
-					svgInternal.setMaximum(true);
-				} catch (PropertyVetoException pve) {
-					// TODO Auto-generated catch block
-					pve.printStackTrace();
-				}
-		}
-		
-		else if(svgInternal.getSize().equals(new Dimension(0,0)))
-		{
-			svgInternal.setSize(500,500);
-		}
-		
-		else
-		{
-			svgInternal.setSize(display.getPreferredSize());	
-		}
+//		Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+//		if((toolkit.getScreenSize().height <= display.getPreferredSize().height)
+//				|| (toolkit.getScreenSize().width <= display.getPreferredSize().width))
+//		{
+//				try {
+//					svgInternal.setMaximum(true);
+//				} catch (PropertyVetoException pve) {
+//					// TODO Auto-generated catch block
+//					pve.printStackTrace();
+//				}
+//		}
+//		
+//		else if(svgInternal.getSize().equals(new Dimension(0,0)))
+//		{
+//			svgInternal.setSize(500,500);
+//		}
+//		
+//		else
+//		{
+//			svgInternal.setSize(display.getPreferredSize());	
+//		}
 	}
 }
