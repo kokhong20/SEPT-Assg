@@ -78,6 +78,10 @@ public class SVGDisplay extends JViewport
 		if(!drawCollection.isEmpty())
 		{
 			Iterator<Drawings> it = drawCollection.iterator();
+			// Set a rectangle border to force the panel to paint within the bountry 
+			Rectangle2D.Double frame = new Rectangle2D.Double(0,0,render.getPreferredSize().getWidth(),render.getPreferredSize().getHeight());
+			g2d.setClip(frame);
+			
 			while(it.hasNext())
 			{
 				Drawings drawItem = it.next();
@@ -87,7 +91,7 @@ public class SVGDisplay extends JViewport
 					Ellipse2D.Double circleShape = new Ellipse2D.Double(((Circles) drawItem).getEllipse2DX()*zoomScale+xPosition,
 							((Circles) drawItem).getEllipse2DY()*zoomScale+yPosition,((Circles) drawItem).getR()*2*zoomScale
 							,((Circles) drawItem).getR()*2*zoomScale);
-
+					
 					g2d.setColor(((Shapes) drawItem).getFill());
 					g2d.fill(circleShape);
 					g2d.setColor(((Drawings) drawItem).getStrokeColor());
