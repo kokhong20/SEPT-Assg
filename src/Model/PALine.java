@@ -1,4 +1,4 @@
-package src.Model;
+package Model;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
