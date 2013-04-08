@@ -1,11 +1,11 @@
-package Model;
+package model;
 
 import java.util.regex.Pattern;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class SVGTag 
+public class PASVGTag 
 {
 	private double width;
 	private double height;
@@ -19,12 +19,12 @@ public class SVGTag
 	
 	private Node node;
 	
-	public SVGTag()
+	public PASVGTag()
 	{
 		
 	}
 	
-	public SVGTag(Node node)
+	public PASVGTag(Node node)
 	{
 		this.node = node;
 	}
