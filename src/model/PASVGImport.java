@@ -21,7 +21,6 @@ public class PASVGImport {
 	private Document svgDoc;
 	private DocumentBuilderFactory svgDBFactory;
 	private DocumentBuilder svgDocBuilder;
-	private LinkedHashSet<PAShape> svgShapeCollection;
 	// private SVGTag svgElement;
 	private boolean isSVG;
 	private String directory;
@@ -43,8 +42,7 @@ public class PASVGImport {
 	}
 
 	/**
-	 * @param svgFile
-	 *            the svgFile to set
+	 * @param svgFile the svgFile to set
 	 */
 	public void setSvgFile(File svgFile) {
 		this.svgFile = svgFile;
@@ -58,26 +56,10 @@ public class PASVGImport {
 	}
 
 	/**
-	 * @param svgDoc
-	 *            the svgDoc to set
+	 * @param svgDoc the svgDoc to set
 	 */
 	public void setSvgDoc(Document svgDoc) {
 		this.svgDoc = svgDoc;
-	}
-
-	/**
-	 * @return the svgShapeCollection
-	 */
-	public LinkedHashSet<PAShape> getSvgShapeCollection() {
-		return svgShapeCollection;
-	}
-
-	/**
-	 * @param svgShapeCollection
-	 *            the svgShapeCollection to set
-	 */
-	public void setSvgShapeCollection(LinkedHashSet<PAShape> svgShapeCollection) {
-		this.svgShapeCollection = svgShapeCollection;
 	}
 
 	/**
@@ -88,15 +70,30 @@ public class PASVGImport {
 	}
 
 	/**
-	 * @param isSVG
-	 *            the isSVG to set
+	 * @param isSVG the isSVG to set
 	 */
 	public void setIsSVG(boolean isSVG) {
 		this.isSVG = isSVG;
 	}
 
 	/**
-	 * 
+	 * @return the directory
+	 */
+	public String getDirectory() {
+		return directory;
+	}
+
+	/**
+	 * @param directory the directory to set
+	 */
+	public void setDirectory(String directory) {
+		this.directory = directory;
+	}
+
+
+	/**
+	 * Validate the current file whether it
+	 * is a valid SVG file to be opened
 	 * @param directory
 	 */
 	private void validateSVG(String directory) {
@@ -114,29 +111,14 @@ public class PASVGImport {
 			splits = dir.split("\\\\");
 		}
 
-		setIsSVG((!Pattern
-				.matches(
-						"([a-zA-Z0-9\\!\\@\\#\\$\\%\\^\\&\\(\\)\\-\\_\\=\\+\\{\\}\\[\\]\\;\\'\\,\\.\\`\\~])+(.svg|.xml)",
-						splits[splits.length - 1])));
+		setIsSVG((!Pattern.matches("([a-zA-Z0-9\\!\\@\\#\\$\\%\\^\\&\\(\\)\\-\\_\\=\\+\\{\\}\\[\\]\\;\\'\\,\\.\\`\\~])+(.svg|.xml)",splits[splits.length - 1])));
 	}
-
+	
 	/**
-	 * @return the directory
-	 */
-	public String getDirectory() {
-		return directory;
-	}
-
-	/**
-	 * @param directory
-	 *            the directory to set
-	 */
-	public void setDirectory(String directory) {
-		this.directory = directory;
-	}
-
-	/**
-	 * @throws ParserConfigurationException
+	 * Process current SVG file by parsing the SVG file
+	 * to be readable in JAVA
+	 * 
+	 * @throws ParserConfigurationException if a DocumentBuilder cannot be created which satisfies the configuration requested.
 	 * @throws IOException
 	 * @throws SAXException
 	 * 
@@ -150,13 +132,27 @@ public class PASVGImport {
 
 		svgDoc = svgDocBuilder.parse(getSvgFile());
 		svgDoc.getDocumentElement().normalize();
-
-		svgShapeCollection = readSVGElements();
-
 	}
-
+	
+	/**
+	 * Create a new PASVGTag by passing the SVG Element
+	 * to the constructor of PASVGTag 
+	 * @return a new PASVGTag object
+	 */
+	private PASVGTag createSVGTag()
+	{
+		return new PASVGTag(svgDoc.getElementsByTagName("svg").item(0));
+	}
+	
+	/**
+	 * Read the current SVG file and add all available elements
+	 * (rect, circle, line, g) into a LinkedHashSet
+	 * @return a LinkedHashSet of all shapes 
+	 */
 	private LinkedHashSet<PAShape> readSVGElements() {
 		// TODO Auto-generated method stub
-		return null;
+		LinkedHashSet<PAShape> shapesCollection = new LinkedHashSet<PAShape>();
+		
+		return shapesCollection;
 	}
 }
