@@ -21,7 +21,6 @@ public class PASVGImport {
 	private Document svgDoc;
 	private DocumentBuilderFactory svgDBFactory;
 	private DocumentBuilder svgDocBuilder;
-	// private SVGTag svgElement;
 	private boolean isSVG;
 	private String directory;
 
@@ -89,7 +88,6 @@ public class PASVGImport {
 	public void setDirectory(String directory) {
 		this.directory = directory;
 	}
-
 
 	/**
 	 * Validate the current file whether it

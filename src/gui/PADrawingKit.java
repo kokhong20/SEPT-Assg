@@ -21,7 +21,7 @@ public class PADrawingKit extends JFrame
 
 	public PADrawingKit()
 	{
-//		this.setUndecorated(true);
+		this.setUndecorated(true);
 		this.setResizable(true);
 	}
 	
