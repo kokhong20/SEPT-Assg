@@ -1,26 +1,15 @@
-/**
- * 
- */
 package model;
 
+import org.w3c.dom.Node;
+
 /**
- * @author KokHong
+ * @author bryantylai
  *
  */
 public class PASVGTag {
-	private double width;
 
-	/**
-	 * @return the width
-	 */
-	public double getWidth() {
-		return width;
+	public PASVGTag(Node node) {
+		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param width the width to set
-	 */
-	public void setWidth(double width) {
-		this.width = width;
-	}
 }
