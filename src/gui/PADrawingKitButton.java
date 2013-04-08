@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 /**
  * 
@@ -13,18 +14,19 @@ public class PADrawingKitButton extends JButton
 	 * 
 	 */
 	private static final long serialVersionUID = -1493410390416700500L;
+	private final int maxWidth = 40;
+	private final int maxHeight = 40;
 	private PADrawingKit drawKitPanel;
-	private JButton fill;
-	private JButton handCursor;
-	private JButton selectCursor;
-	private JButton selectAllCursor;
-	private JButton line;
-	private JButton rectangle;
-	private JButton circle;
-	private JButton group;
-	private JButton ungroup;
-	
-	
+	public JButton fill;
+	public JButton handCursor;
+	public JButton selectCursor;
+	public JButton line;
+	public JButton rectangle;
+	public JButton circle;
+	public JButton group;
+	public JButton ungroup;
+	public JButton zoomIn;
+	public JButton zoomOut;
 	
 	
 	public PADrawingKitButton(PADrawingKit drawKitPanel)
@@ -32,25 +34,69 @@ public class PADrawingKitButton extends JButton
 		this.drawKitPanel = drawKitPanel;
 	}
 	
+	
+	
 	public void addButton()
 	{
+		this.createButton();
+		
+		handCursor.setBounds(0, 0, maxWidth, maxHeight);
+		zoomIn.setBounds(0, 40, maxWidth, maxHeight);
+		selectCursor.setBounds(40, 0, maxWidth, maxHeight);
+		zoomOut.setBounds(40, 40, maxWidth, maxHeight);
+		fill.setBounds(0, 80, maxWidth, maxHeight);
+		line.setBounds(40, 80, maxWidth, maxHeight);
+		rectangle.setBounds(0, 120, maxWidth, maxHeight);
+		circle.setBounds(40, 120, maxWidth, maxHeight);
+		group.setBounds(0, 160, maxWidth, maxHeight);
+		ungroup.setBounds(40, 160, maxWidth, maxHeight);
+		
+		drawKitPanel.add(fill);
+		drawKitPanel.add(handCursor);
+		drawKitPanel.add(selectCursor);
+		drawKitPanel.add(line);
+		drawKitPanel.add(rectangle);
+		drawKitPanel.add(circle);
+		drawKitPanel.add(group);
+		drawKitPanel.add(ungroup);
+		drawKitPanel.add(zoomIn);
+		drawKitPanel.add(zoomOut);
 		
 	}
 	
-	public void createButton()
+	public final void createButton()
 	{
 		fill = new JButton();
 		handCursor = new JButton();
 		selectCursor = new JButton();
-		selectAllCursor = new JButton();
 		line = new JButton();
 		rectangle = new JButton();
 		circle = new JButton();
 		group = new JButton();
 		ungroup = new JButton();
+		zoomIn = new JButton();
+		zoomOut = new JButton();
 		
+		setImageIcon("resources/fill 30x30.png",fill,"Fill");
+		setImageIcon("resources/cursor.png",handCursor,"Hand Cursor");
+		setImageIcon("resources/select.png",selectCursor,"Select Cursor");
+		setImageIcon("resources/rect.png",rectangle,"Rectangle");
+		setImageIcon("resources/line.png",line,"Line");
+		setImageIcon("resources/circle 30x30.png",circle,"Circle");
+		setImageIcon("resources/group.png",group,"Group");
+		setImageIcon("resources/ungroup.png",ungroup,"Ungroup");
+		setImageIcon("resources/zoomin.png",zoomIn,"Zoom In");
+		setImageIcon("resources/zoomout.png",zoomOut,"Zoom Out");
 		
-		
+	}
+	
+	public void setImageIcon(String imgPath, JButton button,String tootip)
+	{
+		ImageIcon imgIcon = new ImageIcon(imgPath);
+		button.setIcon(imgIcon);
+		button.setBorder(null);
+		button.setBorderPainted(false);
+		button.setToolTipText(tootip);
 	}
 
 }
