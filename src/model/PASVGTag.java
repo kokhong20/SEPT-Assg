@@ -5,6 +5,12 @@ import java.util.regex.Pattern;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/**
+ * 
+ * @author LaiSaiHoo
+ *
+ */
+
 public class PASVGTag 
 {
 	private double width;
@@ -159,11 +165,19 @@ public class PASVGTag
 	{
 		if (Pattern.matches("\\d+ *,* *\\d+ *,* *\\d+ *,* *\\d+", value))
 		{
-			String values[]  = value.split("[ ]*[,]*[ ]*");
-			setInitX(PAUnit.setUnit(values[0],false));
-			setInitY(PAUnit.setUnit(values[1], false));
-			setViewWidth(PAUnit.setUnit(values[2], false));
-			setViewHeight(PAUnit.setUnit(values[3], false));
+			value = value.replace(",", ";");
+			value = value.replace(" ", ";");
+			String values[]  = value.split(";");
+			String attValues[] = new String[4];
+			int j = 0;
+			for(int i = 0; i < values.length; i++)
+				if(!values[i].isEmpty())
+					attValues[j++] = values[i];
+			
+			setInitX(PAUnit.setUnit(attValues[0],false));
+			setInitY(PAUnit.setUnit(attValues[1], false));
+			setViewWidth(PAUnit.setUnit(attValues[2], false));
+			setViewHeight(PAUnit.setUnit(attValues[3], false));
 		}
 	}
 
