@@ -11,7 +11,6 @@ public class TestClass
     {
         PAStartMenu start = new PAStartMenu();
         start.setVisible(true);
-        System.out.println("haha");
     }
 
 }
