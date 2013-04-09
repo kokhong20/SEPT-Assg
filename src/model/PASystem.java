@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 
 /**
  * @author bryantylai
@@ -15,7 +16,8 @@ public class PASystem {
 	private static double screenWidth = dimension.getWidth();
 	private static double screenSize = Math.sqrt((screenHeight * screenWidth));
 	private static double screenRatio = (screenResolution / screenSize) + 1;
-	private static final double dotsPerPixels = screenResolution * screenRatio;
+	private static final double dotsPerInch = screenResolution * screenRatio;
+	private static String currentOS = System.getProperty("os.name");
 	
 	/**
 	 * @return the dimension
@@ -60,10 +62,44 @@ public class PASystem {
 	}
 
 	/**
-	 * @return the dotsperpixels
+	 * @return the dotsPerInch
 	 */
-	public static double getDotsperpixels() {
-		return dotsPerPixels;
+	public static double getDotsPerInch() {
+		return dotsPerInch;
 	}
-	
+
+	/**
+	 * @return the currentOS
+	 */
+	public static String getCurrentOS() {
+		return currentOS;
+	}
+
+	/**
+	 * Concat name of selected file with path based on current OS	 * 
+	 * @param path the path leading to the selected file
+	 * @param selectedFile the file selected from JFileChooser
+	 * @return a concatenated path
+	 */
+	public static String setPath(String path, File selectedFile)
+	{	
+		if(path.endsWith(":\\"))
+		{
+			path += selectedFile.getName();
+		}
+		else
+		{
+			if (currentOS.toLowerCase().contains("mac"))
+			{
+				path +=  "//" + selectedFile.getName();
+			}
+			
+			else if (currentOS.toLowerCase().contains("windows"))
+			{
+				path +=  "\\" + selectedFile.getName();
+			}
+		}
+
+		return path;
+	}
 }
