@@ -44,14 +44,23 @@ public class PASVGTag
 			Element eNode = (Element) this.getNode();
 			
 			if(eNode.hasAttribute("width"))
+			{
 				this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),false));
+			}
 			else
+			{
 				this.setWidth(500);
+			}
 				
 			if(eNode.hasAttribute("height"))
+			{
 				this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),false));
+			}
 			else
+			{
 				this.setHeight(500);
+			}
+			
 			if (eNode.hasAttribute("viewBox"))
 			{
 				setViewbox(eNode.getAttribute("viewBox"));

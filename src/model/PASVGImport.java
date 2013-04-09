@@ -151,6 +151,10 @@ public class PASVGImport {
 		// TODO Auto-generated method stub
 		LinkedHashSet<PAShape> shapesCollection = new LinkedHashSet<PAShape>();
 		
+		/**
+		 * Reading of svg elements not done yet
+		 */
+		
 		return shapesCollection;
 	}
 }

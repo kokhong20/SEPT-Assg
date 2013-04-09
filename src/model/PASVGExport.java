@@ -1,14 +1,11 @@
 package model;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -26,24 +23,20 @@ public class PASVGExport {
 	private DocumentBuilderFactory svgDBFactory;
 	private DocumentBuilder svgDocBuilder;
 	private String directory;
-	private LinkedHashSet<PAShape> svgShapeCollection;
-	private PASVGTag svgTag;
+	private PASVGContainer svgContainer;
 
-	// Should be passing in PASVGContainer instead of a collection of shapeCollection but what the heck.. Modify after PASVGContainer is completed.
 	/**
-	 *  
-	 * @param svgTag
-	 * @param shapeCollection
+	 * 
+	 * @param container
 	 * @param directory
 	 * @throws ParserConfigurationException
-	 * @throws TransformerConfigurationException
 	 */
-	public PASVGExport(PASVGTag svgTag, LinkedHashSet<PAShape> shapeCollection, String directory) throws ParserConfigurationException, TransformerConfigurationException {
+	public PASVGExport(PASVGContainer container, String directory) throws ParserConfigurationException
+	{
 		// TODO Auto-generated constructor stub
 		setDirectory(directory);
 		createNewSVG();
-		setSvgTag(svgTag);
-		setSvgShapeCollection(shapeCollection);
+		setSvgContainer(container);
 	}
 
 	/**
@@ -70,65 +63,10 @@ public class PASVGExport {
 		Element svg = svgDoc.createElement("svg");
 		svgDoc.appendChild(svg);
 
-		Iterator<PAShape> it = svgShapeCollection.iterator();
-
-		while (it.hasNext()) {
-			PAShape draw = it.next();
-			
-			if(draw instanceof PARectangle)
-			{
-				PARectangle saveRect = (PARectangle) draw;				
-				Element rect = svgDoc.createElement("rect");
-				rect.setAttribute("width", String.valueOf(saveRect.getWidth()));
-				rect.setAttribute("height", String.valueOf(saveRect.getHeight()));
-				rect.setAttribute("x", String.valueOf(saveRect.getX()));
-				rect.setAttribute("y", String.valueOf(saveRect.getY()));
-				rect.setAttribute("fill", String.valueOf("rgb(" + saveRect.getFill().getRed()
-								+ "," + saveRect.getFill().getGreen() + ","
-								+ saveRect.getFill().getBlue())
-								+ ")");
-				rect.setAttribute("stroke", String.valueOf("rgb(" + saveRect.getStroke().getRed()
-								+ "," + saveRect.getStroke().getGreen() + ","
-								+ saveRect.getStroke().getBlue())
-								+ ")");
-				rect.setAttribute("stroke-width", String.valueOf(saveRect.getStrokeWidth()));
-				svg.appendChild(rect);
-			}
-			else if(draw instanceof PACircle)
-			{
-				PACircle saveCircle = (PACircle) draw;
-				Element circle = svgDoc.createElement("circle");
-				circle.setAttribute("cx", String.valueOf(saveCircle.getCx()));
-				circle.setAttribute("cy", String.valueOf(saveCircle.getCy()));
-				circle.setAttribute("r", String.valueOf(saveCircle.getR()));
-				circle.setAttribute("fill", String.valueOf("rgb(" + saveCircle.getFill().getRed()
-								+ "," + saveCircle.getFill().getGreen() + ","
-								+ saveCircle.getFill().getBlue())
-								+ ")");
-				circle.setAttribute("stroke", String.valueOf("rgb(" + saveCircle.getStroke().getRed()
-								+ "," + saveCircle.getStroke().getGreen() + ","
-								+ saveCircle.getStroke().getBlue())
-								+ ")");
-				circle.setAttribute("stroke-width", String.valueOf(saveCircle.getStrokeWidth()));
-				svg.appendChild(circle);
-			}
-				else if(draw instanceof PALine)
-			{
-					PALine saveLine = (PALine) draw;
-				Element line = svgDoc.createElement("line");
-				line.setAttribute("x1", String.valueOf(saveLine.getX1()));
-				line.setAttribute("x2", String.valueOf(saveLine.getX2()));
-				line.setAttribute("y1", String.valueOf(saveLine.getY1()));
-				line.setAttribute("y2", String.valueOf(saveLine.getY2()));
-				line.setAttribute("stroke", String.valueOf("rgb(" + saveLine.getStroke().getRed()
-								+ "," + saveLine.getStroke().getGreen() + ","
-								+ saveLine.getStroke().getBlue())
-								+ ")");
-				line.setAttribute("stroke-width", String.valueOf(saveLine.getStrokeWidth()));
-				svg.appendChild(line);
-			}
-		}
-
+		/**
+		 * Reading through collection and append to svg not done yet
+		 */
+		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(svgDoc);
@@ -164,32 +102,18 @@ public class PASVGExport {
 	public void setDirectory(String directory) {
 		this.directory = directory;
 	}
-	
+
 	/**
-	 * @return the svgShapeCollection
+	 * @return the svgContainer
 	 */
-	public LinkedHashSet<PAShape> getSvgShapeCollection() {
-		return svgShapeCollection;
+	public PASVGContainer getSvgContainer() {
+		return svgContainer;
 	}
 
 	/**
-	 * @param svgShapeCollection the svgShapeCollection to set
+	 * @param svgContainer the svgContainer to set
 	 */
-	public void setSvgShapeCollection(LinkedHashSet<PAShape> svgShapeCollection) {
-		this.svgShapeCollection = svgShapeCollection;
-	}
-
-	/**
-	 * @return the svgTag
-	 */
-	public PASVGTag getSvgTag() {
-		return svgTag;
-	}
-
-	/**
-	 * @param svgTag the svgTag to set
-	 */
-	public void setSvgTag(PASVGTag svgTag) {
-		this.svgTag = svgTag;
+	public void setSvgContainer(PASVGContainer svgContainer) {
+		this.svgContainer = svgContainer;
 	}
 }
