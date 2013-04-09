@@ -21,7 +21,6 @@ public class PASVGImport {
 	private Document svgDoc;
 	private DocumentBuilderFactory svgDBFactory;
 	private DocumentBuilder svgDocBuilder;
-	// private SVGTag svgElement;
 	private boolean isSVG;
 	private String directory;
 
@@ -90,7 +89,6 @@ public class PASVGImport {
 		this.directory = directory;
 	}
 
-
 	/**
 	 * Validate the current file whether it
 	 * is a valid SVG file to be opened
@@ -152,6 +150,10 @@ public class PASVGImport {
 	private LinkedHashSet<PAShape> readSVGElements() {
 		// TODO Auto-generated method stub
 		LinkedHashSet<PAShape> shapesCollection = new LinkedHashSet<PAShape>();
+		
+		/**
+		 * Reading of svg elements not done yet
+		 */
 		
 		return shapesCollection;
 	}
