@@ -20,6 +20,8 @@ public class PASVGTag
 	private double initY;
 	private double viewHeight;
 	private double viewWidth;
+	private double scaleX;
+	private double scaleY;
 	private Color stroke;
 	private Color fill;
 	private double strokeWidth;
@@ -65,6 +67,15 @@ public class PASVGTag
 			{
 				setViewbox(eNode.getAttribute("viewBox"));
 			}
+			else
+			{
+				setInitX(0);
+				setInitY(0);
+				setViewWidth(0);
+				setViewHeight(0);
+			}
+			
+			setScale(this.width, this.height, this.viewWidth, this.viewHeight);
 
 			this.setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"), true));
 			this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), true));
@@ -81,19 +92,18 @@ public class PASVGTag
 	{
 		if (Pattern.matches("\\d+ *,* *\\d+ *,* *\\d+ *,* *\\d+", value))
 		{
-			value = value.replace(",", ";");
-			value = value.replace(" ", ";");
-			String values[]  = value.split(";");
-			String attValues[] = new String[4];
-			int j = 0;
-			for(int i = 0; i < values.length; i++)
-				if(!values[i].isEmpty())
-					attValues[j++] = values[i];
-			
-			setInitX(PAUnit.setUnit(attValues[0],false));
-			setInitY(PAUnit.setUnit(attValues[1], false));
-			setViewWidth(PAUnit.setUnit(attValues[2], false));
-			setViewHeight(PAUnit.setUnit(attValues[3], false));
+			String values[]  = value.split("[ *,* *]+");
+			setInitX(PAUnit.setUnit(values[0],false));
+			setInitY(PAUnit.setUnit(values[1], false));
+			setViewWidth(PAUnit.setUnit(values[2], false));
+			setViewHeight(PAUnit.setUnit(values[3], false));
+		}
+		else
+		{
+			setInitX(0);
+			setInitY(0);
+			setViewWidth(0);
+			setViewHeight(0);
 		}
 	}
 
@@ -237,4 +247,25 @@ public class PASVGTag
 		this.node = node;
 	}
 
+	public void setScale(double oriWidth, double oriHeight, double viewWidth, double viewHeight)
+	{
+		if (this.viewWidth == 0 && this.viewHeight == 0)
+		{
+			this.scaleX = 1;
+			this.scaleY = 1;
+		}
+		else
+		{
+			this.scaleX = (oriWidth/viewWidth);
+			this.scaleY = (oriHeight/viewHeight);
+		}
+	}
+	public double getScaleY()
+	{
+		return scaleY;
+	}
+	public double getScaleX()
+	{
+		return scaleX;
+	}
 }
