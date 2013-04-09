@@ -19,14 +19,13 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
  *
  * @author LiHao
  */
-public class PAStartMenu extends JFrame
+public class PAStartMenu extends JPanel
 {
     private JPanel mainPanel;
     private JPanel buttonPanel;
@@ -37,51 +36,12 @@ public class PAStartMenu extends JFrame
     {
         initialize();
         customize();
+        setUpStartMenu();
     }
 
     private void initialize()
     {
-        mainPanel = setUpMainPanel();
         buttonPanel = setUpButtonPanel();
-    }
-
-    private JPanel setUpMainPanel()
-    {
-        return new JPanel()
-        {
-            @Override
-            public void paintComponent(Graphics g)
-            {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                Point2D start = new Point2D.Float(0, 0);
-                Point2D end = new Point2D.Float(300, 0);
-                float[] dist =
-                {
-                    0.0f, 0.2f, 0.5f, 0.8f, 1.0f
-                };
-                Color[] colors =
-                {
-                    new Color(170, 170, 170), new Color(210, 210, 210), new Color(230, 230, 230), new Color(220, 220, 220), new Color(185, 185, 185)
-                };
-                LinearGradientPaint gPaint = new LinearGradientPaint(start, end, dist, colors);
-
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setPaint(gPaint);
-                g2d.fillRect(0, 0, 300, 400);
-
-                try
-                {
-                    Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
-                    g.drawImage(img, 60, 40, 180, 180, null);
-                }
-                catch (IOException ex)
-                {
-                    Logger.getLogger(PAStartMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        };
     }
 
     private JPanel setUpButtonPanel()
@@ -120,24 +80,19 @@ public class PAStartMenu extends JFrame
         button.setBorderPainted(false);
         button.setBounds(x, y, img.getWidth(button), img.getHeight(button));
         button.setVisible(true);
-        
+
         return button;
     }
 
     private void customize()
     {
+        setLayout(null);       
         buttonPanel.setLayout(null);
         buttonPanel.setBackground(Color.white);
         buttonPanel.setSize(300, 400);
         buttonPanel.setBounds(300, 0, buttonPanel.getWidth(), buttonPanel.getHeight());
         buttonPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.gray));
         buttonPanel.setVisible(true);
-
-        mainPanel.setLayout(null);
-        mainPanel.setOpaque(false);
-        mainPanel.setSize(600, 400);
-        mainPanel.setVisible(true);
-        mainPanel.add(buttonPanel);
 
         try
         {
@@ -154,11 +109,47 @@ public class PAStartMenu extends JFrame
         {
             System.err.println(ex.getMessage());
         }
-
-        add(mainPanel);
+    }
+    
+    private void setUpStartMenu()
+    {
+        setOpaque(false);
         setSize(600, 400);
-        setLocationRelativeTo(null);
+        setLocation(360,200);
+        add(buttonPanel);
         setVisible(true);
     }
 
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        Point2D start = new Point2D.Float(0, 0);
+        Point2D end = new Point2D.Float(300, 0);
+        float[] dist =
+        {
+            0.0f, 0.2f, 0.5f, 0.8f, 1.0f
+        };
+        Color[] colors =
+        {
+           // new Color(170, 170, 170), new Color(210, 210, 210), new Color(230, 230, 230), new Color(220, 220, 220), new Color(185, 185, 185)
+           new Color(40, 40, 40), new Color(60, 60, 60), new Color(80, 80, 80), new Color(60, 60, 60), new Color(40, 40, 40)     
+        };
+        LinearGradientPaint gPaint = new LinearGradientPaint(start, end, dist, colors);
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setPaint(gPaint);
+        g2d.fillRect(0, 0, 300, 400);
+
+        try
+        {
+            Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
+            g.drawImage(img, 60, 40, 180, 180, null);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(PAStartMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
