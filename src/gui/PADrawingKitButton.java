@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 /**
@@ -94,6 +96,7 @@ public class PADrawingKitButton extends JButton
 	{
 		ImageIcon imgIcon = new ImageIcon(imgPath);
 		button.setIcon(imgIcon);
+		button.setBackground(new Color(40,40,40));
 		button.setBorder(null);
 		button.setBorderPainted(false);
 		button.setToolTipText(tootip);
