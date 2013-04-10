@@ -101,7 +101,7 @@ public class PAUnit
 	 */
 	public final static double convertEM(String value)
 	{
-		return (Double.parseDouble(value) * 12 * PASystem.dotsPerInch / 72);
+		return (Double.parseDouble(value) * 12 * PASystem.getDotsPerInch() / 72);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class PAUnit
 	 */
 	public final static double convertPT(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.dotsPerInch / 72);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 72);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class PAUnit
 	 */
 	public final static double convertPC(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.dotsPerInch / 6);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 6);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class PAUnit
 	 */
 	public final static double convertMM(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.dotsPerInch / 25.4);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 25.4);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class PAUnit
 	 */
 	public final static double convertCM(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.dotsPerInch / 2.54);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 2.54);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class PAUnit
 	 */
 	public final static double convertIN(String value)
 	{
-		return Double.parseDouble(value) * PASystem.dotsPerInch;
+		return Double.parseDouble(value) * PASystem.getDotsPerInch();
 	}
 
 }
