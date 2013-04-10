@@ -19,6 +19,7 @@ public class PARootView extends JFrame
     private Dimension userScreenSize;
     private JDesktopPane rootView;
     private PAStartMenu startMenu;
+    private PADrawingKit toolBar;
     
     public PARootView()
     {
@@ -32,6 +33,7 @@ public class PARootView extends JFrame
     {
         rootView = new JDesktopPane();
         startMenu = new PAStartMenu();
+        toolBar = new PADrawingKit();
     }
     
     private void customize()
@@ -39,6 +41,7 @@ public class PARootView extends JFrame
         rootView.setOpaque(false);
         rootView.setSize(userScreenSize);
         rootView.add(startMenu);
+        rootView.add(toolBar);
         rootView.setVisible(true);
     }
     
