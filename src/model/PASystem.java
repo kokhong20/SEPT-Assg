@@ -106,6 +106,9 @@ public class PASystem
         return path;
     }
 
+    /**
+     * set the look and feel of system based on currentOS
+     */
     public static void setLookandFeel()
     {
         if (currentOS.toLowerCase().contains("mac"))
