@@ -11,12 +11,10 @@ import java.io.File;
 public class PASystem {
 	
 	private static String currentOS = System.getProperty("os.name");
-	private static Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+	private static Toolkit toolkit =  Toolkit.getDefaultToolkit();
 	private static Dimension dimension = toolkit.getScreenSize();
-	private static int screenResolution = Toolkit.getDefaultToolkit().getScreenResolution();
-	private static double screenHeight = dimension.getHeight();
-	private static double screenWidth = dimension.getWidth();
-	private static double screenSize = Math.sqrt((screenHeight * screenWidth));
+	private static int screenResolution = toolkit.getScreenResolution();
+	private static double screenSize = Math.sqrt((dimension.height * dimension.width));
 	private static double screenRatio = (screenResolution / screenSize) + 1;
 	private static final double dotsPerInch = screenResolution * screenRatio;
 
@@ -46,20 +44,6 @@ public class PASystem {
 	 */
 	public static int getScreenResolution() {
 		return screenResolution;
-	}
-
-	/**
-	 * @return the screenHeight
-	 */
-	public static double getScreenHeight() {
-		return screenHeight;
-	}
-
-	/**
-	 * @return the screenWidth
-	 */
-	public static double getScreenWidth() {
-		return screenWidth;
 	}
 
 	/**
