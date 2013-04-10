@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import model.PASystem;
 
 /**
  *
@@ -20,11 +19,10 @@ public class PARootView extends JFrame
     private Dimension userScreenSize;
     private JDesktopPane rootView;
     private PAStartMenu startMenu;
-    private PAMenuBar menuBar;
+    private PADrawingKit toolBar;
     
     public PARootView()
     {
-        PASystem.setLookandFeel();
         initialize();
         getScreenSize();
         customize();
@@ -35,7 +33,7 @@ public class PARootView extends JFrame
     {
         rootView = new JDesktopPane();
         startMenu = new PAStartMenu();
-        menuBar = new PAMenuBar();
+        toolBar = new PADrawingKit();
     }
     
     private void customize()
@@ -43,6 +41,7 @@ public class PARootView extends JFrame
         rootView.setOpaque(false);
         rootView.setSize(userScreenSize);
         rootView.add(startMenu);
+        rootView.add(toolBar);
         rootView.setVisible(true);
     }
     
@@ -56,7 +55,6 @@ public class PARootView extends JFrame
     {
         add(rootView);
         setSize(userScreenSize);
-        setJMenuBar(menuBar);
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
         setVisible(true);
