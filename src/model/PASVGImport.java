@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -146,13 +146,13 @@ public class PASVGImport {
 	
 	/**
 	 * Read the current SVG file and add all available elements
-	 * (rect, circle, line, g) into a LinkedHashSet
+	 * (rect, circle, line, g) into a LinkedList
 	 * 
-	 * @return a LinkedHashSet of all shapes 
+	 * @return a LinkedList of all shapes 
 	 */
-	private LinkedHashSet<PAShape> readSVGElements() {
+	private LinkedList<PAShape> readSVGElements() {
 		// TODO Auto-generated method stub
-		LinkedHashSet<PAShape> shapesCollection = new LinkedHashSet<PAShape>();
+		LinkedList<PAShape> shapesCollection = new LinkedList<PAShape>();
 		
 		/**
 		 * Reading of svg elements not done yet
