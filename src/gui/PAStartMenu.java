@@ -6,29 +6,23 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.LinearGradientPaint;
-import java.awt.RenderingHints;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
 /**
  *
  * @author LiHao
  */
-public class PAStartMenu extends JPanel
+public class PAStartMenu extends JInternalFrame
 {
     private JPanel mainPanel;
-    private JPanel buttonPanel;
     private JButton openFileButton;
     private JButton newFileButton;
 
@@ -39,44 +33,54 @@ public class PAStartMenu extends JPanel
         setUpStartMenu();
     }
 
+    /**
+     * 
+     * initialize component.
+     */
     private void initialize()
     {
-        buttonPanel = setUpButtonPanel();
+        mainPanel = setUpMainPanel();
     }
 
-    private JPanel setUpButtonPanel()
+    /**
+     * 
+     * draw Logo to Panel.
+     * @return JPanel
+     */
+    private JPanel setUpMainPanel()
     {
         return new JPanel()
         {
             @Override
             public void paintComponent(Graphics g)
             {
-                Graphics2D g2d = (Graphics2D) g;
-                Point2D start = new Point2D.Float(0, 0);
-                Point2D end = new Point2D.Float(300, 0);
-                float[] dist =
+                try
                 {
-                    0.0f, 0.05f
-                };
-                Color[] colors =
+                    Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
+                    g.drawImage(img, 80, 20, 180, 180, null);
+                }
+                catch (IOException ex)
                 {
-                    Color.gray, new Color(210, 210, 210)
-                };
-                LinearGradientPaint gPaint = new LinearGradientPaint(start, end, dist, colors);
-
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setPaint(gPaint);
-                g2d.fillRect(0, 0, 300, 400);
+                    System.err.println(ex.getMessage());
+                }
             }
 
         };
     }
 
+    /**
+     * 
+     * initialize button and set size, bounds and icon.
+     * @param img
+     * @param x
+     * @param y
+     * @return JButton
+     */
     private JButton setUpButtonWithBounds(Image img, int x, int y)
     {
         ImageIcon icon = new ImageIcon(img);
         JButton button = new JButton(icon);
-        button.setBorder(null);
+        //button.setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
         button.setBorderPainted(false);
         button.setBounds(x, y, img.getWidth(button), img.getHeight(button));
         button.setVisible(true);
@@ -84,26 +88,23 @@ public class PAStartMenu extends JPanel
         return button;
     }
 
-    private void customize()
+    /**
+     * 
+     * load image to button
+     * add button to JPanel.
+     */
+    private void setUpButton()
     {
-        setLayout(null);       
-        buttonPanel.setLayout(null);
-        buttonPanel.setBackground(Color.white);
-        buttonPanel.setSize(300, 400);
-        buttonPanel.setBounds(300, 0, buttonPanel.getWidth(), buttonPanel.getHeight());
-        buttonPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.gray));
-        buttonPanel.setVisible(true);
-
         try
         {
-            Image openFileImg = ImageIO.read(new File("resources/OpenFile 128x128.png"));
-            Image newFileImg = ImageIO.read(new File("resources/NewFile 128x128.png"));
+            Image openFileImg = ImageIO.read(new File("resources/OpenFile 150x150.png"));
+            Image newFileImg = ImageIO.read(new File("resources/NewFile 150x150.png"));
 
-            openFileButton = setUpButtonWithBounds(openFileImg, 86, 36);
-            newFileButton = setUpButtonWithBounds(newFileImg, 86, 200);
+            openFileButton = setUpButtonWithBounds(openFileImg, 86, 226);
+            newFileButton = setUpButtonWithBounds(newFileImg, 386, 226);
 
-            buttonPanel.add(openFileButton);
-            buttonPanel.add(newFileButton);
+            mainPanel.add(openFileButton);
+            mainPanel.add(newFileButton);
         }
         catch (NullPointerException | IOException ex)
         {
@@ -111,45 +112,27 @@ public class PAStartMenu extends JPanel
         }
     }
     
-    private void setUpStartMenu()
+    /**
+     * 
+     * customize mainPanel and add to InternalFrame.
+     */
+    private void customize()
     {
-        setOpaque(false);
-        setSize(600, 400);
-        setLocation(360,200);
-        add(buttonPanel);
-        setVisible(true);
+        mainPanel.setLayout(null);
+        mainPanel.setOpaque(false);
+        mainPanel.setSize(640,450);
+        setUpButton();
+        add(mainPanel);
     }
 
-    @Override
-    public void paintComponent(Graphics g)
+    /**
+     * 
+     * to show the InternalFrame and set size to it.
+     */
+    private void setUpStartMenu()
     {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        Point2D start = new Point2D.Float(0, 0);
-        Point2D end = new Point2D.Float(300, 0);
-        float[] dist =
-        {
-            0.0f, 0.2f, 0.5f, 0.8f, 1.0f
-        };
-        Color[] colors =
-        {
-           // new Color(170, 170, 170), new Color(210, 210, 210), new Color(230, 230, 230), new Color(220, 220, 220), new Color(185, 185, 185)
-           new Color(40, 40, 40), new Color(60, 60, 60), new Color(80, 80, 80), new Color(60, 60, 60), new Color(40, 40, 40)     
-        };
-        LinearGradientPaint gPaint = new LinearGradientPaint(start, end, dist, colors);
-
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setPaint(gPaint);
-        g2d.fillRect(0, 0, 300, 400);
-
-        try
-        {
-            Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
-            g.drawImage(img, 60, 40, 180, 180, null);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(PAStartMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //setBackground(Color.white);
+        setSize(650, 450);
+        setVisible(true);
     }
 }

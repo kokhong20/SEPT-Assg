@@ -92,6 +92,7 @@ public class PASVGImport {
 	/**
 	 * Validate the current file whether it
 	 * is a valid SVG file to be opened
+	 * 
 	 * @param directory
 	 */
 	private void validateSVG(String directory) {
@@ -135,6 +136,7 @@ public class PASVGImport {
 	/**
 	 * Create a new PASVGTag by passing the SVG Element
 	 * to the constructor of PASVGTag 
+	 * 
 	 * @return a new PASVGTag object
 	 */
 	private PASVGTag createSVGTag()
@@ -145,6 +147,7 @@ public class PASVGImport {
 	/**
 	 * Read the current SVG file and add all available elements
 	 * (rect, circle, line, g) into a LinkedHashSet
+	 * 
 	 * @return a LinkedHashSet of all shapes 
 	 */
 	private LinkedHashSet<PAShape> readSVGElements() {

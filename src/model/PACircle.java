@@ -11,14 +11,17 @@ public class PACircle extends PAFillableShape{
 
 	/**
 	 * Constructor which receives a node
+	 * 
 	 * @param node
 	 */
 	public PACircle(Node node) 
 	{
 		super(node);
 	}
-	
-	//Read and process attributes
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void readAttributes()
 	{

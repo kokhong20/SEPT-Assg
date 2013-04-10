@@ -16,6 +16,7 @@ public class PALine extends PAShape{
 	
 	/**
 	 * Constructor which receives a node
+	 * 
 	 * @param node
 	 */
 	public PALine(Node node) 
@@ -23,7 +24,10 @@ public class PALine extends PAShape{
 		// TODO Auto-generated constructor stub
 		super(node);
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void readAttributes() 
 	{

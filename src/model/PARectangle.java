@@ -16,6 +16,7 @@ public class PARectangle extends PAFillableShape {
 
 	/**
 	 * Constructor which receives a node
+	 * 
 	 * @param node
 	 */
 	public PARectangle(Node node) 
@@ -24,6 +25,9 @@ public class PARectangle extends PAFillableShape {
 		super(node);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void readAttributes() 
 	{

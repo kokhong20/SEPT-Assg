@@ -10,15 +10,11 @@ import java.util.regex.Pattern;
 public class PAUnit
 {
 	/**
-	 * Default dots per pixels
-	 */
-	private static double dpi = 96;
-	
-	/**
+	 * Validate and convert the SVG element attributes value received as String to double
 	 * 
-	 * @param att
-	 * @param isStrokeWidth
-	 * @return
+	 * @param att attribute value of an SVG element attribute
+	 * @param isStrokeWidth true if attribute value passed in is from stroke-width
+	 * @return unit of length in double
 	 */
 	public final static double setUnit(String att, boolean isStrokeWidth)
 	{
@@ -66,9 +62,10 @@ public class PAUnit
 	}
 	
 	/**
+	 * To calculate exponential values
 	 * 
 	 * @param att
-	 * @return
+	 * @return a String with its exponential value calculated
 	 */
 	private static String calculate(String att)
 	{
@@ -86,9 +83,10 @@ public class PAUnit
 	}
 	
 	/**
+	 * remove symbol from a attribute value
 	 * 
-	 * @param att
-	 * @return
+	 * @param att attribute value
+	 * @return a String with its symbol removed
 	 */
 	private static String removeUnits(String att)
 	{
@@ -96,19 +94,21 @@ public class PAUnit
 	}
 	
 	/**
+	 * Convert from EM to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from EM
 	 */
 	public final static double convertEM(String value)
 	{
-		return (Double.parseDouble(value) * 12 * dpi / 72);
+		return (Double.parseDouble(value) * 12 * PASystem.getDotsPerInch() / 72);
 	}
 
 	/**
+	 * Convert from EX to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from EX
 	 */
 	public final static double convertEX(String value)
 	{
@@ -116,9 +116,10 @@ public class PAUnit
 	}
 
 	/**
+	 * Convert from PX to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from PX
 	 */
 	public final static double convertPX(String value)
 	{
@@ -126,53 +127,58 @@ public class PAUnit
 	}
 
 	/**
+	 * Convert from PT to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from PT
 	 */
 	public final static double convertPT(String value)
 	{
-		return (Double.parseDouble(value) * dpi / 72);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 72);
 	}
 
 	/**
+	 * Convert from PC to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from PC
 	 */
 	public final static double convertPC(String value)
 	{
-		return (Double.parseDouble(value) * dpi / 6);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 6);
 	}
 
 	/**
+	 * Convert from MM to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from MM
 	 */
 	public final static double convertMM(String value)
 	{
-		return (Double.parseDouble(value) * dpi / 25.4);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 25.4);
 	}
 
 	/**
+	 * Convert from CM to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from CM
 	 */
 	public final static double convertCM(String value)
 	{
-		return (Double.parseDouble(value) * dpi / 2.54);
+		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 2.54);
 	}
 
 	/**
+	 * Convert from IN to PX
 	 * 
-	 * @param value
-	 * @return
+	 * @param value attribute value
+	 * @return length of attribute value double converted from IN
 	 */
 	public final static double convertIN(String value)
 	{
-		return Double.parseDouble(value) * dpi;
+		return Double.parseDouble(value) * PASystem.getDotsPerInch();
 	}
 
 }
