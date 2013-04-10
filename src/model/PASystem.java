@@ -12,10 +12,10 @@ public class PASystem {
 	
 	private static String currentOS = System.getProperty("os.name");
 	private static Toolkit toolkit =  Toolkit.getDefaultToolkit();
-	private static Dimension dimension = toolkit.getScreenSize();
-	private static int screenResolution = toolkit.getScreenResolution();
-	private static double screenSize = Math.sqrt((dimension.height * dimension.width));
-	private static double screenRatio = (screenResolution / screenSize) + 1;
+	private static final Dimension screenDimension = toolkit.getScreenSize();
+	private static final int screenResolution = toolkit.getScreenResolution();
+	private static final double screenSize = Math.sqrt((screenDimension.height * screenDimension.width));
+	private static final double screenRatio = (screenResolution / screenSize) + 1;
 	private static final double dotsPerInch = screenResolution * screenRatio;
 
 	/**
@@ -33,10 +33,10 @@ public class PASystem {
 	}
 
 	/**
-	 * @return the dimension
+	 * @return the screenDimension
 	 */
-	public static Dimension getDimension() {
-		return dimension;
+	public static Dimension getScreenDimension() {
+		return screenDimension;
 	}
 
 	/**
