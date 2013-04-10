@@ -29,6 +29,7 @@ public class PASVGTag
 
 	/**
 	 * Constructor which receives a node
+	 * 
 	 * @param node
 	 */
 	public PASVGTag(Node node)
@@ -86,6 +87,7 @@ public class PASVGTag
 	/**
 	 * Read in value as value of svg viewbox attribute
 	 * set it to current instance variables
+	 * 
 	 * @param value
 	 */
 	public void setViewbox(String value)
@@ -247,25 +249,53 @@ public class PASVGTag
 		this.node = node;
 	}
 
+	/**
+	 * @return the scaleX
+	 */
+	public double getScaleX() {
+		return scaleX;
+	}
+
+	/**
+	 * @param scaleX the scaleX to set
+	 */
+	public void setScaleX(double scaleX) {
+		this.scaleX = scaleX;
+	}
+
+
+	/**
+	 * @return the scaleY
+	 */
+	public double getScaleY() {
+		return scaleY;
+	}
+
+	/**
+	 * @param scaleY the scaleY to set
+	 */
+	public void setScaleY(double scaleY) {
+		this.scaleY = scaleY;
+	}
+
+	/**
+	 * 
+	 * @param oriWidth
+	 * @param oriHeight
+	 * @param viewWidth
+	 * @param viewHeight
+	 */
 	public void setScale(double oriWidth, double oriHeight, double viewWidth, double viewHeight)
 	{
 		if (this.viewWidth == 0 && this.viewHeight == 0)
 		{
-			this.scaleX = 1;
-			this.scaleY = 1;
+			this.setScaleX(1);
+			this.setScaleY(1);
 		}
 		else
 		{
-			this.scaleX = (oriWidth/viewWidth);
-			this.scaleY = (oriHeight/viewHeight);
+			this.setScaleX((oriWidth/viewWidth));
+			this.setScaleY((oriHeight/viewHeight));
 		}
-	}
-	public double getScaleY()
-	{
-		return scaleY;
-	}
-	public double getScaleX()
-	{
-		return scaleX;
 	}
 }

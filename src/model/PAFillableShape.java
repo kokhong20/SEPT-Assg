@@ -14,6 +14,7 @@ public abstract class PAFillableShape extends PAShape {
 	/**
 	 * Constructor which receives a node
 	 * Call setColor method to set value 
+	 * 
 	 * @param node
 	 */
 	public PAFillableShape(Node node) 

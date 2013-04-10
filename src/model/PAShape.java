@@ -20,6 +20,7 @@ public abstract class PAShape {
 	/**
 	 * Constructor which receives a node 
 	 * Call setColor and setUnit method to set value 
+	 * 
 	 * @param node
 	 */
 	public PAShape(Node node) 
@@ -32,7 +33,7 @@ public abstract class PAShape {
 	}
 	
 	/**
-	 * Abstract method of reading SVG attributes
+	 * To read attribute values from SVG elements to setters
 	 */
 	public abstract void readAttributes();
 

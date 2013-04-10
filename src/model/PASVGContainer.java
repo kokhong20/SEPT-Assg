@@ -21,6 +21,7 @@ public class PASVGContainer {
 	
 	/**
 	 * Delete a whole group of PAShapes
+	 * 
 	 * @param groupId
 	 */
 	public boolean deleteGroup(String groupId)
@@ -36,6 +37,7 @@ public class PASVGContainer {
 	
 	/**
 	 * Remove a particular PAShape from a group
+	 * 
 	 * @param shapeToRemove
 	 * @return return true if successfully removed, return null otherwise
 	 */
@@ -55,6 +57,7 @@ public class PASVGContainer {
 	
 	/**
 	 * Return LinkedHashSet of the groupId, otherwise return null
+	 * 
 	 * @param groupId
 	 * @return
 	 */
