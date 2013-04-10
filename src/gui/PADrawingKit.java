@@ -1,10 +1,10 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
 import javax.swing.JPanel;
+
+import model.PASystem;
 /**
  * 
  * @author KokHong
@@ -38,7 +38,7 @@ public class PADrawingKit extends JPanel
 		this.setVisible(true);
 		this.setSize(80, 220);
 		//Set location based on user's computer resolution
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(((int)(0.05*screenSize.width)),((int)(0.2*screenSize.height)));
+		this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())), 
+				((int) (0.2 * PASystem.getScreenDimension().getHeight())));
 	}
 }
