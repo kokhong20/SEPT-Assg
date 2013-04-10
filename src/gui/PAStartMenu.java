@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -56,7 +55,9 @@ public class PAStartMenu extends JInternalFrame
             {
                 try
                 {
+                    Image background = ImageIO.read(new File("resources/background.png"));
                     Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
+                    g.drawImage(background, 0, 0, 650, 450, null);
                     g.drawImage(img, 80, 20, 180, 180, null);
                 }
                 catch (IOException ex)
@@ -80,7 +81,7 @@ public class PAStartMenu extends JInternalFrame
     {
         ImageIcon icon = new ImageIcon(img);
         JButton button = new JButton(icon);
-        //button.setBorder(BorderFactory.createLineBorder(Color.gray, 1, true));
+        button.setBackground(new Color(0,0,0,0));
         button.setBorderPainted(false);
         button.setBounds(x, y, img.getWidth(button), img.getHeight(button));
         button.setVisible(true);
@@ -100,8 +101,8 @@ public class PAStartMenu extends JInternalFrame
             Image openFileImg = ImageIO.read(new File("resources/OpenFile 150x150.png"));
             Image newFileImg = ImageIO.read(new File("resources/NewFile 150x150.png"));
 
-            openFileButton = setUpButtonWithBounds(openFileImg, 86, 226);
-            newFileButton = setUpButtonWithBounds(newFileImg, 386, 226);
+            openFileButton = setUpButtonWithBounds(openFileImg, 386, 226);
+            newFileButton = setUpButtonWithBounds(newFileImg, 86, 226);
 
             mainPanel.add(openFileButton);
             mainPanel.add(newFileButton);
