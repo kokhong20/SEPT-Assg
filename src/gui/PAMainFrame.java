@@ -1,117 +1,129 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.Point;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-
 import model.PASystem;
+
 /**
- * 
+ *
  * @author KokHong
  *
  */
 public class PAMainFrame extends JInternalFrame
 {
-	private PAStatusPanel statusPanel;
-	private PASVGPanel svgPanel;
-	private PAShapeAttributeBar attributeBar;
-	private JPanel mainPanel;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6966744942640238103L;
-	
-	public PAMainFrame()
-	{
-		setAttributes();
-		initMainPanel();
-		setFrameLayout();
-	}
-	
-	/*
-	 * Initialize the instance variables
-	 */
-	public void initMainPanel()
-	{
-		statusPanel = new PAStatusPanel(this);
-		svgPanel = new PASVGPanel(this);
-		attributeBar = new PAShapeAttributeBar(this);
-		mainPanel = new JPanel();
-		
-		mainPanel.setPreferredSize(new Dimension(800,600));
-		
-		attributeBar.initPanel();
-		svgPanel.initPanel();
-		statusPanel.initPanel();	
-		
-		//Testing
-		
-	}
-	
-	/*
-	 * Set the attributes of the Internal Frame
-	 */
-	public void setAttributes()
-	{
-		
-		this.setTitle("New SVG");
-		this.setResizable(true);
-		this.setClosable(true);
-		this.setMaximizable(true);
-		
-		
-		this.setBackground(new Color(38,38,38));
-		this.setVisible(true);
-		this.setSize(800, 600);
-		
-		//Set location based on user's computer resolution
-		this.setLocation(((int) (0.2 * PASystem.getScreenDimension().getWidth())), 
-				((int) (0.1 * PASystem.getScreenDimension().getHeight())));
-	}
-	
-	/*
-	 * Set mainPanel layout
-	 * 
-	 */
-	
-	public void setFrameLayout()
-	{
-		GroupLayout layout = new GroupLayout(mainPanel);
-		mainPanel.setLayout(layout);
+    private PAStatusPanel statusPanel;
+    private PAShapeAttributeBar attributeBar;
+    private PASVGPanel svgPanel;
+    private JPanel mainPanel;
+    private JPanel svgBackPanel;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6966744942640238103L;
 
-		// Create a sequential group for the horizontal axis.
+    public PAMainFrame()
+    {
+        setAttributes();
+        initialize();
+        customize();
+        setFrameLayout();
+    }
 
-		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+    /**
+     * 
+     * Initialize the instance variables
+     */
+    private void initialize()
+    {
+        statusPanel = new PAStatusPanel(this);
+        attributeBar = new PAShapeAttributeBar(this);
+        svgPanel = new PASVGPanel(this);
+        mainPanel = new JPanel();
+        svgBackPanel = new JPanel();
+    }
 
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(attributeBar)
-				.addComponent(svgPanel)
-				.addComponent(statusPanel));
-	
-		layout.setHorizontalGroup(hGroup);
+    private void customize()
+    {
+        Dimension minSize = new Dimension(getWidth(), getHeight() - 100);
+        Box box = new Box(BoxLayout.Y_AXIS);
+        
+        box.setBackground(new Color(38, 38, 38));
+        box.add(Box.createVerticalGlue());
+        box.add(svgPanel);
+        box.add(Box.createVerticalGlue());
+        svgBackPanel.setLayout(new BorderLayout());
+        svgBackPanel.add(box, BorderLayout.CENTER);
+        svgBackPanel.setMinimumSize(minSize);
+        svgBackPanel.setBackground(new Color(38, 38, 38));
+        mainPanel.setPreferredSize(new Dimension(800, 600));
+        attributeBar.initPanel();
+        statusPanel.initPanel();
+    }
 
-		// Create a sequential group for the vertical axis.
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+    /**
+     * 
+     * Set the attributes of the Internal Frame
+     */
+    private void setAttributes()
+    {
+        //Set location based on user's computer resolution
+        Dimension screenResolution = PASystem.getScreenDimension();
+        int startX = (int) (0.2*screenResolution.getWidth());
+        int startY = (int) (0.1*screenResolution.getHeight());
+        Point startPoint = new Point(startX, startY);
+        
+        setTitle("New SVG");
+        setResizable(true);
+        setClosable(true);
+        setMaximizable(true);
+        setBackground(new Color(38, 38, 38));
+        setVisible(true);
+        setSize(800, 600);
+        setLocation(startPoint);
+    }
 
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(attributeBar));
-		
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(svgPanel));
-		
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(statusPanel));
-		
-		layout.setVerticalGroup(vGroup);
+    /**
+     * 
+     * Set mainPanel layout
+     */
+    private void setFrameLayout()
+    {
+        GroupLayout layout = new GroupLayout(mainPanel);
+        mainPanel.setLayout(layout);
 
-		this.add(mainPanel);
-		
-	}
-	
-	
-	
+        // Create a sequential group for the horizontal axis.
+
+        GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+
+        hGroup.addGroup(layout.createParallelGroup()
+                .addComponent(attributeBar)
+                .addComponent(svgBackPanel)
+                .addComponent(statusPanel));
+
+        layout.setHorizontalGroup(hGroup);
+
+        // Create a sequential group for the vertical axis.
+        GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                .addComponent(attributeBar));
+
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                .addComponent(svgBackPanel));
+
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                .addComponent(statusPanel));
+
+        layout.setVerticalGroup(vGroup);
+
+        this.add(mainPanel);
+    }
 }
