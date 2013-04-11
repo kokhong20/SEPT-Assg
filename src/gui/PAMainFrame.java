@@ -29,7 +29,7 @@ public class PAMainFrame extends JInternalFrame
 	{
 		setAttributes();
 		initMainPanel();
-		this.setFrameLayout();
+		setFrameLayout();
 	}
 	
 	/*
@@ -47,6 +47,9 @@ public class PAMainFrame extends JInternalFrame
 		attributeBar.initPanel();
 		svgPanel.initPanel();
 		statusPanel.initPanel();	
+		
+		//Testing
+		
 	}
 	
 	/*
@@ -84,8 +87,10 @@ public class PAMainFrame extends JInternalFrame
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
-		hGroup.addGroup(layout.createParallelGroup().addComponent(attributeBar)
-				.addComponent(svgPanel).addComponent(statusPanel));
+		hGroup.addGroup(layout.createParallelGroup()
+				.addComponent(attributeBar)
+				.addComponent(svgPanel)
+				.addComponent(statusPanel));
 	
 		layout.setHorizontalGroup(hGroup);
 
@@ -94,10 +99,13 @@ public class PAMainFrame extends JInternalFrame
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(attributeBar));
+		
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(svgPanel));
+		
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(statusPanel));
+		
 		layout.setVerticalGroup(vGroup);
 
 		this.add(mainPanel);

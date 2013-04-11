@@ -22,9 +22,13 @@ public class PASVGPanel extends JPanel
 		this.mainFrame = mainFrame;
 	}
 	
+	/*
+	 * Initialise Svg Panel
+	 */
 	public void initPanel()
 	{
 		this.setBackground(new Color(38,38,38));
 		this.setPreferredSize(new Dimension(mainFrame.getWidth(),mainFrame.getHeight()-50));
 	}
+	
 }
