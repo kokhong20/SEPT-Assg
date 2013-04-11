@@ -17,6 +17,11 @@ public abstract class PAShape {
 	private boolean isGrouped;
 	private Node node;
 	
+	public PAShape()
+	{
+		
+	}
+	
 	/**
 	 * Constructor which receives a node 
 	 * Call setColor and setUnit method to set value 

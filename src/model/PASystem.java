@@ -3,8 +3,6 @@ package model;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 

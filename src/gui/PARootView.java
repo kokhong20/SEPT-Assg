@@ -4,6 +4,7 @@
  */
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -20,6 +21,7 @@ public class PARootView extends JFrame
     private JDesktopPane rootView;
     private PAStartMenu startMenu;
     private PADrawingKit toolBar;
+    private PAMainFrame mainPanel;
     
     public PARootView()
     {
@@ -34,14 +36,17 @@ public class PARootView extends JFrame
         rootView = new JDesktopPane();
         startMenu = new PAStartMenu();
         toolBar = new PADrawingKit();
+        mainPanel = new PAMainFrame();
+        
     }
     
     private void customize()
     {
         rootView.setOpaque(false);
         rootView.setSize(userScreenSize);
-        rootView.add(startMenu);
+//        rootView.add(startMenu);
         rootView.add(toolBar);
+        rootView.add(mainPanel);
         rootView.setVisible(true);
     }
     

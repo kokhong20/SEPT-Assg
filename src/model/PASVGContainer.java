@@ -1,74 +1,58 @@
 package model;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
+
 
 /**
  * @author bryantylai/LaiSaiHoo
  *
  */
 public class PASVGContainer {
+	private PAGroup svgGroup;
 	private PASVGTag svgTag;
-	private LinkedHashMap<String, LinkedHashSet<PAShape>> groupedSVGCollection;
+	private LinkedList<PAShape> svgContainer;
 	
 	/**
-	 * Create a new group for PAShape
-	 */
-	public void createGroup()
-	{
-		
-	}
-	
-	/**
-	 * Delete a whole group of PAShapes
+	 * constructor with only svgTag such that 
+	 * from a newly created svg
 	 * 
-	 * @param groupId
+	 * @param svgTag
 	 */
-	public boolean deleteGroup(String groupId)
+	public PASVGContainer(PASVGTag svgTag)
 	{
-		if(groupedSVGCollection.containsKey(groupId))
-		{
-			groupedSVGCollection.remove(groupId);
-			return true;
-		}
-		
-		return false;
+		setSvgTag(svgTag);
+		setSvgGroup(new PAGroup());
+		setSvgContainer(new LinkedList<PAShape>());
 	}
-	
-	/**
-	 * Remove a particular PAShape from a group
-	 * 
-	 * @param shapeToRemove
-	 * @return return true if successfully removed, return null otherwise
-	 */
-	public boolean removeFromGroup(PAShape shapeToRemove)
-	{
-		String gID = shapeToRemove.getId();
-		if(groupedSVGCollection.containsKey(gID))
-		{
-			LinkedHashSet<PAShape> collection = groupedSVGCollection.get(gID);
-			collection.remove(shapeToRemove);
-			groupedSVGCollection.put(gID, collection);
-			return true;
-		}
 
-		return false;
+	/**
+	 * constructor with a pre-created list of shapes 
+	 * such that from existing svg
+	 *
+	 * @param svgTag
+	 * @param shapes
+	 */
+	public PASVGContainer(PASVGTag svgTag, LinkedList<PAShape> shapes)
+	{
+		setSvgTag(svgTag);
+		setSvgGroup(new PAGroup());
+		setSvgContainer(shapes);
 	}
 	
 	/**
-	 * Return LinkedHashSet of the groupId, otherwise return null
-	 * 
-	 * @param groupId
-	 * @return
+	 * @return the svgGroup
 	 */
-	public LinkedHashSet<PAShape> getGroupedSVG(String groupId)
-	{
-		if(groupedSVGCollection.containsKey(groupId))
-			return groupedSVGCollection.get(groupId);
-		else 
-			return null;
+	public PAGroup getSvgGroup() {
+		return svgGroup;
 	}
-	
+
+	/**
+	 * @param svgGroup the svgGroup to set
+	 */
+	public void setSvgGroup(PAGroup svgGroup) {
+		this.svgGroup = svgGroup;
+	}
+
 	/**
 	 * @return the svgTag
 	 */
@@ -82,18 +66,217 @@ public class PASVGContainer {
 	public void setSvgTag(PASVGTag svgTag) {
 		this.svgTag = svgTag;
 	}
-	
+
 	/**
-	 * @return the groupedSVGCollection
+	 * @return the svgContainer
 	 */
-	public LinkedHashMap<String, LinkedHashSet<PAShape>> getGroupedSVGCollection() {
-		return groupedSVGCollection;
+	public LinkedList<PAShape> getSvgContainer() {
+		return svgContainer;
+	}
+
+	/**
+	 * @param svgContainer the svgContainer to set
+	 */
+	public void setSvgContainer(LinkedList<PAShape> svgContainer) {
+		this.svgContainer = svgContainer;
 	}
 	
 	/**
-	 * @param groupedSVGCollection the groupedSVGCollection to set
+	 * Create a new group and add a single PAShape to end of svgContainer
+	 * 
+	 * @param shape
+	 * @return true if shape is added, return false otherwise
 	 */
-	public void setGroupedSVGCollection(LinkedHashMap<String, LinkedHashSet<PAShape>> groupedSVGCollection) {
-		this.groupedSVGCollection = groupedSVGCollection;
+	public boolean createGroupAndAddShape(PAShape shape)
+	{
+		shape.setId(svgGroup.generateID());
+		shape.setGrouped(true);
+		
+		return svgContainer.add(shape);
+	}
+
+	/**
+	 * Create a new group and add a group of PAShape to end of svgContainer
+	 * 
+	 * @param shapes
+	 * @return true if list of shapes is added, return false otherwise
+	 */
+	public boolean createGroupAndAddShapes(LinkedList<PAShape> shapes)
+	{
+		for(int i = 0; i < shapes.size(); i++)
+		{
+			PAShape shape = shapes.get(i);
+			if(i != 0)
+				shape.setId(shapes.getFirst().getId());
+			else
+				shape.setId(svgGroup.generateID());
+			shape.setGrouped(true);
+		}
+		
+		return svgContainer.addAll(shapes);
+	}
+	
+	/**
+	 * add a single shape to the end of an existing group
+	 * 
+	 * @param groupId
+	 * @param shape
+	 * @return true if PAShape is added to group, return false otherwise
+	 */
+	public boolean addShapeToGroup(String groupId, PAShape shape)
+	{
+		if(svgGroup.getIdList().contains(groupId))
+		{
+			for(int i = 0; i < svgContainer.size(); i++)
+			{
+				if(svgContainer.get(i).getId().equals(groupId))
+				{
+					for(int j = i; j < svgContainer.size(); j++)
+					{
+						if(!svgContainer.get(j).equals(groupId) || !svgContainer.get(j).isGrouped())
+						{
+							svgContainer.add(j, shape);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * add a group of shapes to the end of an existing group 
+	 * 
+	 * @param groupId
+	 * @param shape
+	 * @return true if list of PAShape is added to group, return false otherwise
+	 */
+	public boolean addShapesToGroup(String groupId, LinkedList<PAShape> shapes)
+	{
+		if(svgGroup.getIdList().contains(groupId))
+		{
+			for(int i = 0; i < svgContainer.size(); i++)
+			{
+				if(svgContainer.get(i).getId().equals(groupId))
+				{
+					for(int j = i; j < svgContainer.size(); j++)
+					{
+						if(!svgContainer.get(j).equals(groupId) || !svgContainer.get(j).isGrouped())
+						{
+							svgContainer.addAll(j, shapes);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Remove a particular PAShape from an existing group and
+	 * add it directly after that group
+	 * 
+	 * @param groupId
+	 * @param shapeToRemove
+	 * @return true if PAShape successfully removed from group, return false otherwise
+	 */
+	public boolean removeFromGroup(String groupId, PAShape shapeToRemove)
+	{
+		if(svgGroup.getIdList().contains(groupId))
+		{
+			for(int i = 0; i < svgContainer.size(); i++)
+			{
+				if(svgContainer.get(i).getId().equals(groupId))
+				{
+					for(int j = i; j < svgContainer.size(); j++)
+					{
+						if(!svgContainer.get(j).equals(groupId) && !svgContainer.get(j).isGrouped())
+						{
+							shapeToRemove.setGrouped(false);
+							shapeToRemove.setId(null);
+							svgContainer.add(j - 1, shapeToRemove);
+							svgContainer.removeFirstOccurrence(shapeToRemove);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * remove a list of PAShape from an existing group and
+	 * add the list directly after that group
+	 * 
+	 * @param groupId
+	 * @param shapes
+	 * @return true if list of PAShape successfully removed from group, return false otherwise 
+	 */
+	public boolean removeListFromGroup(String groupId, LinkedList<PAShape> shapes)
+	{
+		if(svgGroup.getIdList().contains(groupId))
+		{
+			for(int i = 0; i < svgContainer.size(); i++)
+			{
+				if(svgContainer.get(i).getId().equals(groupId))
+				{
+					for(int j = 0; j < shapes.size(); j++)
+					{
+						PAShape current = shapes.get(j);
+						if(current.getId().equals(groupId) && current.isGrouped())
+						{
+							current.setGrouped(false);
+							current.setId(null);
+						}
+					}
+
+					svgContainer.removeAll(shapes);
+					svgContainer.addAll(i + shapes.size() - 1, shapes);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * remove all PAShape from an existing group and keep its position
+	 * 
+	 * @param groupId
+	 * @return true if all PAShape successfully removed from group, return false otherwise
+	 */
+	public boolean removeAllFromGroup(String groupId)
+	{
+		if(svgGroup.getIdList().contains(groupId))
+		{
+			for(int i = 0; i < svgContainer.size(); i++)
+			{
+				PAShape current = svgContainer.get(i);
+				if(current.isGrouped() && current.getId().equals(groupId))
+				{
+					for(int j = i; j < svgContainer.size(); j++)
+					{
+						current = svgContainer.get(j);
+						if(current.getId().equals(groupId) && current.isGrouped())
+						{
+							current.setGrouped(false);
+							current.setId(null);
+						}
+						else
+						{
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

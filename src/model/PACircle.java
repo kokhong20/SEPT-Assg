@@ -9,6 +9,11 @@ public class PACircle extends PAFillableShape{
 	private double cy;
 	private double r;
 
+	public PACircle()
+	{
+		
+	}
+	
 	/**
 	 * Constructor which receives a node
 	 * 

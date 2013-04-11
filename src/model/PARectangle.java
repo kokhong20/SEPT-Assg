@@ -14,6 +14,11 @@ public class PARectangle extends PAFillableShape {
 	private double width;
 	private double height;
 
+	public PARectangle()
+	{
+		
+	}
+	
 	/**
 	 * Constructor which receives a node
 	 * 
