@@ -11,6 +11,9 @@ public class PAGroup {
 	private String groupId;
 	private LinkedHashSet<String> idList;
 
+	/**
+	 * constructor to create a new list of unique groupId
+	 */
 	public PAGroup()
 	{
 		setIdList(new LinkedHashSet<String>());
@@ -45,25 +48,51 @@ public class PAGroup {
 	}
 	
 	/**
+	 * generates a unique id for a svg group
+	 * 
 	 * @return newly generated groupId
 	 */
 	public String generateID()
 	{
-		/**
-		 * Implementation of generate unique id not done
-		 */
+		if(idList.isEmpty())
+		{
+			return "PA1";
+		}
 		
-		return groupId;
+		Object[] idArr = idList.toArray();
+		
+		int index = idArr.length - 1;
+		for(; index >= 0; index--)
+		{
+			if(((String)idArr[index]).startsWith("PA"))
+				break;
+		}
+		String lastString = (String)idArr[index];
+		String[] split = lastString.split("PA");
+		int lastId = Integer.parseInt(split[1]);
+		
+		return "PA" + (lastId + 1);
 	}
 	
 	/**
 	 * Create a new empty group
 	 * 
-	 * @return
+	 * @return true if successfully created new id and added to idList, return false otherwise
 	 */
 	public boolean createGroup()
 	{
 		return idList.add(generateID());
+	}
+	
+	/**
+	 * Create a new group with existing group Id from svg
+	 * 
+	 * @param idFromSVG id obtained from svg group tag
+	 * @return true if groupId successfully added to idList, return false otherwise
+	 */
+	public boolean createGroup(String idFromSVG)
+	{
+		return idList.add(idFromSVG);
 	}
 	
 	/**

@@ -11,6 +11,11 @@ import org.w3c.dom.Node;
 public abstract class PAFillableShape extends PAShape {
 	private Color fill;
 	
+	public PAFillableShape()
+	{
+		
+	}
+	
 	/**
 	 * Constructor which receives a node
 	 * Call setColor method to set value 

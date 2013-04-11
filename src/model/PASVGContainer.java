@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 
@@ -14,12 +13,30 @@ public class PASVGContainer {
 	private LinkedList<PAShape> svgContainer;
 	
 	/**
-	 * constructor
+	 * constructor with only svgTag such that 
+	 * from a newly created svg
+	 * 
+	 * @param svgTag
 	 */
-	public PASVGContainer()
+	public PASVGContainer(PASVGTag svgTag)
 	{
+		setSvgTag(svgTag);
 		setSvgGroup(new PAGroup());
 		setSvgContainer(new LinkedList<PAShape>());
+	}
+
+	/**
+	 * constructor with a pre-created list of shapes 
+	 * such that from existing svg
+	 *
+	 * @param svgTag
+	 * @param shapes
+	 */
+	public PASVGContainer(PASVGTag svgTag, LinkedList<PAShape> shapes)
+	{
+		setSvgTag(svgTag);
+		setSvgGroup(new PAGroup());
+		setSvgContainer(shapes);
 	}
 	
 	/**
@@ -177,11 +194,11 @@ public class PASVGContainer {
 				{
 					for(int j = i; j < svgContainer.size(); j++)
 					{
-						if(!svgContainer.get(j).equals(groupId) || !svgContainer.get(j).isGrouped())
+						if(!svgContainer.get(j).equals(groupId) && !svgContainer.get(j).isGrouped())
 						{
 							shapeToRemove.setGrouped(false);
 							shapeToRemove.setId(null);
-							svgContainer.add(j, shapeToRemove);
+							svgContainer.add(j - 1, shapeToRemove);
 							svgContainer.removeFirstOccurrence(shapeToRemove);
 							return true;
 						}
@@ -212,7 +229,7 @@ public class PASVGContainer {
 					for(int j = 0; j < shapes.size(); j++)
 					{
 						PAShape current = shapes.get(j);
-						if(current.equals(groupId) && current.isGrouped())
+						if(current.getId().equals(groupId) && current.isGrouped())
 						{
 							current.setGrouped(false);
 							current.setId(null);
@@ -220,8 +237,7 @@ public class PASVGContainer {
 					}
 
 					svgContainer.removeAll(shapes);
-					svgContainer.addAll(i + shapes.size(), shapes);
-					
+					svgContainer.addAll(i + shapes.size() - 1, shapes);
 					return true;
 				}
 			}
@@ -248,14 +264,14 @@ public class PASVGContainer {
 					for(int j = i; j < svgContainer.size(); j++)
 					{
 						current = svgContainer.get(j);
-						if(!current.equals(groupId) || !current.isGrouped())
-						{
-							return true;
-						}
-						else
+						if(current.getId().equals(groupId) && current.isGrouped())
 						{
 							current.setGrouped(false);
 							current.setId(null);
+						}
+						else
+						{
+							return true;
 						}
 					}
 				}

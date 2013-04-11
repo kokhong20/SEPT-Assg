@@ -14,6 +14,11 @@ public class PALine extends PAShape{
 	private double y1;
 	private double y2;
 	
+	public PALine()
+	{
+		
+	}
+	
 	/**
 	 * Constructor which receives a node
 	 * 
