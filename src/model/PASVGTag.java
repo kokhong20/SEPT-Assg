@@ -9,10 +9,10 @@ import org.w3c.dom.Node;
 /**
  * 
  * @author LaiSaiHoo
- *
+ * 
  */
 
-public class PASVGTag 
+public class PASVGTag
 {
 	private double width;
 	private double height;
@@ -26,6 +26,7 @@ public class PASVGTag
 	private Color fill;
 	private double strokeWidth;
 	private Node node;
+	private static double scale;
 
 	/**
 	 * Constructor which receives a node
@@ -36,7 +37,7 @@ public class PASVGTag
 	{
 		this.setNode(node);
 	}
-	
+
 	/**
 	 * Set values to variables to current instance if an Element Node
 	 */
@@ -45,25 +46,26 @@ public class PASVGTag
 		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
 			Element eNode = (Element) this.getNode();
-			
-			if(eNode.hasAttribute("width"))
+
+			if (eNode.hasAttribute("width"))
 			{
-				this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),false));
+				this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"), false));
 			}
 			else
 			{
 				this.setWidth(500);
 			}
-				
-			if(eNode.hasAttribute("height"))
+
+			if (eNode.hasAttribute("height"))
 			{
-				this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),false));
+				this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),
+						false));
 			}
 			else
 			{
 				this.setHeight(500);
 			}
-			
+
 			if (eNode.hasAttribute("viewBox"))
 			{
 				setViewbox(eNode.getAttribute("viewBox"));
@@ -75,18 +77,20 @@ public class PASVGTag
 				setViewWidth(0);
 				setViewHeight(0);
 			}
-			
-			setScale(this.width, this.height, this.viewWidth, this.viewHeight);
 
-			this.setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"), true));
+			setScale(this.width, this.height, this.viewWidth, this.viewHeight);
+			setScaleXY(getScaleX(), getScaleY());
+
+			this.setStrokeWidth(PAUnit.setUnit(
+					eNode.getAttribute("stroke-width"), true));
 			this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), true));
 			this.setFill(PAColor.setColor(eNode.getAttribute("fill"), false));
 		}
 	}
-	
+
 	/**
-	 * Read in value as value of svg viewbox attribute
-	 * set it to current instance variables
+	 * Read in value as value of svg viewbox attribute set it to current
+	 * instance variables
 	 * 
 	 * @param value
 	 */
@@ -94,8 +98,8 @@ public class PASVGTag
 	{
 		if (Pattern.matches("\\d+ *,* *\\d+ *,* *\\d+ *,* *\\d+", value))
 		{
-			String values[]  = value.split("[ *,* *]+");
-			setInitX(PAUnit.setUnit(values[0],false));
+			String values[] = value.split("[ *,* *]+");
+			setInitX(PAUnit.setUnit(values[0], false));
 			setInitY(PAUnit.setUnit(values[1], false));
 			setViewWidth(PAUnit.setUnit(values[2], false));
 			setViewHeight(PAUnit.setUnit(values[3], false));
@@ -112,169 +116,204 @@ public class PASVGTag
 	/**
 	 * @return the width
 	 */
-	public double getWidth() {
+	public double getWidth()
+	{
 		return width;
 	}
 
 	/**
-	 * @param width the width to set
+	 * @param width
+	 *            the width to set
 	 */
-	public void setWidth(double width) {
+	public void setWidth(double width)
+	{
 		this.width = width;
 	}
 
 	/**
 	 * @return the height
 	 */
-	public double getHeight() {
+	public double getHeight()
+	{
 		return height;
 	}
 
 	/**
-	 * @param height the height to set
+	 * @param height
+	 *            the height to set
 	 */
-	public void setHeight(double height) {
+	public void setHeight(double height)
+	{
 		this.height = height;
 	}
 
 	/**
 	 * @return the initX
 	 */
-	public double getInitX() {
+	public double getInitX()
+	{
 		return initX;
 	}
 
 	/**
-	 * @param initX the initX to set
+	 * @param initX
+	 *            the initX to set
 	 */
-	public void setInitX(double initX) {
+	public void setInitX(double initX)
+	{
 		this.initX = initX;
 	}
 
 	/**
 	 * @return the initY
 	 */
-	public double getInitY() {
+	public double getInitY()
+	{
 		return initY;
 	}
 
 	/**
-	 * @param initY the initY to set
+	 * @param initY
+	 *            the initY to set
 	 */
-	public void setInitY(double initY) {
+	public void setInitY(double initY)
+	{
 		this.initY = initY;
 	}
 
 	/**
 	 * @return the viewHeight
 	 */
-	public double getViewHeight() {
+	public double getViewHeight()
+	{
 		return viewHeight;
 	}
 
 	/**
-	 * @param viewHeight the viewHeight to set
+	 * @param viewHeight
+	 *            the viewHeight to set
 	 */
-	public void setViewHeight(double viewHeight) {
+	public void setViewHeight(double viewHeight)
+	{
 		this.viewHeight = viewHeight;
 	}
 
 	/**
 	 * @return the viewWidth
 	 */
-	public double getViewWidth() {
+	public double getViewWidth()
+	{
 		return viewWidth;
 	}
 
 	/**
-	 * @param viewWidth the viewWidth to set
+	 * @param viewWidth
+	 *            the viewWidth to set
 	 */
-	public void setViewWidth(double viewWidth) {
+	public void setViewWidth(double viewWidth)
+	{
 		this.viewWidth = viewWidth;
 	}
 
 	/**
 	 * @return the stroke
 	 */
-	public Color getStroke() {
+	public Color getStroke()
+	{
 		return stroke;
 	}
 
 	/**
-	 * @param stroke the stroke to set
+	 * @param stroke
+	 *            the stroke to set
 	 */
-	public void setStroke(Color stroke) {
+	public void setStroke(Color stroke)
+	{
 		this.stroke = stroke;
 	}
 
 	/**
 	 * @return the fill
 	 */
-	public Color getFill() {
+	public Color getFill()
+	{
 		return fill;
 	}
 
 	/**
-	 * @param fill the fill to set
+	 * @param fill
+	 *            the fill to set
 	 */
-	public void setFill(Color fill) {
+	public void setFill(Color fill)
+	{
 		this.fill = fill;
 	}
 
 	/**
 	 * @return the strokeWidth
 	 */
-	public double getStrokeWidth() {
+	public double getStrokeWidth()
+	{
 		return strokeWidth;
 	}
 
 	/**
-	 * @param strokeWidth the strokeWidth to set
+	 * @param strokeWidth
+	 *            the strokeWidth to set
 	 */
-	public void setStrokeWidth(double strokeWidth) {
+	public void setStrokeWidth(double strokeWidth)
+	{
 		this.strokeWidth = strokeWidth;
 	}
 
 	/**
 	 * @return the node
 	 */
-	public Node getNode() {
+	public Node getNode()
+	{
 		return node;
 	}
 
 	/**
-	 * @param node the node to set
+	 * @param node
+	 *            the node to set
 	 */
-	public void setNode(Node node) {
+	public void setNode(Node node)
+	{
 		this.node = node;
 	}
 
 	/**
 	 * @return the scaleX
 	 */
-	public double getScaleX() {
+	public double getScaleX()
+	{
 		return scaleX;
 	}
 
 	/**
-	 * @param scaleX the scaleX to set
+	 * @param scaleX
+	 *            the scaleX to set
 	 */
-	public void setScaleX(double scaleX) {
+	public void setScaleX(double scaleX)
+	{
 		this.scaleX = scaleX;
 	}
-
 
 	/**
 	 * @return the scaleY
 	 */
-	public double getScaleY() {
+	public double getScaleY()
+	{
 		return scaleY;
 	}
 
 	/**
-	 * @param scaleY the scaleY to set
+	 * @param scaleY
+	 *            the scaleY to set
 	 */
-	public void setScaleY(double scaleY) {
+	public void setScaleY(double scaleY)
+	{
 		this.scaleY = scaleY;
 	}
 
@@ -285,7 +324,8 @@ public class PASVGTag
 	 * @param viewWidth
 	 * @param viewHeight
 	 */
-	public void setScale(double oriWidth, double oriHeight, double viewWidth, double viewHeight)
+	public void setScale(double oriWidth, double oriHeight, double viewWidth,
+			double viewHeight)
 	{
 		if (this.viewWidth == 0 && this.viewHeight == 0)
 		{
@@ -294,8 +334,25 @@ public class PASVGTag
 		}
 		else
 		{
-			this.setScaleX((oriWidth/viewWidth));
-			this.setScaleY((oriHeight/viewHeight));
+			this.setScaleX((oriWidth / viewWidth));
+			this.setScaleY((oriHeight / viewHeight));
+		}
+	}
+
+	public static double getScaleXY()
+	{
+		return scale;
+	}
+
+	public static void setScaleXY(double scaleX, double scaleY)
+	{
+		if (scaleX > scaleY)
+		{
+			PASVGTag.scale = scaleY;
+		}
+		else
+		{
+			PASVGTag.scale = scaleX;
 		}
 	}
 }
