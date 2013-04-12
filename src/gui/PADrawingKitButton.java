@@ -111,7 +111,6 @@ public class PADrawingKitButton extends JButton
 		button.setBorder(null);
 		button.setBorderPainted(false);
 		button.setToolTipText(toolTip);
-		button.setBackground(new Color(40, 40, 40));
 	}
 
 }

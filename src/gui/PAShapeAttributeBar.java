@@ -1,8 +1,11 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import model.PASystem;
 /**
@@ -29,7 +34,7 @@ public class PAShapeAttributeBar extends JPanel
 	private JButton strokeButton,fillButton,inspectButton;
 	private JCheckBox fillCheck,strokeCheck;
 	private JSpinner strokeWidthBox;
-	private String[] strokeWidthValues;
+//	private String[] strokeWidthValues;
 
 	public PAShapeAttributeBar(PAMainFrame mainFrame)
 	{
@@ -70,13 +75,20 @@ public class PAShapeAttributeBar extends JPanel
 		fillButton = new JButton();
 		inspectButton = new JButton();
 		
-		strokeButton.setBackground(this.getBackground());
-		fillButton.setBackground(this.getBackground());
-		inspectButton.setBackground(this.getBackground());
-		
-		strokeButton.setPreferredSize(new Dimension(50,20));
-		fillButton.setPreferredSize(new Dimension(50,20));
-		inspectButton.setPreferredSize(new Dimension(50,20));
+		setButtonAttributes("Fill Color",fillButton,new Dimension(40,20));
+		setButtonAttributes("Stroke Color",strokeButton,new Dimension(40,20));
+		setButtonAttributes("Inspect",inspectButton,new Dimension(40,20));
+	}
+	
+
+	public void setButtonAttributes(String toolTip,JButton button,Dimension dim)
+	{
+		button.setPreferredSize(dim);
+		button.setMaximumSize(dim);
+		button.setMinimumSize(dim);
+		button.setBackground(Color.WHITE);
+		button.setOpaque(false);
+		button.setBorder(BorderFactory.createLineBorder(new Color(70,70,70),1));
 	}
 	
 	public void initSubComponents()
@@ -93,41 +105,36 @@ public class PAShapeAttributeBar extends JPanel
 		
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-
+		
 		layout.setAutoCreateContainerGaps(true);
-		layout.setAutoCreateGaps(true);
 		
 		// Create a sequential group for the horizontal axis.
 		
-		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(fillCheck)
-				.addComponent(fillButton));
-		
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(strokeCheck)
-				.addComponent(strokeWidthBox)
-				.addComponent(strokeButton));
-		
-		hGroup.addGroup(layout.createParallelGroup()
-				.addComponent(inspectButton));
-	
-		layout.setHorizontalGroup(hGroup);
-
+	    layout.setHorizontalGroup(layout.createSequentialGroup()
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                        .addComponent(fillCheck))
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                        .addComponent(fillButton))
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                        .addComponent(strokeCheck))
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                        .addComponent(strokeButton))
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                        .addComponent(strokeWidthBox))
+	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	                    	.addComponent(inspectButton))
+	    				);
+	    
 		// Create a sequential group for the vertical axis.
-		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-
-		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(fillCheck)
+	    
+	    layout.setVerticalGroup(layout.createSequentialGroup()
+	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	    		.addComponent(fillCheck)
 				.addComponent(fillButton)
 				.addComponent(strokeCheck)
 				.addComponent(strokeWidthBox)
 				.addComponent(strokeButton)
-				.addComponent(inspectButton));
-
-		layout.setVerticalGroup(vGroup);
-		
+				.addComponent(inspectButton)));
 	}
 	
 	
