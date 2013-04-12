@@ -67,6 +67,10 @@ public class PAShapeAttributeBar extends JPanel
 		
 		fillCheck.setForeground(Color.WHITE);
 		strokeCheck.setForeground(Color.WHITE);
+		fillCheck.setContentAreaFilled(false);
+		fillCheck.setOpaque(false);
+		strokeCheck.setContentAreaFilled(false);
+		strokeCheck.setOpaque(false);
 	}
 	
 	public void createButton()
@@ -86,7 +90,8 @@ public class PAShapeAttributeBar extends JPanel
 		button.setPreferredSize(dim);
 		button.setMaximumSize(dim);
 		button.setMinimumSize(dim);
-		button.setBackground(Color.WHITE);
+		//button.setBackground(Color.WHITE);
+		button.setContentAreaFilled(false);
 		button.setOpaque(false);
 		button.setBorder(BorderFactory.createLineBorder(new Color(70,70,70),1));
 	}

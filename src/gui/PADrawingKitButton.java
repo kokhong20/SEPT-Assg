@@ -108,6 +108,8 @@ public class PADrawingKitButton extends JButton
 		ImageIcon imgIcon = new ImageIcon(imgPath);
 		button.setIcon(imgIcon);
 		button.setBackground(new Color(40, 40, 40));
+		button.setContentAreaFilled(false);
+		button.setOpaque(false);
 		button.setBorder(null);
 		button.setBorderPainted(false);
 		button.setToolTipText(toolTip);
