@@ -10,6 +10,13 @@ import java.util.regex.Pattern;
 public class PAUnit
 {
 	/**
+	 * create a static variable as this is constantly used across the class
+	 * 
+	 */
+	public static double dpi = PASystem.getDotsPerInch();
+	/**
+	 * removed convert the string to lower case as svg is case sensitive
+	 * 
 	 * Validate and convert the SVG element attributes value received as String to double
 	 * 
 	 * @param att attribute value of an SVG element attribute
@@ -18,7 +25,6 @@ public class PAUnit
 	 */
 	public final static double setUnit(String att, boolean isStrokeWidth)
 	{
-		att = att.toLowerCase();
 		if (!att.isEmpty())
 		{
 			// 10.10px or 10px or .10px are valid
@@ -101,7 +107,7 @@ public class PAUnit
 	 */
 	public final static double convertEM(String value)
 	{
-		return (Double.parseDouble(value) * 12 * PASystem.getDotsPerInch() / 72);
+		return (Double.parseDouble(value) * 12 * dpi / 72);
 	}
 
 	/**
@@ -134,7 +140,7 @@ public class PAUnit
 	 */
 	public final static double convertPT(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 72);
+		return (Double.parseDouble(value) * dpi / 72);
 	}
 
 	/**
@@ -145,7 +151,7 @@ public class PAUnit
 	 */
 	public final static double convertPC(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 6);
+		return (Double.parseDouble(value) * dpi / 6);
 	}
 
 	/**
@@ -156,7 +162,7 @@ public class PAUnit
 	 */
 	public final static double convertMM(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 25.4);
+		return (Double.parseDouble(value) * dpi / 25.4);
 	}
 
 	/**
@@ -167,7 +173,7 @@ public class PAUnit
 	 */
 	public final static double convertCM(String value)
 	{
-		return (Double.parseDouble(value) * PASystem.getDotsPerInch() / 2.54);
+		return (Double.parseDouble(value) * dpi / 2.54);
 	}
 
 	/**
@@ -178,7 +184,7 @@ public class PAUnit
 	 */
 	public final static double convertIN(String value)
 	{
-		return Double.parseDouble(value) * PASystem.getDotsPerInch();
+		return Double.parseDouble(value) * dpi;
 	}
 
 }
