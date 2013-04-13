@@ -13,7 +13,7 @@ import model.PASystem;
 public class PADrawingKit extends JPanel
 {
 
-	private PADrawingKitButton drawingKitButton;
+	private PADrawingItems drawingKitButton;
 	/**
 	 * 
 	 */
@@ -30,19 +30,19 @@ public class PADrawingKit extends JPanel
 	 */
 	public void initDrawingKit()
 	{
-		drawingKitButton = new PADrawingKitButton(this);
-		drawingKitButton.addButton();
+		drawingKitButton = new PADrawingItems(this);
+		drawingKitButton.initPanel();
 	}
 	
 	/*
 	 * Set panel attributes
 	 */
-	public void setPanelAttribues()
+	private void setPanelAttribues()
 	{
 		this.setLayout(null);
 		this.setBackground(new Color(40,40,40));
 		this.setVisible(true);
-		this.setSize(80, 220);
+		this.setSize(80, 240);
 		//Set location based on user's computer resolution
 		this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())), 
 				((int) (0.2 * PASystem.getScreenDimension().getHeight())));

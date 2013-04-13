@@ -1,22 +1,19 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSpinner;
-import javax.swing.LayoutStyle;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
+import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import model.PASystem;
 /**
@@ -52,15 +49,28 @@ public class PAShapeAttributeBar extends JPanel
 		
 	}
 	
-	public void createSpinner()
+	private void createSpinner()
 	{
 		strokeWidthBox = new JSpinner();
 		strokeWidthBox.setPreferredSize(new Dimension(50,20));
 		strokeWidthBox.setMaximumSize(new Dimension(50,20));
 		strokeWidthBox.setMinimumSize(new Dimension(50,20));
+		
+        SpinnerModel yearModel = new SpinnerNumberModel(10, //initial value
+                0, //min
+                100, //max
+                1); //step
+        
+        strokeWidthBox.setModel(yearModel);
+
+		JTextField tf = ((JSpinner.NumberEditor) strokeWidthBox.getEditor()).getTextField();
+	    tf.setBackground(this.getBackground());
+		tf.setForeground(Color.WHITE);
+		tf.setBorder(BorderFactory.createLineBorder(new Color(60,60,60),1));
+		
 	}
 	
-	public void createCheckBox()
+	private void createCheckBox()
 	{
 		fillCheck = new JCheckBox("Fill:");
 		strokeCheck = new JCheckBox("Stroke:");
@@ -71,75 +81,67 @@ public class PAShapeAttributeBar extends JPanel
 		fillCheck.setOpaque(false);
 		strokeCheck.setContentAreaFilled(false);
 		strokeCheck.setOpaque(false);
+		
+		fillCheck.putClientProperty("JComponent.sizeVariant", "small");
+		strokeCheck.putClientProperty("JComponent.sizeVariant", "small");
+
 	}
 	
-	public void createButton()
+	private void createButton()
 	{
 		strokeButton = new JButton();
 		fillButton = new JButton();
 		inspectButton = new JButton();
 		
-		setButtonAttributes("Fill Color",fillButton,new Dimension(40,20));
-		setButtonAttributes("Stroke Color",strokeButton,new Dimension(40,20));
-		setButtonAttributes("Inspect",inspectButton,new Dimension(40,20));
+		setButtonAttributes("Fill Color",fillButton,new Dimension(40,17));
+		setButtonAttributes("Stroke Color",strokeButton,new Dimension(40,17));
+		setButtonAttributes("Inspect",inspectButton,new Dimension(70,30));
+		
+		//Inspect Button customazation
+		ImageIcon icon = new ImageIcon("resources/inspect.png");
+		inspectButton.setIcon(icon);
+		inspectButton.setBorder(null);
+		inspectButton.setBorderPainted(false);
 	}
 	
 
-	public void setButtonAttributes(String toolTip,JButton button,Dimension dim)
+	private void setButtonAttributes(String toolTip,JButton button,Dimension dim)
 	{
 		button.setPreferredSize(dim);
 		button.setMaximumSize(dim);
 		button.setMinimumSize(dim);
-		//button.setBackground(Color.WHITE);
 		button.setContentAreaFilled(false);
 		button.setOpaque(false);
-		button.setBorder(BorderFactory.createLineBorder(new Color(70,70,70),1));
+		button.setBorder(BorderFactory.createLineBorder(new Color(60,60,60),2));
+		button.setToolTipText(toolTip);
 	}
 	
-	public void initSubComponents()
+	private void initSubComponents()
 	{
 		createSpinner();
 		createCheckBox();
 		createButton();
 	}
 	
-	public void setPanelLayout()
+	private void setPanelLayout()
 	{
-		// Create All the components
 		initSubComponents();
-		
-		GroupLayout layout = new GroupLayout(this);
+		BoxLayout layout = new BoxLayout(this,BoxLayout.LINE_AXIS);
 		this.setLayout(layout);
 		
-		layout.setAutoCreateContainerGaps(true);
+		this.add(Box.createRigidArea(new Dimension(10,0)));
+		this.add(fillCheck);
+		this.add(Box.createRigidArea(new Dimension(5,0)));
+		this.add(fillButton);
+		this.add(Box.createRigidArea(new Dimension(30,0)));
+		this.add(strokeCheck);
+		this.add(Box.createRigidArea(new Dimension(5,0)));
+		this.add(strokeWidthBox);
+		this.add(Box.createRigidArea(new Dimension(5,0)));
+		this.add(strokeButton);
+		this.add(Box.createRigidArea(new Dimension(30,0)));
+		this.add(inspectButton);
 		
-		// Create a sequential group for the horizontal axis.
-		
-	    layout.setHorizontalGroup(layout.createSequentialGroup()
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                        .addComponent(fillCheck))
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                        .addComponent(fillButton))
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                        .addComponent(strokeCheck))
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                        .addComponent(strokeButton))
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                        .addComponent(strokeWidthBox))
-	                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	                    	.addComponent(inspectButton))
-	    				);
-	    
-		// Create a sequential group for the vertical axis.
-	    
-	    layout.setVerticalGroup(layout.createSequentialGroup()
-	    		.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-	    		.addComponent(fillCheck)
-				.addComponent(fillButton)
-				.addComponent(strokeCheck)
-				.addComponent(strokeWidthBox)
-				.addComponent(strokeButton)
-				.addComponent(inspectButton)));
 	}
 	
 	

@@ -1,20 +1,22 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 /**
  * 
  * @author KokHong
  *
  */
-public class PADrawingKitButton extends JButton
-{
-	private static final long serialVersionUID = -1493410390416700500L;
+public class PADrawingItems
+{	
 	private final int maxWidth = 40;
 	private final int maxHeight = 40;
 	private PADrawingKit drawKitPanel;
+	private JLabel title;
 	public JButton fill;
 	public JButton handCursor;
 	public JButton selectCursor;
@@ -31,28 +33,45 @@ public class PADrawingKitButton extends JButton
 	 * 
 	 * @param drawKitPanel PADrawingKit
 	 */
-	public PADrawingKitButton(PADrawingKit drawKitPanel)
+	public PADrawingItems(PADrawingKit drawKitPanel)
 	{
 		this.drawKitPanel = drawKitPanel;
+	}
+	/**
+	 * Initialize Components 
+	 */
+	public void initPanel()
+	{
+		addButton();
+		addTitle();
+	}
+	
+	private void addTitle()
+	{
+		title = new JLabel("Tools");
+		title.setForeground(Color.WHITE);
+		title.setFont(new Font("Helvetica",10, 12));
+		title.setBounds(24, 0, 40, 20);
+		drawKitPanel.add(title);
 	}
 	
 	/**
 	 * add all buttons to drawing kit
 	 */
-	public void addButton()
+	private void addButton()
 	{
 		this.createButton();
 		
-		handCursor.setBounds(0, 0, maxWidth, maxHeight);
-		zoomIn.setBounds(0, 40, maxWidth, maxHeight);
-		selectCursor.setBounds(40, 0, maxWidth, maxHeight);
-		zoomOut.setBounds(40, 40, maxWidth, maxHeight);
-		fill.setBounds(0, 80, maxWidth, maxHeight);
-		line.setBounds(40, 80, maxWidth, maxHeight);
-		rectangle.setBounds(0, 120, maxWidth, maxHeight);
-		circle.setBounds(40, 120, maxWidth, maxHeight);
-		group.setBounds(0, 160, maxWidth, maxHeight);
-		ungroup.setBounds(40, 160, maxWidth, maxHeight);
+		handCursor.setBounds(0, 20, maxWidth, maxHeight);
+		zoomIn.setBounds(0, 60, maxWidth, maxHeight);
+		selectCursor.setBounds(40, 20, maxWidth, maxHeight);
+		zoomOut.setBounds(40, 60, maxWidth, maxHeight);
+		fill.setBounds(0, 100, maxWidth, maxHeight);
+		line.setBounds(40, 100, maxWidth, maxHeight);
+		rectangle.setBounds(0, 140, maxWidth, maxHeight);
+		circle.setBounds(40, 140, maxWidth, maxHeight);
+		group.setBounds(0, 180, maxWidth, maxHeight);
+		ungroup.setBounds(40, 180, maxWidth, maxHeight);
 		
 		drawKitPanel.add(fill);
 		drawKitPanel.add(handCursor);
@@ -70,7 +89,7 @@ public class PADrawingKitButton extends JButton
 	/**
 	 * create all buttons for drawing kit
 	 */
-	public final void createButton()
+	private void createButton()
 	{
 		fill = new JButton();
 		handCursor = new JButton();
@@ -103,7 +122,7 @@ public class PADrawingKitButton extends JButton
 	 * @param button a JButton
 	 * @param toolTip String to set for toolTip
 	 */
-	public void setImageIcon(String imgPath, JButton button, String toolTip) 
+	private void setImageIcon(String imgPath, JButton button, String toolTip) 
 	{
 		ImageIcon imgIcon = new ImageIcon(imgPath);
 		button.setIcon(imgIcon);
