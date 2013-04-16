@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.UIManager;
@@ -87,21 +88,19 @@ public class PASystem
     {
         if (path.endsWith(":\\"))
         {
-            path += selectedFile.getName();
+            return path += selectedFile.getName();
         }
+        
         else
         {
-            if (currentOS.toLowerCase().contains("mac"))
+            if (currentOS.equalsIgnoreCase("mac"))
             {
-                path += "//" + selectedFile.getName();
+                return path += "//" + selectedFile.getName();
             }
-            else if (currentOS.toLowerCase().contains("windows"))
-            {
-                path += "\\" + selectedFile.getName();
-            }
+                
+            return path += "\\" + selectedFile.getName();
+          
         }
-
-        return path;
     }
 
     /**
@@ -109,7 +108,7 @@ public class PASystem
      */
     public static void setLookandFeel()
     {
-        if (currentOS.toLowerCase().contains("mac"))
+        if (currentOS.equalsIgnoreCase("mac"))
         {
             // macos use its own menubar
             System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -124,6 +123,16 @@ public class PASystem
         {
             System.err.println(ex.getMessage());
         }
+    }
+    
+    public static int setKeyMask()
+    {
+        if (currentOS.equalsIgnoreCase("mac"))
+        {
+            return Event.META_MASK;
+        }
+        
+        return Event.CTRL_MASK;
     }
 
 }
