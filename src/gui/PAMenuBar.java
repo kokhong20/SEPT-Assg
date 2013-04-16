@@ -24,7 +24,6 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem saveFile;
     private JMenuItem saveAsFile;
     private JMenuItem exitFile;
-    
     private JMenuItem editEdit;
     private JMenuItem selectAllEdit;
     private JMenuItem deselectAllEdit;
@@ -32,14 +31,12 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem copyEdit;
     private JMenuItem pasteEdit;
     private JMenuItem deleteEdit;
-    
     private JMenuItem imageSizeImage;
     private JMenuItem viewBoxImage;
-    
     private JMenuItem zoomInView;
     private JMenuItem zoomOutView;
     private JMenuItem actualSizeView;
-    
+
     /**
      * constructor to create menu bar
      */
@@ -50,7 +47,7 @@ public class PAMenuBar extends JMenuBar
         addMenuItem();
         setUpMenuBar();
     }
-    
+
     /**
      * initialize menu
      */
@@ -62,7 +59,7 @@ public class PAMenuBar extends JMenuBar
         viewMenu = new JMenu("View");
         helpMenu = new JMenu("Help");
     }
-    
+
     /**
      * initialize menu items
      */
@@ -74,7 +71,7 @@ public class PAMenuBar extends JMenuBar
         saveFile = new JMenuItem("Save");
         saveAsFile = new JMenuItem("Save As...");
         exitFile = new JMenuItem("Exit");
-        
+
         // Edit's MenuItem
         editEdit = new JMenuItem("Edit");
         selectAllEdit = new JMenuItem("Select All");
@@ -83,18 +80,18 @@ public class PAMenuBar extends JMenuBar
         copyEdit = new JMenuItem("Copy");
         pasteEdit = new JMenuItem("Paste");
         deleteEdit = new JMenuItem("Delete");
-        
+
         // Image's MenuItem
         imageSizeImage = new JMenuItem("Image Size");
         viewBoxImage = new JMenuItem("ViewBox");
-        
+
         // View's MenuItem
         zoomInView = new JMenuItem("Zoom In");
         zoomOutView = new JMenuItem("Zoom Out");
         actualSizeView = new JMenuItem("Actual Size");
-        
+
     }
-    
+
     /**
      * add menu items to menu
      */
@@ -105,7 +102,7 @@ public class PAMenuBar extends JMenuBar
         fileMenu.add(saveFile);
         fileMenu.add(saveAsFile);
         fileMenu.add(exitFile);
-        
+
         editMenu.add(editEdit);
         editMenu.add(selectAllEdit);
         editMenu.add(deselectAllEdit);
@@ -113,15 +110,15 @@ public class PAMenuBar extends JMenuBar
         editMenu.add(copyEdit);
         editMenu.add(pasteEdit);
         editMenu.add(deleteEdit);
-        
+
         imageMenu.add(imageSizeImage);
         imageMenu.add(viewBoxImage);
-        
+
         viewMenu.add(zoomInView);
         viewMenu.add(zoomOutView);
-        viewMenu.add(actualSizeView);        
+        viewMenu.add(actualSizeView);
     }
-    
+
     /**
      * add menu to menu bar
      */
@@ -133,4 +130,5 @@ public class PAMenuBar extends JMenuBar
         add(viewMenu);
         add(helpMenu);
     }
+
 }

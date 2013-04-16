@@ -32,7 +32,7 @@ public class PASVGPanel extends JPanel
         int width = mainFrame.getWidth() - 120;
         int height = mainFrame.getHeight() - 300;
         Dimension size = new Dimension(width, height);
-        
+
         setBackground(Color.white);
         setMaximumSize(size);
         setMinimumSize(size);

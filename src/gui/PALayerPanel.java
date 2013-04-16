@@ -33,16 +33,24 @@ public class PALayerPanel extends JPanel
     private JButton deleteLayerButton;
     private JScrollPane layerPane;
 
+    /**
+     * 
+     * PALayerPane's constructor.
+     */
     public PALayerPanel()
     {
-        initilize();
+        initialize();
         customize();
         setUpMainLayout();
         setUpBottomBarLayout();
         setUpLayerPanel();
     }
 
-    private void initilize()
+    /**
+     * 
+     * initialize LayerPane's attribute.
+     */
+    private void initialize()
     {
         defaultWidth = 270;
         defaultHeight = 300;
@@ -56,6 +64,10 @@ public class PALayerPanel extends JPanel
         layerPane = new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     }
 
+    /**
+     * 
+     * customize LayerPane.
+     */
     private void customize()
     {
         title.setForeground(Color.white);
@@ -86,6 +98,10 @@ public class PALayerPanel extends JPanel
         titleBar.add(title);
     }
 
+    /**
+     * 
+     * set up the main layout.
+     */
     private void setUpMainLayout()
     {
         GroupLayout layout = new GroupLayout(this);
@@ -115,6 +131,10 @@ public class PALayerPanel extends JPanel
         layout.setVerticalGroup(vGroup);
     }
 
+    /**
+     * 
+     * add button to bottomBar and setting layout.
+     */
     private void setUpBottomBarLayout()
     {
         BoxLayout layout = new BoxLayout(bottomBar, BoxLayout.LINE_AXIS);
@@ -125,7 +145,14 @@ public class PALayerPanel extends JPanel
         bottomBar.add(Box.createRigidArea(new Dimension(15, 0)));
         bottomBar.add(deleteLayerButton);
     }
-
+    
+    /**
+     * 
+     * set Image Icon to button.
+     * @param imgPath Image's Path.
+     * @param button button want to set the image.
+     * @param toolTip the button's name.
+     */
     private void setImageIcon(String imgPath, JButton button, String toolTip)
     {
         ImageIcon imgIcon = new ImageIcon(imgPath);
@@ -138,6 +165,10 @@ public class PALayerPanel extends JPanel
         button.setToolTipText(toolTip);
     }
 
+    /**
+     * 
+     * set LayerPane size and background color.
+     */
     private void setUpLayerPanel()
     {
         setBackground(new Color(38, 38, 38, 240));

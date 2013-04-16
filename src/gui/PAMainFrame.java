@@ -64,7 +64,6 @@ public class PAMainFrame extends JInternalFrame
         svgBackPanel.setMinimumSize(minSize);
         svgBackPanel.setBackground(new Color(38, 38, 38));
         mainPanel.setPreferredSize(new Dimension(800, 600));
-        statusPanel.initPanel();
     }
 
     /**
