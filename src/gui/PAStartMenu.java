@@ -33,7 +33,7 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * initialize component.
      */
     private void initialize()
@@ -42,8 +42,9 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * draw Logo to Panel.
+     *
      * @return JPanel
      */
     private JPanel setUpMainPanel()
@@ -70,8 +71,9 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * initialize button and set size, bounds and icon.
+     *
      * @param img
      * @param x
      * @param y
@@ -81,7 +83,7 @@ public class PAStartMenu extends JInternalFrame
     {
         ImageIcon icon = new ImageIcon(img);
         JButton button = new JButton(icon);
-        button.setBackground(new Color(0,0,0,0));
+        button.setBackground(new Color(0, 0, 0, 0));
         button.setBorderPainted(false);
         button.setBounds(x, y, img.getWidth(button), img.getHeight(button));
         button.setVisible(true);
@@ -90,9 +92,8 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     * 
-     * load image to button
-     * add button to JPanel.
+     *
+     * load image to button add button to JPanel.
      */
     private void setUpButton()
     {
@@ -112,22 +113,22 @@ public class PAStartMenu extends JInternalFrame
             System.err.println(ex.getMessage());
         }
     }
-    
+
     /**
-     * 
+     *
      * customize mainPanel and add to InternalFrame.
      */
     private void customize()
     {
         mainPanel.setLayout(null);
         mainPanel.setOpaque(false);
-        mainPanel.setSize(640,450);
+        mainPanel.setSize(640, 450);
         setUpButton();
         add(mainPanel);
     }
 
     /**
-     * 
+     *
      * to show the InternalFrame and set size to it.
      */
     private void setUpStartMenu()
@@ -136,4 +137,5 @@ public class PAStartMenu extends JInternalFrame
         setSize(650, 450);
         setVisible(true);
     }
+
 }
