@@ -54,8 +54,10 @@ public class PARootView extends JFrame
         rootView.add(mainPanel);
         rootView.setVisible(true);
         
-        inspectFrame.initInspectFrame();
-        inspectFrame.initCirclePanel();
+//        inspectFrame.initGroupPanel();
+//        inspectFrame.initLinePanel();
+//        inspectFrame.initRectPanel();
+//        inspectFrame.initCirclePanel();
     }
     
     private void getScreenSize()
