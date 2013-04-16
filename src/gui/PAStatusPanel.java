@@ -27,13 +27,13 @@ public class PAStatusPanel extends JPanel
 		this.mainFrame = mainFrame;
 	}
 	
-	/*
-	 * Initialise status panel 
+	/**
+	 * Init status panel 
 	 */
 	
 	public void initPanel()
 	{
-		statusMsg = new JLabel(" ",JLabel.CENTER);
+		statusMsg = new JLabel(" ",JLabel.LEFT);
 		statusMsg.setVerticalTextPosition(JLabel.BOTTOM);
 		statusMsg.setHorizontalTextPosition(JLabel.CENTER);
 		statusMsg.setFont(new Font("Helvetica",10, 12));
@@ -52,7 +52,7 @@ public class PAStatusPanel extends JPanel
 	}
 	/**
 	 * Set Status Message
-	 * @param msg
+	 * @param msg Message to be shown
 	 */
 	
 	public void setLabelText(String msg)

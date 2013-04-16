@@ -24,6 +24,7 @@ public class PARootView extends JFrame
     private PAStartMenu startMenu;
     private PADrawingKit toolBar;
     private PAMainFrame mainPanel;
+    private PAInspectFrame inspectFrame;
     
     public PARootView()
     {
@@ -41,6 +42,7 @@ public class PARootView extends JFrame
         startMenu = new PAStartMenu();
         toolBar = new PADrawingKit();
         mainPanel = new PAMainFrame();
+        inspectFrame = new PAInspectFrame(this);
     }
     
     private void customize()
@@ -51,6 +53,9 @@ public class PARootView extends JFrame
         rootView.add(toolBar);
         rootView.add(mainPanel);
         rootView.setVisible(true);
+        
+        inspectFrame.initInspectFrame();
+        inspectFrame.initCirclePanel();
     }
     
     private void getScreenSize()

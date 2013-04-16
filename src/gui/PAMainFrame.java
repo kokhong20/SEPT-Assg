@@ -20,7 +20,7 @@ import model.PASystem;
 public class PAMainFrame extends JInternalFrame
 {
     private PAStatusPanel statusPanel;
-    private PAShapeAttributeBar attributeBar;
+    private PAShapeBar attributeBar;
     private PASVGPanel svgPanel;
     private JPanel mainPanel;
     private JPanel svgBackPanel;
@@ -44,7 +44,7 @@ public class PAMainFrame extends JInternalFrame
     private void initialize()
     {
         statusPanel = new PAStatusPanel(this);
-        attributeBar = new PAShapeAttributeBar(this);
+        attributeBar = new PAShapeBar(this);
         svgPanel = new PASVGPanel(this);
         mainPanel = new JPanel();
         svgBackPanel = new JPanel();

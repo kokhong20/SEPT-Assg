@@ -25,7 +25,7 @@ public class PADrawingKit extends JPanel
 		setPanelAttribues();
 	}
 	
-	/*
+	/**
 	 * Initialize the drawkingKit panel
 	 */
 	public void initDrawingKit()
@@ -34,7 +34,7 @@ public class PADrawingKit extends JPanel
 		drawingKitButton.initPanel();
 	}
 	
-	/*
+	/**
 	 * Set panel attributes
 	 */
 	private void setPanelAttribues()
