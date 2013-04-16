@@ -37,7 +37,8 @@ public class PALayerPanel extends JPanel
     {
         initilize();
         customize();
-        setUpLayout();
+        setUpMainLayout();
+        setUpBottomBarLayout();
         setUpLayerPanel();
     }
 
@@ -64,14 +65,14 @@ public class PALayerPanel extends JPanel
         bottomBar.setBackground(new Color(30, 30, 30));
 
         // need a method to handle list of layers, so than layer will auto generate
-        exampleLayer.setMaximumSize(new Dimension(defaultWidth, 150));
-        exampleLayer.setBackground(Color.blue);
+        //exampleLayer.setMaximumSize(new Dimension(defaultWidth, 150));
+        //exampleLayer.setBackground(Color.blue);
 
-        box.setBackground(new Color(38, 38, 38));
-        box.add(exampleLayer);
-        box.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+        //box.setBackground(new Color(38, 38, 38));
+        //box.add(exampleLayer);
+        //box.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
         // scrollpane will display scroo;bar when only box size large thab viewport
-        box.setPreferredSize(new Dimension(250, 100));
+        //box.setPreferredSize(new Dimension(250, 100));
 
         layerPane.setPreferredSize(new Dimension(defaultWidth, defaultHeight - 65));
         layerPane.revalidate();
@@ -79,13 +80,13 @@ public class PALayerPanel extends JPanel
         layerPane.setBorder(BorderFactory.createLineBorder(Color.black, 1));
         layerPane.getViewport().setBackground(new Color(0, 0, 0, 0));
 
-        setImageIcon("resources/plus.png", addLayerButton, "Add");
-        setImageIcon("resources/minus.png", deleteLayerButton, "Delete");
+        setImageIcon("resources/plus 20x20.png", addLayerButton, "Add");
+        setImageIcon("resources/minus 20x20.png", deleteLayerButton, "Delete");
 
         titleBar.add(title);
     }
 
-    private void setUpLayout()
+    private void setUpMainLayout()
     {
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
@@ -113,13 +114,16 @@ public class PALayerPanel extends JPanel
 
         layout.setVerticalGroup(vGroup);
     }
-
-    private void setUpLayerPanel()
+    
+    private void setUpBottomBarLayout()
     {
-        setBackground(new Color(38, 38, 38, 240));
-        setSize(defaultWidth, defaultHeight);
-        setVisible(true);
-        setLocation(1000, 20);
+        BoxLayout layout = new BoxLayout(bottomBar, BoxLayout.LINE_AXIS);
+
+        bottomBar.setLayout(layout);
+        bottomBar.add(Box.createRigidArea(new Dimension(10, 0)));
+        bottomBar.add(addLayerButton);
+        bottomBar.add(Box.createRigidArea(new Dimension(15, 0)));
+        bottomBar.add(deleteLayerButton);
     }
 
     private void setImageIcon(String imgPath, JButton button, String toolTip)
@@ -132,6 +136,14 @@ public class PALayerPanel extends JPanel
         button.setBorder(null);
         button.setBorderPainted(false);
         button.setToolTipText(toolTip);
+    }
+
+    private void setUpLayerPanel()
+    {
+        setBackground(new Color(38, 38, 38, 240));
+        setSize(defaultWidth, defaultHeight);
+        setVisible(true);
+        setLocation(1000, 20);
     }
 
 }
