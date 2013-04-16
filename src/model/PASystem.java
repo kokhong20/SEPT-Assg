@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
-    private static String currentOS = System.getProperty("os.name");
+    private static String currentOS = System.getProperty("os.name").toLowerCase();
     private static Toolkit toolkit = Toolkit.getDefaultToolkit();
     private static final Dimension screenDimension = toolkit.getScreenSize();
     private static final int screenResolution = toolkit.getScreenResolution();
@@ -93,7 +93,7 @@ public class PASystem
         
         else
         {
-            if (currentOS.equalsIgnoreCase("mac"))
+            if (currentOS.indexOf("mac") >= 0)
             {
                 return path += "//" + selectedFile.getName();
             }
@@ -108,7 +108,7 @@ public class PASystem
      */
     public static void setLookandFeel()
     {
-        if (currentOS.equalsIgnoreCase("mac"))
+        if (currentOS.indexOf("mac") >= 0)
         {
             // macos use its own menubar
             System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -127,7 +127,7 @@ public class PASystem
     
     public static int setKeyMask()
     {
-        if (currentOS.equalsIgnoreCase("mac"))
+        if (currentOS.indexOf("mac") >= 0)
         {
             return Event.META_MASK;
         }
