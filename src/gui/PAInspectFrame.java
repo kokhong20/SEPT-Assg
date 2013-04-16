@@ -16,6 +16,11 @@ import javax.swing.JTextField;
 
 import model.PASystem;
 
+/**
+ * 
+ * @author KokHong
+ *
+ */
 
 public class PAInspectFrame extends JInternalFrame
 {
@@ -41,9 +46,13 @@ public class PAInspectFrame extends JInternalFrame
 		initSubComponents();
 	}
 	
+	/**
+	 * Init the internal frame
+	 */
 	public void initInspectFrame()
 	{
 		rootView.add(this);
+		this.setClosable(true);
 		this.setSize(new Dimension(240,270));
 		this.setBackground(new Color(40,40,40));
 		this.setVisible(true);
@@ -53,6 +62,9 @@ public class PAInspectFrame extends JInternalFrame
 		
 	}
 	
+	/**
+	 * Pop out circle inspect panel
+	 */
 	public void initCirclePanel()
 	{
 		circlePanel = new JPanel();
@@ -100,6 +112,9 @@ public class PAInspectFrame extends JInternalFrame
 		this.add(circlePanel);
 	}
 	
+	/**
+	 * Pop out rectangle inspect panel
+	 */
 	public void initRectPanel()
 	{
 		rectPanel = new JPanel();
@@ -152,6 +167,9 @@ public class PAInspectFrame extends JInternalFrame
 		this.add(rectPanel);
 	}
 	
+	/**
+	 * Pop out line inspect panel
+	 */
 	public void initLinePanel()
 	{
 		linePanel = new JPanel();
@@ -187,6 +205,9 @@ public class PAInspectFrame extends JInternalFrame
 		this.add(linePanel);
 	}
 	
+	/**
+	 * Pop out group inspect panel
+	 */
 	public void initGroupPanel()
 	{
 		groupPanel = new JPanel();
@@ -224,6 +245,9 @@ public class PAInspectFrame extends JInternalFrame
 		this.add(groupPanel);
 	}
 	
+	/**
+	 * Init all the sub components
+	 */
 	private void initSubComponents()
 	{
 		PAAttributeItems attrItems = new PAAttributeItems(this);
