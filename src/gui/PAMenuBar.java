@@ -4,6 +4,8 @@
  */
 package gui;
 
+import controller.PAFileMenuAction.OpenFileMenu;
+import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -36,16 +38,20 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem zoomInView;
     private JMenuItem zoomOutView;
     private JMenuItem actualSizeView;
+    private JDesktopPane parent;
 
     /**
      * constructor to create menu bar
      */
-    public PAMenuBar()
+    public PAMenuBar(JDesktopPane parent)
     {
+        this.parent = parent;
+        
         initMenu();
         initMenuItem();
         addMenuItem();
         setUpMenuBar();
+        addAction();
     }
 
     /**
@@ -117,6 +123,12 @@ public class PAMenuBar extends JMenuBar
         viewMenu.add(zoomInView);
         viewMenu.add(zoomOutView);
         viewMenu.add(actualSizeView);
+    }
+    
+    private void addAction()
+    {
+        OpenFileMenu openAction = new OpenFileMenu(parent);
+        openFile.setAction(openAction);
     }
 
     /**

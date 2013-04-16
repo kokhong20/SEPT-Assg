@@ -4,7 +4,6 @@
  */
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -39,7 +38,7 @@ public class PARootView extends JFrame
     private void initialize()
     {
         rootView = new JDesktopPane();
-        menuBar = new PAMenuBar();
+        menuBar = new PAMenuBar(rootView);
         startMenu = new PAStartMenu();
         toolBar = new PADrawingKit();
         mainPanel = new PAMainFrame();
