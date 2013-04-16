@@ -86,6 +86,7 @@ public class PAAttributeItems
         checkBox.setForeground(Color.WHITE);
         checkBox.setContentAreaFilled(false);
         checkBox.setOpaque(false);
+        checkBox.setSelected(true);
         checkBox.putClientProperty("JComponent.sizeVariant", "small");
     }
 

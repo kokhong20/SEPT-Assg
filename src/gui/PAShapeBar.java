@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+
+import controller.PAShapeBarAction;
+import controller.PAShapeBarAction.StrokeCheck;
 import model.PASystem;
 
 /**
@@ -33,6 +36,7 @@ public class PAShapeBar extends JPanel
         initPanel();
         initSubComponents();
         setPanelLayout();
+        addAction();
     }
 
     /**
@@ -79,6 +83,12 @@ public class PAShapeBar extends JPanel
         inspectButton.setBorder(null);
         inspectButton.setBorderPainted(false);
 
+    }
+    
+    private void addAction()
+    {
+    	StrokeCheck shapeAction = new StrokeCheck(strokeButton,strokeWidthBox,strokeCheck);
+    	strokeCheck.setAction(shapeAction);
     }
 
     /**
