@@ -38,7 +38,7 @@ public class PAMainFrame extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * Initialize the instance variables
      */
     private void initialize()
@@ -54,7 +54,7 @@ public class PAMainFrame extends JInternalFrame
     {
         Dimension minSize = new Dimension(getWidth(), getHeight() - 100);
         Box box = new Box(BoxLayout.Y_AXIS);
-        
+
         box.setBackground(new Color(38, 38, 38));
         box.add(Box.createVerticalGlue());
         box.add(svgPanel);
@@ -64,22 +64,21 @@ public class PAMainFrame extends JInternalFrame
         svgBackPanel.setMinimumSize(minSize);
         svgBackPanel.setBackground(new Color(38, 38, 38));
         mainPanel.setPreferredSize(new Dimension(800, 600));
-        attributeBar.initPanel();
         statusPanel.initPanel();
     }
 
     /**
-     * 
+     *
      * Set the attributes of the Internal Frame
      */
     private void setAttributes()
     {
         //Set location based on user's computer resolution
         Dimension screenResolution = PASystem.getScreenDimension();
-        int startX = (int) (0.15*screenResolution.getWidth());
-        int startY = (int) (0.1*screenResolution.getHeight());
+        int startX = (int) (0.15 * screenResolution.getWidth());
+        int startY = (int) (0.1 * screenResolution.getHeight());
         Point startPoint = new Point(startX, startY);
-        
+
         setTitle("New SVG");
         setResizable(true);
         setClosable(true);
@@ -91,7 +90,7 @@ public class PAMainFrame extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * Set mainPanel layout
      */
     private void setFrameLayout()
@@ -126,4 +125,5 @@ public class PAMainFrame extends JInternalFrame
 
         this.add(mainPanel);
     }
+
 }

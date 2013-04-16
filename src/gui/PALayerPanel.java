@@ -114,7 +114,7 @@ public class PALayerPanel extends JPanel
 
         layout.setVerticalGroup(vGroup);
     }
-    
+
     private void setUpBottomBarLayout()
     {
         BoxLayout layout = new BoxLayout(bottomBar, BoxLayout.LINE_AXIS);

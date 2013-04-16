@@ -25,7 +25,7 @@ public class PARootView extends JFrame
     private PADrawingKit toolBar;
     private PAMainFrame mainPanel;
     private PAInspectFrame inspectFrame;
-    
+
     public PARootView()
     {
         PASystem.setLookandFeel();
@@ -34,7 +34,7 @@ public class PARootView extends JFrame
         customize();
         setUpRootView();
     }
-    
+
     private void initialize()
     {
         rootView = new JDesktopPane();
@@ -44,7 +44,7 @@ public class PARootView extends JFrame
         mainPanel = new PAMainFrame();
         inspectFrame = new PAInspectFrame(this);
     }
-    
+
     private void customize()
     {
         rootView.setOpaque(false);
@@ -53,19 +53,19 @@ public class PARootView extends JFrame
         rootView.add(toolBar);
         rootView.add(mainPanel);
         rootView.setVisible(true);
-        
+
 //        inspectFrame.initGroupPanel();
 //        inspectFrame.initLinePanel();
 //        inspectFrame.initRectPanel();
 //        inspectFrame.initCirclePanel();
     }
-    
+
     private void getScreenSize()
     {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         userScreenSize = toolkit.getScreenSize();
     }
-    
+
     private void setUpRootView()
     {
         add(rootView);
@@ -75,4 +75,5 @@ public class PARootView extends JFrame
         setBackground(new Color(0, 0, 0, 0));
         setVisible(true);
     }
+
 }
