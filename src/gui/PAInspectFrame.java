@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
@@ -14,9 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 
 import model.PASystem;
 
@@ -32,7 +28,7 @@ public class PAInspectFrame extends JInternalFrame
 	private PARootView rootView;
 	private JPanel circlePanel,rectPanel,linePanel,groupPanel;
 	private JButton strokeButton,fillButton;
-	private JLabel width,height,radius,circleTitle,groupTitle,lineTitle,rectTitle;
+	private JLabel width,height,radius,thumbnail;
 	private JCheckBox fillCheck,strokeCheck;
 	private JSpinner strokeWidthBox;
 	private JTextField widthText,heightText,radText;
@@ -40,19 +36,20 @@ public class PAInspectFrame extends JInternalFrame
 	public PAInspectFrame(PARootView rootView)
 	{
 		this.rootView = rootView;
+		
+		initInspectFrame();
+		initSubComponents();
 	}
 	
 	public void initInspectFrame()
 	{
 		rootView.add(this);
-		this.setSize(new Dimension(300,200));
+		this.setSize(new Dimension(240,270));
 		this.setBackground(new Color(40,40,40));
 		this.setVisible(true);
 		//Set location based on user's computer resolution
-		this.setLocation(((int) (0.75 * PASystem.getScreenDimension().getWidth())), 
-				((int) (0.1 * PASystem.getScreenDimension().getHeight())));	
-		
-		initSubComponents();
+		this.setLocation(((int) (0.80 * PASystem.getScreenDimension().getWidth())), 
+				((int) (0.10 * PASystem.getScreenDimension().getHeight())));	
 		
 	}
 	
@@ -68,22 +65,25 @@ public class PAInspectFrame extends JInternalFrame
 		//Adding Component
 		
 		layout.setHorizontalGroup(layout.createSequentialGroup()
+									.addGap(10)
 									.addGroup(layout.createParallelGroup()
 										.addComponent(fillCheck)
 										.addComponent(strokeCheck)
 										.addComponent(radius))
 									.addGroup(layout.createParallelGroup()
-										.addComponent(circleTitle)
+										.addComponent(thumbnail)
 										.addComponent(fillButton)
 										.addComponent(strokeButton)
 										.addComponent(radText))
-									.addGap(20)
-									.addComponent(strokeWidthBox)
+									.addGap(10)
+									.addGroup(layout.createParallelGroup()
+									.addComponent(strokeWidthBox))
 								);
 		
 		layout.setVerticalGroup(layout.createSequentialGroup()
-									.addComponent(circleTitle)
-									.addGap(30)
+									.addGap(20)
+									.addComponent(thumbnail)
+									.addGap(40)
 									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 										.addComponent(fillCheck)
 										.addComponent(fillButton))
@@ -103,8 +103,51 @@ public class PAInspectFrame extends JInternalFrame
 	public void initRectPanel()
 	{
 		rectPanel = new JPanel();
+		rectPanel.setBackground(new Color(40,40,40));
 		GroupLayout layout = new GroupLayout(rectPanel);
 		rectPanel.setLayout(layout);
+		
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+		//Adding Component
+		
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+									.addGap(10)
+									.addGroup(layout.createParallelGroup()
+										.addComponent(fillCheck)
+										.addComponent(strokeCheck)
+										.addComponent(width)
+										.addComponent(height))
+									.addGroup(layout.createParallelGroup()
+										.addComponent(thumbnail)
+										.addComponent(fillButton)
+										.addComponent(strokeButton)
+										.addComponent(widthText)
+										.addComponent(heightText))
+									.addGap(10)
+									.addGroup(layout.createParallelGroup()
+									.addComponent(strokeWidthBox))
+								);
+		
+		layout.setVerticalGroup(layout.createSequentialGroup()
+									.addGap(20)
+									.addComponent(thumbnail)
+									.addGap(40)
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(fillCheck)
+										.addComponent(fillButton))
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(strokeCheck)
+										.addComponent(strokeButton)
+										.addComponent(strokeWidthBox))
+									.addGap(20)
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(width)
+										.addComponent(widthText))
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(height)
+										.addComponent(heightText))	
+								);
 		
 		this.add(rectPanel);
 	}
@@ -112,8 +155,34 @@ public class PAInspectFrame extends JInternalFrame
 	public void initLinePanel()
 	{
 		linePanel = new JPanel();
+		linePanel.setBackground(new Color(40,40,40));
 		GroupLayout layout = new GroupLayout(linePanel);
 		linePanel.setLayout(layout);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setAutoCreateGaps(true);
+		//Adding Component
+		
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+									.addGap(10)
+									.addGroup(layout.createParallelGroup()
+										.addComponent(strokeCheck))
+									.addGroup(layout.createParallelGroup()
+										.addComponent(thumbnail)
+										.addComponent(strokeButton))
+									.addGap(10)
+									.addGroup(layout.createParallelGroup()
+									.addComponent(strokeWidthBox))
+								);
+		
+		layout.setVerticalGroup(layout.createSequentialGroup()
+									.addGap(20)
+									.addComponent(thumbnail)
+									.addGap(40)
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(strokeCheck)
+										.addComponent(strokeButton)
+										.addComponent(strokeWidthBox))
+								);
 		
 		this.add(linePanel);
 	}
@@ -121,8 +190,36 @@ public class PAInspectFrame extends JInternalFrame
 	public void initGroupPanel()
 	{
 		groupPanel = new JPanel();
+		groupPanel.setBackground(new Color(40,40,40));
 		GroupLayout layout = new GroupLayout(groupPanel);
 		groupPanel.setLayout(layout);
+		
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+				.addGap(10)
+				.addGroup(layout.createParallelGroup()
+					.addComponent(fillCheck)
+					.addComponent(strokeCheck))
+				.addGroup(layout.createParallelGroup()
+					.addComponent(thumbnail)
+					.addComponent(fillButton)
+					.addComponent(strokeButton))
+				.addGap(10)
+				.addGroup(layout.createParallelGroup()
+				.addComponent(strokeWidthBox))
+			);
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.addGap(20)
+				.addComponent(thumbnail)
+				.addGap(40)
+				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(fillCheck)
+					.addComponent(fillButton))
+				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(strokeCheck)
+					.addComponent(strokeButton)
+					.addComponent(strokeWidthBox))
+			);		
 		
 		this.add(groupPanel);
 	}
@@ -153,9 +250,9 @@ public class PAInspectFrame extends JInternalFrame
 		heightText = new JTextField();
 		radText = new JTextField();
 		
-		attrItems.createTextField(widthText, new Dimension(50,20), Color.WHITE);
-		attrItems.createTextField(heightText, new Dimension(50,20), Color.WHITE);
-		attrItems.createTextField(radText, new Dimension(50,20), Color.WHITE);
+		attrItems.createTextField(widthText, new Dimension(40,18), Color.WHITE);
+		attrItems.createTextField(heightText, new Dimension(40,18), Color.WHITE);
+		attrItems.createTextField(radText, new Dimension(40,18), Color.WHITE);
 		
 		// JLabel
 		
@@ -163,20 +260,15 @@ public class PAInspectFrame extends JInternalFrame
 		height = new JLabel("Height:");
 		radius = new JLabel("Radius:");
 		
-		lineTitle = new JLabel("Line");
-		rectTitle = new JLabel("Rectangle");
-		circleTitle = new JLabel("Circle");
-		groupTitle = new JLabel("Group");
+		thumbnail = new JLabel();
 		
 		attrItems.createLabel(width, Color.WHITE, new Font("Helvetica",10, 12));
 		attrItems.createLabel(height, Color.WHITE, new Font("Helvetica",10, 12));
 		attrItems.createLabel(radius, Color.WHITE, new Font("Helvetica",10, 12));
 		
-		attrItems.createLabel(lineTitle, Color.WHITE, new Font("Helvetica",10, 20));
-		attrItems.createLabel(rectTitle, Color.WHITE, new Font("Helvetica",10, 20));
-		attrItems.createLabel(circleTitle, Color.WHITE, new Font("Helvetica",10, 20));
-		attrItems.createLabel(groupTitle, Color.WHITE, new Font("Helvetica",10, 20));	
-	}	
-
-
+		// Customization Of Title labels
+		attrItems.createLabel(thumbnail, new Dimension(50,50));
+		
+	}
+	
 }

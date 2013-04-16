@@ -88,8 +88,8 @@ public class PAAttributeItems
 	}
 	
 	/**
-	 * Create JLabel
-	 * @param title Set title of label
+	 * Create JLabel with text
+	 * @param label JLabel
 	 * @param foreground Set Color of the title
 	 * @param font Set Font of the title
 	 */
@@ -98,6 +98,20 @@ public class PAAttributeItems
 	{
 		label.setForeground(foreground);
 		label.setFont(font);
+	}
+	
+	/**
+	 * Create JLabel with Image Icons
+	 * @param label JLabel 
+	 * @param dim The Dimension of the JLabel
+	 */
+	
+	public void createLabel(JLabel label, Dimension dim)
+	{
+		label.setPreferredSize(dim);
+		label.setMaximumSize(dim);
+		label.setMinimumSize(dim);
+		label.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
 	}
 	
 	/**

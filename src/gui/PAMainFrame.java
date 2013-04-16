@@ -76,7 +76,7 @@ public class PAMainFrame extends JInternalFrame
     {
         //Set location based on user's computer resolution
         Dimension screenResolution = PASystem.getScreenDimension();
-        int startX = (int) (0.2*screenResolution.getWidth());
+        int startX = (int) (0.15*screenResolution.getWidth());
         int startY = (int) (0.1*screenResolution.getHeight());
         Point startPoint = new Point(startX, startY);
         

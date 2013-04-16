@@ -73,7 +73,7 @@ public class PAShapeBar extends JPanel
 		attrItems.setButtonAttributes("Stroke Color",strokeButton,new Dimension(40,17));
 		attrItems.setButtonAttributes("Inspect",inspectButton,new Dimension(70,30));
 		
-		//Inspect Button customazation
+		//Inspect Button customization
 		ImageIcon icon = new ImageIcon("resources/inspect.png");
 		inspectButton.setIcon(icon);
 		inspectButton.setBorder(null);
