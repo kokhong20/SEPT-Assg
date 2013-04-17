@@ -4,6 +4,7 @@
  */
 package gui;
 
+import controller.PAFileMenuAction.ExitProgram;
 import controller.PAFileMenuAction.OpenFileMenu;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
@@ -127,8 +128,10 @@ public class PAMenuBar extends JMenuBar
     
     private void addAction()
     {
+        ExitProgram exitAction = new ExitProgram();
         OpenFileMenu openAction = new OpenFileMenu(parent);
         openFile.setAction(openAction);
+        exitFile.setAction(exitAction);
     }
 
     /**

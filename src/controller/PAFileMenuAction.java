@@ -6,10 +6,12 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -55,8 +57,8 @@ public abstract class PAFileMenuAction extends AbstractAction
             FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
             FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
             FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
-            
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);            
+
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.setAcceptAllFileFilterUsed(false);
             fileChooser.setFileFilter(xmlFilter);
             fileChooser.setFileFilter(svgFilter);
@@ -65,6 +67,36 @@ public abstract class PAFileMenuAction extends AbstractAction
             fcInternal.pack();
             fcInternal.setVisible(true);
             parent.add(fcInternal);
+
+            try
+            {
+                fcInternal.setSelected(true);
+            }
+            catch (PropertyVetoException ex)
+            {
+                System.err.println(ex.getMessage());
+            }
+        }
+
+    }
+
+    public static class ExitProgram extends PAFileMenuAction
+    {
+        public ExitProgram()
+        {
+            super(KeyEvent.VK_W, "Exit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            int selectedOption = 
+                    JOptionPane.showConfirmDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (selectedOption == 0)
+            {
+                System.exit(0);
+            }
         }
 
     }
