@@ -25,6 +25,9 @@ public class PAStartMenu extends JInternalFrame
     private JButton openFileButton;
     private JButton newFileButton;
 
+    /**
+     * constructor to create PAStartMenu
+     */
     public PAStartMenu()
     {
         initialize();

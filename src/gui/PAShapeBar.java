@@ -32,6 +32,10 @@ public class PAShapeBar extends JPanel
     private JCheckBox fillCheck, strokeCheck;
     private JSpinner strokeWidthBox;
 
+    /**
+     * constructor to define PAShapeBar for PAMainFrame
+     * @param mainFrame
+     */
     public PAShapeBar(PAMainFrame mainFrame)
     {
         this.mainFrame = mainFrame;

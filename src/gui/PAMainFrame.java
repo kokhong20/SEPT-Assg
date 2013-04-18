@@ -31,6 +31,10 @@ public class PAMainFrame extends JInternalFrame
      */
     private static final long serialVersionUID = 6966744942640238103L;
 
+    /**
+     * constructor to define PAMainFrame for PARootView
+     * @param rootView
+     */
     public PAMainFrame(JDesktopPane rootView)
     {
     	this.rootView = rootView;

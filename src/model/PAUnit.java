@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
  * 
  */
 
-public class PAUnit implements PAAttributeConstant {
+public class PAUnit implements PAAttributeConstant
+{
 	/**
 	 * create a static variable as this is constantly used across the class
 	 * 
@@ -15,19 +16,17 @@ public class PAUnit implements PAAttributeConstant {
 	public static double dpi = PASystem.getDotsPerInch();
 
 	/**
-	 * removed convert the string to lower case as svg is case sensitive
-	 * 
 	 * Validate and convert the SVG element attributes value received as String
 	 * to double
 	 * 
-	 * @param att
-	 *            attribute value of an SVG element attribute
-	 * @param isStrokeWidth
-	 *            true if attribute value passed in is from stroke-width
+	 * @param att attribute value of an SVG element attribute
+	 * @param constant constant set based on attibute
 	 * @return unit of length in double
 	 */
-	public final static double setUnit(String att, int constant) {
-		if (!att.isEmpty()) {
+	public final static double setUnit(String att, int constant)
+	{
+		if (!att.isEmpty())
+		{
 			// 10.10px or 10px or .10px are valid
 			if (Pattern
 					.matches(
@@ -39,8 +38,10 @@ public class PAUnit implements PAAttributeConstant {
 									att)
 					|| Pattern.matches(
 							"(\\-?\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)",
-							att)) {
-				switch (att.substring(att.length() - 2)) {
+							att))
+			{
+				switch (att.substring(att.length() - 2))
+				{
 				case "em":
 					return convertEM(calculate(removeUnits(att)));
 				case "ex":
@@ -62,21 +63,22 @@ public class PAUnit implements PAAttributeConstant {
 			// 10 or 10.10 or .10 are valid
 			else if (Pattern.matches("(\\-?\\d+[e]?\\d*)", att)
 					|| Pattern.matches("(\\-?\\d+.\\d+[e]?\\d*)", att)
-					|| Pattern.matches("(\\-?\\.?\\d+[e]?\\d*)", att)) {
+					|| Pattern.matches("(\\-?\\.?\\d+[e]?\\d*)", att))
+			{
 				return Double.parseDouble(calculate(att));
 			}
 		}
 
-		switch (constant) 
+		switch (constant)
 		{
-			case SVG_WIDTH:
-				return 500;
-			case SVG_HEIGHT:
-				return 500;
-			case STROKE_WIDTH:
-				return 1;
-			default:
-				return 0;
+		case SVG_WIDTH:
+			return 500;
+		case SVG_HEIGHT:
+			return 500;
+		case STROKE_WIDTH:
+			return 1;
+		default:
+			return 0;
 		}
 	}
 
@@ -86,8 +88,10 @@ public class PAUnit implements PAAttributeConstant {
 	 * @param att
 	 * @return a String with its exponential value calculated
 	 */
-	private static String calculate(String att) {
-		if (att.contains("e")) {
+	private static String calculate(String att)
+	{
+		if (att.contains("e"))
+		{
 			int loop = Integer.parseInt(att.substring(att.indexOf("e") + 1));
 			double value = Double
 					.parseDouble(att.substring(0, att.indexOf("e")));
@@ -107,7 +111,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return a String with its symbol removed
 	 */
-	private static String removeUnits(String att) {
+	private static String removeUnits(String att)
+	{
 		return att.replace(att.substring(att.length() - 2), "");
 	}
 
@@ -118,7 +123,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from EM
 	 */
-	public final static double convertEM(String value) {
+	public final static double convertEM(String value)
+	{
 		return (Double.parseDouble(value) * 12 * dpi / 72);
 	}
 
@@ -129,7 +135,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from EX
 	 */
-	public final static double convertEX(String value) {
+	public final static double convertEX(String value)
+	{
 		return Double.parseDouble(value) * 7;
 	}
 
@@ -140,7 +147,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from PX
 	 */
-	public final static double convertPX(String value) {
+	public final static double convertPX(String value)
+	{
 		return Double.parseDouble(value);
 	}
 
@@ -151,7 +159,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from PT
 	 */
-	public final static double convertPT(String value) {
+	public final static double convertPT(String value)
+	{
 		return (Double.parseDouble(value) * dpi / 72);
 	}
 
@@ -162,7 +171,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from PC
 	 */
-	public final static double convertPC(String value) {
+	public final static double convertPC(String value)
+	{
 		return (Double.parseDouble(value) * dpi / 6);
 	}
 
@@ -173,7 +183,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from MM
 	 */
-	public final static double convertMM(String value) {
+	public final static double convertMM(String value)
+	{
 		return (Double.parseDouble(value) * dpi / 25.4);
 	}
 
@@ -184,7 +195,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from CM
 	 */
-	public final static double convertCM(String value) {
+	public final static double convertCM(String value)
+	{
 		return (Double.parseDouble(value) * dpi / 2.54);
 	}
 
@@ -195,7 +207,8 @@ public class PAUnit implements PAAttributeConstant {
 	 *            attribute value
 	 * @return length of attribute value double converted from IN
 	 */
-	public final static double convertIN(String value) {
+	public final static double convertIN(String value)
+	{
 		return Double.parseDouble(value) * dpi;
 	}
 

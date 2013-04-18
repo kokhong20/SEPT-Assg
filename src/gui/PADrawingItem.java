@@ -48,6 +48,9 @@ public class PADrawingItem
         addTitle();
     }
 
+    /**
+     * Create title for drawing kit
+     */
     private void addTitle()
     {
         title = new JLabel("Tools");

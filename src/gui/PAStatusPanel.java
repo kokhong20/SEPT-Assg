@@ -23,6 +23,10 @@ public class PAStatusPanel extends JPanel
     private PAMainFrame mainFrame;
     private JLabel statusMsg;
 
+    /**
+     * constructor to define PAStatusPanel for PAMainFrame
+     * @param mainFrame
+     */
     public PAStatusPanel(PAMainFrame mainFrame)
     {
         this.mainFrame = mainFrame;
