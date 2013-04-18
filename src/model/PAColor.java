@@ -6,7 +6,7 @@ import java.awt.Color;
  * @author bryantylai
  *
  */
-public enum PAColor implements AttributeConstant {
+public enum PAColor implements PAAttributeConstant {
 	/**
 	 * Enumaration of all SVG system colors
 	 */

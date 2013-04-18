@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * 
  */
 
-public class PAUnit implements AttributeConstant {
+public class PAUnit implements PAAttributeConstant {
 	/**
 	 * create a static variable as this is constantly used across the class
 	 * 

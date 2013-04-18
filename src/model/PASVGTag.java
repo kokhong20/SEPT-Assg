@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
  * @author LaiSaiHoo
  *
  */
-public class PASVGTag implements AttributeConstant
+public class PASVGTag implements PAAttributeConstant
 {
     private double width;
     private double height;

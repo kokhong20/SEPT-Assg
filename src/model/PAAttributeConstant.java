@@ -1,6 +1,6 @@
 package model;
 
-public interface AttributeConstant {
+public interface PAAttributeConstant {
 	public static final int SVG_WIDTH = 0;
 	public static final int SVG_HEIGHT = 1;
 	public static final int STROKE_WIDTH = 2;

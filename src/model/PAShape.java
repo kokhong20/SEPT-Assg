@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
  * @author bryantylai
  *
  */
-public abstract class PAShape implements AttributeConstant {
+public abstract class PAShape implements PAAttributeConstant {
 
 	private Color stroke;
 	private float strokeWidth;
