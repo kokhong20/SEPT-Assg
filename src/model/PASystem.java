@@ -5,6 +5,7 @@ import java.awt.Event;
 import java.awt.Toolkit;
 import java.io.File;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -91,14 +92,13 @@ public class PASystem
         {
             return path += selectedFile.getName();
         }
-        
         else
         {
             if (currentOS.indexOf("mac") >= 0)
             {
                 return path += "//" + selectedFile.getName();
             }
-                
+
             return path += "\\" + selectedFile.getName();
         }
     }
@@ -117,21 +117,29 @@ public class PASystem
 
         try
         {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
         {
             System.err.println(ex.getMessage());
         }
     }
-    
+
     public static int setKeyMask()
     {
         if (currentOS.indexOf("mac") >= 0)
         {
             return Event.META_MASK;
         }
-        
+
         return Event.CTRL_MASK;
     }
 
