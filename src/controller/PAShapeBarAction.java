@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -37,46 +38,75 @@ public abstract class PAShapeBarAction extends AbstractAction
 	protected JColorChooser colorChooserObject;
 	protected String title;
 	
-	// Constructor
-	public PAShapeBarAction(JDesktopPane rootView , JButton button, String title)
+	/**
+	 * Constructor for Stroke
+	 * @param rootView
+	 * @param button
+	 * @param title
+	 * @param checkBox
+	 * @param spinner
+	 */
+	public PAShapeBarAction(JDesktopPane rootView , JButton button, String title,JCheckBox checkBox,JSpinner spinner)
 	{
 		this.title = title;
 		this.button = button;
 		this.rootView = rootView;
-		
-		settingAction();
-	}
-	
-	public PAShapeBarAction(JButton button, JCheckBox checkBox)
-	{
-		this.button = button;
 		this.checkBox = checkBox;
-		
-		settingAction();
-	}
-	
-	public PAShapeBarAction(JButton button, JSpinner spinner,JCheckBox checkBox)
-	{
-		this.button = button;
 		this.spinner = spinner;
+		
+		settingAction();
+	}
+	
+	/**
+	 * Constructor for Fill
+	 * @param rootView
+	 * @param button
+	 * @param title
+	 * @param checkBox
+	 */
+	public PAShapeBarAction(JDesktopPane rootView , JButton button, String title,JCheckBox checkBox)
+	{
+		this.title = title;
+		this.button = button;
+		this.rootView = rootView;
 		this.checkBox = checkBox;
 		
 		settingAction();
 	}
 	
+	private void setDefaultIcon()
+	{
+
+		if(!checkBox.isSelected())
+		{
+			ImageIcon icon = new ImageIcon("resources/none.png");
+			button.setIcon(icon);
+			
+			if(colorChooser!=null)
+				colorChooser.dispose();
+		}
+		else
+		{
+			button.setIcon(null);
+		}
 	
-	public void setFillEnable()
+	}
+	
+	private void setFillEnable()
 	{
 		button.setEnabled(checkBox.isSelected());
+		setDefaultIcon();
+
 	}
 	
-	public void setStrokeEnable()
+	private void setStrokeEnable()
 	{
 		button.setEnabled(checkBox.isSelected());
 		spinner.setEnabled(checkBox.isSelected());
+		setDefaultIcon();
 	}
 	
-	public void setColorChooser()
+	private void setColorChooser()
 	{
 		if(colorChooser == null)
 		{
@@ -93,7 +123,6 @@ public abstract class PAShapeBarAction extends AbstractAction
 				}
 			});
 			colorChooser.setTitle(title);
-			System.out.println(colorChooser.getTitle());
 			colorChooserObject = colorChooser.getColorChooser();
 			colorChooserObject.setColor(button.getBackground());
 		}
@@ -107,9 +136,9 @@ public abstract class PAShapeBarAction extends AbstractAction
 	 */
 	public static class FillCheckAction extends PAShapeBarAction
 	{
-		public FillCheckAction(JButton button,JCheckBox checkBox)
+		public FillCheckAction(JDesktopPane rootView , JButton button, String title,JCheckBox checkBox)
 		{
-			super(button,checkBox);
+			super(rootView,button,title,checkBox);
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) 
@@ -118,10 +147,27 @@ public abstract class PAShapeBarAction extends AbstractAction
 			{
 				super.setFillEnable();
 			}
+			
+			else if(e.getSource()==button)
+			{
+				super.setColorChooser();
+				
+				colorChooserObject.getSelectionModel().addChangeListener(new ChangeListener()
+				{
+					@Override
+					public void stateChanged(ChangeEvent e) 
+					{
+						Color color = colorChooserObject.getColor();
+						button.setBackground(color);
+					}
+					
+				});
+			}
 		}
 		@Override
 		public void settingAction() 
 		{
+			button.setAction(this);
 			checkBox.setAction(this);
 			checkBox.setText("Fill:");
 		}
@@ -130,58 +176,41 @@ public abstract class PAShapeBarAction extends AbstractAction
 	
 	public static class StrokeCheckAction extends PAShapeBarAction
 	{
-		public StrokeCheckAction(JButton button,JSpinner spinner ,JCheckBox checkBox)
+		public StrokeCheckAction(JDesktopPane rootView , JButton button, String title,JCheckBox checkBox,JSpinner spinner)
 		{
-			super(button,spinner,checkBox);
+			super(rootView,button,title,checkBox,spinner);
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(e.getSource()==checkBox)
 			{
-				
 				super.setStrokeEnable();
+			}
+			
+			else if(e.getSource()==button)
+			{
+				super.setColorChooser();
+				
+				colorChooserObject.getSelectionModel().addChangeListener(new ChangeListener()
+				{
+					@Override
+					public void stateChanged(ChangeEvent e) 
+					{
+						Color color = colorChooserObject.getColor();
+						button.setBackground(color);
+					}
+					
+				});
 			}
 		}
 		@Override
 		public void settingAction() 
 		{
+			button.setAction(this);
 			checkBox.setAction(this);
 			checkBox.setText("Stroke:");
 		}
 
 	}
-	
-	public static class ColorAction extends PAShapeBarAction
-	{
-		public ColorAction(JDesktopPane parent ,JButton button,String title) 
-		{
-			super(parent,button,title);
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			super.setColorChooser();
-			colorChooserObject.getSelectionModel().addChangeListener(new ChangeListener()
-			{
-				@Override
-				public void stateChanged(ChangeEvent e) 
-				{
-					Color color = colorChooserObject.getColor();
-					button.setBackground(color);
-				}
-				
-			});
-		}
-
-		@Override
-		public void settingAction() 
-		{
-			button.setAction(this);
-		}
-
-	}
-	
-	
 }

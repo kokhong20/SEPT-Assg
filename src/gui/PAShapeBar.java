@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
 import model.PASystem;
-import controller.PAShapeBarAction.ColorAction;
 import controller.PAShapeBarAction.FillCheckAction;
 import controller.PAShapeBarAction.StrokeCheckAction;
 
@@ -95,17 +94,10 @@ public class PAShapeBar extends JPanel
     private void addAction()
     {
     	// strokecheck
-    	StrokeCheckAction strokeCheckAc = new StrokeCheckAction(strokeButton,strokeWidthBox,strokeCheck);
+    	StrokeCheckAction strokeCheckAc = new StrokeCheckAction(mainFrame.getParentView(),strokeButton,"Stroke",strokeCheck,strokeWidthBox);
     	
     	// fillcheck
-    	FillCheckAction fillCheckAc = new FillCheckAction(fillButton,fillCheck);
-    
-    	// fillbutton
-    	ColorAction colorFillAction = new ColorAction(mainFrame.getParentView(),fillButton,"Fill");
-    	
-    	// strokebutton
-    	
-    	ColorAction colorStrokeAction = new ColorAction(mainFrame.getParentView(),strokeButton,"Stroke");
+    	FillCheckAction fillCheckAc = new FillCheckAction(mainFrame.getParentView(),fillButton,"Fill",fillCheck);
     	
     }
 
