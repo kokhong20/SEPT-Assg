@@ -7,8 +7,16 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.LinkedList;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import model.PASVGContainer;
+import model.PASVGImport;
+import model.PASVGTag;
+import model.PAShape;
+import model.PASystem;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  *
@@ -31,9 +39,13 @@ public class PAFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
-            String path = fileChooser.getCurrentDirectory().toString() ;
+            Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+            LinkedList<PAShape> shapesCollection = PASVGImport.readSVGElements(svgDoc);
+            Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
+            PASVGTag svgTag = new PASVGTag(svgNode);
+            PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
         }
-        
+
         frame.setVisible(false);
         frame.dispose();
     }
