@@ -27,15 +27,26 @@ public class PAFileChooserAction implements ActionListener
     private JFileChooser fileChooser;
     private JInternalFrame frame;
 
+    /**
+     * 
+     * Contructor for file chooser's action. 
+     * @param fileChooser pass existing file chooser.
+     * @param frame internal frame which store file chooser.
+     */
     public PAFileChooserAction(JFileChooser fileChooser, JInternalFrame frame)
     {
         this.fileChooser = fileChooser;
         this.frame = frame;
     }
 
+    /**
+     * action in file chooser (Cancel and Open button)
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        // Open Button Action
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
@@ -46,6 +57,7 @@ public class PAFileChooserAction implements ActionListener
             PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
         }
 
+        // need to do for both Cancel and Open button.
         frame.setVisible(false);
         frame.dispose();
     }

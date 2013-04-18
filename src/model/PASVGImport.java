@@ -15,6 +15,12 @@ import org.xml.sax.SAXException;
  */
 public class PASVGImport
 {
+    /**
+     * 
+     * Process current SVG file by parsing the SVG file to be readable in JAVA
+     * @param svgFile file from file chooser
+     * @return svg's Document.
+     */
     public static Document processFiletoDoc(File svgFile)
     {
         Document svgDoc = null;
