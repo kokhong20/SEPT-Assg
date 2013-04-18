@@ -49,7 +49,9 @@ public class PASVGImport
     {
         // TODO Auto-generated method stub
         LinkedList<PAShape> shapesCollection = new LinkedList<PAShape>();
+        
 
+        
         /**
          * Reading of svg elements not done yet
          */

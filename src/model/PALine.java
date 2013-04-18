@@ -41,10 +41,10 @@ public class PALine extends PAShape{
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setX1(PAUnit.setUnit(eNode.getAttribute("x1"),OTHER_UNIT));
-			this.setX2(PAUnit.setUnit(eNode.getAttribute("x2"),OTHER_UNIT));
-			this.setY1(PAUnit.setUnit(eNode.getAttribute("y1"),OTHER_UNIT));
-			this.setY2(PAUnit.setUnit(eNode.getAttribute("y2"),OTHER_UNIT));
+			this.setX1(PAUnit.setSymbol(eNode.getAttribute("x1"),OTHER_UNIT));
+			this.setX2(PAUnit.setSymbol(eNode.getAttribute("x2"),OTHER_UNIT));
+			this.setY1(PAUnit.setSymbol(eNode.getAttribute("y1"),OTHER_UNIT));
+			this.setY2(PAUnit.setSymbol(eNode.getAttribute("y2"),OTHER_UNIT));
 		}
 	}
 

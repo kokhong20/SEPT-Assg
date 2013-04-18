@@ -33,7 +33,7 @@ public abstract class PAShape implements PAAttributeConstant {
 		// TODO Auto-generated constructor stub
 		
 		this.setStroke(PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
-		this.setStrokeWidth((float) PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), STROKE_WIDTH));
+		this.setStrokeWidth((float) PAUnit.setSymbol(((Element)node).getAttribute("stroke-width"), STROKE_WIDTH));
 		this.setNode(node);
 	}
 	

@@ -35,9 +35,9 @@ public class PACircle extends PAFillableShape{
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setCx(PAUnit.setUnit(eNode.getAttribute("cx"), OTHER_UNIT));
-			this.setCy(PAUnit.setUnit(eNode.getAttribute("cy"), OTHER_UNIT));
-			this.setR(PAUnit.setUnit(eNode.getAttribute("r"), OTHER_UNIT));
+			this.setCx(PAUnit.setSymbol(eNode.getAttribute("cx"), OTHER_UNIT));
+			this.setCy(PAUnit.setSymbol(eNode.getAttribute("cy"), OTHER_UNIT));
+			this.setR(PAUnit.setSymbol(eNode.getAttribute("r"), OTHER_UNIT));
 		}
 	}
 
