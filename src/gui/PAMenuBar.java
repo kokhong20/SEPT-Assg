@@ -4,11 +4,11 @@
  */
 package gui;
 
-import controller.PAFileMenuAction.ExitProgram;
-import controller.PAFileMenuAction.NewFile;
-import controller.PAFileMenuAction.OpenFile;
-import controller.PAFileMenuAction.SaveAsFile;
-import controller.PAFileMenuAction.SaveFile;
+import controller.PAMenuAction.ExitProgram;
+import controller.PAMenuAction.NewFile;
+import controller.PAMenuAction.OpenFile;
+import controller.PAMenuAction.SaveAsFile;
+import controller.PAMenuAction.SaveFile;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
