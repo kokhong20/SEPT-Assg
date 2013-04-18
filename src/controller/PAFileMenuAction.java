@@ -4,10 +4,14 @@
  */
 package controller;
 
+import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import javax.swing.AbstractAction;
+import static javax.swing.Action.ACCELERATOR_KEY;
+import static javax.swing.Action.MNEMONIC_KEY;
+import static javax.swing.Action.NAME;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -35,15 +39,42 @@ public abstract class PAFileMenuAction extends AbstractAction
         putValue(MNEMONIC_KEY, keyEvent);
         putValue(NAME, name);
     }
+    
+    public PAFileMenuAction(int keyEvent, int event, String name)
+    {
+        keyMask = PASystem.setKeyMask();
+        keyStroke = KeyStroke.getKeyStroke(keyEvent, keyMask | event);
+
+        putValue(ACCELERATOR_KEY, keyStroke);
+        putValue(MNEMONIC_KEY, keyEvent);
+        putValue(NAME, name);
+    }
+    
+    public static class NewFile extends PAFileMenuAction
+    {
+        private JDesktopPane parent;
+        
+        public NewFile(JDesktopPane parent)
+        {
+            super(KeyEvent.VK_N, "New");
+            this.parent = parent;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
 
     /**
      *
      */
-    public static class OpenFileMenu extends PAFileMenuAction
+    public static class OpenFile extends PAFileMenuAction
     {
         private JDesktopPane parent;
 
-        public OpenFileMenu(JDesktopPane parent)
+        public OpenFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_O, "Open...");
             this.parent = parent;
@@ -79,19 +110,58 @@ public abstract class PAFileMenuAction extends AbstractAction
         }
 
     }
+    
+    public static class SaveFile extends PAFileMenuAction
+    {
+        private JDesktopPane parent;
+        private JInternalFrame onFocusFrame;
+        
+        public SaveFile(JDesktopPane parent)
+        {
+            super(KeyEvent.VK_S, "Save");
+            this.parent = parent;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+    
+    public static class SaveAsFile extends PAFileMenuAction
+    {
+        private JDesktopPane parent;
+        private JInternalFrame onFocusFrame;
+        
+        public SaveAsFile(JDesktopPane parent)
+        {
+            super(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As...");
+            this.parent = parent;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
 
     public static class ExitProgram extends PAFileMenuAction
     {
-        public ExitProgram()
+        private JDesktopPane parent;
+        
+        public ExitProgram(JDesktopPane parent)
         {
             super(KeyEvent.VK_W, "Exit");
+            this.parent = parent;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
             int selectedOption = 
-                    JOptionPane.showConfirmDialog(null, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showConfirmDialog(parent, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             
             if (selectedOption == 0)
             {

@@ -5,7 +5,10 @@
 package gui;
 
 import controller.PAFileMenuAction.ExitProgram;
-import controller.PAFileMenuAction.OpenFileMenu;
+import controller.PAFileMenuAction.NewFile;
+import controller.PAFileMenuAction.OpenFile;
+import controller.PAFileMenuAction.SaveAsFile;
+import controller.PAFileMenuAction.SaveFile;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -47,7 +50,7 @@ public class PAMenuBar extends JMenuBar
     public PAMenuBar(JDesktopPane parent)
     {
         this.parent = parent;
-        
+
         initMenu();
         initMenuItem();
         addMenuItem();
@@ -125,12 +128,22 @@ public class PAMenuBar extends JMenuBar
         viewMenu.add(zoomOutView);
         viewMenu.add(actualSizeView);
     }
-    
+
+    /**
+     *
+     * add action to each menu item.
+     */
     private void addAction()
     {
-        ExitProgram exitAction = new ExitProgram();
-        OpenFileMenu openAction = new OpenFileMenu(parent);
+        NewFile newAction = new NewFile(parent);
+        OpenFile openAction = new OpenFile(parent);
+        SaveFile saveAction = new SaveFile(parent);
+        SaveAsFile saveAsAction = new SaveAsFile(parent);
+        ExitProgram exitAction = new ExitProgram(parent);
+        newFile.setAction(newAction);
         openFile.setAction(openAction);
+        saveFile.setAction(saveAction);
+        saveAsFile.setAction(saveAsAction);
         exitFile.setAction(exitAction);
     }
 
