@@ -13,7 +13,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
-    private static String currentOS = System.getProperty("os.name").toLowerCase();
+    public static String currentOS = System.getProperty("os.name").toLowerCase();
+    public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
     private static final Dimension screenDimension = toolkit.getScreenSize();
     private static final int screenResolution = toolkit.getScreenResolution();
