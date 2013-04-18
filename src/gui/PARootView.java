@@ -57,7 +57,7 @@ public class PARootView extends JFrame
     private void customize()
     {
         rootView.setOpaque(false);
-        rootView.setSize(userScreenSize);
+        rootView.setSize(new Dimension(PASystem.getScreenDimension().width, PASystem.getScreenDimension().height));
 //        rootView.add(startMenu);
         rootView.add(toolBar);
         rootView.add(mainPanel);
