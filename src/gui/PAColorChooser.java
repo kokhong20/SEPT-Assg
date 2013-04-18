@@ -3,6 +3,7 @@ package gui;
 import java.awt.Dimension;
 
 import javax.swing.JColorChooser;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -22,13 +23,13 @@ public class PAColorChooser extends JInternalFrame
 	 * 
 	 */
 	private static final long serialVersionUID = -7537988030356975339L;
-	private PARootView rootView;
+	private JDesktopPane parent;
 	private JPanel chooserPanel;
 	private JColorChooser colorChooser;
 	
-	public PAColorChooser(PARootView rootView)
+	public PAColorChooser(JDesktopPane parent)
 	{
-		this.rootView = rootView;
+		this.parent = parent;
 		createColorChooser();
 		initColorChooser();
 	}
@@ -38,7 +39,7 @@ public class PAColorChooser extends JInternalFrame
 	 */
 	private void initColorChooser()
 	{
-		rootView.add(this);
+		parent.add(this);
 		this.setClosable(true);
 		this.setSize(new Dimension(700,300));
 		this.setVisible(true);
@@ -68,5 +69,10 @@ public class PAColorChooser extends JInternalFrame
 				
 		chooserPanel.add(colorChooser);
 		this.add(chooserPanel);
+	}
+	
+	public JColorChooser getColorChooser()
+	{
+		return colorChooser;
 	}
 }

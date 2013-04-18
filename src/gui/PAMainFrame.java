@@ -8,6 +8,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import model.PASystem;
@@ -24,13 +25,15 @@ public class PAMainFrame extends JInternalFrame
     private PASVGPanel svgPanel;
     private JPanel mainPanel;
     private JPanel svgBackPanel;
+    private JDesktopPane rootView;
     /**
      *
      */
     private static final long serialVersionUID = 6966744942640238103L;
 
-    public PAMainFrame()
+    public PAMainFrame(JDesktopPane rootView)
     {
+    	this.rootView = rootView;
         setAttributes();
         initialize();
         customize();
@@ -123,6 +126,11 @@ public class PAMainFrame extends JInternalFrame
         layout.setVerticalGroup(vGroup);
 
         this.add(mainPanel);
+    }
+    
+    public JDesktopPane getParentView()
+    {
+    	return this.rootView;
     }
 
 }

@@ -41,9 +41,9 @@ public class PARootView extends JFrame
         menuBar = new PAMenuBar(rootView);
         startMenu = new PAStartMenu();
         toolBar = new PADrawingKit();
-        mainPanel = new PAMainFrame();
+        mainPanel = new PAMainFrame(rootView);
         layerPanel = new PALayerPanel();
-        inspectFrame = new PAInspectFrame(this);
+        inspectFrame = new PAInspectFrame(rootView);
     }
 
     private void customize()

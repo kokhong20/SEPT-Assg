@@ -8,6 +8,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +31,7 @@ public class PAInspectFrame extends JInternalFrame
 	 */
 	private static final long serialVersionUID = 7343927563831687660L;
 	
-	private PARootView rootView;
+	private JDesktopPane rootView;
 	private JPanel circlePanel,rectPanel,linePanel,groupPanel;
 	private JButton strokeButton,fillButton;
 	private JLabel width,height,radius,thumbnail;
@@ -38,7 +39,7 @@ public class PAInspectFrame extends JInternalFrame
 	private JSpinner strokeWidthBox;
 	private JTextField widthText,heightText,radText;
 	
-	public PAInspectFrame(PARootView rootView)
+	public PAInspectFrame(JDesktopPane rootView)
 	{
 		this.rootView = rootView;
 		
@@ -51,7 +52,6 @@ public class PAInspectFrame extends JInternalFrame
 	 */
 	public void initInspectFrame()
 	{
-		rootView.add(this);
 		this.setClosable(true);
 		this.setSize(new Dimension(240,270));
 		this.setBackground(new Color(40,40,40));

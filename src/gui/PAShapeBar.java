@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -10,9 +11,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
-import controller.PAShapeBarAction;
-import controller.PAShapeBarAction.StrokeCheck;
 import model.PASystem;
+import controller.PAShapeBarAction.ColorAction;
+import controller.PAShapeBarAction.FillCheckAction;
+import controller.PAShapeBarAction.StrokeCheckAction;
 
 /**
  *
@@ -76,19 +78,35 @@ public class PAShapeBar extends JPanel
         attrItems.setButtonAttributes("Fill Color", fillButton, new Dimension(40, 17));
         attrItems.setButtonAttributes("Stroke Color", strokeButton, new Dimension(40, 17));
         attrItems.setButtonAttributes("Inspect", inspectButton, new Dimension(70, 30));
-
-        //Inspect Button customization
+        
+        //Inspect Button customization	
         ImageIcon icon = new ImageIcon("resources/inspect.png");
+        inspectButton.setBackground(this.getBackground());
         inspectButton.setIcon(icon);
         inspectButton.setBorder(null);
         inspectButton.setBorderPainted(false);
 
     }
     
+    /**
+     * Adding Action to the JComponents
+     */
+    
     private void addAction()
     {
-    	StrokeCheck shapeAction = new StrokeCheck(strokeButton,strokeWidthBox,strokeCheck);
-    	strokeCheck.setAction(shapeAction);
+    	// strokecheck
+    	StrokeCheckAction strokeCheckAc = new StrokeCheckAction(strokeButton,strokeWidthBox,strokeCheck);
+    	
+    	// fillcheck
+    	FillCheckAction fillCheckAc = new FillCheckAction(fillButton,fillCheck);
+    
+    	// fillbutton
+    	ColorAction colorFillAction = new ColorAction(mainFrame.getParentView(),fillButton);
+    	
+    	// strokebutton
+    	
+    	ColorAction colorStrokeAction = new ColorAction(mainFrame.getParentView(),strokeButton);
+    	
     }
 
     /**
