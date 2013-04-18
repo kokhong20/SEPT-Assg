@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
  * @author LaiSaiHoo
  *
  */
-public class PASVGTag
+public class PASVGTag implements AttributeConstant
 {
     private double width;
     private double height;
@@ -46,27 +46,20 @@ public class PASVGTag
         {
             Element eNode = (Element) this.getNode();
 
-            setWidth(eNode.hasAttribute("width") ? PAUnit.setUnit(eNode.getAttribute("width"), false): 500 );
-            setHeight(eNode.hasAttribute("height") ? PAUnit.setUnit(eNode.getAttribute("height"), false): 500);
+			this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"), SVG_WIDTH));
 
-            if (eNode.hasAttribute("viewBox"))
-            {
-                setViewbox(eNode.getAttribute("viewBox"));
-            }
-            else
-            {
-                setInitX(0);
-                setInitY(0);
-                setViewWidth(0);
-                setViewHeight(0);
-            }
+			this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),
+					SVG_HEIGHT));
+			
+			this.setViewbox(eNode.getAttribute("viewBox"));
 
-            setScale(this.width, this.height, this.viewWidth, this.viewHeight);
-            setScaleXY(getScaleX(), getScaleY());
-            setStrokeWidth(PAUnit.setUnit(
-                    eNode.getAttribute("stroke-width"), true));
-            setStroke(PAColor.setColor(eNode.getAttribute("stroke"), true));
-            setFill(PAColor.setColor(eNode.getAttribute("fill"), false));
+		setScale(this.width, this.height, this.viewWidth, this.viewHeight);
+		setScaleXY(getScaleX(), getScaleY());
+
+		this.setStrokeWidth(PAUnit.setUnit(
+				eNode.getAttribute("stroke-width"), STROKE_WIDTH));
+		this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
+		this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
         }
     }
 
@@ -81,10 +74,10 @@ public class PASVGTag
         if (Pattern.matches("\\d+ *,* *\\d+ *,* *\\d+ *,* *\\d+", value))
         {
             String values[] = value.split("[ *,* *]+");
-            setInitX(PAUnit.setUnit(values[0], false));
-            setInitY(PAUnit.setUnit(values[1], false));
-            setViewWidth(PAUnit.setUnit(values[2], false));
-            setViewHeight(PAUnit.setUnit(values[3], false));
+            setInitX(PAUnit.setUnit(values[0], OTHER_UNIT));
+            setInitY(PAUnit.setUnit(values[1], OTHER_UNIT));
+            setViewWidth(PAUnit.setUnit(values[2], OTHER_UNIT));
+            setViewHeight(PAUnit.setUnit(values[3], OTHER_UNIT));
         }
         else
         {

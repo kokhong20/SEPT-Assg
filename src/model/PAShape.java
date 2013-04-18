@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
  * @author bryantylai
  *
  */
-public abstract class PAShape {
+public abstract class PAShape implements AttributeConstant {
 
 	private Color stroke;
 	private float strokeWidth;
@@ -32,8 +32,8 @@ public abstract class PAShape {
 	{
 		// TODO Auto-generated constructor stub
 		
-		this.setStroke(PAColor.setColor(((Element)node).getAttribute("stroke"), true));
-		this.setStrokeWidth((float) PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), true));
+		this.setStroke(PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
+		this.setStrokeWidth((float) PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), STROKE_WIDTH));
 		this.setNode(node);
 	}
 	

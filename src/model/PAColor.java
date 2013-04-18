@@ -6,7 +6,7 @@ import java.awt.Color;
  * @author bryantylai
  *
  */
-public enum PAColor {
+public enum PAColor implements AttributeConstant {
 	/**
 	 * Enumaration of all SVG system colors
 	 */
@@ -89,10 +89,10 @@ public enum PAColor {
 	 * Validate and convert the SVG element attributes value received as String to Color
 	 * 
 	 * @param value attribute value of an SVG element attribute
-	 * @param isStroke true if attribute value passed in is from stroke 
+	 * @param constant
 	 * @return a Color object
 	 */
-	public static Color setColor(String value, boolean isStroke) {
+	public static Color setColor(String value, int constant) {
 		
 		value = value.toLowerCase();
 
@@ -160,10 +160,15 @@ public enum PAColor {
 				if(c.name().equals(value))
 					return c.getColor();
 	
-			if(isStroke)
-				return PAColor.none.getColor();
-			else
-				return PAColor.black.getColor();
+			switch(constant)
+			{
+				case FILL:
+					return Color.black;
+				case STROKE:
+					return PAColor.none.getColor();
+			}
+			
+			return PAColor.none.getColor();
 		}
 	}
 }

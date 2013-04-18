@@ -27,7 +27,7 @@ public abstract class PAFillableShape extends PAShape {
 		// TODO Auto-generated constructor stub
 		super(node);
 
-		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"),false));
+		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 	}
 
 	/**
