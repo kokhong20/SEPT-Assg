@@ -11,6 +11,9 @@ import javax.swing.JDesktopPane;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import gui.PAColorChooser;
 import gui.PARootView;
@@ -30,14 +33,16 @@ public abstract class PAShapeBarAction extends AbstractAction
 	protected JSpinner spinner;
 	protected JCheckBox checkBox;
 	protected PAColorChooser colorChooser;
-	protected JDesktopPane parent;
+	protected JDesktopPane rootView;
 	protected JColorChooser colorChooserObject;
+	protected String title;
 	
 	// Constructor
-	public PAShapeBarAction(JDesktopPane parent , JButton button)
+	public PAShapeBarAction(JDesktopPane rootView , JButton button, String title)
 	{
+		this.title = title;
 		this.button = button;
-		this.parent = parent;
+		this.rootView = rootView;
 		
 		settingAction();
 	}
@@ -60,24 +65,39 @@ public abstract class PAShapeBarAction extends AbstractAction
 	}
 	
 	
-	
 	public void setFillEnable()
 	{
 		button.setEnabled(checkBox.isSelected());
-		
 	}
 	
 	public void setStrokeEnable()
 	{
 		button.setEnabled(checkBox.isSelected());
 		spinner.setEnabled(checkBox.isSelected());
-		
 	}
 	
 	public void setColorChooser()
 	{
-		colorChooser = new PAColorChooser(parent);
-		colorChooserObject = colorChooser.getColorChooser();
+		if(colorChooser == null)
+		{
+			colorChooser = new PAColorChooser(rootView);
+			colorChooser.addInternalFrameListener(new InternalFrameAdapter()
+			{
+				@Override
+				public void internalFrameClosed(InternalFrameEvent e) 
+				{
+					if(e.getSource()==colorChooser)
+					{
+						colorChooser = null;
+					}
+				}
+			});
+			colorChooser.setTitle(title);
+			System.out.println(colorChooser.getTitle());
+			colorChooserObject = colorChooser.getColorChooser();
+			colorChooserObject.setColor(button.getBackground());
+		}
+		
 	}
 	
 	public abstract void settingAction();
@@ -134,16 +154,15 @@ public abstract class PAShapeBarAction extends AbstractAction
 	
 	public static class ColorAction extends PAShapeBarAction
 	{
-		public ColorAction(JDesktopPane parent ,JButton button) 
+		public ColorAction(JDesktopPane parent ,JButton button,String title) 
 		{
-			super(parent,button);
+			super(parent,button,title);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
 			super.setColorChooser();
-			PAColorChooserAction chooserAction = new PAColorChooserAction(colorChooserObject,button);
 			colorChooserObject.getSelectionModel().addChangeListener(new ChangeListener()
 			{
 				@Override

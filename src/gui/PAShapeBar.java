@@ -101,11 +101,11 @@ public class PAShapeBar extends JPanel
     	FillCheckAction fillCheckAc = new FillCheckAction(fillButton,fillCheck);
     
     	// fillbutton
-    	ColorAction colorFillAction = new ColorAction(mainFrame.getParentView(),fillButton);
+    	ColorAction colorFillAction = new ColorAction(mainFrame.getParentView(),fillButton,"Fill");
     	
     	// strokebutton
     	
-    	ColorAction colorStrokeAction = new ColorAction(mainFrame.getParentView(),strokeButton);
+    	ColorAction colorStrokeAction = new ColorAction(mainFrame.getParentView(),strokeButton,"Stroke");
     	
     }
 

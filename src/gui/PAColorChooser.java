@@ -8,6 +8,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+
 import model.PASystem;
 
 /**
@@ -23,13 +24,13 @@ public class PAColorChooser extends JInternalFrame
 	 * 
 	 */
 	private static final long serialVersionUID = -7537988030356975339L;
-	private JDesktopPane parent;
+	private JDesktopPane rootView;
 	private JPanel chooserPanel;
 	private JColorChooser colorChooser;
 	
-	public PAColorChooser(JDesktopPane parent)
+	public PAColorChooser(JDesktopPane rootView)
 	{
-		this.parent = parent;
+		this.rootView = rootView;
 		createColorChooser();
 		initColorChooser();
 	}
@@ -39,13 +40,14 @@ public class PAColorChooser extends JInternalFrame
 	 */
 	private void initColorChooser()
 	{
-		parent.add(this);
+		rootView.add(this);
 		this.setClosable(true);
 		this.setSize(new Dimension(700,300));
 		this.setVisible(true);
 		//Set location based on user's computer resolution
 		this.setLocation(((int) (0.2 * PASystem.getScreenDimension().getWidth())), 
-						((int) (0.2 * PASystem.getScreenDimension().getHeight())));	
+						((int) (0.2 * PASystem.getScreenDimension().getHeight())));
+		
 	}
 	
 	/**
@@ -75,4 +77,5 @@ public class PAColorChooser extends JInternalFrame
 	{
 		return colorChooser;
 	}
+	
 }
