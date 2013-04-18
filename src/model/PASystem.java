@@ -139,6 +139,10 @@ public class PASystem
         }
     }
 
+    /**
+     * set Key mask based on currentOS
+     * @return mask constant
+     */
     public static int setKeyMask()
     {
         if (currentOS.indexOf("mac") >= 0)

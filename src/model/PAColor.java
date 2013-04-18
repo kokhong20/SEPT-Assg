@@ -166,9 +166,9 @@ public enum PAColor implements PAAttributeConstant {
 					return Color.black;
 				case STROKE:
 					return PAColor.none.getColor();
+				default:
+					return PAColor.none.getColor();
 			}
-			
-			return PAColor.none.getColor();
 		}
 	}
 }
