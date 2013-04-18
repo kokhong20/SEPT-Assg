@@ -89,7 +89,7 @@ public enum PAColor implements PAAttributeConstant {
 	 * Validate and convert the SVG element attributes value received as String to Color
 	 * 
 	 * @param value attribute value of an SVG element attribute
-	 * @param constant
+	 * @param constant constant set based on attibute
 	 * @return a Color object
 	 */
 	public static Color setColor(String value, int constant) {
@@ -166,9 +166,9 @@ public enum PAColor implements PAAttributeConstant {
 					return Color.black;
 				case STROKE:
 					return PAColor.none.getColor();
+				default:
+					return PAColor.none.getColor();
 			}
-			
-			return PAColor.none.getColor();
 		}
 	}
 }

@@ -34,8 +34,7 @@ public class PALayerPanel extends JPanel
     private JScrollPane layerPane;
 
     /**
-     * 
-     * PALayerPane's constructor.
+     * constructor to define PALayerPanel to show layers
      */
     public PALayerPanel()
     {

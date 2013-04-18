@@ -26,15 +26,20 @@ public class PARootView extends JFrame
     private PALayerPanel layerPanel;
     private PAInspectFrame inspectFrame;
 
+    /**
+     * constructor to create PARootView
+     */
     public PARootView()
     {
         PASystem.setLookandFeel();
         initialize();
-        getScreenSize();
         customize();
         setUpRootView();
     }
 
+    /**
+     * initialization of direct child items in PARootView
+     */
     private void initialize()
     {
         rootView = new JDesktopPane();
@@ -46,10 +51,13 @@ public class PARootView extends JFrame
         inspectFrame = new PAInspectFrame(rootView);
     }
 
+    /**
+     * customization of PARootView
+     */
     private void customize()
     {
         rootView.setOpaque(false);
-        rootView.setSize(userScreenSize);
+        rootView.setSize(new Dimension(PASystem.getScreenDimension().width, PASystem.getScreenDimension().height));
 //        rootView.add(startMenu);
         rootView.add(toolBar);
         rootView.add(mainPanel);
@@ -57,17 +65,14 @@ public class PARootView extends JFrame
         rootView.setVisible(true);
     }
 
-    private void getScreenSize()
-    {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        userScreenSize = toolkit.getScreenSize();
-    }
-
+    /**
+     * settings for PARootView
+     */
     private void setUpRootView()
     {
         add(rootView);
         setJMenuBar(menuBar);
-        setSize(userScreenSize);
+        setSize(new Dimension(PASystem.getScreenDimension().width, PASystem.getScreenDimension().height));
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
         setVisible(true);

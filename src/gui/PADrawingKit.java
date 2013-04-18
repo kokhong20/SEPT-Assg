@@ -19,6 +19,9 @@ public class PADrawingKit extends JPanel
      */
     private static final long serialVersionUID = -918164000427896948L;
 
+    /**
+     * constructor to define PADrawingKit for PARootView
+     */
     public PADrawingKit()
     {
         initDrawingKit();

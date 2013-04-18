@@ -39,6 +39,10 @@ public class PAInspectFrame extends JInternalFrame
 	private JSpinner strokeWidthBox;
 	private JTextField widthText,heightText,radText;
 	
+	/**
+	 * constructor to define PAInspectFrame for PARootView
+	 * @param rootView 
+	 */
 	public PAInspectFrame(JDesktopPane rootView)
 	{
 		this.rootView = rootView;

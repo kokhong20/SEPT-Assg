@@ -18,13 +18,17 @@ public class PASVGPanel extends JPanel
     private static final long serialVersionUID = 940764866671091035L;
     private PAMainFrame mainFrame;
 
+    /**
+     * constructor to define PASVGPanel for PAMainFrame
+     * @param mainFrame
+     */
     public PASVGPanel(PAMainFrame mainFrame)
     {
         this.mainFrame = mainFrame;
         initPanel();
     }
 
-    /*
+    /**
      * Initialise Svg Panel
      */
     private void initPanel()

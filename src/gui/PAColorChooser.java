@@ -36,7 +36,7 @@ public class PAColorChooser extends JInternalFrame
 	}
 	
 	/**
-	 * Init the Internal Frame
+	 * Initialize the Internal Frame
 	 */
 	private void initColorChooser()
 	{
@@ -72,10 +72,12 @@ public class PAColorChooser extends JInternalFrame
 		chooserPanel.add(colorChooser);
 		this.add(chooserPanel);
 	}
-	
+
+	/**
+	 * @return the colorChooser
+	 */
 	public JColorChooser getColorChooser()
 	{
 		return colorChooser;
 	}
-	
 }
