@@ -117,13 +117,19 @@ public class PASystem
 
         try
         {
-            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+            if (currentOS.indexOf("mac") >= 0)
             {
-                if ("Nimbus".equals(info.getName()))
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+            else
+            {
+                for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
                 {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
+                    if ("Nimbus".equals(info.getName()))
+                    {
+                        UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
             }
         }
