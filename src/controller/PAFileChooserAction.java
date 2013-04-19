@@ -50,11 +50,13 @@ public class PAFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
+            //String path = fileChooser.getCurrentDirectory().toString() ;
+            //String completedPath = PASystem.setPath(path, selectedFile);
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
             LinkedList<PAShape> shapesCollection = svgImport.readSVGElements(svgDoc);
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
-            PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
+           // PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
         }
 
         // need to do for both Cancel and Open button.

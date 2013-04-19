@@ -11,8 +11,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
-
 /**
  *
  * @author bryantylai/LiHao
@@ -20,23 +18,31 @@ import org.xml.sax.SAXException;
 public class PASVGImport
 {
     /**
-     * 
+     *
      * Process current SVG file by parsing the SVG file to be readable in JAVA
+     *
      * @param svgFile file from file chooser
      * @return svg's Document.
      */
-	private PASVGTag svgElement;
+    private PASVGTag svgElement;
     private LinkedList<PAShape> shapesCollection = new LinkedList<PAShape>();
+
     public PASVGImport()
     {
-    	
     }
+
     public static Document processFiletoDoc(File svgFile)
     {
         Document svgDoc = null;
         DocumentBuilderFactory svgDBFactory = DocumentBuilderFactory.newInstance();
+
         try
         {
+            svgDBFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+            svgDBFactory.setFeature("http://xml.org/sax/features/validation", false);
+            svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+            svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
             DocumentBuilder svgDocBuilder = svgDBFactory.newDocumentBuilder();
             svgDoc = svgDocBuilder.parse(svgFile);
             svgDoc.getDocumentElement().normalize();
@@ -58,61 +64,66 @@ public class PASVGImport
     public LinkedList<PAShape> readSVGElements(Document svgDoc)
     {
         // TODO Auto-generated method stub
-        if(svgDoc != null)
-		{
-			//Processing SVG tag
-			Node svg = svgDoc.getElementsByTagName("svg").item(0);
-			svgElement = new PASVGTag(svg);
-			
-			NodeList drawList = svg.getChildNodes();
-			for (int index = 0; index < drawList.getLength(); index++)
-			{
-				switch(drawList.item(index).getNodeName())
-				{
-					case "rect":
-						PARectangle newRect = new PARectangle(drawList.item(index));
-						newRect.readAttributes();
+        if (svgDoc != null)
+        {
+            //Processing SVG tag
+            Node svg = svgDoc.getElementsByTagName("svg").item(0);
+            svgElement = new PASVGTag(svg);
 
-						//Add new rectangle object to Shapes and put into linked list
-						//Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
-						this.shapesCollection.add(newRect);
-						break;
+            NodeList drawList = svg.getChildNodes();
+            for (int index = 0; index < drawList.getLength(); index++)
+            {
+                switch (drawList.item(index).getNodeName())
+                {
+                    case "rect":
+                        PARectangle newRect = new PARectangle(drawList.item(index));
+                        newRect.readAttributes();
 
-					case "circle":
-						PACircle newCircle = new PACircle(drawList.item(index));
-						newCircle.readAttributes();
+                        //Add new rectangle object to Shapes and put into linked list
+                        //Rectangle2D.Double rectShape = new Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
+                        this.shapesCollection.add(newRect);
+                        break;
 
-						//Add new circle object to Shapes and put into linked List
-						//Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
-						
-						this.shapesCollection.add(newCircle);
-						break;
+                    case "circle":
+                        PACircle newCircle = new PACircle(drawList.item(index));
+                        newCircle.readAttributes();
 
-					case "line":
-						PALine newLine = new PALine(drawList.item(index));
-						newLine.readAttributes();
+                        //Add new circle object to Shapes and put into linked List
+                        //Ellipse2D.Double circleShape = new Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 
-						this.shapesCollection.add(newLine);
-						break;
+                        this.shapesCollection.add(newCircle);
+                        break;
+
+                    case "line":
+                        PALine newLine = new PALine(drawList.item(index));
+                        newLine.readAttributes();
+
+                        this.shapesCollection.add(newLine);
+                        break;
 
 //					case "g":
 //						NodeList gList = drawList.item(index).getChildNodes();
 //						createGroups(this.shapesCollection, gList, drawList.item(index), null, null);
 //						
 //						break;
-				}
-			}
-		}
-        
+                }
+            }
+        }
+        else if (svgDoc == null)
+        {
+            System.out.println("let me know");
+        }
 
-        
+
         /**
          * Reading of svg elements not done yet
          */
         return shapesCollection;
     }
-	public PASVGTag getSVGElement()
-	{
-		return svgElement;
-	}
+
+    public PASVGTag getSVGElement()
+    {
+        return svgElement;
+    }
+
 }
