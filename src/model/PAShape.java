@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 public abstract class PAShape implements PAAttributeConstant {
 
 	private Color stroke;
-	private float strokeWidth;
+	private double strokeWidth;
 	private String id;
 	private boolean isGrouped;
 	private Node node;
@@ -33,7 +33,7 @@ public abstract class PAShape implements PAAttributeConstant {
 		// TODO Auto-generated constructor stub
 		
 		this.setStroke(PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
-		this.setStrokeWidth((float) PAUnit.setSymbol(((Element)node).getAttribute("stroke-width"), STROKE_WIDTH));
+		this.setStrokeWidth(PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
 		this.setNode(node);
 	}
 	
@@ -87,14 +87,14 @@ public abstract class PAShape implements PAAttributeConstant {
 	/**
 	 * @return the strokeWidth
 	 */
-	public float getStrokeWidth() {
+	public double getStrokeWidth() {
 		return strokeWidth;
 	}
 
 	/**
 	 * @param strokeWidth the strokeWidth to set
 	 */
-	public void setStrokeWidth(float strokeWidth) {
+	public void setStrokeWidth(double strokeWidth) {
 		this.strokeWidth = strokeWidth;
 	}
 

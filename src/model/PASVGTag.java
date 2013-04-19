@@ -46,63 +46,17 @@ public class PASVGTag implements PAAttributeConstant
 		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
 			Element eNode = (Element) this.getNode();
-
-			// if (eNode.hasAttribute("width") == true)
-			// {
-			// if (eNode.getAttribute("width").matches("\\d+%{1}"))
-			// {
-			// setWidth(PAUnit.setPercentage(eNode.getAttribute("width"),
-			// 500));
-			// }
-			// else
-			// {
-			// setWidth(PAUnit.setUnit(eNode.getAttribute("width"), false));
-			// }
-			// }
-			// else
-			// {
-			// setWidth(500);
-			// }
-			//
-			// if (eNode.hasAttribute("height") == true)
-			// {
-			// if (eNode.getAttribute("height").matches("\\d+%{1}"))
-			// {
-			// setHeight(PAUnit.setPercentage(
-			// eNode.getAttribute("height"), 500));
-			// }
-			// else
-			// {
-			// setHeight(PAUnit.setUnit(eNode.getAttribute("height"),
-			// false));
-			// }
-			// }
-			// else
-			// {
-			// setHeight(500);
-			// }
-
 			this.setWidth(PAUnit.setUnit(
-					eNode.getAttribute("width"), SVG_WIDTH, 500));
+					eNode.getAttribute("width"), DEFAULT_SVG_SIZE));
 			this.setHeight(PAUnit.setUnit(
-					eNode.getAttribute("height"), SVG_HEIGHT, 500));
+					eNode.getAttribute("height"), DEFAULT_SVG_SIZE));
 
-			if (eNode.hasAttribute("viewBox"))
-			{
-				setViewbox(eNode.getAttribute("viewBox"));
-			}
-			else
-			{
-				setInitX(0);
-				setInitY(0);
-				setViewWidth(0);
-				setViewHeight(0);
-			}
+			setViewbox(eNode.getAttribute("viewBox"));
 
 			this.setScale(this.width, this.height, this.viewWidth, this.viewHeight);
 			this.setScaleXY(getScaleX(), getScaleY());
 			this.setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"),
-					STROKE_WIDTH, 0));
+					DEFAULT_STROKE_WIDTH));
 			this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
 			this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
 		}
@@ -119,17 +73,17 @@ public class PASVGTag implements PAAttributeConstant
 		if (Pattern.matches("\\d+ *,* *\\d+ *,* *\\d+ *,* *\\d+", value))
 		{
 			String values[] = value.split("[ *,* *]+");
-			setInitX(PAUnit.setUnit(values[0], OTHER_UNIT, 0));
-			setInitY(PAUnit.setUnit(values[1], OTHER_UNIT, 0));
-			setViewWidth(PAUnit.setUnit(values[2], OTHER_UNIT, 0));
-			setViewHeight(PAUnit.setUnit(values[3], OTHER_UNIT, 0));
+			setInitX(PAUnit.setUnit(values[0], DEFAULT_LENGTH));
+			setInitY(PAUnit.setUnit(values[1], DEFAULT_LENGTH));
+			setViewWidth(PAUnit.setUnit(values[2], DEFAULT_LENGTH));
+			setViewHeight(PAUnit.setUnit(values[3], DEFAULT_LENGTH));
 		}
 		else
 		{
-			setInitX(0);
-			setInitY(0);
-			setViewWidth(0);
-			setViewHeight(0);
+			setInitX(DEFAULT_LENGTH);
+			setInitY(DEFAULT_LENGTH);
+			setViewWidth(DEFAULT_LENGTH);
+			setViewHeight(DEFAULT_LENGTH);
 		}
 	}
 

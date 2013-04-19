@@ -1,4 +1,3 @@
-
 package model;
 
 import java.util.regex.Pattern;
@@ -16,48 +15,32 @@ public class PAUnit implements PAAttributeConstant
 	 */
 	public static double dpi = PASystem.getDotsPerInch();
 
-	public static double setUnit(String att, int constant, double size)
-	{
-		if (att.matches("\\d+%{1}"))
-		{
-			return setPercentage(att, size);
-		}
-		else
-		{
-			return setSymbol(att, constant);
-		}
-	}
-	
-	
 	/**
 	 * removed convert the string to lower case as svg is case sensitive
 	 * 
 	 * Validate and convert the SVG element attributes value received as String
 	 * to double
 	 * 
-	 * @param att
-	 *            attribute value of an SVG element attribute
-	 * @param isStrokeWidth
-	 *            true if attribute value passed in is from stroke-width
+	 * @param att attribute value of an SVG element attribute
+	 * @param constant constant is returned if error in setting unit
 	 * @return unit of length in double
 	 */
 
-	public static double setSymbol(String att, int constant)
+	public static double setUnit(String att, int constant)
 	{
 		if (!att.isEmpty())
 		{
 			// 10.10px or 10px or .10px are valid
-			if (Pattern
-					.matches(
-							"(\\-?\\d+\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)",
+			if (Pattern.matches(
+					"(\\-?\\d+\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc|%)",
+					att)
+					|| Pattern.matches(
+							"(\\-?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc|%)",
 							att)
 					|| Pattern
 							.matches(
-									"(\\-?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)",
-									att)
-					|| Pattern.matches(
-							"(\\-?\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc)",
-							att))
+									"(\\-?\\.?\\d+[e]?\\d*)+(em|ex|px|in|cm|mm|pt|pc|%)",
+									att))
 			{
 				switch (att.substring(att.length() - 2))
 				{
@@ -77,6 +60,8 @@ public class PAUnit implements PAAttributeConstant
 					return convertPT(calculate(removeUnits(att)));
 				case "pc":
 					return convertPC(calculate(removeUnits(att)));
+				case "%":
+					return convertPercent(calculate(removeUnits(att)));
 				}
 			}
 			// 10 or 10.10 or .10 are valid
@@ -90,29 +75,13 @@ public class PAUnit implements PAAttributeConstant
 
 		switch (constant)
 		{
-		case SVG_WIDTH:
-			return 500;
-		case SVG_HEIGHT:
-			return 500;
-		case STROKE_WIDTH:
-			return 1;
-		default:
-			return 0;
+			case DEFAULT_SVG_SIZE:
+				return DEFAULT_SVG_SIZE;
+			case DEFAULT_STROKE_WIDTH:
+				return DEFAULT_STROKE_WIDTH;
+			default:
+				return DEFAULT_LENGTH;
 		}
-	}
-
-	/**
-	 * To convert percentage to size
-	 * 
-	 * @param att
-	 * @param size
-	 * @return calculated size with respect to size
-	 */
-	public static double setPercentage(String att, double size)
-	{
-		double percent = Double.parseDouble(att.replace(
-				att.substring(att.length() - 1), "")) / 100;
-		return percent * size;
 	}
 
 	/**
@@ -140,13 +109,16 @@ public class PAUnit implements PAAttributeConstant
 	/**
 	 * remove symbol from a attribute value
 	 * 
-	 * @param att
-	 *            attribute value
+	 * @param att attribute value
 	 * @return a String with its symbol removed
 	 */
 	private static String removeUnits(String att)
 	{
-		return att.replace(att.substring(att.length() - 2), "");
+		if(!att.endsWith("%"))
+			return att.replace(att.substring(att.length() - 2), "");
+		else
+			return att.replace(att.substring(att.length() - 1), "");
+			
 	}
 
 	/**
@@ -200,8 +172,7 @@ public class PAUnit implements PAAttributeConstant
 	/**
 	 * Convert from PC to PX
 	 * 
-	 * @param value
-	 *            attribute value
+	 * @param value attribute value
 	 * @return length of attribute value double converted from PC
 	 */
 	public final static double convertPC(String value)
@@ -212,8 +183,7 @@ public class PAUnit implements PAAttributeConstant
 	/**
 	 * Convert from MM to PX
 	 * 
-	 * @param value
-	 *            attribute value
+	 * @param value attribute value
 	 * @return length of attribute value double converted from MM
 	 */
 	public final static double convertMM(String value)
@@ -224,8 +194,7 @@ public class PAUnit implements PAAttributeConstant
 	/**
 	 * Convert from CM to PX
 	 * 
-	 * @param value
-	 *            attribute value
+	 * @param value attribute value
 	 * @return length of attribute value double converted from CM
 	 */
 	public final static double convertCM(String value)
@@ -236,8 +205,7 @@ public class PAUnit implements PAAttributeConstant
 	/**
 	 * Convert from IN to PX
 	 * 
-	 * @param value
-	 *            attribute value
+	 * @param value attribute value
 	 * @return length of attribute value double converted from IN
 	 */
 	public final static double convertIN(String value)
@@ -245,5 +213,15 @@ public class PAUnit implements PAAttributeConstant
 		return Double.parseDouble(value) * dpi;
 	}
 
+	/**
+	 * To convert percentage to size
+	 * 
+	 * @param att
+	 * @return calculated size with respect to size
+	 */
+	public final static double convertPercent(String att)
+	{
+		return Double.parseDouble(att.replace(att.substring(att.length() - 1),
+				"")) / 100 * DEFAULT_SVG_SIZE;
+	}
 }
-

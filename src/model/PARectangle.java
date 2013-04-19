@@ -41,10 +41,10 @@ public class PARectangle extends PAFillableShape {
 		{
 			Element eNode = (Element) this.getNode();
 			
-			this.setX(PAUnit.setSymbol(eNode.getAttribute("x"),OTHER_UNIT));
-			this.setY(PAUnit.setSymbol(eNode.getAttribute("y"),OTHER_UNIT));
-			this.setWidth(PAUnit.setSymbol(eNode.getAttribute("width"),OTHER_UNIT));
-			this.setHeight(PAUnit.setSymbol(eNode.getAttribute("height"),OTHER_UNIT));
+			this.setX(PAUnit.setUnit(eNode.getAttribute("x"),DEFAULT_LENGTH));
+			this.setY(PAUnit.setUnit(eNode.getAttribute("y"),DEFAULT_LENGTH));
+			this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),DEFAULT_LENGTH));
+			this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),DEFAULT_LENGTH));
 		}
 	}
 
