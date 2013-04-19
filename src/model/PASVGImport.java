@@ -25,18 +25,7 @@ public class PASVGImport
 	 *            file from file chooser
 	 * @return svg's Document.
 	 */
-	private PASVGTag svgElement;
-	private LinkedList<PAShape> shapesCollection = new LinkedList<PAShape>();
-	private Document svgDoc;
-
-	public PASVGImport(File svgFile)
-	{
-		processFiletoDoc(svgFile);
-		readSVGElements(this.getSVGDoc());
-
-	}
-
-	public void processFiletoDoc(File svgFile)
+	public static Document processFiletoDoc(File svgFile)
 	{
 		Document svgDoc = null;
 		DocumentBuilderFactory svgDBFactory = DocumentBuilderFactory
@@ -66,7 +55,7 @@ public class PASVGImport
 			System.err.println(ex.getMessage());
 		}
 
-		this.setSVGDoc(svgDoc);
+		return svgDoc;
 	}
 
 	/**
@@ -75,14 +64,15 @@ public class PASVGImport
 	 * 
 	 * @return a LinkedList of all shapes
 	 */
-	public void readSVGElements(Document svgDoc)
+	public static LinkedList<PAShape> readSVGElements(Document svgDoc)
 	{
+
+		LinkedList<PAShape> shapesCollection = new LinkedList<PAShape>();
 		// TODO Auto-generated method stub
 		if (svgDoc != null)
 		{
 			// Processing SVG tag
 			Node svg = svgDoc.getElementsByTagName("svg").item(0);
-			svgElement = new PASVGTag(svg);
 			System.out.println(svg.DOCUMENT_POSITION_CONTAINS);
 
 			NodeList drawList = svg.getChildNodes();
@@ -98,7 +88,7 @@ public class PASVGImport
 					// list
 					// Rectangle2D.Double rectShape = new
 					// Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
-					this.shapesCollection.add(newRect);
+					shapesCollection.add(newRect);
 					break;
 
 				case "circle":
@@ -109,14 +99,14 @@ public class PASVGImport
 					// Ellipse2D.Double circleShape = new
 					// Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 
-					this.shapesCollection.add(newCircle);
+					shapesCollection.add(newCircle);
 					break;
 
 				case "line":
 					PALine newLine = new PALine(drawList.item(index));
 					newLine.readAttributes();
 
-					this.shapesCollection.add(newLine);
+					shapesCollection.add(newLine);
 					break;
 
 				// case "g":
@@ -136,32 +126,6 @@ public class PASVGImport
 		/**
 		 * Reading of svg elements not done yet
 		 */
-		this.setShapesCollection(shapesCollection);
+		return shapesCollection;
 	}
-
-	public void setShapesCollection(LinkedList<PAShape> shapesCollection)
-	{
-		this.shapesCollection = shapesCollection;
-	}
-
-	public PASVGTag getSVGElement()
-	{
-		return svgElement;
-	}
-
-	public LinkedList<PAShape> getShapeCollection()
-	{
-		return this.shapesCollection;
-	}
-
-	public Document getSVGDoc()
-	{
-		return svgDoc;
-	}
-
-	public void setSVGDoc(Document svgDoc)
-	{
-		this.svgDoc = svgDoc;
-	}
-
 }
