@@ -50,10 +50,15 @@ public class PAFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
+            System.out.println(selectedFile);
             //String path = fileChooser.getCurrentDirectory().toString() ;
             //String completedPath = PASystem.setPath(path, selectedFile);
-            Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-            LinkedList<PAShape> shapesCollection = svgImport.readSVGElements(svgDoc);
+//            Document svgDoc = svgImport.processFiletoDoc(selectedFile);
+//            System.out.println(svgDoc);
+//            LinkedList<PAShape> shapesCollection = svgImport.readSVGElements(svgDoc);
+            svgImport = new PASVGImport(selectedFile);
+            Document svgDoc = svgImport.getSVGDoc();
+            LinkedList<PAShape> shapesColection = svgImport.getShapeCollection();
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
            // PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
