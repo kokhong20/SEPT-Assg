@@ -6,9 +6,10 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 import model.PASystem;
 
 /**
@@ -57,9 +58,19 @@ public class PARootView extends JFrame
     private void customize()
     {
         rootView.setOpaque(false);
-        rootView.setSize(new Dimension(PASystem.getScreenDimension().width, PASystem.getScreenDimension().height));
+        rootView.setSize(PASystem.getScreenDimension());
 //        rootView.add(startMenu);
-        rootView.add(toolBar);
+        JInternalFrame fr = new JInternalFrame("");
+        fr.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        fr.add(toolBar);
+        //fr.pack();
+        fr.setMaximumSize(new Dimension(80,240));
+        fr.setPreferredSize(new Dimension(80,240));
+        fr.setMinimumSize(new Dimension(80,240));
+        fr.setSize(new Dimension(80,240));
+        fr.setVisible(true);
+        rootView.add(fr);
+        //rootView.add(toolBar);
         rootView.add(mainPanel);
         rootView.add(layerPanel);
         rootView.setVisible(true);
@@ -72,7 +83,7 @@ public class PARootView extends JFrame
     {
         add(rootView);
         setJMenuBar(menuBar);
-        setSize(new Dimension(PASystem.getScreenDimension().width, PASystem.getScreenDimension().height));
+        setSize(PASystem.getScreenDimension());
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
         setVisible(true);
