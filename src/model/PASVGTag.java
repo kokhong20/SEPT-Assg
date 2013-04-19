@@ -41,7 +41,7 @@ public class PASVGTag implements PAAttributeConstant
 	/**
 	 * Set values to variables to current instance if an Element Node
 	 */
-	private void setSVGAttr()
+	public void setSVGAttr()
 	{
 		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{

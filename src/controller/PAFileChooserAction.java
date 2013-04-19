@@ -26,7 +26,7 @@ public class PAFileChooserAction implements ActionListener
 {
     private JFileChooser fileChooser;
     private JInternalFrame frame;
-
+    private PASVGImport svgImport;
     /**
      * 
      * Contructor for file chooser's action. 
@@ -51,7 +51,7 @@ public class PAFileChooserAction implements ActionListener
         {
             File selectedFile = fileChooser.getSelectedFile();
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-            LinkedList<PAShape> shapesCollection = PASVGImport.readSVGElements(svgDoc);
+            LinkedList<PAShape> shapesCollection = svgImport.readSVGElements(svgDoc);
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
             PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
