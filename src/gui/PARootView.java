@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 import model.PASystem;
 
 /**
@@ -25,6 +24,7 @@ public class PARootView extends JFrame
     private PADrawingKit toolBar;
     private PAMainFrame mainPanel;
     private PALayerPanel layerPanel;
+    private PANewFileSetting newFileSetting;
     private PAInspectFrame inspectFrame;
 
     /**
@@ -49,6 +49,7 @@ public class PARootView extends JFrame
         toolBar = new PADrawingKit();
         mainPanel = new PAMainFrame(rootView);
         layerPanel = new PALayerPanel();
+        newFileSetting = new PANewFileSetting();
         inspectFrame = new PAInspectFrame(rootView);
     }
 
@@ -59,7 +60,8 @@ public class PARootView extends JFrame
     {
         rootView.setOpaque(false);
         rootView.setSize(PASystem.getScreenDimension());
-//        rootView.add(startMenu);
+        rootView.add(newFileSetting);
+        rootView.add(startMenu);
         JInternalFrame fr = new JInternalFrame("");
         fr.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         fr.add(toolBar);

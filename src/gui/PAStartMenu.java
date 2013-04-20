@@ -42,6 +42,8 @@ public class PAStartMenu extends JInternalFrame
     private void initialize()
     {
         mainPanel = setUpMainPanel();
+        openFileButton = new JButton();
+        newFileButton = new JButton();
     }
 
     /**
@@ -100,21 +102,12 @@ public class PAStartMenu extends JInternalFrame
      */
     private void setUpButton()
     {
-        try
-        {
-            Image openFileImg = ImageIO.read(new File("resources/OpenFile 150x150.png"));
-            Image newFileImg = ImageIO.read(new File("resources/NewFile 150x150.png"));
-
-            openFileButton = setUpButtonWithBounds(openFileImg, 386, 226);
-            newFileButton = setUpButtonWithBounds(newFileImg, 86, 226);
-
-            mainPanel.add(openFileButton);
-            mainPanel.add(newFileButton);
-        }
-        catch (NullPointerException | IOException ex)
-        {
-            System.err.println(ex.getMessage());
-        }
+        setImageIcon("resources/openFile 150x150.png", openFileButton, "Open File");
+        setImageIcon("resources/newFile 150x150.png", newFileButton, "New File");
+        openFileButton.setBounds(386, 226, 150, 150);
+        newFileButton.setBounds(86, 226, 150, 150);
+        mainPanel.add(openFileButton);
+        mainPanel.add(newFileButton);
     }
 
     /**
@@ -128,6 +121,18 @@ public class PAStartMenu extends JInternalFrame
         mainPanel.setSize(640, 450);
         setUpButton();
         add(mainPanel);
+    }
+
+    private void setImageIcon(String imgPath, JButton button, String toolTip)
+    {
+        ImageIcon imgIcon = new ImageIcon(imgPath);
+        button.setIcon(imgIcon);
+        button.setBackground(new Color(40, 40, 40));
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+        button.setBorder(null);
+        button.setBorderPainted(false);
+        button.setToolTipText(toolTip);
     }
 
     /**
