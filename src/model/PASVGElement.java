@@ -14,8 +14,10 @@ import org.w3c.dom.Node;
  */
 public abstract class PASVGElement implements PAAttributeConstant
 {
+	private Color fill;
 	private Color stroke;
 	private double strokeWidth;
+	private boolean isGrouped;
 	private Node node;
 	
 	public PASVGElement()
@@ -30,18 +32,21 @@ public abstract class PASVGElement implements PAAttributeConstant
 	{
 		// TODO Auto-generated constructor stub
 
+		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 		this.setStroke(PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
 		this.setStrokeWidth(PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
 		this.setNode(node);
 	}
 
-	public PASVGElement(Node node, Color groupStroke, double groupWidth)
+	public PASVGElement(Node node, Color groupFill, Color groupStroke, double groupWidth)
 	{
 		// TODO Auto-generated constructor stub
 
+		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 		this.setStroke(((Element)node).hasAttribute("stroke") ? groupStroke : PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
 		this.setStrokeWidth(((Element)node).hasAttribute("stroke-width") ? groupWidth : PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
 		this.setNode(node);
+		this.setGrouped(true);
 	}
 	
 	/**
@@ -49,6 +54,21 @@ public abstract class PASVGElement implements PAAttributeConstant
 	 */
 	public abstract void readAttributes();
 
+
+	/**
+	 * @return the fill
+	 */
+	public Color getFill() {
+		return fill;
+	}
+
+	/**
+	 * @param fill the fill to set
+	 */
+	public void setFill(Color fill) {
+		this.fill = fill;
+	}
+	
 	/**
 	 * @return the stroke
 	 */
@@ -95,6 +115,20 @@ public abstract class PASVGElement implements PAAttributeConstant
 	public void setNode(Node node)
 	{
 		this.node = node;
+	}
+
+	/**
+	 * @return the isGrouped
+	 */
+	public boolean isGrouped() {
+		return isGrouped;
+	}
+
+	/**
+	 * @param isGrouped the isGrouped to set
+	 */
+	public void setGrouped(boolean isGrouped) {
+		this.isGrouped = isGrouped;
 	}
 
 }

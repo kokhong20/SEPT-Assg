@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
  * @author LaiSaiHoo
  *
  */
-public class PASVGTag extends PASVGElement implements PAFillable
+public class PASVGTag extends PASVGElement
 {
     private double width;
     private double height;

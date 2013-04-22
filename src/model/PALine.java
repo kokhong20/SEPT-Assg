@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
  * @author bryantylai
  *
  */
-public class PALine extends PAShape{
+public class PALine extends PASVGElement {
 
 	private double x1;
 	private double x2;
@@ -35,7 +35,7 @@ public class PALine extends PAShape{
 	public PALine(Node node, Color groupStroke, double groupWidth)
 	{
 		// TODO Auto-generated constructor stub
-		super(node, groupStroke, groupWidth);
+		super(node, null, groupStroke, groupWidth);
 	}
 
 	/**
@@ -54,6 +54,18 @@ public class PALine extends PAShape{
 			this.setY1(PAUnit.setUnit(eNode.getAttribute("y1"),DEFAULT_LENGTH));
 			this.setY2(PAUnit.setUnit(eNode.getAttribute("y2"),DEFAULT_LENGTH));
 		}
+	}
+	
+	@Override
+	public void setFill(Color c)
+	{
+		this.setFill(null);
+	}
+
+	@Override
+	public Color getFill()
+	{
+		return null;
 	}
 
 	/**

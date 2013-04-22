@@ -9,9 +9,8 @@ import org.w3c.dom.Node;
  * @author bryantylai
  *
  */
-public class PARectangle extends PAShape {
+public class PARectangle extends PASVGElement {
 
-	private Color fill;
 	private double x;
 	private double y;
 	private double width;
@@ -37,9 +36,7 @@ public class PARectangle extends PAShape {
 			double groupWidth)
 	{
 		// TODO Auto-generated constructor stub
-		super(node, groupStroke, groupWidth);
-
-		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
+		super(node, groupFill, groupStroke, groupWidth);
 	}
 
 	/**
@@ -53,26 +50,11 @@ public class PARectangle extends PAShape {
 		{
 			Element eNode = (Element) this.getNode();
 
-			this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
 			this.setX(PAUnit.setUnit(eNode.getAttribute("x"),DEFAULT_LENGTH));
 			this.setY(PAUnit.setUnit(eNode.getAttribute("y"),DEFAULT_LENGTH));
 			this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),DEFAULT_LENGTH));
 			this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),DEFAULT_LENGTH));
 		}
-	}
-
-	/**
-	 * @return the fill
-	 */
-	public Color getFill() {
-		return fill;
-	}
-
-	/**
-	 * @param fill the fill to set
-	 */
-	public void setFill(Color fill) {
-		this.fill = fill;
 	}
 
 	/**

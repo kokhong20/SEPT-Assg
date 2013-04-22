@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
  * @author bryantylai
  *
  */
-public class PASVGGroup extends PASVGElement implements PAFillable
+public class PASVGGroup extends PASVGElement
 {
 	private Color fill;
 	private LinkedList<PASVGElement> elementList;
@@ -62,10 +62,10 @@ public class PASVGGroup extends PASVGElement implements PAFillable
 			switch(node.getNodeName())
 			{
 			case "g":
-				PASVGGroup newGroup = new PASVGGroup(node);
-				newGroup.readAttributes();
+				PASVGGroup nestedGroup = new PASVGGroup(node);
+				nestedGroup.readAttributes();
 				
-				elementList.add(newGroup);
+				elementList.add(nestedGroup);
 				break;
 			case "rect":
                 PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);

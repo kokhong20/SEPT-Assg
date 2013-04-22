@@ -5,9 +5,8 @@ import java.awt.Color;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class PACircle extends PAShape implements PAFillable {
+public class PACircle extends PASVGElement {
 
-	private Color fill;
 	private double cx;
 	private double cy;
 	private double r;
@@ -31,9 +30,8 @@ public class PACircle extends PAShape implements PAFillable {
 
 	public PACircle(Node node, Color groupFill, Color groupStroke, double groupWidth) 
 	{
-		super(node, groupStroke, groupWidth);
+		super(node, groupFill, groupStroke, groupWidth);
 
-		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 	}
 
 	/**
@@ -52,20 +50,6 @@ public class PACircle extends PAShape implements PAFillable {
 			this.setCy(PAUnit.setUnit(eNode.getAttribute("cy"), DEFAULT_LENGTH));
 			this.setR(PAUnit.setUnit(eNode.getAttribute("r"), DEFAULT_LENGTH));
 		}
-	}
-
-	/**
-	 * @return the fill
-	 */
-	public Color getFill() {
-		return fill;
-	}
-
-	/**
-	 * @param fill the fill to set
-	 */
-	public void setFill(Color fill) {
-		this.fill = fill;
 	}
 
 	/**
