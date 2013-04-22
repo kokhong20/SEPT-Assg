@@ -1,10 +1,13 @@
 package model;
 
+import java.awt.Color;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class PACircle extends PAFillableShape{
+public class PACircle extends PAShape implements PAFillable {
 
+	private Color fill;
 	private double cx;
 	private double cy;
 	private double r;
@@ -22,6 +25,8 @@ public class PACircle extends PAFillableShape{
 	public PACircle(Node node) 
 	{
 		super(node);
+
+		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 	}
 
 	/**
@@ -34,11 +39,26 @@ public class PACircle extends PAFillableShape{
 		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
 		{
 			Element eNode = (Element) this.getNode();
-			
+
+			this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
 			this.setCx(PAUnit.setUnit(eNode.getAttribute("cx"), DEFAULT_LENGTH));
 			this.setCy(PAUnit.setUnit(eNode.getAttribute("cy"), DEFAULT_LENGTH));
 			this.setR(PAUnit.setUnit(eNode.getAttribute("r"), DEFAULT_LENGTH));
 		}
+	}
+
+	/**
+	 * @return the fill
+	 */
+	public Color getFill() {
+		return fill;
+	}
+
+	/**
+	 * @param fill the fill to set
+	 */
+	public void setFill(Color fill) {
+		this.fill = fill;
 	}
 
 	/**
@@ -82,6 +102,4 @@ public class PACircle extends PAFillableShape{
 	public void setR(double r) {
 		this.r = r;
 	}
-
-
 }

@@ -8,12 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.LinkedList;
+
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+
 import model.PASVGContainer;
+import model.PASVGElement;
 import model.PASVGImport;
 import model.PASVGTag;
 import model.PAShape;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -53,10 +57,10 @@ public class PAFileChooserAction implements ActionListener
         {
             File selectedFile = fileChooser.getSelectedFile();
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-            LinkedList<PAShape> shapesCollection = PASVGImport.readSVGElements(svgDoc);
+            LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
-            PASVGContainer svgContainer = new PASVGContainer(svgTag, shapesCollection);
+            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
         }
 
         // need to do for both Cancel and Open button.

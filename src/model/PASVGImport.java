@@ -13,7 +13,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author bryantylai/LiHao／Lai Sai Hoo
+ * @author bryantylai/LiHao/Lai Sai Hoo
  */
 public class PASVGImport
 {
@@ -54,10 +54,10 @@ public class PASVGImport
      *
      * @return a LinkedList of all shapes
      */
-    public static LinkedList<PAShape> readSVGElements(Document svgDoc)
+    public static LinkedList<PASVGElement> readSVGElements(Document svgDoc)
     {
 
-        LinkedList<PAShape> shapesCollection = new LinkedList<>();
+        LinkedList<PASVGElement> elementCollection = new LinkedList<>();
         // TODO Auto-generated method stub
         if (svgDoc != null)
         {
@@ -77,7 +77,7 @@ public class PASVGImport
                         // list
                         // Rectangle2D.Double rectShape = new
                         // Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
-                        shapesCollection.add(newRect);
+                        elementCollection.add(newRect);
                         break;
 
                     case "circle":
@@ -88,19 +88,19 @@ public class PASVGImport
                         // Ellipse2D.Double circleShape = new
                         // Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 
-                        shapesCollection.add(newCircle);
+                        elementCollection.add(newCircle);
                         break;
 
                     case "line":
                         PALine newLine = new PALine(drawList.item(index));
                         newLine.readAttributes();
 
-                        shapesCollection.add(newLine);
+                        elementCollection.add(newLine);
                         break;
 
                     // case "g":
                     // NodeList gList = drawList.item(index).getChildNodes();
-                    // createGroups(this.shapesCollection, gList,
+                    // createGroups(this.elementCollection, gList,
                     // drawList.item(index), null, null);
                     //
                     // break;
@@ -111,7 +111,7 @@ public class PASVGImport
         /**
          * Reading of svg elements not done yet
          */
-        return shapesCollection;
+        return elementCollection;
     }
 
 }
