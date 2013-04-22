@@ -98,12 +98,15 @@ public class PASVGImport
                         elementCollection.add(newLine);
                         break;
 
-                    // case "g":
+                    case "g":
+                    	PASVGGroup newGroup = new PASVGGroup(drawList.item(index));
+                    	newGroup.readAttributes();
+
+                        elementCollection.add(newGroup);
                     // NodeList gList = drawList.item(index).getChildNodes();
                     // createGroups(this.elementCollection, gList,
                     // drawList.item(index), null, null);
-                    //
-                    // break;
+                    break;
                 }
             }
         }

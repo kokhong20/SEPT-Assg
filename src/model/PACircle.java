@@ -29,6 +29,13 @@ public class PACircle extends PAShape implements PAFillable {
 		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 	}
 
+	public PACircle(Node node, Color groupFill, Color groupStroke, double groupWidth) 
+	{
+		super(node, groupStroke, groupWidth);
+
+		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

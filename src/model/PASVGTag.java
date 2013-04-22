@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
  * @author LaiSaiHoo
  *
  */
-public class PASVGTag implements PAAttributeConstant
+public class PASVGTag extends PASVGElement implements PAFillable
 {
     private double width;
     private double height;
@@ -20,10 +20,7 @@ public class PASVGTag implements PAAttributeConstant
     private double viewWidth;
     private double scaleX;
     private double scaleY;
-    private Color stroke;
     private Color fill;
-    private double strokeWidth;
-    private Node node;
     private double scale;
 
     /**
@@ -34,16 +31,15 @@ public class PASVGTag implements PAAttributeConstant
     public PASVGTag(Node node)
     {
         setNode(node);
-        setSVGAttr();
+        readAttributes();
         System.out.println(width);
         System.out.println(height);
     }
 
-    /**
-     * Set values to variables to current instance if an Element Node
-     */
-    private void setSVGAttr()
-    {
+	@Override
+	public void readAttributes()
+	{
+		// TODO Auto-generated method stub
         if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
         {
             Element eNode = (Element) this.getNode();
@@ -61,8 +57,9 @@ public class PASVGTag implements PAAttributeConstant
             this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
             this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
         }
-    }
-
+		
+	}
+	
     /**
      * Read in value as value of svg viewbox attribute set it to current
      * instance variables
@@ -185,22 +182,6 @@ public class PASVGTag implements PAAttributeConstant
     }
 
     /**
-     * @return the stroke
-     */
-    public Color getStroke()
-    {
-        return stroke;
-    }
-
-    /**
-     * @param stroke the stroke to set
-     */
-    public void setStroke(Color stroke)
-    {
-        this.stroke = stroke;
-    }
-
-    /**
      * @return the fill
      */
     public Color getFill()
@@ -214,38 +195,6 @@ public class PASVGTag implements PAAttributeConstant
     public void setFill(Color fill)
     {
         this.fill = fill;
-    }
-
-    /**
-     * @return the strokeWidth
-     */
-    public double getStrokeWidth()
-    {
-        return strokeWidth;
-    }
-
-    /**
-     * @param strokeWidth the strokeWidth to set
-     */
-    public void setStrokeWidth(double strokeWidth)
-    {
-        this.strokeWidth = strokeWidth;
-    }
-
-    /**
-     * @return the node
-     */
-    public Node getNode()
-    {
-        return node;
-    }
-
-    /**
-     * @param node the node to set
-     */
-    private void setNode(Node node)
-    {
-        this.node = node;
     }
 
     /**
@@ -318,5 +267,4 @@ public class PASVGTag implements PAAttributeConstant
             this.scale = scaleX;
         }
     }
-
 }

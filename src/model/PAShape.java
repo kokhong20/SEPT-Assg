@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+
 import org.w3c.dom.Node;
 
 /**
@@ -26,6 +28,13 @@ public abstract class PAShape extends PASVGElement {
 	{
 		// TODO Auto-generated constructor stub
 		super(node);
+	}
+	
+	public PAShape(Node node, Color groupStroke, double groupWidth)
+	{
+		super(node, groupStroke, groupWidth);
+		
+		this.setGrouped(true);
 	}
 
 	/**

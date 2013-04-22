@@ -33,6 +33,15 @@ public class PARectangle extends PAShape {
 		super(node);
 	}
 	
+	public PARectangle(Node node, Color groupFill, Color groupStroke,
+			double groupWidth)
+	{
+		// TODO Auto-generated constructor stub
+		super(node, groupStroke, groupWidth);
+
+		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

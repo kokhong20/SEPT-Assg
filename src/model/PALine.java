@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Color;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
@@ -28,6 +30,12 @@ public class PALine extends PAShape{
 	{
 		// TODO Auto-generated constructor stub
 		super(node);
+	}
+
+	public PALine(Node node, Color groupStroke, double groupWidth)
+	{
+		// TODO Auto-generated constructor stub
+		super(node, groupStroke, groupWidth);
 	}
 
 	/**

@@ -34,6 +34,15 @@ public abstract class PASVGElement implements PAAttributeConstant
 		this.setStrokeWidth(PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
 		this.setNode(node);
 	}
+
+	public PASVGElement(Node node, Color groupStroke, double groupWidth)
+	{
+		// TODO Auto-generated constructor stub
+
+		this.setStroke(((Element)node).hasAttribute("stroke") ? groupStroke : PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
+		this.setStrokeWidth(((Element)node).hasAttribute("stroke-width") ? groupWidth : PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
+		this.setNode(node);
+	}
 	
 	/**
 	 * To read attribute values from SVG elements to setters

@@ -6,7 +6,9 @@ package model;
 import java.awt.Color;
 import java.util.LinkedList;
 
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author bryantylai
@@ -29,6 +31,7 @@ public class PASVGGroup extends PASVGElement implements PAFillable
 	public PASVGGroup(Node node)
 	{
 		super(node);
+		this.setElementList(new LinkedList<PASVGElement>());
 	}
 
 	/**
@@ -38,7 +41,52 @@ public class PASVGGroup extends PASVGElement implements PAFillable
 	public void readAttributes()
 	{
 		// TODO Auto-generated method stub
+		/**
+		 * Reading of child nodes in <g>
+		 */
+		Node gNode = this.getNode();
+		Element gElement = (Element)gNode;
 		
+		this.setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : null);
+		this.setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : null);
+		this.setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : null);
+		
+		createGroups(gNode.getChildNodes(), getFill(), getStroke(), getStrokeWidth());
+	}
+	
+	private void createGroups(NodeList gList, Color groupFill, Color groupStroke, double groupWidth)
+	{
+		for(int index = 0; index < gList.getLength(); index++)
+		{
+			Node node = gList.item(index);
+			switch(node.getNodeName())
+			{
+			case "g":
+				PASVGGroup newGroup = new PASVGGroup(node);
+				newGroup.readAttributes();
+				
+				elementList.add(newGroup);
+				break;
+			case "rect":
+                PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);
+                newRect.readAttributes();
+
+                elementList.add(newRect);
+				break;
+			case "circle":
+                PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth);
+                newCirc.readAttributes();
+
+                elementList.add(newCirc);
+				break;
+			case "line":
+                PALine newLine = new PALine(node, groupStroke, groupWidth);
+                newLine.readAttributes();
+
+                elementList.add(newLine);
+				break;
+			}
+		}
 	}
 	
 	/**
