@@ -19,9 +19,12 @@ public class PASVGGroup extends PASVGElement
 	private Color fill;
 	private LinkedList<PASVGElement> groupElementList;
 	
+	/**
+	 * 
+	 */
 	public PASVGGroup()
 	{
-		
+		this.setGroupElementList(new LinkedList<PASVGElement>());
 	}
 	
 	/**
@@ -34,6 +37,13 @@ public class PASVGGroup extends PASVGElement
 		this.setGroupElementList(new LinkedList<PASVGElement>());
 	}
 
+	/**
+	 * Constructor which receives a node and groupFill, groupStroke, groupWidth from parent group
+	 * @param node
+	 * @param groupFill
+	 * @param groupStroke
+	 * @param groupWidth
+	 */
 	public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth)
 	{
 		super(node, groupFill, groupStroke, groupWidth);		
@@ -59,40 +69,40 @@ public class PASVGGroup extends PASVGElement
 		 */
 		Node gNode = this.getNode();
 		
-		createGroups(gNode.getChildNodes(), getFill(), getStroke(), getStrokeWidth());
-	}
-	
-	private void createGroups(NodeList gList, Color groupFill, Color groupStroke, double groupWidth)
-	{
+		NodeList gList = gNode.getChildNodes();
+		Color groupFill = getFill();
+		Color groupStroke = getStroke();
+		double groupWidth = getStrokeWidth();
+		
 		for(int index = 0; index < gList.getLength(); index++)
 		{
 			Node node = gList.item(index);
 			switch(node.getNodeName())
 			{
-			case "g":
-				PASVGGroup nestedGroup = new PASVGGroup(node);
-				nestedGroup.readAttributes();
-				
-				groupElementList.add(nestedGroup);
-				break;
-			case "rect":
-                PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);
-                newRect.readAttributes();
-
-                groupElementList.add(newRect);
-				break;
-			case "circle":
-                PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth);
-                newCirc.readAttributes();
-
-                groupElementList.add(newCirc);
-				break;
-			case "line":
-                PALine newLine = new PALine(node, groupStroke, groupWidth);
-                newLine.readAttributes();
-
-                groupElementList.add(newLine);
-				break;
+				case "g":
+					PASVGGroup nestedGroup = new PASVGGroup(node);
+					nestedGroup.readAttributes();
+					
+					groupElementList.add(nestedGroup);
+					break;
+				case "rect":
+	                PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);
+	                newRect.readAttributes();
+	
+	                groupElementList.add(newRect);
+					break;
+				case "circle":
+	                PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth);
+	                newCirc.readAttributes();
+	
+	                groupElementList.add(newCirc);
+					break;
+				case "line":
+	                PALine newLine = new PALine(node, groupStroke, groupWidth);
+	                newLine.readAttributes();
+	
+	                groupElementList.add(newLine);
+					break;
 			}
 		}
 	}
@@ -125,5 +135,56 @@ public class PASVGGroup extends PASVGElement
 	public void setGroupElementList(LinkedList<PASVGElement> groupElementList)
 	{
 		this.groupElementList = groupElementList;
+	}
+	
+	/**
+	 * add a new element to group
+	 * @param element PASVGElement to add
+	 * @return true if successfully added to groupElementList, return false otherwise
+	 */
+	public boolean addNewElementToGroup(PASVGElement element)
+	{
+		return groupElementList.add(element);
+	}
+
+	/**
+	 * add a new list of elements to group
+	 * @param elementsList list of PASVGElements to add
+	 * @return true if successfully added to groupElementList, return false otherwise
+	 */
+	public boolean addNewElementsToGroup(LinkedList<PASVGElement> elementsList)
+	{
+		return groupElementList.addAll(elementsList);
+	}
+	
+	/**
+	 * remove a specific element from PASVGGroup
+	 * @param element PASVGElement to remove
+	 * @return true if successfully removed from groupElementList, return false otherwise
+	 */
+	public boolean removeElementFromGroup(PASVGElement element)
+	{
+		return groupElementList.remove(element);
+	}
+
+	/**
+	 * remove a specific list of element from PASVGGroup
+	 * @param elementList list of PASVGElement to remove
+	 * @return true if successfully removed from groupElementList, return false otherwise
+	 */
+	public boolean removeElementsFromGroup(LinkedList<PASVGElement> elementsList)
+	{
+		return groupElementList.removeAll(elementsList);
+	}
+	
+	/**
+	 * remove all elements from PASVGGroup
+	 * @return all elements removed from PASVGGroup
+	 */
+	public LinkedList<PASVGElement> removeAllElementsFromGroup()
+	{
+		LinkedList<PASVGElement> elements = groupElementList;
+		groupElementList.clear();
+		return elements;
 	}
 }
