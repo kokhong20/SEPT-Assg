@@ -11,6 +11,9 @@ public class PACircle extends PASVGElement {
 	private double cy;
 	private double r;
 
+        /**
+         * 
+         */
 	public PACircle()
 	{
 		
@@ -24,14 +27,21 @@ public class PACircle extends PASVGElement {
 	public PACircle(Node node) 
 	{
 		super(node);
-
-		this.setFill(PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
 	}
 
-	public PACircle(Node node, Color groupFill, Color groupStroke, double groupWidth) 
+        /**
+	 * Constructor which receives a node and groupFill, groupStroke, groupWidth from parent group
+         * @param node
+         * @param groupFill
+         * @param groupStroke
+         * @param groupWidth
+         * @param parentGroup 
+         */
+	public PACircle(Node node, Color groupFill, Color groupStroke,
+			double groupWidth, PASVGGroup parentGroup)
 	{
-		super(node, groupFill, groupStroke, groupWidth);
-
+		// TODO Auto-generated constructor stub
+		super(node, groupFill, groupStroke, groupWidth, parentGroup);
 	}
 
 	/**
@@ -45,7 +55,6 @@ public class PACircle extends PASVGElement {
 		{
 			Element eNode = (Element) this.getNode();
 
-			this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
 			this.setCx(PAUnit.setUnit(eNode.getAttribute("cx"), DEFAULT_LENGTH));
 			this.setCy(PAUnit.setUnit(eNode.getAttribute("cy"), DEFAULT_LENGTH));
 			this.setR(PAUnit.setUnit(eNode.getAttribute("r"), DEFAULT_LENGTH));

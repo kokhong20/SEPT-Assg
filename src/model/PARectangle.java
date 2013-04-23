@@ -16,6 +16,9 @@ public class PARectangle extends PASVGElement {
 	private double width;
 	private double height;
 
+        /**
+         * 
+         */
 	public PARectangle()
 	{
 		
@@ -32,11 +35,19 @@ public class PARectangle extends PASVGElement {
 		super(node);
 	}
 	
+        /**
+	 * Constructor which receives a node and groupFill, groupStroke, groupWidth from parent group
+         * @param node
+         * @param groupFill
+         * @param groupStroke
+         * @param groupWidth
+         * @param parentGroup 
+         */
 	public PARectangle(Node node, Color groupFill, Color groupStroke,
-			double groupWidth)
+			double groupWidth, PASVGGroup parentGroup)
 	{
 		// TODO Auto-generated constructor stub
-		super(node, groupFill, groupStroke, groupWidth);
+		super(node, groupFill, groupStroke, groupWidth, parentGroup);
 	}
 
 	/**

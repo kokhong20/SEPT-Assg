@@ -43,10 +43,11 @@ public class PASVGGroup extends PASVGElement
 	 * @param groupFill
 	 * @param groupStroke
 	 * @param groupWidth
-	 */
-	public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth)
+         * @param parentGroup 
+         */
+	public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth, PASVGGroup parentGroup)
 	{
-		super(node, groupFill, groupStroke, groupWidth);		
+		super(node, groupFill, groupStroke, groupWidth, parentGroup);		
 
 		Element gElement = (Element)node;
 
@@ -80,25 +81,25 @@ public class PASVGGroup extends PASVGElement
 			switch(node.getNodeName())
 			{
 				case "g":
-					PASVGGroup nestedGroup = new PASVGGroup(node);
+					PASVGGroup nestedGroup = new PASVGGroup(node, groupFill, groupStroke, groupWidth, this);
 					nestedGroup.readAttributes();
 					
 					groupElementList.add(nestedGroup);
 					break;
 				case "rect":
-	                PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);
+	                PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth, this);
 	                newRect.readAttributes();
 	
 	                groupElementList.add(newRect);
 					break;
 				case "circle":
-	                PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth);
+	                PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth, this);
 	                newCirc.readAttributes();
 	
 	                groupElementList.add(newCirc);
 					break;
 				case "line":
-	                PALine newLine = new PALine(node, groupStroke, groupWidth);
+	                PALine newLine = new PALine(node, groupStroke, groupWidth, this);
 	                newLine.readAttributes();
 	
 	                groupElementList.add(newLine);

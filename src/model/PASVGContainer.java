@@ -144,18 +144,14 @@ public class PASVGContainer
     }
 
     /**
-     * remove group but retain all elements inside
-     * @param group
-     * @return true if successfully remove group and added the list, return false otherwise
+     * permanently remove an element
+     * 
+     * @param element
+     * @return true if successfully removed, return false otherwise
      */
-    public boolean removeGroup(PASVGGroup group)
+    public boolean removeElement(PASVGElement element)
     {
-    	if(svgContainer.addAll(svgContainer.indexOf(group), group.getGroupElementList()))
-    	{
-    		return svgContainer.remove(group);
-    	}
-    	
-    	return false;
+        return svgContainer.remove(element);
     }
     
     /**
@@ -214,5 +210,39 @@ public class PASVGContainer
     	}
     	
     	return false;
+    }
+    
+    /**
+     * move an element to other position
+     * @param elementToMove
+     * @param beforeThis
+     * @return true if successfully moved, return false otherwise
+     */
+    public boolean moveElement(PASVGElement elementToMove, PASVGElement beforeThis)
+    {
+        if(svgContainer.remove(elementToMove))
+        {
+            svgContainer.add(svgContainer.indexOf(beforeThis), elementToMove);
+        }
+        
+        return false;
+        
+    }
+    
+    /**
+     * move a list of elements to other position
+     * @param elementsToMove
+     * @param beforeThis
+     * @return true if successfully moved, return false otherwise
+     */
+    public boolean moveElements(LinkedList<PASVGElement> elementsToMove, PASVGElement beforeThis)
+    {
+        if(svgContainer.removeAll(elementsToMove))
+        {
+            svgContainer.addAll(svgContainer.indexOf(beforeThis), elementsToMove);
+        }
+        
+        return false;
+        
     }
 }

@@ -16,6 +16,9 @@ public class PALine extends PASVGElement {
 	private double y1;
 	private double y2;
 	
+        /**
+         * 
+         */
 	public PALine()
 	{
 		
@@ -32,10 +35,18 @@ public class PALine extends PASVGElement {
 		super(node);
 	}
 
-	public PALine(Node node, Color groupStroke, double groupWidth)
+        /**
+	 * Constructor which receives a node and groupStroke, groupWidth from parent group
+         * @param node
+         * @param groupStroke
+         * @param groupWidth
+         * @param parentGroup 
+         */
+	public PALine(Node node, Color groupStroke,
+			double groupWidth, PASVGGroup parentGroup)
 	{
 		// TODO Auto-generated constructor stub
-		super(node, null, groupStroke, groupWidth);
+		super(node, null, groupStroke, groupWidth, parentGroup);
 	}
 
 	/**
