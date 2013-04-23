@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 public class PASVGGroup extends PASVGElement
 {
 	private Color fill;
-	private LinkedList<PASVGElement> elementList;
+	private LinkedList<PASVGElement> groupElementList;
 	
 	public PASVGGroup()
 	{
@@ -31,7 +31,20 @@ public class PASVGGroup extends PASVGElement
 	public PASVGGroup(Node node)
 	{
 		super(node);
-		this.setElementList(new LinkedList<PASVGElement>());
+		this.setGroupElementList(new LinkedList<PASVGElement>());
+	}
+
+	public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth)
+	{
+		super(node, groupFill, groupStroke, groupWidth);		
+
+		Element gElement = (Element)node;
+
+		this.setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : (this.isGrouped()) ? getFill() : null);
+		this.setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : (this.isGrouped()) ? getStroke() : null);
+		this.setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : (this.isGrouped()) ? getStrokeWidth() : null);
+		
+		this.setGroupElementList(new LinkedList<PASVGElement>());
 	}
 
 	/**
@@ -45,11 +58,6 @@ public class PASVGGroup extends PASVGElement
 		 * Reading of child nodes in <g>
 		 */
 		Node gNode = this.getNode();
-		Element gElement = (Element)gNode;
-		
-		this.setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : null);
-		this.setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : null);
-		this.setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : null);
 		
 		createGroups(gNode.getChildNodes(), getFill(), getStroke(), getStrokeWidth());
 	}
@@ -65,25 +73,25 @@ public class PASVGGroup extends PASVGElement
 				PASVGGroup nestedGroup = new PASVGGroup(node);
 				nestedGroup.readAttributes();
 				
-				elementList.add(nestedGroup);
+				groupElementList.add(nestedGroup);
 				break;
 			case "rect":
                 PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth);
                 newRect.readAttributes();
 
-                elementList.add(newRect);
+                groupElementList.add(newRect);
 				break;
 			case "circle":
                 PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth);
                 newCirc.readAttributes();
 
-                elementList.add(newCirc);
+                groupElementList.add(newCirc);
 				break;
 			case "line":
                 PALine newLine = new PALine(node, groupStroke, groupWidth);
                 newLine.readAttributes();
 
-                elementList.add(newLine);
+                groupElementList.add(newLine);
 				break;
 			}
 		}
@@ -104,18 +112,18 @@ public class PASVGGroup extends PASVGElement
 	}
 
 	/**
-	 * @return the elementList
+	 * @return the groupElementList
 	 */
-	public LinkedList<PASVGElement> getElementList()
+	public LinkedList<PASVGElement> getGroupElementList()
 	{
-		return elementList;
+		return groupElementList;
 	}
 
 	/**
-	 * @param elementList the elementList to set
+	 * @param groupElementList the groupElementList to set
 	 */
-	public void setElementList(LinkedList<PASVGElement> elementList)
+	public void setGroupElementList(LinkedList<PASVGElement> groupElementList)
 	{
-		this.elementList = elementList;
+		this.groupElementList = groupElementList;
 	}
 }

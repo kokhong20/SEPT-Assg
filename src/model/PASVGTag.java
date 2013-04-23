@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
  * @author LaiSaiHoo
  *
  */
-public class PASVGTag extends PASVGElement
+public class PASVGTag implements PAAttributeConstant
 {
     private double width;
     private double height;
@@ -21,7 +21,10 @@ public class PASVGTag extends PASVGElement
     private double scaleX;
     private double scaleY;
     private Color fill;
+    private Color stroke;
+    private double strokeWidth;
     private double scale;
+    private Node node;
 
     /**
      * Constructor which receives a node
@@ -32,11 +35,8 @@ public class PASVGTag extends PASVGElement
     {
         setNode(node);
         readAttributes();
-        System.out.println(width);
-        System.out.println(height);
     }
 
-	@Override
 	public void readAttributes()
 	{
 		// TODO Auto-generated method stub
@@ -267,4 +267,52 @@ public class PASVGTag extends PASVGElement
             this.scale = scaleX;
         }
     }
+
+	/**
+	 * @return the stroke
+	 */
+	public Color getStroke()
+	{
+		return stroke;
+	}
+
+	/**
+	 * @param stroke the stroke to set
+	 */
+	public void setStroke(Color stroke)
+	{
+		this.stroke = stroke;
+	}
+
+	/**
+	 * @return the strokeWidth
+	 */
+	public double getStrokeWidth()
+	{
+		return strokeWidth;
+	}
+
+	/**
+	 * @param strokeWidth the strokeWidth to set
+	 */
+	public void setStrokeWidth(double strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+	}
+
+	/**
+	 * @return the node
+	 */
+	public Node getNode()
+	{
+		return node;
+	}
+
+	/**
+	 * @param node the node to set
+	 */
+	public void setNode(Node node)
+	{
+		this.node = node;
+	}
 }

@@ -42,9 +42,9 @@ public abstract class PASVGElement implements PAAttributeConstant
 	{
 		// TODO Auto-generated constructor stub
 
-		this.setFill(((Element)node).hasAttribute("fill") ? groupFill : PAColor.setColor(((Element)node).getAttribute("fill"), FILL));
-		this.setStroke(((Element)node).hasAttribute("stroke") ? groupStroke : PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE));
-		this.setStrokeWidth(((Element)node).hasAttribute("stroke-width") ? groupWidth : PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
+		this.setFill(((Element)node).hasAttribute("fill") ? PAColor.setColor(((Element)node).getAttribute("fill"), FILL) : groupFill);
+		this.setStroke(((Element)node).hasAttribute("stroke") ? PAColor.setColor(((Element)node).getAttribute("stroke"), STROKE) : groupStroke);
+		this.setStrokeWidth(((Element)node).hasAttribute("stroke-width") ? PAUnit.setUnit(((Element)node).getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : groupWidth);
 		this.setNode(node);
 		this.setGrouped(true);
 	}

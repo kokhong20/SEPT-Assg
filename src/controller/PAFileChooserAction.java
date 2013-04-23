@@ -16,7 +16,6 @@ import model.PASVGContainer;
 import model.PASVGElement;
 import model.PASVGImport;
 import model.PASVGTag;
-import model.PAShape;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
