@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import model.PASystem;
 
 /**
@@ -90,5 +89,4 @@ public class PARootView extends JFrame
         setBackground(new Color(0, 0, 0, 0));
         setVisible(true);
     }
-
 }

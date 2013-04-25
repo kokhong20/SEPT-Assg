@@ -5,6 +5,7 @@
 package controller;
 
 import gui.PAMainFrame;
+import gui.PAStartMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -29,6 +30,7 @@ public class PAFileChooserAction implements ActionListener
     private JFileChooser fileChooser;
     private JInternalFrame frame;
     private PASVGImport svgImport;
+    private PAStartMenu startMenu;
 
     /**
      *
@@ -42,6 +44,14 @@ public class PAFileChooserAction implements ActionListener
         this.parent = parent;
         this.fileChooser = fileChooser;
         this.frame = frame;
+    }
+    
+    public PAFileChooserAction(JDesktopPane parent, PAStartMenu startMenu, JFileChooser fileChooser, JInternalFrame frame)
+    {
+        this.parent = parent;
+        this.fileChooser = fileChooser;
+        this.frame = frame;
+        this.startMenu = startMenu;
     }
 
     /**
@@ -63,6 +73,12 @@ public class PAFileChooserAction implements ActionListener
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer);
             parent.add(svgDisplay);
+            
+            if(startMenu != null)
+            {
+                startMenu.setVisible(false);
+                startMenu.dispose();
+            }
         }
 
         // need to do for both Cancel and Open button.

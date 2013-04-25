@@ -5,6 +5,7 @@
 package controller;
 
 import gui.PAMainFrame;
+import gui.PAStartMenu;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Point;
@@ -97,11 +98,19 @@ public abstract class PAMenuAction extends AbstractAction
     public static class OpenFile extends PAMenuAction
     {
         private JDesktopPane parent;
+        private PAStartMenu startMenu;
 
         public OpenFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_O, "Open...");
             this.parent = parent;
+        }
+        
+        public OpenFile(JDesktopPane parent, PAStartMenu startMenu)
+        {
+            super(KeyEvent.VK_O, "Open...");
+            this.parent = parent;
+            this.startMenu = startMenu;
         }
 
         @Override
@@ -112,10 +121,20 @@ public abstract class PAMenuAction extends AbstractAction
             FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
             FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
             FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
-            PAFileChooserAction fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
             Dimension screenResolution = PASystem.getScreenDimension();
+            PAFileChooserAction fcAction;
             int startX ,startY;
             Point startPoint;
+            
+            if (startMenu != null)
+            {
+                 fcAction = new PAFileChooserAction(parent, startMenu, fileChooser, fcInternal);
+            }
+            
+            else
+            {
+                fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
+            }
 
             fileChooser.addActionListener(fcAction);
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
