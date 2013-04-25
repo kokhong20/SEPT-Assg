@@ -5,7 +5,9 @@
 package controller;
 
 import gui.PAMainFrame;
+import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
@@ -32,8 +34,9 @@ public abstract class PAMenuAction extends AbstractAction
     private KeyStroke keyStroke;
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
+     *
      * @param keyEvent keyEvent want to use
      * @param name menu item's name
      */
@@ -46,10 +49,11 @@ public abstract class PAMenuAction extends AbstractAction
         putValue(MNEMONIC_KEY, keyEvent);
         putValue(NAME, name);
     }
-    
+
     /**
-     * 
+     *
      * Constructor of Menu Action.
+     *
      * @param keyEvent keyEvent want to use
      * @param event event want to add
      * @param name menu item's name
@@ -63,15 +67,15 @@ public abstract class PAMenuAction extends AbstractAction
         putValue(MNEMONIC_KEY, keyEvent);
         putValue(NAME, name);
     }
-    
+
     /**
-     * 
+     *
      * action class for menu item "New"
      */
     public static class NewFile extends PAMenuAction
     {
         private JDesktopPane parent;
-        
+
         public NewFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_N, "New");
@@ -83,6 +87,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
 
     /**
@@ -108,7 +113,10 @@ public abstract class PAMenuAction extends AbstractAction
             FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
             FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
             PAFileChooserAction fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
-            
+            Dimension screenResolution = PASystem.getScreenDimension();
+            int startX ,startY;
+            Point startPoint;
+
             fileChooser.addActionListener(fcAction);
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.setAcceptAllFileFilterUsed(false);
@@ -117,6 +125,11 @@ public abstract class PAMenuAction extends AbstractAction
             fileChooser.setFileFilter(allFilter);
             fcInternal.add(fileChooser);
             fcInternal.pack();
+            
+            startX = (int) (screenResolution.getWidth() - fcInternal.getWidth()) / 2;
+            startY = (int) (screenResolution.getHeight() - fcInternal.getHeight()) / 2;
+            startPoint = new Point(startX, startY);
+            fcInternal.setLocation(startPoint);
             fcInternal.setVisible(true);
             parent.add(fcInternal);
 
@@ -131,16 +144,16 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
     /**
-     * 
+     *
      * action class for menu item "Save"
      */
     public static class SaveFile extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public SaveFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_S, "Save");
@@ -152,17 +165,18 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     /**
-     * 
+     *
      * action class for menu item "Save As..."
      */
     public static class SaveAsFile extends PAMenuAction
     {
         private JDesktopPane parent;
         private JInternalFrame onFocusFrame;
-        
+
         public SaveAsFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As...");
@@ -174,16 +188,17 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
 
     /**
-     * 
+     *
      * action class for menu item "Exit"
      */
     public static class ExitProgram extends PAMenuAction
     {
         private JDesktopPane parent;
-        
+
         public ExitProgram(JDesktopPane parent)
         {
             super(KeyEvent.VK_W, "Exit");
@@ -193,9 +208,9 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            int selectedOption = 
+            int selectedOption =
                     JOptionPane.showConfirmDialog(parent, "Are You Sure You Want To Exit?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            
+
             if (selectedOption == 0)
             {
                 System.exit(0);
@@ -203,12 +218,12 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
     public static class SelectAll extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public SelectAll(JDesktopPane parent)
         {
             super(KeyEvent.VK_A, "Select All");
@@ -220,13 +235,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class DeselectAll extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public DeselectAll(JDesktopPane parent)
         {
             super(KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
@@ -238,13 +254,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class Cut extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public Cut(JDesktopPane parent)
         {
             super(KeyEvent.VK_X, "Cut");
@@ -256,13 +273,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class Copy extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public Copy(JDesktopPane parent)
         {
             super(KeyEvent.VK_C, "Copy");
@@ -274,13 +292,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class Paste extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public Paste(JDesktopPane parent)
         {
             super(KeyEvent.VK_V, "Cut");
@@ -292,13 +311,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class ImageSize extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public ImageSize(JDesktopPane parent)
         {
             super(KeyEvent.VK_I, Event.ALT_MASK, "Image Size...");
@@ -310,13 +330,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class Viewbox extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public Viewbox(JDesktopPane parent)
         {
             super(KeyEvent.VK_V, Event.ALT_MASK, "Viewbox");
@@ -328,13 +349,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class ZoomIn extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public ZoomIn(JDesktopPane parent)
         {
             super(KeyEvent.VK_PLUS, "Zoom In");
@@ -346,13 +368,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class ZoomOut extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public ZoomOut(JDesktopPane parent)
         {
             super(KeyEvent.VK_MINUS, "Zoom Out");
@@ -364,13 +387,14 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
-    
+
     public static class ActualSize extends PAMenuAction
     {
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
-        
+
         public ActualSize(JDesktopPane parent)
         {
             super(KeyEvent.VK_0, "Actual Size");
@@ -382,5 +406,6 @@ public abstract class PAMenuAction extends AbstractAction
         {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
     }
 }

@@ -45,12 +45,12 @@ public class PARootView extends JFrame
     {
         rootView = new JDesktopPane();
         menuBar = new PAMenuBar(rootView);
-        startMenu = new PAStartMenu();
-        toolBar = new PADrawingKit();
+        startMenu = new PAStartMenu(rootView);
+        //toolBar = new PADrawingKit();
         //mainPanel = new PAMainFrame(rootView);
-        layerPanel = new PALayerPanel();
-        newFileSetting = new PANewFileSetting();
-        inspectFrame = new PAInspectFrame(rootView);
+        //layerPanel = new PALayerPanel();
+        //newFileSetting = new PANewFileSetting();
+        //inspectFrame = new PAInspectFrame(rootView);
     }
 
     /**
@@ -60,9 +60,9 @@ public class PARootView extends JFrame
     {
         rootView.setOpaque(false);
         rootView.setSize(PASystem.getScreenDimension());
-        rootView.add(newFileSetting);
+        //rootView.add(newFileSetting);
         rootView.add(startMenu);
-        JInternalFrame fr = new JInternalFrame("");
+        /*JInternalFrame fr = new JInternalFrame("");
         fr.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         fr.add(toolBar);
         //fr.pack();
@@ -74,7 +74,7 @@ public class PARootView extends JFrame
         rootView.add(fr);
         //rootView.add(toolBar);
         //rootView.add(mainPanel);
-        rootView.add(layerPanel);
+        rootView.add(layerPanel);*/
         rootView.setVisible(true);
     }
 
