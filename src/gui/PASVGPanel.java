@@ -7,12 +7,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 import model.PACircle;
+import model.PALine;
+import model.PARectangle;
 import model.PASVGContainer;
 import model.PASVGElement;
 
@@ -77,20 +80,22 @@ public class PASVGPanel extends JPanel
         if (!elementCollection.isEmpty())
         {
             float strokeWidth;
-            double x, y, diameter, width, height;
+            double x, y, diameter, shapeWidth, shapeHeight;
+            double x2, y2;
             BasicStroke stroke;
             Iterator<PASVGElement> it = elementCollection.iterator();
 
             while (it.hasNext())
             {
                 PASVGElement drawItem = it.next();
+                strokeWidth = (float) ((PASVGElement)drawItem).getStrokeWidth();
+                stroke = new BasicStroke(strokeWidth * (float) zoomScale);
+                
                 if (drawItem instanceof PACircle)
                 {
                     x = ((PACircle)drawItem).getCx() - ((PACircle)drawItem).getR() * zoomScale + xPosition;
                     y = ((PACircle)drawItem).getCy() - ((PACircle)drawItem).getR() * zoomScale + yPosition;
                     diameter = ((PACircle)drawItem).getR() * 2 * zoomScale;
-                    strokeWidth = (float) ((PASVGElement)drawItem).getStrokeWidth();
-                    stroke = new BasicStroke(strokeWidth * (float) zoomScale);
                     
                     // creating 2D Shapes object 
                     Ellipse2D.Double circle = new Ellipse2D.Double(x, y, diameter, diameter);
@@ -100,30 +105,36 @@ public class PASVGPanel extends JPanel
                     g2d.setStroke(stroke);
                     g2d.draw(circle);
                 }
-                /*else if (drawItem instanceof Rectangles)
+                
+                else if (drawItem instanceof PARectangle)
                 {
+                    x = ((PARectangle)drawItem).getX() * zoomScale + xPosition;
+                    y = ((PARectangle)drawItem).getY() * zoomScale + yPosition;
+                    shapeWidth = ((PARectangle)drawItem).getWidth() * zoomScale;
+                    shapeHeight = ((PARectangle)drawItem).getHeight() * zoomScale;
+                    
                     // creating 2D Shapes object 
-                    Rectangle2D.Double rectShape = new Rectangle2D.Double(((Rectangles) drawItem).getX() * zoomScale + xPosition,
-                            ((Rectangles) drawItem).getY() * zoomScale + yPosition, ((Rectangles) drawItem).getWidth() * zoomScale, ((Rectangles) drawItem).getHeight() * zoomScale);
-
-                    g2d.setColor(((Shapes) drawItem).getFill());
-                    g2d.fill(rectShape);
-                    g2d.setColor(((Drawings) drawItem).getStrokeColor());
-                    g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth() * ((float) zoomScale)));
-                    g2d.draw(rectShape);
+                    Rectangle2D.Double rect = new Rectangle2D.Double(x, y, shapeWidth, shapeHeight);
+                    g2d.setColor(((PASVGElement)drawItem).getFill());
+                    g2d.fill(rect);
+                    g2d.setColor(((PASVGElement)drawItem).getStroke());
+                    g2d.setStroke(stroke);
+                    g2d.draw(rect);
                 }
-                else if (drawItem instanceof Lines)
+                
+                else if (drawItem instanceof PALine)
                 {
+                    x = ((PALine)drawItem).getX1() * zoomScale + xPosition;
+                    x2 = ((PALine)drawItem).getX2() * zoomScale + xPosition;
+                    y = ((PALine)drawItem).getY1() * zoomScale + xPosition;
+                    y2 = ((PALine)drawItem).getY2() * zoomScale + xPosition;
+                    
                     // creating 2D Shapes object 
-
-                    Line2D.Double lineShape = new Line2D.Double(((Lines) drawItem).getX1() * zoomScale + xPosition,
-                            ((Lines) drawItem).getY1() * zoomScale + yPosition, ((Lines) drawItem).getX2() * zoomScale + xPosition,
-                            ((Lines) drawItem).getY2() * zoomScale + yPosition);
-
-                    g2d.setColor(((Drawings) drawItem).getStrokeColor());
-                    g2d.setStroke(new BasicStroke(((Drawings) drawItem).getStrokeWidth() * ((float) zoomScale)));
-                    g2d.draw(lineShape);
-                }*/
+                    Line2D.Double line = new Line2D.Double(x, y, x2, y2);
+                    g2d.setColor(((PASVGElement)drawItem).getStroke());
+                    g2d.setStroke(stroke);
+                    g2d.draw(line);
+                }
             }
         }
     }
