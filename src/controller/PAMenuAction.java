@@ -107,7 +107,7 @@ public abstract class PAMenuAction extends AbstractAction
             FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
             FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
             FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
-            PAFileChooserAction fcAction = new PAFileChooserAction(fileChooser, fcInternal);
+            PAFileChooserAction fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
             
             fileChooser.addActionListener(fcAction);
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

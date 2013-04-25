@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+import model.PASVGContainer;
 
 /**
  *
@@ -12,19 +13,16 @@ import javax.swing.JPanel;
  */
 public class PASVGPanel extends JPanel
 {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 940764866671091035L;
     private PAMainFrame mainFrame;
+    private PASVGContainer svgContainer;
 
     /**
      * constructor to define PASVGPanel for PAMainFrame
      * @param mainFrame
      */
-    public PASVGPanel(PAMainFrame mainFrame)
+    public PASVGPanel(PASVGContainer svgContainer)
     {
-        this.mainFrame = mainFrame;
+        this.svgContainer = svgContainer;
         initPanel();
     }
 
@@ -33,8 +31,8 @@ public class PASVGPanel extends JPanel
      */
     private void initPanel()
     {
-        int width = mainFrame.getWidth() - 120;
-        int height = mainFrame.getHeight() - 300;
+        int width = (int)svgContainer.getSvgTag().getWidth();
+        int height = (int)svgContainer.getSvgTag().getHeight();
         Dimension size = new Dimension(width, height);
 
         setBackground(Color.white);

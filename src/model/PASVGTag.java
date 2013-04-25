@@ -37,9 +37,9 @@ public class PASVGTag implements PAAttributeConstant
         readAttributes();
     }
 
-	public void readAttributes()
-	{
-		// TODO Auto-generated method stub
+    private void readAttributes()
+    {
+        // TODO Auto-generated method stub
         if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
         {
             Element eNode = (Element) this.getNode();
@@ -57,9 +57,9 @@ public class PASVGTag implements PAAttributeConstant
             this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
             this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
         }
-		
-	}
-	
+
+    }
+
     /**
      * Read in value as value of svg viewbox attribute set it to current
      * instance variables
@@ -268,51 +268,52 @@ public class PASVGTag implements PAAttributeConstant
         }
     }
 
-	/**
-	 * @return the stroke
-	 */
-	public Color getStroke()
-	{
-		return stroke;
-	}
+    /**
+     * @return the stroke
+     */
+    public Color getStroke()
+    {
+        return stroke;
+    }
 
-	/**
-	 * @param stroke the stroke to set
-	 */
-	public void setStroke(Color stroke)
-	{
-		this.stroke = stroke;
-	}
+    /**
+     * @param stroke the stroke to set
+     */
+    public void setStroke(Color stroke)
+    {
+        this.stroke = stroke;
+    }
 
-	/**
-	 * @return the strokeWidth
-	 */
-	public double getStrokeWidth()
-	{
-		return strokeWidth;
-	}
+    /**
+     * @return the strokeWidth
+     */
+    public double getStrokeWidth()
+    {
+        return strokeWidth;
+    }
 
-	/**
-	 * @param strokeWidth the strokeWidth to set
-	 */
-	public void setStrokeWidth(double strokeWidth)
-	{
-		this.strokeWidth = strokeWidth;
-	}
+    /**
+     * @param strokeWidth the strokeWidth to set
+     */
+    public void setStrokeWidth(double strokeWidth)
+    {
+        this.strokeWidth = strokeWidth;
+    }
 
-	/**
-	 * @return the node
-	 */
-	public Node getNode()
-	{
-		return node;
-	}
+    /**
+     * @return the node
+     */
+    public Node getNode()
+    {
+        return node;
+    }
 
-	/**
-	 * @param node the node to set
-	 */
-	public void setNode(Node node)
-	{
-		this.node = node;
-	}
+    /**
+     * @param node the node to set
+     */
+    private void setNode(Node node)
+    {
+        this.node = node;
+    }
+
 }

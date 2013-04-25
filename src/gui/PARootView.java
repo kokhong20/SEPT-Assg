@@ -47,7 +47,7 @@ public class PARootView extends JFrame
         menuBar = new PAMenuBar(rootView);
         startMenu = new PAStartMenu();
         toolBar = new PADrawingKit();
-        mainPanel = new PAMainFrame(rootView);
+        //mainPanel = new PAMainFrame(rootView);
         layerPanel = new PALayerPanel();
         newFileSetting = new PANewFileSetting();
         inspectFrame = new PAInspectFrame(rootView);
@@ -73,7 +73,7 @@ public class PARootView extends JFrame
         fr.setVisible(true);
         rootView.add(fr);
         //rootView.add(toolBar);
-        rootView.add(mainPanel);
+        //rootView.add(mainPanel);
         rootView.add(layerPanel);
         rootView.setVisible(true);
     }

@@ -11,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import model.PASVGContainer;
 import model.PASystem;
 
 /**
@@ -23,9 +24,10 @@ public class PAMainFrame extends JInternalFrame
     private PAStatusPanel statusPanel;
     private PAShapeBar attributeBar;
     private PASVGPanel svgPanel;
+    private PASVGContainer svgContainer;
     private JPanel mainPanel;
     private JPanel svgBackPanel;
-    private JDesktopPane rootView;
+    private JDesktopPane parent;
     /**
      *
      */
@@ -33,11 +35,12 @@ public class PAMainFrame extends JInternalFrame
 
     /**
      * constructor to define PAMainFrame for PARootView
-     * @param rootView
+     * @param parent
      */
-    public PAMainFrame(JDesktopPane rootView)
+    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer)
     {
-    	this.rootView = rootView;
+    	this.parent = parent;
+        this.svgContainer = svgContainer;
         setAttributes();
         initialize();
         customize();
@@ -52,7 +55,7 @@ public class PAMainFrame extends JInternalFrame
     {
         statusPanel = new PAStatusPanel(this);
         attributeBar = new PAShapeBar(this);
-        svgPanel = new PASVGPanel(this);
+        svgPanel = new PASVGPanel(svgContainer);
         mainPanel = new JPanel();
         svgBackPanel = new JPanel();
     }
@@ -134,7 +137,7 @@ public class PAMainFrame extends JInternalFrame
     
     public JDesktopPane getParentView()
     {
-    	return this.rootView;
+    	return this.parent;
     }
 
 }
