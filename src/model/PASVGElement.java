@@ -24,8 +24,19 @@ public abstract class PASVGElement implements PAAttributeConstant  {
 	/**
 	 * 
 	 */
-	public PASVGElement() {
+	public PASVGElement() 
+	{
 
+	}
+	
+	/**
+	 * 
+	 */
+	public PASVGElement(Color fill, Color stroke, double strokeWidth) 
+	{
+		this.fill = fill;
+		this.stroke = stroke;
+		this.strokeWidth = strokeWidth;
 	}
 
 	/**

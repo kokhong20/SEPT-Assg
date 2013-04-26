@@ -27,9 +27,9 @@ public class PAShapeBar extends JPanel
      */
     private static final long serialVersionUID = 1474246142443123659L;
     private PAMainFrame mainFrame;
-    private JButton strokeButton, fillButton, inspectButton;
-    private JCheckBox fillCheck, strokeCheck;
-    private JSpinner strokeWidthBox;
+    public JButton strokeButton, fillButton, inspectButton;
+    public JCheckBox fillCheck, strokeCheck;
+    public JSpinner strokeWidthBox;
 
     /**
      * constructor to define PAShapeBar for PAMainFrame

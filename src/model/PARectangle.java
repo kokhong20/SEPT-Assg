@@ -24,6 +24,15 @@ public class PARectangle extends PASVGElement {
 		
 	}
 	
+	public PARectangle(Color fill, Color stroke, double strokeWidth, double x, double y , double width , double height)
+	{
+		super(fill,stroke,strokeWidth);
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
 	/**
 	 * Constructor which receives a node
 	 * 

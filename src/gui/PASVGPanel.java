@@ -31,9 +31,9 @@ public class PASVGPanel extends JPanel
     private double zoomScale;
     private double xPosition;
     private double yPosition;
-    private BufferedImage svgImage;
+    public BufferedImage svgImage;
     private PAMainFrame mainFrame;
-    private PASVGContainer svgContainer;
+    public PASVGContainer svgContainer;
     private LinkedList<PASVGElement> elementCollection;
 
     /**
@@ -46,8 +46,8 @@ public class PASVGPanel extends JPanel
         this.svgContainer = svgContainer;
         this.elementCollection = svgContainer.getSvgContainer();
         zoomScale = 1;
-	xPosition = 0;
-	yPosition = 0;
+        xPosition = 0;
+        yPosition = 0;
         initPanel();
         drawToImage();
     }
