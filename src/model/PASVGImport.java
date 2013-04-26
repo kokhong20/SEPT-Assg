@@ -35,7 +35,7 @@ public class PASVGImport
             svgDBFactory.setFeature("http://xml.org/sax/features/validation", false);
             svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
             svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            
+
             DocumentBuilder svgDocBuilder = svgDBFactory.newDocumentBuilder();
             svgDoc = svgDocBuilder.parse(svgFile);
             svgDoc.getDocumentElement().normalize();
@@ -64,7 +64,7 @@ public class PASVGImport
             // Processing SVG tag
             Node svg = svgDoc.getElementsByTagName("svg").item(0);
             NodeList drawList = svg.getChildNodes();
-            
+
             for (int index = 0; index < drawList.getLength(); index++)
             {
                 switch (drawList.item(index).getNodeName())
@@ -99,14 +99,14 @@ public class PASVGImport
                         break;
 
                     case "g":
-                    	PASVGGroup newGroup = new PASVGGroup(drawList.item(index));
-                    	newGroup.readAttributes();
+                        PASVGGroup newGroup = new PASVGGroup(drawList.item(index));
+                        newGroup.readAttributes();
 
                         elementCollection.add(newGroup);
-                    // NodeList gList = drawList.item(index).getChildNodes();
-                    // createGroups(this.elementCollection, gList,
-                    // drawList.item(index), null, null);
-                    break;
+                        // NodeList gList = drawList.item(index).getChildNodes();
+                        // createGroups(this.elementCollection, gList,
+                        // drawList.item(index), null, null);
+                        break;
                 }
             }
         }

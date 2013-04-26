@@ -14,6 +14,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,6 +28,7 @@ import model.PALine;
 import model.PARectangle;
 import model.PASVGContainer;
 import model.PASVGElement;
+import model.PASVGGroup;
 import model.PASVGImport;
 import model.PASVGTag;
 import org.w3c.dom.Document;
@@ -61,7 +63,7 @@ public class PAFileChooserAction implements ActionListener
         this.fileChooser = fileChooser;
         this.frame = frame;
     }
-    
+
     public PAFileChooserAction(JDesktopPane parent, PAStartMenu startMenu, JFileChooser fileChooser, JInternalFrame frame)
     {
         this.parent = parent;
@@ -69,7 +71,7 @@ public class PAFileChooserAction implements ActionListener
         this.frame = frame;
         this.startMenu = startMenu;
     }
-    
+
     private void drawToImage()
     {
         svgImage = new BufferedImage(svgWidth, svgHeight, BufferedImage.TYPE_INT_ARGB);
@@ -79,10 +81,14 @@ public class PAFileChooserAction implements ActionListener
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.fillRect(0, 0, svgWidth, svgHeight);
         g2d.setPaint(new Color(255, 255, 255, 255));
+        iterateList(g2d, elementCollection);
+    }
 
-        if (!elementCollection.isEmpty())
+    private void iterateList(Graphics2D g2d, LinkedList<PASVGElement> collection)
+    {
+        if (!collection.isEmpty())
         {
-            Iterator<PASVGElement> it = elementCollection.iterator();
+            Iterator<PASVGElement> it = collection.iterator();
 
             while (it.hasNext())
             {
@@ -90,12 +96,20 @@ public class PAFileChooserAction implements ActionListener
 
                 if (drawItem instanceof PACircle)
                 {
+                    drawCircle(g2d, drawItem);
                 }
                 else if (drawItem instanceof PARectangle)
                 {
+                    drawRect(g2d, drawItem);
                 }
                 else if (drawItem instanceof PALine)
                 {
+                    drawLine(g2d, drawItem);
+                }
+                else if (drawItem instanceof PASVGGroup)
+                {
+                    LinkedList<PASVGElement> groupElement = ((PASVGGroup) drawItem).getGroupElementList();
+                    iterateList(g2d, groupElement);
                 }
             }
         }
@@ -136,6 +150,22 @@ public class PAFileChooserAction implements ActionListener
         g2d.draw(rect);
     }
 
+    private void drawLine(Graphics2D g2d, PASVGElement drawItem)
+    {
+        double x = ((PALine) drawItem).getX1();
+        double x2 = ((PALine) drawItem).getX2();
+        double y = ((PALine) drawItem).getY1();
+        double y2 = ((PALine) drawItem).getY2();
+        float strokeWidth = (float) ((PASVGElement) drawItem).getStrokeWidth();
+        BasicStroke stroke = new BasicStroke(strokeWidth);
+
+        // creating 2D Shapes object 
+        Line2D.Double line = new Line2D.Double(x, y, x2, y2);
+        g2d.setColor(((PASVGElement) drawItem).getStroke());
+        g2d.setStroke(stroke);
+        g2d.draw(line);
+    }
+
     /**
      * action in file chooser (Cancel and Open button)
      *
@@ -151,15 +181,20 @@ public class PAFileChooserAction implements ActionListener
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
-            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
-            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer);
-            PADrawingKit drawingKit = new PADrawingKit();
+            svgWidth = (int) svgTag.getWidth();
+            svgHeight = (int) svgTag.getHeight();
             elementCollection = PASVGImport.readSVGElements(svgDoc);
+            drawToImage();
+            
+            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, svgImage);
+            PADrawingKit drawingKit = new PADrawingKit();
+            
             //drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
             parent.add(svgDisplay);
             parent.add(drawingKit);
-            
-            if(startMenu != null)
+
+            if (startMenu != null)
             {
                 startMenu.setVisible(false);
                 startMenu.dispose();

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -23,6 +24,7 @@ public class PAMainFrame extends JInternalFrame
 {
     private int svgWidth;
     private int svgHeight;
+    private BufferedImage svgImage;
     private PAStatusPanel statusPanel;
     public PAShapeBar attributeBar;
     public PASVGPanel svgPanel;
@@ -39,10 +41,11 @@ public class PAMainFrame extends JInternalFrame
      * constructor to define PAMainFrame for PARootView
      * @param parent
      */
-    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer)
+    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer, BufferedImage svgImage)
     {
     	this.parent = parent;
         this.svgContainer = svgContainer;
+        this.svgImage = svgImage;
         initialize();
         customize();
         setFrameLayout();
@@ -57,7 +60,7 @@ public class PAMainFrame extends JInternalFrame
     {
         statusPanel = new PAStatusPanel(this);
         attributeBar = new PAShapeBar(this);
-        svgPanel = new PASVGPanel(svgContainer);
+        svgPanel = new PASVGPanel(svgContainer, svgImage);
         mainPanel = new JPanel();
         svgBackPanel = new JPanel();
     }
