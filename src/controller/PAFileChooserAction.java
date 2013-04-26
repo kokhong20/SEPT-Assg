@@ -74,7 +74,7 @@ public class PAFileChooserAction implements ActionListener
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer);
             PADrawingKit drawingKit = new PADrawingKit();
-            drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
+//            drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
             parent.add(svgDisplay);
             parent.add(drawingKit);
             
