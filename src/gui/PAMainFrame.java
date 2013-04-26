@@ -22,8 +22,6 @@ import model.PASystem;
  */
 public class PAMainFrame extends JInternalFrame
 {
-    private int svgWidth;
-    private int svgHeight;
     private BufferedImage svgImage;
     private PAStatusPanel statusPanel;
     public PAShapeBar attributeBar;
@@ -39,11 +37,12 @@ public class PAMainFrame extends JInternalFrame
 
     /**
      * constructor to define PAMainFrame for PARootView
+     *
      * @param parent
      */
     public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer, BufferedImage svgImage)
     {
-    	this.parent = parent;
+        this.parent = parent;
         this.svgContainer = svgContainer;
         this.svgImage = svgImage;
         initialize();
@@ -87,28 +86,47 @@ public class PAMainFrame extends JInternalFrame
      */
     private void setAttributes()
     {
-        svgWidth = (int) svgContainer.getSvgTag().getWidth();
-        svgHeight = (int) svgContainer.getSvgTag().getHeight();
-        
-        if(svgWidth < 500)
+        Dimension screenResolution = PASystem.getScreenDimension();
+        int mainFrameWidth = (int) svgContainer.getSvgTag().getWidth();
+        int mainFrameHeight = (int) svgContainer.getSvgTag().getHeight();
+        int maxViewWidth = (int) (screenResolution.getWidth() / 1.4);
+        int maxViewHeight = (int) (screenResolution.getHeight() / 1.4);
+
+        if (mainFrameWidth < 500)
         {
-            System.out.println("haha");
-            svgWidth = 500;
-        }
-        
-        if (svgHeight < 500)
-        {
-            svgHeight = 500;
+            mainFrameWidth = 500;
         }
 
-        int mainFrameWidth = svgWidth + 23;
-        int mainFrameHeight = svgHeight + 30 + 24 *2 + 20;
-        Dimension mainFrameSize = new Dimension(mainFrameWidth, mainFrameHeight);
+        if (mainFrameHeight < 500)
+        {
+            mainFrameHeight = 500;
+        }
         
+        if (mainFrameWidth > maxViewWidth)
+        {
+            mainFrameWidth = maxViewWidth;
+        }
+        
+        if (mainFrameHeight > maxViewHeight)
+        {
+            mainFrameHeight = maxViewHeight;
+        }
+        
+        if (PASystem.currentOS.indexOf("mac") >= 0)
+        {
+            int screenWidth = (int) screenResolution.getWidth();
+            int screenHeight = (int) screenResolution.getHeight() - 86;
+            screenResolution = new Dimension(screenWidth, screenHeight);
+            mainFrameWidth += 23;
+            mainFrameHeight += 20;
+        }
+        
+        mainFrameHeight = mainFrameHeight + 30 + 24 * 2;
+        Dimension mainFrameSize = new Dimension(mainFrameWidth, mainFrameHeight);
+
         //Set location based on user's computer resolution
-        Dimension screenResolution = PASystem.getScreenDimension();
-        int startX = (int) (screenResolution.getWidth() - mainFrameWidth)/2;
-        int startY = (int) (screenResolution.getHeight() - mainFrameHeight)/2;
+        int startX = (int) (screenResolution.getWidth() - mainFrameWidth) / 2;
+        int startY = (int) (screenResolution.getHeight() - mainFrameHeight) / 2;
         Point startPoint = new Point(startX, startY);
 
         setTitle("New SVG");
@@ -158,10 +176,10 @@ public class PAMainFrame extends JInternalFrame
 
         this.add(mainPanel);
     }
-    
+
     public JDesktopPane getParentView()
     {
-    	return this.parent;
+        return this.parent;
     }
 
 }
