@@ -57,6 +57,7 @@ public class PADrawingKit extends JPanel
     public void addAction(PASVGPanel drawPanel,PAShapeBar shapeBar)
     {
     	DrawRectangleAction drawRectAction = new DrawRectangleAction(drawPanel,drawingKitButton.rectangle,shapeBar);
+        drawingKitButton.rectangle.setAction(drawRectAction);
     }
 
 }

@@ -189,8 +189,6 @@ public class PAFileChooserAction implements ActionListener
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, svgImage);
             PADrawingKit drawingKit = new PADrawingKit();
-            
-            //drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
             parent.add(svgDisplay);
             parent.add(drawingKit);
 
@@ -199,6 +197,9 @@ public class PAFileChooserAction implements ActionListener
                 startMenu.setVisible(false);
                 startMenu.dispose();
             }
+            
+             drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
+             
         }
 
         // need to do for both Cancel and Open button.
