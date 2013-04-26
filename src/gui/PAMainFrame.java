@@ -24,8 +24,8 @@ public class PAMainFrame extends JInternalFrame
     private int svgWidth;
     private int svgHeight;
     private PAStatusPanel statusPanel;
-    private PAShapeBar attributeBar;
-    private PASVGPanel svgPanel;
+    public PAShapeBar attributeBar;
+    public PASVGPanel svgPanel;
     private PASVGContainer svgContainer;
     private JPanel mainPanel;
     private JPanel svgBackPanel;

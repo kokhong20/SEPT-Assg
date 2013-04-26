@@ -4,6 +4,7 @@
  */
 package controller;
 
+import gui.PADrawingKit;
 import gui.PAMainFrame;
 import gui.PAStartMenu;
 import java.awt.event.ActionEvent;
@@ -72,7 +73,10 @@ public class PAFileChooserAction implements ActionListener
             PASVGTag svgTag = new PASVGTag(svgNode);
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer);
+            PADrawingKit drawingKit = new PADrawingKit();
+            drawingKit.addAction(svgDisplay.svgPanel, svgDisplay.attributeBar);
             parent.add(svgDisplay);
+            parent.add(drawingKit);
             
             if(startMenu != null)
             {

@@ -2,7 +2,10 @@ package gui;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import controller.PAToolKitAction.DrawRectangleAction;
 
 import model.PASystem;
 
@@ -49,6 +52,11 @@ public class PADrawingKit extends JPanel
         //Set location based on user's computer resolution
         this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())),
                 ((int) (0.2 * PASystem.getScreenDimension().getHeight())));
+    }
+    
+    public void addAction(PASVGPanel drawPanel,PAShapeBar shapeBar)
+    {
+    	DrawRectangleAction drawRectAction = new DrawRectangleAction(drawPanel,drawingKitButton.rectangle,shapeBar);
     }
 
 }
