@@ -21,6 +21,8 @@ import model.PASystem;
  */
 public class PAMainFrame extends JInternalFrame
 {
+    private int svgWidth;
+    private int svgHeight;
     private PAStatusPanel statusPanel;
     private PAShapeBar attributeBar;
     private PASVGPanel svgPanel;
@@ -41,10 +43,10 @@ public class PAMainFrame extends JInternalFrame
     {
     	this.parent = parent;
         this.svgContainer = svgContainer;
-        setAttributes();
         initialize();
         customize();
         setFrameLayout();
+        setAttributes();
     }
 
     /**
@@ -73,7 +75,7 @@ public class PAMainFrame extends JInternalFrame
         svgBackPanel.add(box, BorderLayout.CENTER);
         svgBackPanel.setMinimumSize(minSize);
         svgBackPanel.setBackground(new Color(38, 38, 38));
-        mainPanel.setPreferredSize(new Dimension(800, 600));
+        //mainPanel.setPreferredSize(new Dimension(800, 600));
     }
 
     /**
@@ -82,10 +84,28 @@ public class PAMainFrame extends JInternalFrame
      */
     private void setAttributes()
     {
+        svgWidth = (int) svgContainer.getSvgTag().getWidth();
+        svgHeight = (int) svgContainer.getSvgTag().getHeight();
+        
+        if(svgWidth < 500)
+        {
+            System.out.println("haha");
+            svgWidth = 500;
+        }
+        
+        if (svgHeight < 500)
+        {
+            svgHeight = 500;
+        }
+
+        int mainFrameWidth = svgWidth + 23;
+        int mainFrameHeight = svgHeight + 30 + 24 *2 + 20;
+        Dimension mainFrameSize = new Dimension(mainFrameWidth, mainFrameHeight);
+        
         //Set location based on user's computer resolution
         Dimension screenResolution = PASystem.getScreenDimension();
-        int startX = (int) (0.15 * screenResolution.getWidth());
-        int startY = (int) (0.1 * screenResolution.getHeight());
+        int startX = (int) (screenResolution.getWidth() - mainFrameWidth)/2;
+        int startY = (int) (screenResolution.getHeight() - mainFrameHeight)/2;
         Point startPoint = new Point(startX, startY);
 
         setTitle("New SVG");
@@ -94,7 +114,8 @@ public class PAMainFrame extends JInternalFrame
         setMaximizable(true);
         setBackground(new Color(38, 38, 38));
         setVisible(true);
-        setSize(800, 600);
+        System.out.println(mainFrameSize);
+        setSize(mainFrameSize);
         setLocation(startPoint);
     }
 

@@ -197,7 +197,7 @@ public class PAUnit implements PAAttributeConstant
      */
     public static double convertCM(String value)
     {
-        return (Double.parseDouble(value) * 37.795276);
+        return (Double.parseDouble(value) * dpi / 2.54);
     }
 
     /**

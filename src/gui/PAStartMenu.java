@@ -4,16 +4,22 @@
  */
 package gui;
 
+import controller.PAMenuAction.NewFile;
+import controller.PAMenuAction.OpenFile;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import model.PASystem;
 
 /**
  *
@@ -24,12 +30,14 @@ public class PAStartMenu extends JInternalFrame
     private JPanel mainPanel;
     private JButton openFileButton;
     private JButton newFileButton;
+    private JDesktopPane parent;
 
     /**
      * constructor to create PAStartMenu
      */
-    public PAStartMenu()
+    public PAStartMenu(JDesktopPane parent)
     {
+        this.parent = parent;
         initialize();
         customize();
         setUpStartMenu();
@@ -102,25 +110,16 @@ public class PAStartMenu extends JInternalFrame
      */
     private void setUpButton()
     {
+        NewFile newAction = new NewFile(parent);
+        OpenFile openAction = new OpenFile(parent, this);
+        newFileButton.setAction(newAction);
+        openFileButton.setAction(openAction);
         setImageIcon("resources/openFile 150x150.png", openFileButton, "Open File");
         setImageIcon("resources/newFile 150x150.png", newFileButton, "New File");
         openFileButton.setBounds(386, 226, 150, 150);
         newFileButton.setBounds(86, 226, 150, 150);
         mainPanel.add(openFileButton);
         mainPanel.add(newFileButton);
-    }
-
-    /**
-     *
-     * customize mainPanel and add to InternalFrame.
-     */
-    private void customize()
-    {
-        mainPanel.setLayout(null);
-        mainPanel.setOpaque(false);
-        mainPanel.setSize(640, 450);
-        setUpButton();
-        add(mainPanel);
     }
 
     private void setImageIcon(String imgPath, JButton button, String toolTip)
@@ -137,12 +136,31 @@ public class PAStartMenu extends JInternalFrame
 
     /**
      *
+     * customize mainPanel and add to InternalFrame.
+     */
+    private void customize()
+    {
+        mainPanel.setLayout(null);
+        mainPanel.setOpaque(false);
+        mainPanel.setSize(640, 450);
+        setUpButton();
+        add(mainPanel);
+    }
+
+    /**
+     *
      * to show the InternalFrame and set size to it.
      */
     private void setUpStartMenu()
     {
-        //setBackground(Color.white);
-        setSize(650, 450);
+        Dimension screenResolution = PASystem.getScreenDimension();
+        int width = 650;
+        int height = 450;
+        int startX = (int) (screenResolution.getWidth() - width)/2;
+        int startY = (int) (screenResolution.getHeight() - height)/2;
+        Point startPoint = new Point(startX, startY);
+        setSize(width, height);
+        setLocation(startPoint);
         setVisible(true);
     }
 
