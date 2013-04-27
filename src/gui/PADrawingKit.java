@@ -1,11 +1,7 @@
 package gui;
 
 import java.awt.Color;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import controller.PAToolKitAction.DrawRectangleAction;
+import javax.swing.JInternalFrame;
 
 import model.PASystem;
 
@@ -14,9 +10,10 @@ import model.PASystem;
  * @author KokHong
  *
  */
-public class PADrawingKit extends JPanel
+public class PADrawingKit extends JInternalFrame
 {
     private PADrawingItem drawingKitButton;
+    public PAMainFrame mainFrame;
     /**
      *
      */
@@ -25,10 +22,11 @@ public class PADrawingKit extends JPanel
     /**
      * constructor to define PADrawingKit for PARootView
      */
-    public PADrawingKit()
+    public PADrawingKit(PAMainFrame mainFrame)
     {
+        this.mainFrame = mainFrame;
         initDrawingKit();
-        setPanelAttribues();
+        setFrameAttribues();
     }
 
     /**
@@ -37,27 +35,20 @@ public class PADrawingKit extends JPanel
     private void initDrawingKit()
     {
         drawingKitButton = new PADrawingItem(this);
-        drawingKitButton.initPanel();
     }
 
     /**
-     * Set panel attributes
+     * Set frame attributes
      */
-    private void setPanelAttribues()
+    private void setFrameAttribues()
     {
         this.setLayout(null);
         this.setBackground(new Color(40, 40, 40));
         this.setVisible(true);
-        this.setSize(80, 240);
+        this.setSize(100, 270);
         //Set location based on user's computer resolution
         this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())),
                 ((int) (0.2 * PASystem.getScreenDimension().getHeight())));
-    }
-    
-    public void addAction(PASVGPanel drawPanel,PAShapeBar shapeBar)
-    {
-    	DrawRectangleAction drawRectAction = new DrawRectangleAction(drawPanel,drawingKitButton.rectangle,shapeBar);
-        drawingKitButton.rectangle.setAction(drawRectAction);
     }
 
 }

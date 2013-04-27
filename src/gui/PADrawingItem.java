@@ -1,5 +1,6 @@
 package gui;
 
+import controller.PAToolKitAction;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -17,6 +18,7 @@ public class PADrawingItem
     private final int maxWidth = 40;
     private final int maxHeight = 40;
     private PADrawingKit drawKitPanel;
+    private PAMainFrame mainFrame;
     private JLabel title;
     public JButton fill;
     public JButton handCursor;
@@ -37,17 +39,13 @@ public class PADrawingItem
     public PADrawingItem(PADrawingKit drawKitPanel)
     {
         this.drawKitPanel = drawKitPanel;
-    }
-
-    /**
-     * Initialize Components
-     */
-    public void initPanel()
-    {
+        mainFrame = drawKitPanel.mainFrame;
+        createButton();
+        addAction();
         addButton();
         addTitle();
     }
-
+    
     /**
      * Create title for drawing kit
      */
@@ -65,19 +63,17 @@ public class PADrawingItem
      */
     private void addButton()
     {
-        this.createButton();
-
-        handCursor.setBounds(0, 20, maxWidth, maxHeight);
-        zoomIn.setBounds(0, 60, maxWidth, maxHeight);
-        selectCursor.setBounds(40, 20, maxWidth, maxHeight);
-        zoomOut.setBounds(40, 60, maxWidth, maxHeight);
-        fill.setBounds(0, 100, maxWidth, maxHeight);
-        line.setBounds(40, 100, maxWidth, maxHeight);
-        rectangle.setBounds(0, 140, maxWidth, maxHeight);
-        circle.setBounds(40, 140, maxWidth, maxHeight);
-        group.setBounds(0, 180, maxWidth, maxHeight);
-        ungroup.setBounds(40, 180, maxWidth, maxHeight);
-
+        setButtonAttribute("resources/fill 30x30.png", fill, "Fill",0,100);
+        setButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor",0,20);
+        setButtonAttribute("resources/select.png", selectCursor, "Select Cursor",40,20);
+        setButtonAttribute("resources/rect.png", rectangle, "Rectangle",0,140);
+        setButtonAttribute("resources/line.png", line, "Line",40,100);
+        setButtonAttribute("resources/circle 30x30.png", circle, "Circle",40,140);
+        setButtonAttribute("resources/group.png", group, "Group",0,180);
+        setButtonAttribute("resources/ungroup.png", ungroup, "Ungroup",40,180);
+        setButtonAttribute("resources/zoomin.png", zoomIn, "Zoom In",0,60);
+        setButtonAttribute("resources/zoomout.png", zoomOut, "Zoom Out",40,60);
+        
         drawKitPanel.add(fill);
         drawKitPanel.add(handCursor);
         drawKitPanel.add(selectCursor);
@@ -107,26 +103,18 @@ public class PADrawingItem
         zoomIn = new JButton();
         zoomOut = new JButton();
 
-        setImageIcon("resources/fill 30x30.png", fill, "Fill");
-        setImageIcon("resources/cursor.png", handCursor, "Hand Cursor");
-        setImageIcon("resources/select.png", selectCursor, "Select Cursor");
-        setImageIcon("resources/rect.png", rectangle, "Rectangle");
-        setImageIcon("resources/line.png", line, "Line");
-        setImageIcon("resources/circle 30x30.png", circle, "Circle");
-        setImageIcon("resources/group.png", group, "Group");
-        setImageIcon("resources/ungroup.png", ungroup, "Ungroup");
-        setImageIcon("resources/zoomin.png", zoomIn, "Zoom In");
-        setImageIcon("resources/zoomout.png", zoomOut, "Zoom Out");
     }
 
     /**
-     * set an image icon and tool tip for a JButton
+     * set an image icon, tool tip and position for a JButton
      *
      * @param imgPath url path to the image
      * @param button a JButton
      * @param toolTip String to set for toolTip
+     * @param x X position for set bounds
+     * @param y Y position for set bounds
      */
-    private void setImageIcon(String imgPath, JButton button, String toolTip)
+    private void setButtonAttribute(String imgPath, JButton button, String toolTip , int x , int y)
     {
         ImageIcon imgIcon = new ImageIcon(imgPath);
         button.setIcon(imgIcon);
@@ -136,6 +124,14 @@ public class PADrawingItem
         button.setBorder(null);
         button.setBorderPainted(false);
         button.setToolTipText(toolTip);
+        button.setBounds(x,y,maxWidth,maxHeight);
+    }
+
+    private void addAction()
+    {
+        //Rectangle
+    	PAToolKitAction.DrawRectangleAction drawRectAction = new PAToolKitAction.DrawRectangleAction(mainFrame.svgPanel,rectangle,mainFrame.attributeBar);
+        rectangle.setAction(drawRectAction);
     }
 
 }
