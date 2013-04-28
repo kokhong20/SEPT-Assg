@@ -3,10 +3,8 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 import javax.swing.JPanel;
 import model.PASVGContainer;
-import model.PASVGElement;
 
 /**
  *

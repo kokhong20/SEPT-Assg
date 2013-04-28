@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -12,6 +13,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import model.PASVGContainer;
 import model.PASystem;
 
@@ -22,13 +24,14 @@ import model.PASystem;
  */
 public class PAMainFrame extends JInternalFrame
 {
-    private BufferedImage svgImage;
-    private PAStatusPanel statusPanel;
     public PAShapeBar attributeBar;
     public PASVGPanel svgPanel;
+    private Box box;
+    private BufferedImage svgImage;
+    private PAStatusPanel statusPanel;
     private PASVGContainer svgContainer;
     private JPanel mainPanel;
-    private JPanel svgBackPanel;
+    private JScrollPane svgBackPanel;
     private JDesktopPane parent;
     /**
      *
@@ -48,7 +51,7 @@ public class PAMainFrame extends JInternalFrame
         initialize();
         customize();
         setFrameLayout();
-        setAttributes();
+        setUpMainFrame();
     }
 
     /**
@@ -60,23 +63,25 @@ public class PAMainFrame extends JInternalFrame
         statusPanel = new PAStatusPanel(this);
         attributeBar = new PAShapeBar(this);
         svgPanel = new PASVGPanel(svgContainer, svgImage);
+        box = new Box(BoxLayout.Y_AXIS);
         mainPanel = new JPanel();
-        svgBackPanel = new JPanel();
+        svgBackPanel = new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
 
     private void customize()
     {
         Dimension minSize = new Dimension(getWidth(), getHeight() - 100);
-        Box box = new Box(BoxLayout.Y_AXIS);
 
         box.setBackground(new Color(38, 38, 38));
         box.add(Box.createVerticalGlue());
         box.add(svgPanel);
         box.add(Box.createVerticalGlue());
-        svgBackPanel.setLayout(new BorderLayout());
-        svgBackPanel.add(box, BorderLayout.CENTER);
+        //svgBackPanel.setLayout(new BorderLayout());
+        //svgBackPanel.add(box, BorderLayout.CENTER);
         svgBackPanel.setMinimumSize(minSize);
-        svgBackPanel.setBackground(new Color(38, 38, 38));
+        svgBackPanel.revalidate();
+        svgBackPanel.setBorder(BorderFactory.createLineBorder(new Color(38, 38, 38), 1));
+        svgBackPanel.getViewport().setBackground(new Color(38, 38, 38));
         //mainPanel.setPreferredSize(new Dimension(800, 600));
     }
 
@@ -84,7 +89,7 @@ public class PAMainFrame extends JInternalFrame
      *
      * Set the attributes of the Internal Frame
      */
-    private void setAttributes()
+    private void setUpMainFrame()
     {
         Dimension screenResolution = PASystem.getScreenDimension();
         int mainFrameWidth = (int) svgContainer.getSvgTag().getWidth();
@@ -117,8 +122,8 @@ public class PAMainFrame extends JInternalFrame
             int screenWidth = (int) screenResolution.getWidth();
             int screenHeight = (int) screenResolution.getHeight() - 86;
             screenResolution = new Dimension(screenWidth, screenHeight);
-            mainFrameWidth += 23;
-            mainFrameHeight += 20;
+            mainFrameWidth += 28;
+            mainFrameHeight += 25;
         }
         
         mainFrameHeight = mainFrameHeight + 30 + 24 * 2;
