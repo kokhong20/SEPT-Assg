@@ -137,6 +137,10 @@ public class PADrawingItem
         //Line
         PAToolKitAction.DrawLineAction drawLineAction = new PAToolKitAction.DrawLineAction(mainFrame.svgPanel,line,mainFrame.attributeBar);
         line.setAction(drawLineAction);
+        
+        //Circle
+        PAToolKitAction.DrawCircleAction drawCircleAction = new PAToolKitAction.DrawCircleAction(mainFrame.svgPanel,circle,mainFrame.attributeBar);
+        circle.setAction(drawCircleAction);
     }
 
 }

@@ -19,6 +19,23 @@ public class PACircle extends PASVGElement
     }
 
     /**
+     * Constructor to create a new PACircle object with all the attributes
+     * @param fill
+     * @param stroke
+     * @param strokeWidth
+     * @param cx
+     * @param cy
+     * @param r 
+     */
+    public PACircle(Color fill, Color stroke, double strokeWidth , double cx, double cy, double r)
+    {
+        super(fill,stroke,strokeWidth);
+        this.cx = cx;
+        this.cy = cy;
+        this.r = r ;
+    }
+
+    /**
      * Constructor which receives a node
      *
      * @param node

@@ -22,6 +22,24 @@ public class PALine extends PASVGElement
     public PALine()
     {
     }
+    
+    /**
+     * Constructor which create a new PALine object with all attributes
+     * @param stroke
+     * @param strokeWidth
+     * @param x1
+     * @param x2
+     * @param y1
+     * @param y2 
+     */
+    public PALine(Color stroke, double strokeWidth, double x1, double x2, double y1, double y2)
+    {
+        super(stroke,strokeWidth);
+        this.x1 = x1;
+        this.x2 = x2;
+        this.y1 = y1;
+        this.y2 = y2;
+    }
 
     /**
      * Constructor which receives a node

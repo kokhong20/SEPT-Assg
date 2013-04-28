@@ -30,7 +30,11 @@ public abstract class PASVGElement implements PAAttributeConstant  {
 	}
 	
 	/**
-	 * 
+	 * Constructor which receives fill, stroke and strokeWidth for rectangle and circle object
+         * @param fill
+         * @param stroke
+         * @param strokeWidth
+         * 
 	 */
 	public PASVGElement(Color fill, Color stroke, double strokeWidth) 
 	{
@@ -38,6 +42,17 @@ public abstract class PASVGElement implements PAAttributeConstant  {
 		this.stroke = stroke;
 		this.strokeWidth = strokeWidth;
 	}
+        
+        /**
+         * Constructor which receives stoke and strokeWidth for line object
+         * @param stroke
+         * @param strokeWidth 
+         */
+        public PASVGElement(Color stroke,double strokeWidth)
+        {
+            this.stroke = stroke;
+            this.strokeWidth = strokeWidth;
+        }
 
 	/**
 	 * Constructor which receives a node

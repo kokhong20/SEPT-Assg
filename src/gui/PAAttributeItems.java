@@ -36,16 +36,16 @@ public class PAAttributeItems
      * @param borderColor Border's Color
      * @param initialValue initial value of the JSpinner
      */
-    public void createSpinner(JSpinner spinner, Dimension dim, Color borderColor, int initialValue)
+    public void createSpinner(JSpinner spinner, Dimension dim, Color borderColor, double initialValue)
     {
         spinner.setPreferredSize(dim);
         spinner.setMaximumSize(dim);
         spinner.setMinimumSize(dim);
 
         SpinnerModel model = new SpinnerNumberModel(initialValue, //initial value
-                0, //min
-                100, //max
-                1); //step
+                0f, //min
+                100f, //max
+                1f); //step
 
         spinner.setModel(model);
 
