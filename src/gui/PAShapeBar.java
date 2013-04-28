@@ -71,7 +71,7 @@ public class PAShapeBar extends JPanel
 
         // JSpinner
         strokeWidthBox = new JSpinner();
-        attrItems.createSpinner(strokeWidthBox, new Dimension(50, 20), new Color(60, 60, 60), 11);
+        attrItems.createSpinner(strokeWidthBox, new Dimension(50, 20), new Color(60, 60, 60), 1);
 
         // JButton
         strokeButton = new JButton();

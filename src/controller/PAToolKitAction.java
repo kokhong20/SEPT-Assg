@@ -1,5 +1,6 @@
 package controller;
 
+import gui.PADrawingItem;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 
@@ -17,7 +18,8 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.JToggleButton;
 
 import model.PAColor;
 import model.PARectangle;
@@ -31,15 +33,15 @@ import model.PAUnit;
  */
 public abstract class PAToolKitAction extends AbstractAction
 {
-    protected JButton button;
+    protected JToggleButton button;
     protected PASVGPanel drawPanel;
     protected BufferedImage drawImage;
     protected LinkedList<PASVGElement> elementCollection;
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
-    protected double strokeWidth;
+    protected int strokeWidth;
 
-    public PAToolKitAction(PASVGPanel drawPanel, JButton button,
+    public PAToolKitAction(PASVGPanel drawPanel, JToggleButton button,
             PAShapeBar shapeBar)
     {
         this.button = button;
@@ -51,13 +53,12 @@ public abstract class PAToolKitAction extends AbstractAction
 
     public void setShapeAttributes()
     {
-        fill = shapeBar.fillButton.isEnabled() ? shapeBar.fillButton
+        fill = shapeBar.fillCheck.isSelected() ? shapeBar.fillButton
                 .getBackground() : PAColor.DEFAULT_FILL;
-        stroke = shapeBar.strokeButton.isEnabled() ? shapeBar.strokeButton
+        stroke = shapeBar.strokeCheck.isSelected() ? shapeBar.strokeButton
                 .getBackground() : PAColor.DEFAULT_FILL;
-//        strokeWidth = shapeBar.strokeWidthBox.isEnabled() ? (double) shapeBar.strokeWidthBox
-//                .getValue() : PAUnit.DEFAULT_STROKE_WIDTH;
-        strokeWidth = 0;
+        strokeWidth = shapeBar.strokeWidthBox.isEnabled() ? (Integer) shapeBar.strokeWidthBox
+                .getValue() : PAUnit.DEFAULT_STROKE_WIDTH;
     }
 
     public abstract void addActionToComponents();
@@ -72,7 +73,7 @@ public abstract class PAToolKitAction extends AbstractAction
         Point startDrag, endDrag;
         PASVGElement rect;
 
-        public DrawRectangleAction(PASVGPanel drawPanel, JButton button,
+        public DrawRectangleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
             super(drawPanel, button, shapeBar);
@@ -81,7 +82,24 @@ public abstract class PAToolKitAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            addActionToComponents();
+            if(button.isSelected())
+            {
+                if((PADrawingItem.buttonSelected!=null)&&(!PADrawingItem.buttonSelected.equals(button)))
+                {
+                    PADrawingItem.buttonSelected.setSelected(false);
+                    PADrawingItem.buttonSelected.setBorder(null);
+                }
+                addActionToComponents();
+                button.setBorder(BorderFactory.createLineBorder(new Color(35, 192, 255,100), 1));
+                    
+                PADrawingItem.buttonSelected = button;
+                System.out.println(PADrawingItem.buttonSelected);
+            }
+            else
+            {
+                PADrawingItem.buttonSelected = null;
+                button.setBorder(null);
+            }
         }
 
         @Override
@@ -129,9 +147,9 @@ public abstract class PAToolKitAction extends AbstractAction
         }
 
         private PARectangle makeRectangle(Color fill, Color stroke,
-                double strokeWidth, int x1, int y1, int x2, int y2)
+                int strokeWidth, int x1, int y1, int x2, int y2)
         {
-            return new PARectangle(fill, stroke, strokeWidth,
+            return new PARectangle(fill, stroke, (double)strokeWidth,
                     (double) Math.min(x1, x2), (double) Math.min(y1, y2),
                     (double) Math.abs(x1 - x2), (double) Math.abs(y1 - y2));
         }
@@ -169,5 +187,48 @@ public abstract class PAToolKitAction extends AbstractAction
 
         }
 
+    }
+    
+    /**
+     * 
+     * 
+     */
+    public static class DrawLineAction extends PAToolKitAction
+    {
+
+        public DrawLineAction(PASVGPanel drawPanel, JToggleButton button,
+                PAShapeBar shapeBar)
+        {
+            super(drawPanel, button, shapeBar);
+        }
+        @Override
+        public void addActionToComponents()
+        {
+            System.out.println("action");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            if(button.isSelected())
+            {
+                if((PADrawingItem.buttonSelected!=null)&&(!PADrawingItem.buttonSelected.equals(button)))
+                {
+                    PADrawingItem.buttonSelected.setSelected(false);
+                    PADrawingItem.buttonSelected.setBorder(null);
+                }
+                addActionToComponents();
+                button.setBorder(BorderFactory.createLineBorder(new Color(35, 192, 255,100), 1));
+                    
+                PADrawingItem.buttonSelected = button;
+                System.out.println(PADrawingItem.buttonSelected);
+            }
+            else
+            {
+                PADrawingItem.buttonSelected = null;
+                button.setBorder(null);
+            }
+        }
+        
     }
 }

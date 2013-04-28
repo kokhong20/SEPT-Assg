@@ -45,7 +45,8 @@ public class PADrawingKit extends JInternalFrame
         this.setLayout(null);
         this.setBackground(new Color(40, 40, 40));
         this.setVisible(true);
-        this.setSize(100, 270);
+        this.setSize(80, 240);
+        this.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         //Set location based on user's computer resolution
         this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())),
                 ((int) (0.2 * PASystem.getScreenDimension().getHeight())));
