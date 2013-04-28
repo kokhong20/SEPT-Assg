@@ -102,6 +102,20 @@ public class PASystem
             return path += "\\" + selectedFile.getName();
         }
     }
+    
+    /**
+     * set Key mask based on currentOS
+     * @return mask constant
+     */
+    public static int setKeyMask()
+    {
+        if (currentOS.indexOf("mac") >= 0)
+        {
+            return Event.META_MASK;
+        }
+
+        return Event.CTRL_MASK;
+    }
 
     /**
      * set the look and feel of system based on currentOS
@@ -138,19 +152,4 @@ public class PASystem
             System.err.println(ex.getMessage());
         }
     }
-
-    /**
-     * set Key mask based on currentOS
-     * @return mask constant
-     */
-    public static int setKeyMask()
-    {
-        if (currentOS.indexOf("mac") >= 0)
-        {
-            return Event.META_MASK;
-        }
-
-        return Event.CTRL_MASK;
-    }
-
 }

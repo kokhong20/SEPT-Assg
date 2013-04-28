@@ -5,6 +5,7 @@
 package controller;
 
 import gui.PAMainFrame;
+import gui.PANewFileSetting;
 import gui.PAStartMenu;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -76,6 +77,7 @@ public abstract class PAMenuAction extends AbstractAction
     public static class NewFile extends PAMenuAction
     {
         private JDesktopPane parent;
+        private PAStartMenu startMenu;
 
         public NewFile(JDesktopPane parent)
         {
@@ -83,10 +85,27 @@ public abstract class PAMenuAction extends AbstractAction
             this.parent = parent;
         }
 
+        public NewFile(JDesktopPane parent, PAStartMenu startMenu)
+        {
+            super(KeyEvent.VK_N, "New");
+            this.parent = parent;
+            this.startMenu = startMenu;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            PANewFileSetting newFileSetting = new PANewFileSetting();
+            parent.add(newFileSetting);
+
+            try
+            {
+                newFileSetting.setSelected(true);
+            }
+            catch (PropertyVetoException ex)
+            {
+                System.err.println(ex.getMessage());
+            }
         }
 
     }
@@ -105,7 +124,7 @@ public abstract class PAMenuAction extends AbstractAction
             super(KeyEvent.VK_O, "Open...");
             this.parent = parent;
         }
-        
+
         public OpenFile(JDesktopPane parent, PAStartMenu startMenu)
         {
             super(KeyEvent.VK_O, "Open...");
@@ -123,14 +142,11 @@ public abstract class PAMenuAction extends AbstractAction
             FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
             Dimension screenResolution = PASystem.getScreenDimension();
             PAFileChooserAction fcAction;
-            int startX ,startY;
-            Point startPoint;
-            
+
             if (startMenu != null)
             {
-                 fcAction = new PAFileChooserAction(parent, startMenu, fileChooser, fcInternal);
+                fcAction = new PAFileChooserAction(parent, startMenu, fileChooser, fcInternal);
             }
-            
             else
             {
                 fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
@@ -144,10 +160,10 @@ public abstract class PAMenuAction extends AbstractAction
             fileChooser.setFileFilter(allFilter);
             fcInternal.add(fileChooser);
             fcInternal.pack();
-            
-            startX = (int) (screenResolution.getWidth() - fcInternal.getWidth()) / 2;
-            startY = (int) (screenResolution.getHeight() - fcInternal.getHeight()) / 2;
-            startPoint = new Point(startX, startY);
+
+            int startX = (int) (screenResolution.getWidth() - fcInternal.getWidth()) / 2;
+            int startY = (int) (screenResolution.getHeight() - fcInternal.getHeight()) / 2;
+            Point startPoint = new Point(startX, startY);
             fcInternal.setLocation(startPoint);
             fcInternal.setVisible(true);
             parent.add(fcInternal);

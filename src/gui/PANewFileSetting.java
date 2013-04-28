@@ -6,6 +6,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +14,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import model.PASystem;
 
 /**
  *
@@ -54,7 +56,7 @@ public class PANewFileSetting extends JInternalFrame
         unitSelection = new JComboBox(unitList);
         cancelButton = new JButton("Cancel");
         okButton = new JButton("OK");
-        
+
         fileName = setUpLabel("Name: ");
         width = setUpLabel("Width: ");
         height = setUpLabel("Height: ");
@@ -67,7 +69,7 @@ public class PANewFileSetting extends JInternalFrame
 
         formPane.setSize(new Dimension(380, 250));
         formPane.setBackground(new Color(28, 28, 28, 240));
-        formPane.setVisible(true);     
+        formPane.setVisible(true);
         fileNameField.setText("Untitled-1");
         widthField.setText("500");
         heightField.setText("500");
@@ -75,23 +77,23 @@ public class PANewFileSetting extends JInternalFrame
         unitSelection.setMaximumSize(new Dimension(120, 0));
         okButton.setSelected(true);
     }
-    
+
     private JLabel setUpLabel(String name)
     {
         JLabel label = new JLabel(name);
         label.setMaximumSize(new Dimension(80, 0));
         label.setForeground(Color.white);
-        
+
         return label;
     }
-    
+
     private JTextField setUpTextField()
     {
         JTextField textField = new JTextField();
         textField.setMaximumSize(new Dimension(200, 0));
         textField.setBackground(new Color(50, 50, 50));
         textField.setForeground(Color.white);
-        
+
         return textField;
     }
 
@@ -153,6 +155,13 @@ public class PANewFileSetting extends JInternalFrame
     {
         add(formPane);
         setSize(new Dimension(380, 250));
+        
+        Dimension screenResolution = PASystem.getScreenDimension();
+        int startX = (int) (screenResolution.getWidth() - this.getWidth()) / 2;
+        int startY = (int) (screenResolution.getHeight() - this.getHeight()) / 2;
+        Point startPoint = new Point(startX, startY);
+        
+        setLocation(startPoint);
         setVisible(true);
     }
 
