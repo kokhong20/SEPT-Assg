@@ -10,7 +10,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
@@ -45,6 +44,7 @@ public class PASVGPanel extends JPanel
 
 	private Shape selectedShape;
 	private Rectangle2D handleRectangle;
+	private Line2D handleLine;
 	private Cursor curCursor;
 	private int x1, y1, x2, y2;
 
@@ -115,14 +115,14 @@ public class PASVGPanel extends JPanel
 			}
 		}
 
-		if (handleRectangle != null)
+		if (handleRectangle != null || handleLine != null)
 		{
 			if (selectedShape instanceof Rectangle2D)
 				drawRectHighlight((Graphics2D) g, handleRectangle);
 			else if (selectedShape instanceof Ellipse2D)
 				drawEllipseHighlight((Graphics2D) g, handleRectangle);
 			else if (selectedShape instanceof Line2D)
-				drawLineHighlight((Graphics2D) g, handleRectangle);
+				drawLineHighlight((Graphics2D) g, handleLine);
 		}
 	}
 
@@ -227,10 +227,25 @@ public class PASVGPanel extends JPanel
 		g2D.draw(rect4);
 	}
 
-	private void drawLineHighlight(Graphics2D g2D, Rectangle2D r)
+	private void drawLineHighlight(Graphics2D g2D, Line2D r)
 	{
 		// TODO Auto-generated method stub
+		double x1 = r.getX1();
+		double x2 = r.getX2();
+		double y1 = r.getY1();
+		double y2 = r.getY2();
+		
+		Rectangle.Double rect1 = new Rectangle.Double(x1 - 3.0, y1 - 3.0, 6.0, 6.0);
+		g2D.setColor(Color.white);
+		g2D.fill(rect1);
+		g2D.setColor(Color.black);
+		g2D.draw(rect1);
 
+		Rectangle.Double rect2 = new Rectangle.Double(x2, y2, 6.0, 6.0);
+		g2D.setColor(Color.white);
+		g2D.fill(rect2);
+		g2D.setColor(Color.black);
+		g2D.draw(rect2);
 	}
 
 	private Rectangle2D.Double makeRectangle(int x1, int y1, int x2, int y2)
@@ -258,29 +273,42 @@ public class PASVGPanel extends JPanel
 		public void mouseClicked(MouseEvent e)
 		{
 			// TODO Auto-generated method stub
+			
 			for (Shape shapes : svgContainer.getShapesCollection().keySet())
 			{
 				if (shapes instanceof Line2D)
 				{
 					Line2D line = (Line2D) shapes;
+					if(line.intersects(new Rectangle2D.Double((double)e.getX() - 3.0, (double)e.getY() - 3.0, 6.0, 6.0)))
+					{
+						System.out.println(shapes + " is clicked");
+
+						selectedShape = line;
+						handleRectangle = null;
+						handleLine =  line;
+					}
 
 				} else
 				{
 					if (shapes.contains(e.getX(), e.getY()))
 					{
 						System.out.println(shapes + " is clicked");
-
+						
 						selectedShape = shapes;
+						handleLine = null;
 						handleRectangle = shapes.getBounds2D();
-
-						repaint();
-						return;
 					}
 				}
+				
+
+				repaint();
 			}
 
-			if (handleRectangle != null)
+			if (handleRectangle != null && handleLine != null)
+			{
+				handleLine = null; 
 				handleRectangle = null;
+			}
 		}
 
 		@Override
