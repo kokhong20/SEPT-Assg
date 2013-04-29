@@ -13,6 +13,7 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -226,10 +227,10 @@ public abstract class PAToolKitAction extends AbstractAction
                     {
                         setShapeAttributes();
                         System.out.println("Mouse Released" + startDrag + "End" + endDrag);
-//                        circle = makeLine(stroke, strokeWidth,
-//                                startDrag.x, startDrag.y, e.getX(), e.getY());
+                        circle = makeCircle(fill, stroke, strokeWidth,
+                                startDrag.x, startDrag.y, e.getX(), e.getY());
                         elementCollection.add(circle);
-//                        overwriteImage();
+                        overwriteImage();
                         startDrag = null;
                         endDrag = null;
                         drawPanel.repaint();
@@ -253,30 +254,37 @@ public abstract class PAToolKitAction extends AbstractAction
             drawPanel.addMouseMotionListener(mouseRectAction);
         }
 
-//        private PACircle makeCircle(Color fill ,Color stroke, double strokeWidth, double cx, double cy , double r)
-//        {
-//            return new PACircle(fill, stroke, (double) strokeWidth,(double)x1,(double)y1,(double)x2,(double)y2);
-//        }
-//        
-//                private void overwriteImage()
-//        {
-//            double x1 = ((PALine) line).getX1();
-//            double y1 = ((PALine) line).getY1();
-//            double x2 = ((PALine) line).getX2();
-//            double y2 = ((PALine) line).getY2();
-//            Line2D.Double rect2D = new Line2D.Double(x1, y1, x2, y2);
-//            
-//            BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
-//
-//            Graphics2D g2d = drawImage.createGraphics();
-//            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//            g2d.setColor(stroke);
-//            
-//            g2d.setStroke(basicStroke);
-//            g2d.draw(rect2D);
-//
-//        }
-//
+        private PACircle makeCircle(Color fill, Color stroke, double strokeWidth, int x1, int y1, int x2, int y2)
+        {
+            double cx, cy, r;
+            r = (Math.abs(x1 - x2) > Math.abs(y1 - y2) ? Math.abs(x1 - x2) : Math.abs(y1 - y2)) / 2;
+            cx = x1 + r;
+            cy = y1 + r;
+            return new PACircle(fill, stroke, (double) strokeWidth, cx, cy, r);
+        }
+
+        private void overwriteImage()
+        {
+            double x = ((PACircle) circle).getCx() - ((PACircle) circle).getR();
+            double y = ((PACircle) circle).getCy() - ((PACircle) circle).getR();
+            double diameter = ((PACircle) circle).getR() * 2;
+
+            Ellipse2D.Double circle2D = new Ellipse2D.Double(x, y, diameter, diameter);
+
+            BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
+
+            Graphics2D g2d = drawImage.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            g2d.setColor(fill);
+            g2d.fill(circle2D);
+            g2d.setColor(stroke);
+
+            g2d.setStroke(basicStroke);
+            g2d.draw(circle2D);
+
+        }
+
     }
 
     public static class DrawLineAction extends PAToolKitAction

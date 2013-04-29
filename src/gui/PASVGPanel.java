@@ -86,11 +86,7 @@ public class PASVGPanel extends JPanel
                     g2d.draw(circle);
                     break;
 
-
-
             }
-
-            System.out.println("drawwwwww");
         }
     }
 
@@ -106,7 +102,8 @@ public class PASVGPanel extends JPanel
 
     private Ellipse2D.Double makeCircle(int x1, int y1, int x2, int y2)
     {
-        return new Ellipse2D.Double(x1, y1, Math.abs(x1 - x2), Math.abs(y1 - y2));
+        double width = (Math.abs(x1 - x2) > Math.abs(y1 - y2) ? Math.abs(x1 - x2) : Math.abs(y1 - y2));
+        return new Ellipse2D.Double(x1, y1, width, width);
     }
 
 }
