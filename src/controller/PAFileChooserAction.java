@@ -7,10 +7,12 @@ package controller;
 import gui.PADrawingKit;
 import gui.PAMainFrame;
 import gui.PAStartMenu;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
@@ -19,10 +21,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+
 import model.PACircle;
 import model.PALine;
 import model.PARectangle;
@@ -31,6 +36,7 @@ import model.PASVGElement;
 import model.PASVGGroup;
 import model.PASVGImport;
 import model.PASVGTag;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -49,6 +55,8 @@ public class PAFileChooserAction implements ActionListener
     private PASVGImport svgImport;
     private PAStartMenu startMenu;
     private LinkedList<PASVGElement> elementCollection;
+    
+    private LinkedHashMap<Shape, PASVGElement> shapesCollection;
 
     /**
      *
@@ -130,6 +138,8 @@ public class PAFileChooserAction implements ActionListener
         g2d.setColor(((PASVGElement) drawItem).getStroke());
         g2d.setStroke(stroke);
         g2d.draw(circle);
+
+        shapesCollection.put(circle, drawItem);
     }
 
     private void drawRect(Graphics2D g2d, PASVGElement drawItem)
@@ -148,6 +158,8 @@ public class PAFileChooserAction implements ActionListener
         g2d.setColor(((PASVGElement) drawItem).getStroke());
         g2d.setStroke(stroke);
         g2d.draw(rect);
+
+        shapesCollection.put(rect, drawItem);
     }
 
     private void drawLine(Graphics2D g2d, PASVGElement drawItem)
@@ -164,6 +176,8 @@ public class PAFileChooserAction implements ActionListener
         g2d.setColor(((PASVGElement) drawItem).getStroke());
         g2d.setStroke(stroke);
         g2d.draw(line);
+
+        shapesCollection.put(line, drawItem);
     }
 
     /**
@@ -184,9 +198,13 @@ public class PAFileChooserAction implements ActionListener
             svgWidth = (int) svgTag.getWidth();
             svgHeight = (int) svgTag.getHeight();
             elementCollection = PASVGImport.readSVGElements(svgDoc);
+            //
+            shapesCollection = new LinkedHashMap<Shape, PASVGElement>();
+            //
             drawToImage();
-            
-            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+
+//            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+            PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection, shapesCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, svgImage);
             PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
             parent.add(svgDisplay);

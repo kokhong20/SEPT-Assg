@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Shape;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
@@ -10,6 +12,8 @@ public class PASVGContainer
 {
     private PASVGTag svgTag;
     private LinkedList<PASVGElement> svgContainer;
+    
+    private LinkedHashMap<Shape, PASVGElement> shapesCollection;
 
     /**
      * constructor with only svgTag such that from a newly created svg
@@ -20,6 +24,7 @@ public class PASVGContainer
     {
         setSvgTag(svgTag);
         setSvgContainer(new LinkedList<PASVGElement>());
+        setShapesCollection(new LinkedHashMap<Shape, PASVGElement>());
     }
 
     /**
@@ -32,6 +37,13 @@ public class PASVGContainer
     {
         setSvgTag(svgTag);
         setSvgContainer(shapes);
+    }
+
+    public PASVGContainer(PASVGTag svgTag, LinkedList<PASVGElement> shapes, LinkedHashMap<Shape, PASVGElement> shapeCollection)
+    {
+        setSvgTag(svgTag);
+        setSvgContainer(shapes);
+        setShapesCollection(shapeCollection);
     }
 
     /**
@@ -67,6 +79,22 @@ public class PASVGContainer
     }
 
     /**
+	 * @return the shapesCollection
+	 */
+	public LinkedHashMap<Shape, PASVGElement> getShapesCollection()
+	{
+		return shapesCollection;
+	}
+
+	/**
+	 * @param shapesCollection the shapesCollection to set
+	 */
+	public void setShapesCollection(LinkedHashMap<Shape, PASVGElement> shapesCollection)
+	{
+		this.shapesCollection = shapesCollection;
+	}
+
+	/**
      * Add a new shape
      * @param shape
      * @return true if shape is successfully added, return false otherwise
