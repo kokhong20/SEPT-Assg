@@ -17,13 +17,14 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JToggleButton;
-import model.PACircle;
 
+import model.PACircle;
 import model.PAColor;
 import model.PALine;
 import model.PARectangle;
@@ -42,6 +43,7 @@ public abstract class PAToolKitAction extends AbstractAction
     protected PASVGPanel drawPanel;
     protected BufferedImage drawImage;
     protected LinkedList<PASVGElement> elementCollection;
+    protected LinkedHashMap<Shape, PASVGElement> shapeCollection;
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
     protected double strokeWidth;
@@ -53,6 +55,7 @@ public abstract class PAToolKitAction extends AbstractAction
         this.shapeBar = shapeBar;
         this.drawImage = drawPanel.svgImage;
         elementCollection = drawPanel.svgContainer.getSvgContainer();
+        shapeCollection = drawPanel.svgContainer.getShapesCollection();
     }
 
     public void setShapeAttributes()
@@ -185,6 +188,7 @@ public abstract class PAToolKitAction extends AbstractAction
             g2d.setStroke(basicStroke);
             g2d.draw(rect2D);
 
+            shapeCollection.put(rect2D, (PARectangle) rect);
         }
 
     }
@@ -283,6 +287,7 @@ public abstract class PAToolKitAction extends AbstractAction
             g2d.setStroke(basicStroke);
             g2d.draw(circle2D);
 
+            shapeCollection.put(circle2D, (PACircle) circle);
         }
 
     }
@@ -359,7 +364,7 @@ public abstract class PAToolKitAction extends AbstractAction
             double y1 = ((PALine) line).getY1();
             double x2 = ((PALine) line).getX2();
             double y2 = ((PALine) line).getY2();
-            Line2D.Double rect2D = new Line2D.Double(x1, y1, x2, y2);
+            Line2D.Double line2D = new Line2D.Double(x1, y1, x2, y2);
 
             BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
 
@@ -368,8 +373,9 @@ public abstract class PAToolKitAction extends AbstractAction
             g2d.setColor(stroke);
 
             g2d.setStroke(basicStroke);
-            g2d.draw(rect2D);
+            g2d.draw(line2D);
 
+            shapeCollection.put(line2D, (PALine) line);
         }
 
     }

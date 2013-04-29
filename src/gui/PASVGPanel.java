@@ -45,6 +45,7 @@ public class PASVGPanel extends JPanel
 	private Shape selectedShape;
 	private Rectangle2D handleRectangle;
 	private Line2D handleLine;
+	private PALine selectedLine;
 	private Cursor curCursor;
 	private int x1, y1, x2, y2;
 
@@ -122,7 +123,7 @@ public class PASVGPanel extends JPanel
 			else if (selectedShape instanceof Ellipse2D)
 				drawEllipseHighlight((Graphics2D) g, handleRectangle);
 			else if (selectedShape instanceof Line2D)
-				drawLineHighlight((Graphics2D) g, handleLine);
+				drawLineHighlight((Graphics2D) g, handleLine, selectedLine);
 		}
 	}
 
@@ -161,28 +162,28 @@ public class PASVGPanel extends JPanel
 		g2D.setColor(Color.black);
 		g2D.draw(rect4);
 
-		Rectangle.Double rect5 = new Rectangle.Double(x + (h / 2) - 3.0, y - 3.0, 6.0,
+		Rectangle.Double rect5 = new Rectangle.Double(x + (w / 2) - 3.0, y - 3.0, 6.0,
 				6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect5);
 		g2D.setColor(Color.black);
 		g2D.draw(rect5);
 
-		Rectangle.Double rect6 = new Rectangle.Double(x - 3.0, y + (w / 2) - 3.0,
+		Rectangle.Double rect6 = new Rectangle.Double(x - 3.0, y + (h / 2) - 3.0,
 				6.0, 6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect6);
 		g2D.setColor(Color.black);
 		g2D.draw(rect6);
 		
-		Rectangle.Double rect7 = new Rectangle.Double(x + w - 3.0, y + (w / 2) - 3.0,
+		Rectangle.Double rect7 = new Rectangle.Double(x + w - 3.0, y + (h / 2) - 3.0,
 				6.0, 6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect7);
 		g2D.setColor(Color.black);
 		g2D.draw(rect7);
 
-		Rectangle.Double rect8 = new Rectangle.Double(x + (h / 2) - 3.0, y + h - 3.0,
+		Rectangle.Double rect8 = new Rectangle.Double(x + (w / 2) - 3.0, y + h - 3.0,
 				6.0, 6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect8);
@@ -227,7 +228,7 @@ public class PASVGPanel extends JPanel
 		g2D.draw(rect4);
 	}
 
-	private void drawLineHighlight(Graphics2D g2D, Line2D r)
+	private void drawLineHighlight(Graphics2D g2D, Line2D r, PALine l)
 	{
 		// TODO Auto-generated method stub
 		double x1 = r.getX1();
@@ -235,7 +236,9 @@ public class PASVGPanel extends JPanel
 		double y1 = r.getY1();
 		double y2 = r.getY2();
 		
-		Rectangle.Double rect1 = new Rectangle.Double(x1 - 3.0, y1 - 3.0, 6.0, 6.0);
+		double w = l.getStrokeWidth();
+		
+		Rectangle.Double rect1 = new Rectangle.Double(x1 - (w/2), y1 - (w/2), 6.0, 6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect1);
 		g2D.setColor(Color.black);
@@ -281,21 +284,19 @@ public class PASVGPanel extends JPanel
 					Line2D line = (Line2D) shapes;
 					if(line.intersects(new Rectangle2D.Double((double)e.getX() - 3.0, (double)e.getY() - 3.0, 6.0, 6.0)))
 					{
-						System.out.println(shapes + " is clicked");
-
 						selectedShape = line;
 						handleRectangle = null;
 						handleLine =  line;
+						selectedLine = (PALine) svgContainer.getShapesCollection().get(line);
 					}
 
 				} else
 				{
 					if (shapes.contains(e.getX(), e.getY()))
 					{
-						System.out.println(shapes + " is clicked");
-						
 						selectedShape = shapes;
 						handleLine = null;
+						selectedLine = null;
 						handleRectangle = shapes.getBounds2D();
 					}
 				}
@@ -329,23 +330,23 @@ public class PASVGPanel extends JPanel
 		public void mousePressed(MouseEvent e)
 		{
 			// TODO Auto-generated method stub
-			for (Shape shapes : svgContainer.getShapesCollection().keySet())
-			{
-				if (shapes.contains(e.getX(), e.getY()))
-				{
-					selectedShape = shapes;
-					if (handleRectangle != null)
-					{
-						handleRectangle = shapes.getBounds2D();
-					}
-				} else
-				{
-					handleRectangle = null;
-				}
-				repaint();
-				x1 = e.getX();
-				y1 = e.getY();
-			}
+//			for (Shape shapes : svgContainer.getShapesCollection().keySet())
+//			{
+//				if (shapes.contains(e.getX(), e.getY()))
+//				{
+//					selectedShape = shapes;
+//					if (handleRectangle != null)
+//					{
+//						handleRectangle = shapes.getBounds2D();
+//					}
+//				} else
+//				{
+//					handleRectangle = null;
+//				}
+//				repaint();
+//				x1 = e.getX();
+//				y1 = e.getY();
+//			}
 		}
 
 		@Override
@@ -368,32 +369,32 @@ public class PASVGPanel extends JPanel
 		public void mouseDragged(MouseEvent e)
 		{
 			// TODO Auto-generated method stub
-			for (Shape shapes : svgContainer.getShapesCollection().keySet())
-			{
-				if (shapes.contains(e.getX(), e.getY()))
-				{
-					PASVGElement svgElement;
-					svgElement = svgContainer.getShapesCollection().get(shapes);
-					int x = (int) ((PARectangle) svgElement).getX();
-					int y = (int) ((PARectangle) svgElement).getY();
-
-					handleRectangle = null;
-					selectedShape = shapes;
-					x2 = e.getX();
-					y2 = e.getY();
-
-					x = x + x2 - x1;
-					y = y + y2 - y1;
-
-					((PARectangle) svgElement).setX(x);
-					((PARectangle) svgElement).setY(y);
-
-					x1 = x2;
-					y1 = y2;
-					repaint();
-					return;
-				}
-			}
+//			for (Shape shapes : svgContainer.getShapesCollection().keySet())
+//			{
+//				if (shapes.contains(e.getX(), e.getY()))
+//				{
+//					PASVGElement svgElement;
+//					svgElement = svgContainer.getShapesCollection().get(shapes);
+//					int x = (int) ((PARectangle) svgElement).getX();
+//					int y = (int) ((PARectangle) svgElement).getY();
+//
+//					handleRectangle = null;
+//					selectedShape = shapes;
+//					x2 = e.getX();
+//					y2 = e.getY();
+//
+//					x = x + x2 - x1;
+//					y = y + y2 - y1;
+//
+//					((PARectangle) svgElement).setX(x);
+//					((PARectangle) svgElement).setY(y);
+//
+//					x1 = x2;
+//					y1 = y2;
+//					repaint();
+//					return;
+//				}
+//			}
 		}
 
 		@Override
