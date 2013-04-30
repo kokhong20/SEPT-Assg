@@ -20,6 +20,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
@@ -28,6 +29,7 @@ import model.PALine;
 import model.PASVGContainer;
 import model.PASVGElement;
 import model.PARectangle;
+import model.PASVGGroup;
 
 /**
  * 
@@ -42,12 +44,10 @@ public class PASVGPanel extends JPanel
 	private PAMainFrame mainFrame;
 	public PASVGContainer svgContainer;
 
-	private Shape selectedShape;
 	private Rectangle2D handleRectangle;
 	private Line2D handleLine;
 	private PALine selectedLine;
-	private Cursor curCursor;
-	private int x1, y1, x2, y2;
+	private PASVGElement selectedElement;
 
 	/**
 	 * constructor to define PASVGPanel for PAMainFrame
@@ -118,17 +118,24 @@ public class PASVGPanel extends JPanel
 
 		if (handleRectangle != null || handleLine != null)
 		{
-			if (selectedShape instanceof Rectangle2D)
+			if (selectedElement instanceof PARectangle)
 				drawRectHighlight((Graphics2D) g, handleRectangle);
-			else if (selectedShape instanceof Ellipse2D)
+			else if (selectedElement instanceof PACircle)
 				drawEllipseHighlight((Graphics2D) g, handleRectangle);
-			else if (selectedShape instanceof Line2D)
+			else if (selectedElement instanceof PALine)
 				drawLineHighlight((Graphics2D) g, handleLine, selectedLine);
+//			if (selectedShape instanceof Rectangle2D)
+//				drawRectHighlight((Graphics2D) g, handleRectangle);
+//			else if (selectedShape instanceof Ellipse2D)
+//				drawEllipseHighlight((Graphics2D) g, handleRectangle);
+//			else if (selectedShape instanceof Line2D)
+//				drawLineHighlight((Graphics2D) g, handleLine, selectedLine);
 		}
 	}
 
 	public void drawRectHighlight(Graphics2D g2D, Rectangle2D r)
 	{
+		System.out.println("Entered DrawRect");
 		double x = r.getX();
 		double y = r.getY();
 		double w = r.getWidth();
@@ -244,7 +251,7 @@ public class PASVGPanel extends JPanel
 		g2D.setColor(Color.black);
 		g2D.draw(rect1);
 
-		Rectangle.Double rect2 = new Rectangle.Double(x2, y2, 6.0, 6.0);
+		Rectangle.Double rect2 = new Rectangle.Double(x2 + 3.0, y2 + 3.0, 6.0, 6.0);
 		g2D.setColor(Color.white);
 		g2D.fill(rect2);
 		g2D.setColor(Color.black);
@@ -276,40 +283,68 @@ public class PASVGPanel extends JPanel
 		public void mouseClicked(MouseEvent e)
 		{
 			// TODO Auto-generated method stub
+
+			selectedElement = null;
 			
-			for (Shape shapes : svgContainer.getShapesCollection().keySet())
+			LinkedList<PASVGElement> elementList = svgContainer.getSvgContainer();
+
+			if((selectedElement = iterateContainer(elementList, e.getX(), e.getY())) != null)
 			{
-				if (shapes instanceof Line2D)
-				{
-					Line2D line = (Line2D) shapes;
-					if(line.intersects(new Rectangle2D.Double((double)e.getX() - 3.0, (double)e.getY() - 3.0, 6.0, 6.0)))
-					{
-						selectedShape = line;
-						handleRectangle = null;
-						handleLine =  line;
-						selectedLine = (PALine) svgContainer.getShapesCollection().get(line);
-					}
-
-				} else
-				{
-					if (shapes.contains(e.getX(), e.getY()))
-					{
-						selectedShape = shapes;
-						handleLine = null;
-						selectedLine = null;
-						handleRectangle = shapes.getBounds2D();
-					}
-				}
-				
-
 				repaint();
 			}
-
-			if (handleRectangle != null && handleLine != null)
+		}
+		
+		public PASVGElement iterateContainer(LinkedList<PASVGElement> elementList, int x, int y)
+		{
+			for(int index = elementList.size() - 1; index >= 0; index--)
 			{
-				handleLine = null; 
-				handleRectangle = null;
+				PASVGElement element = elementList.get(index);
+
+				if(element instanceof PALine)
+				{
+					Line2D line = ((PALine) element).getLine2D();
+					if(line.intersects(new Rectangle2D.Double((double)x - 3.0, (double)y - 3.0, 6.0, 6.0)))
+					{
+						handleLine = line;
+						selectedLine = ((PALine) element);
+						handleRectangle = null;
+						return element;
+					}
+				}
+				else if(element instanceof PACircle)
+				{
+					Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
+					if (ellipse.contains(x, y))
+					{
+						handleLine = null;
+						selectedLine = null;
+						handleRectangle = ellipse.getBounds2D();
+						return element;
+					}
+				}
+				else if(element instanceof PARectangle)
+				{
+					Rectangle2D rect = ((PARectangle) element).getRectangle2D();
+					if (rect.contains(x, y))
+					{
+						handleLine = null;
+						selectedLine = null;
+						handleRectangle = rect.getBounds2D();
+						return element;
+					}
+				}
+				else if(element instanceof PASVGGroup)
+				{
+					LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
+					PASVGElement ele = null;
+					if((ele = iterateContainer(groupList, x, y)) != null)
+					{
+						return ele;
+					}
+				}
 			}
+			
+			return null;
 		}
 
 		@Override
@@ -353,15 +388,14 @@ public class PASVGPanel extends JPanel
 		public void mouseReleased(MouseEvent e)
 		{
 			// TODO Auto-generated method stub
-			for (Shape shapes : svgContainer.getShapesCollection().keySet())
+
+			selectedElement = null;
+			
+			LinkedList<PASVGElement> elementList = svgContainer.getSvgContainer();
+
+			if((selectedElement = iterateContainer(elementList, e.getX(), e.getY())) != null)
 			{
-				if (shapes.contains(e.getX(), e.getY()))
-				{
-					handleRectangle = shapes.getBounds2D();
-					selectedShape = shapes;
-					repaint();
-					return;
-				}
+				repaint();
 			}
 		}
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.geom.Line2D;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -15,6 +16,7 @@ public class PALine extends PASVGElement
     private double x2;
     private double y1;
     private double y2;
+    private Line2D.Double line2D;
 
     /**
      *
@@ -83,6 +85,7 @@ public class PALine extends PASVGElement
             this.setX2(PAUnit.setUnit(eNode.getAttribute("x2"), DEFAULT_LENGTH));
             this.setY1(PAUnit.setUnit(eNode.getAttribute("y1"), DEFAULT_LENGTH));
             this.setY2(PAUnit.setUnit(eNode.getAttribute("y2"), DEFAULT_LENGTH));
+            setLine2D();
         }
     }
 
@@ -160,5 +163,21 @@ public class PALine extends PASVGElement
     {
         this.y2 = y2;
     }
+
+	/**
+	 * @return the line2D
+	 */
+	public Line2D.Double getLine2D()
+	{
+		return line2D;
+	}
+
+	/**
+	 * 
+	 */
+	public void setLine2D()
+	{
+		line2D = new Line2D.Double(x1, y1, x2, y2);
+	}
 
 }

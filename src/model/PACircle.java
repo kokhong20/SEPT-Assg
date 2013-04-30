@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,6 +11,7 @@ public class PACircle extends PASVGElement
     private double cx;
     private double cy;
     private double r;
+    private Ellipse2D.Double ellipse2D;
 
     /**
      *
@@ -76,6 +78,7 @@ public class PACircle extends PASVGElement
             this.setCx(PAUnit.setUnit(eNode.getAttribute("cx"), DEFAULT_LENGTH));
             this.setCy(PAUnit.setUnit(eNode.getAttribute("cy"), DEFAULT_LENGTH));
             this.setR(PAUnit.setUnit(eNode.getAttribute("r"), DEFAULT_LENGTH));
+            setEllipse2D();
         }
     }
 
@@ -126,5 +129,24 @@ public class PACircle extends PASVGElement
     {
         this.r = r;
     }
+
+	/**
+	 * @return the ellipse2D
+	 */
+	public Ellipse2D.Double getEllipse2D()
+	{
+		return ellipse2D;
+	}
+
+	/**
+	 * 
+	 */
+	public void setEllipse2D()
+	{
+        double x = cx - r;
+        double y = cy - r;
+        double diameter = r * 2;
+		this.ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter); 
+	}
 
 }

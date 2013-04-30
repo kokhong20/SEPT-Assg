@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,6 +16,7 @@ public class PARectangle extends PASVGElement {
 	private double y;
 	private double width;
 	private double height;
+	private Rectangle2D.Double rectangle2D;
 
         /**
          * 
@@ -74,6 +76,7 @@ public class PARectangle extends PASVGElement {
 			this.setY(PAUnit.setUnit(eNode.getAttribute("y"),DEFAULT_LENGTH));
 			this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),DEFAULT_LENGTH));
 			this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),DEFAULT_LENGTH));
+			setRectangle2D();
 		}
 	}
 
@@ -131,5 +134,21 @@ public class PARectangle extends PASVGElement {
 	 */
 	public void setHeight(double height) {
 		this.height = height;
+	}
+
+	/**
+	 * @return the rectangle2D
+	 */
+	public Rectangle2D.Double getRectangle2D()
+	{
+		return rectangle2D;
+	}
+
+	/**
+	 * 
+	 */
+	public void setRectangle2D()
+	{
+		rectangle2D = new Rectangle2D.Double(x, y, width, height);
 	}
 }
