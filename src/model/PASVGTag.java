@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.util.regex.Pattern;
+import static model.PAAttributeConstant.DEFAULT_SVG_SIZE;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -36,6 +37,14 @@ public class PASVGTag implements PAAttributeConstant
         setNode(node);
         readAttributes();
     }
+    
+    public PASVGTag(String width, String height, String unit)
+    {
+        System.out.println(width);
+        setWidth(PAUnit.setUnit(width, DEFAULT_SVG_SIZE));
+        System.out.println(getWidth());
+        setHeight(PAUnit.setUnit(height, DEFAULT_SVG_SIZE));
+    }
 
     private void readAttributes()
     {
@@ -43,19 +52,14 @@ public class PASVGTag implements PAAttributeConstant
         if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
         {
             Element eNode = (Element) this.getNode();
-            this.setWidth(PAUnit.setUnit(
-                    eNode.getAttribute("width"), DEFAULT_SVG_SIZE));
-            this.setHeight(PAUnit.setUnit(
-                    eNode.getAttribute("height"), DEFAULT_SVG_SIZE));
-
+            setWidth(PAUnit.setUnit(eNode.getAttribute("width"), DEFAULT_SVG_SIZE));
+            setHeight(PAUnit.setUnit(eNode.getAttribute("height"), DEFAULT_SVG_SIZE));
             setViewbox(eNode.getAttribute("viewBox"));
-
-            this.setScale(this.width, this.height, this.viewWidth, this.viewHeight);
-            this.setScaleXY(getScaleX(), getScaleY());
-            this.setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"),
-                    DEFAULT_STROKE_WIDTH));
-            this.setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
-            this.setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
+            setScale(width, height, viewWidth, viewHeight);
+            setScaleXY(getScaleX(), getScaleY());
+            setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"),DEFAULT_STROKE_WIDTH));
+            setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
+            setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
         }
 
     }
@@ -96,7 +100,7 @@ public class PASVGTag implements PAAttributeConstant
     /**
      * @param width the width to set
      */
-    public void setWidth(double width)
+    private void setWidth(double width)
     {
         this.width = width;
     }
@@ -112,7 +116,7 @@ public class PASVGTag implements PAAttributeConstant
     /**
      * @param height the height to set
      */
-    public void setHeight(double height)
+    private void setHeight(double height)
     {
         this.height = height;
     }

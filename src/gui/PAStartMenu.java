@@ -110,7 +110,7 @@ public class PAStartMenu extends JInternalFrame
      */
     private void setUpButton()
     {
-        NewFile newAction = new NewFile(parent);
+        NewFile newAction = new NewFile(parent, this);
         OpenFile openAction = new OpenFile(parent, this);
         newFileButton.setAction(newAction);
         openFileButton.setAction(openAction);

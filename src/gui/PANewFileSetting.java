@@ -4,12 +4,15 @@
  */
 package gui;
 
+import controller.PANewFileSettingAction;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.HashMap;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,21 +36,67 @@ public class PANewFileSetting extends JInternalFrame
     private JTextField widthField;
     private JTextField heightField;
     private JComboBox unitSelection;
+    private JDesktopPane parent;
+    private PAStartMenu startMenu;
 
-    public PANewFileSetting()
+    public PANewFileSetting(JDesktopPane parent)
     {
         super("New");
+        this.parent = parent;
         initialize();
         customize();
+        setAction();
         setUpMainLayout();
         setUpNewFile();
+    }
+
+    public PANewFileSetting(JDesktopPane parent, PAStartMenu startMenu)
+    {
+        super("New");
+        this.parent = parent;
+        this.startMenu = startMenu;
+        initialize();
+        customize();
+        setAction();
+        setUpMainLayout();
+        setUpNewFile();
+    }
+
+    public HashMap getFieldText()
+    {
+        HashMap<String, String> textMap = new HashMap<>();
+        textMap.put("fileName", fileNameField.getText());
+        textMap.put("width", widthField.getText());
+        textMap.put("height", heightField.getText());
+        textMap.put("unit", (String) unitSelection.getSelectedItem());
+
+        return textMap;
+    }
+
+    private JLabel setUpLabel(String name)
+    {
+        JLabel label = new JLabel(name);
+        label.setMaximumSize(new Dimension(80, 0));
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    private JTextField setUpTextField()
+    {
+        JTextField textField = new JTextField();
+        textField.setMaximumSize(new Dimension(200, 0));
+        textField.setBackground(new Color(50, 50, 50));
+        textField.setForeground(Color.white);
+
+        return textField;
     }
 
     private void initialize()
     {
         String[] unitList =
         {
-            "em", "ex", "pixels", "in", "cm", "mm", "pt", "pc", "percent"
+            "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
         };
         formPane = new JPanel();
         fileNameField = setUpTextField();
@@ -78,23 +127,23 @@ public class PANewFileSetting extends JInternalFrame
         okButton.setSelected(true);
     }
 
-    private JLabel setUpLabel(String name)
+    private void setAction()
     {
-        JLabel label = new JLabel(name);
-        label.setMaximumSize(new Dimension(80, 0));
-        label.setForeground(Color.white);
+        okButton.setActionCommand("OK");
+        cancelButton.setActionCommand("CANCEL");
+        PANewFileSettingAction newFileSettingAction;
 
-        return label;
-    }
-
-    private JTextField setUpTextField()
-    {
-        JTextField textField = new JTextField();
-        textField.setMaximumSize(new Dimension(200, 0));
-        textField.setBackground(new Color(50, 50, 50));
-        textField.setForeground(Color.white);
-
-        return textField;
+        if (startMenu != null)
+        {
+            newFileSettingAction = new PANewFileSettingAction(parent, this, startMenu);
+        }
+        else
+        {
+            newFileSettingAction = new PANewFileSettingAction(parent, this);
+        }
+        
+        okButton.addActionListener(newFileSettingAction);
+        cancelButton.addActionListener(newFileSettingAction);
     }
 
     private void setUpMainLayout()
@@ -155,12 +204,12 @@ public class PANewFileSetting extends JInternalFrame
     {
         add(formPane);
         setSize(new Dimension(380, 250));
-        
+
         Dimension screenResolution = PASystem.getScreenDimension();
         int startX = (int) (screenResolution.getWidth() - this.getWidth()) / 2;
         int startY = (int) (screenResolution.getHeight() - this.getHeight()) / 2;
         Point startPoint = new Point(startX, startY);
-        
+
         setLocation(startPoint);
         setVisible(true);
     }

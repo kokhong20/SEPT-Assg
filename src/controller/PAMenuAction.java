@@ -95,7 +95,17 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PANewFileSetting newFileSetting = new PANewFileSetting();
+            PANewFileSetting newFileSetting;
+            
+            if (startMenu != null)
+            {
+                newFileSetting = new PANewFileSetting(parent, startMenu);
+            }
+            else
+            {
+                newFileSetting = new PANewFileSetting(parent);
+            }
+            
             parent.add(newFileSetting);
 
             try

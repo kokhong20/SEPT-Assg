@@ -89,7 +89,7 @@ public class PASVGContainer
 	/**
 	 * @param shapesCollection the shapesCollection to set
 	 */
-	public void setShapesCollection(LinkedHashMap<Shape, PASVGElement> shapesCollection)
+	private void setShapesCollection(LinkedHashMap<Shape, PASVGElement> shapesCollection)
 	{
 		this.shapesCollection = shapesCollection;
 	}
