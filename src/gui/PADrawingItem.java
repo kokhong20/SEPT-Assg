@@ -141,6 +141,9 @@ public class PADrawingItem
         //Circle
         PAToolKitAction.DrawCircleAction drawCircleAction = new PAToolKitAction.DrawCircleAction(mainFrame.svgPanel,circle,mainFrame.attributeBar);
         circle.setAction(drawCircleAction);
+        
+        PAToolKitAction.ZoomIn zoom = new PAToolKitAction.ZoomIn(mainFrame.svgPanel,zoomIn,mainFrame.attributeBar);
+        zoomIn.setAction(zoom);
     }
 
 }

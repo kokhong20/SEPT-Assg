@@ -17,6 +17,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -47,6 +48,8 @@ public abstract class PAToolKitAction extends AbstractAction
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
     protected double strokeWidth;
+	protected static int height = -1, width = -1;
+	protected static double scale = 1;
 
     public PAToolKitAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -379,4 +382,64 @@ public abstract class PAToolKitAction extends AbstractAction
         }
 
     }
+    
+	public static class ZoomIn extends PAToolKitAction
+	{
+
+		public ZoomIn(PASVGPanel drawPanel, JToggleButton button,
+				PAShapeBar shapeBar)
+		{
+			super(drawPanel, button, shapeBar);
+			// TODO Auto-generated constructor stub
+		}
+
+		public void addActionToComponents()
+		{
+			setSize();
+			DecimalFormat form = new DecimalFormat("#.#");  
+			scale += 0.1;
+			scale = Double.valueOf(form.format(scale));
+			System.out.println(scale);
+			overwriteImage();
+			drawPanel.repaint();
+			
+		}
+
+		private void overwriteImage()
+		{
+//			
+//			AffineTransform at = new AffineTransform();
+//			at.scale(scale, scale);
+//			AffineTransformOp scaleOp = new AffineTransformOp(at,
+//					AffineTransformOp.TYPE_BILINEAR);
+//			BufferedImage before = drawPanel.svgImage;
+//			int w = (int) (width * scale);
+//			int h = (int) (height * scale);
+//			BufferedImage after = new BufferedImage(w, h,
+//					BufferedImage.TYPE_INT_ARGB);
+//			after = scaleOp.filter(before, after);
+
+//			drawPanel.svgImage = after;
+			BufferedImage bi = new BufferedImage((int)(scale*width), (int)(scale*height),BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2d = (Graphics2D) bi.getGraphics();
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			
+			g2d.scale(scale,scale);
+			g2d.drawImage(drawImage, 0, 0, null);
+			drawPanel.paint(g2d);
+			System.out.println(drawPanel.svgImage.getHeight());
+			
+			
+		}
+		private void setSize()
+		{
+			if (height == -1 && width == -1)
+			{
+				height = drawPanel.svgImage.getHeight();
+				width = drawPanel.svgImage.getWidth();
+			}
+		}
+
+	}
 }
