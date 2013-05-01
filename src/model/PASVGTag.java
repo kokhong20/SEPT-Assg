@@ -40,9 +40,7 @@ public class PASVGTag implements PAAttributeConstant
     
     public PASVGTag(String width, String height, String unit)
     {
-        System.out.println(width);
         setWidth(PAUnit.setUnit(width, DEFAULT_SVG_SIZE));
-        System.out.println(getWidth());
         setHeight(PAUnit.setUnit(height, DEFAULT_SVG_SIZE));
     }
 

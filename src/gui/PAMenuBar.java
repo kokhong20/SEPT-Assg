@@ -4,11 +4,7 @@
  */
 package gui;
 
-import controller.PAMenuAction.ExitProgram;
-import controller.PAMenuAction.NewFile;
-import controller.PAMenuAction.OpenFile;
-import controller.PAMenuAction.SaveAsFile;
-import controller.PAMenuAction.SaveFile;
+import controller.PAMenuAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -135,16 +131,20 @@ public class PAMenuBar extends JMenuBar
      */
     private void addAction()
     {
-        NewFile newAction = new NewFile(parent);
-        OpenFile openAction = new OpenFile(parent);
-        SaveFile saveAction = new SaveFile(parent);
-        SaveAsFile saveAsAction = new SaveAsFile(parent);
-        ExitProgram exitAction = new ExitProgram(parent);
+        PAMenuAction.NewFile newAction = new PAMenuAction.NewFile(parent);
+        PAMenuAction.OpenFile openAction = new PAMenuAction.OpenFile(parent);
+        PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(parent);
+        PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(parent);
+        PAMenuAction.ExitProgram exitAction = new PAMenuAction.ExitProgram(parent);
+        //PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
+        //PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         newFile.setAction(newAction);
         openFile.setAction(openAction);
         saveFile.setAction(saveAction);
         saveAsFile.setAction(saveAsAction);
         exitFile.setAction(exitAction);
+        //zoomInView.setAction(zoomInAction);
+        //zoomOutView.setAction(zoomOutAction);
     }
 
     /**

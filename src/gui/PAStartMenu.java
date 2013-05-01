@@ -154,10 +154,18 @@ public class PAStartMenu extends JInternalFrame
     private void setUpStartMenu()
     {
         Dimension screenResolution = PASystem.getScreenDimension();
+        int screenWidth = (int) screenResolution.getWidth();
+        int screenHeight = (int) screenResolution.getHeight();
+        
+        if (PASystem.currentOS.indexOf("mac") >= 0)
+        {
+            screenHeight -= 86;
+        }
+        
         int width = 650;
         int height = 450;
-        int startX = (int) (screenResolution.getWidth() - width)/2;
-        int startY = (int) (screenResolution.getHeight() - height)/2;
+        int startX = (int) (screenWidth - width)/2;
+        int startY = (int) (screenHeight - height)/2;
         Point startPoint = new Point(startX, startY);
         setSize(width, height);
         setLocation(startPoint);

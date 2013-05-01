@@ -12,8 +12,6 @@ public class PASVGContainer
 {
     private PASVGTag svgTag;
     private LinkedList<PASVGElement> svgContainer;
-    
-    private LinkedHashMap<Shape, PASVGElement> shapesCollection;
 
     /**
      * constructor with only svgTag such that from a newly created svg
@@ -24,7 +22,6 @@ public class PASVGContainer
     {
         setSvgTag(svgTag);
         setSvgContainer(new LinkedList<PASVGElement>());
-        setShapesCollection(new LinkedHashMap<Shape, PASVGElement>());
     }
 
     /**
@@ -37,13 +34,6 @@ public class PASVGContainer
     {
         setSvgTag(svgTag);
         setSvgContainer(shapes);
-    }
-
-    public PASVGContainer(PASVGTag svgTag, LinkedList<PASVGElement> shapes, LinkedHashMap<Shape, PASVGElement> shapeCollection)
-    {
-        setSvgTag(svgTag);
-        setSvgContainer(shapes);
-        setShapesCollection(shapeCollection);
     }
 
     /**
@@ -79,41 +69,27 @@ public class PASVGContainer
     }
 
     /**
-	 * @return the shapesCollection
-	 */
-	public LinkedHashMap<Shape, PASVGElement> getShapesCollection()
-	{
-		return shapesCollection;
-	}
-
-	/**
-	 * @param shapesCollection the shapesCollection to set
-	 */
-	private void setShapesCollection(LinkedHashMap<Shape, PASVGElement> shapesCollection)
-	{
-		this.shapesCollection = shapesCollection;
-	}
-
-	/**
      * Add a new shape
+     *
      * @param shape
      * @return true if shape is successfully added, return false otherwise
      */
     public boolean addNewShape(PASVGElement shape)
     {
-    	return svgContainer.add(shape);
+        return svgContainer.add(shape);
     }
-    
+
     /**
      * Add a new group
+     *
      * @param group
      * @return true if group is successfully added, return false otherwise
      */
     public boolean addNewGroup(PASVGGroup group)
     {
-    	return svgContainer.add(group);
+        return svgContainer.add(group);
     }
-    
+
     /**
      * Create a new group and add a single PASVGElement to end of svgContainer
      *
@@ -123,8 +99,8 @@ public class PASVGContainer
     public boolean createGroupAndAddShape(PASVGElement shape)
     {
         shape.setGrouped(true);
-    	PASVGGroup newGroup = new PASVGGroup();
-    	newGroup.addNewElementToGroup(shape);
+        PASVGGroup newGroup = new PASVGGroup();
+        newGroup.addNewElementToGroup(shape);
         return svgContainer.add(newGroup);
     }
 
@@ -136,14 +112,14 @@ public class PASVGContainer
      */
     public boolean createGroupAndAddShapes(LinkedList<PASVGElement> shapes)
     {
-    	for(int index = 0; index < shapes.size(); index++)
-    	{
-    		PASVGElement element = shapes.get(index);
-    		element.setGrouped(true);
-    	}
-    	
-    	PASVGGroup newGroup = new PASVGGroup();
-    	newGroup.addNewElementsToGroup(shapes);
+        for (int index = 0; index < shapes.size(); index++)
+        {
+            PASVGElement element = shapes.get(index);
+            element.setGrouped(true);
+        }
+
+        PASVGGroup newGroup = new PASVGGroup();
+        newGroup.addNewElementsToGroup(shapes);
         return svgContainer.add(newGroup);
     }
 
@@ -156,24 +132,25 @@ public class PASVGContainer
      */
     public boolean addShapeToGroup(PASVGGroup group, PASVGElement shape)
     {
-    	return group.addNewElementToGroup(shape);
+        return group.addNewElementToGroup(shape);
     }
 
     /**
      * add a group of shapes to the end of an existing group
-     * 
+     *
      * @param group
      * @param shapes
-     * @return true if list of PASVGElement is added to group, return false otherwise
+     * @return true if list of PASVGElement is added to group, return false
+     * otherwise
      */
     public boolean addShapesToGroup(PASVGGroup group, LinkedList<PASVGElement> shapes)
     {
-    	return group.addNewElementsToGroup(shapes);
+        return group.addNewElementsToGroup(shapes);
     }
 
     /**
      * permanently remove an element
-     * 
+     *
      * @param element
      * @return true if successfully removed, return false otherwise
      */
@@ -181,96 +158,99 @@ public class PASVGContainer
     {
         return svgContainer.remove(element);
     }
-    
+
     /**
-     * Remove a particular PASVGElement from an existing group and add it directly
-     * after that group
+     * Remove a particular PASVGElement from an existing group and add it
+     * directly after that group
      *
      * @param group
      * @param shapeToRemove
-     * @return true if PASVGElement successfully removed from group, return false
-     * otherwise
+     * @return true if PASVGElement successfully removed from group, return
+     * false otherwise
      */
     public boolean removeFromGroup(PASVGGroup group, PASVGElement shapeToRemove)
     {
-    	if(group.removeElementFromGroup(shapeToRemove))
-    	{
-    		svgContainer.add(svgContainer.indexOf(group) + 1, shapeToRemove);
-    		return true;
-    	}
-    	
-    	return false;
+        if (group.removeElementFromGroup(shapeToRemove))
+        {
+            svgContainer.add(svgContainer.indexOf(group) + 1, shapeToRemove);
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * remove a list of PASVGElement from an existing group and add the list directly
-     * after that group
+     * remove a list of PASVGElement from an existing group and add the list
+     * directly after that group
      *
      * @param group
      * @param shapes
-     * @return true if list of PASVGElement successfully removed from group, return
-     * false otherwise
+     * @return true if list of PASVGElement successfully removed from group,
+     * return false otherwise
      */
     public boolean removeListFromGroup(PASVGGroup group, LinkedList<PASVGElement> shapes)
     {
-    	if(group.removeElementsFromGroup(shapes))
-    	{
-    		return svgContainer.addAll(svgContainer.indexOf(group) + 1, shapes);
-    	}
-    	
-    	return false;
+        if (group.removeElementsFromGroup(shapes))
+        {
+            return svgContainer.addAll(svgContainer.indexOf(group) + 1, shapes);
+        }
+
+        return false;
     }
 
     /**
      * remove all PASVGElement from an existing group and keep its position
      *
      * @param group
-     * @return true if all PASVGElement successfully removed from group, return false
-     * otherwise
+     * @return true if all PASVGElement successfully removed from group, return
+     * false otherwise
      */
     public boolean removeAllFromGroup(PASVGGroup group)
     {
-    	LinkedList<PASVGElement> elements = null;
-    	
-    	if((elements = group.removeAllElementsFromGroup()) != null)
-    	{
-    		return svgContainer.addAll(svgContainer.indexOf(group) + 1, elements);
-    	}
-    	
-    	return false;
+        LinkedList<PASVGElement> elements;
+
+        if ((elements = group.removeAllElementsFromGroup()) != null)
+        {
+            return svgContainer.addAll(svgContainer.indexOf(group) + 1, elements);
+        }
+
+        return false;
     }
-    
+
     /**
      * move an element to other position
+     *
      * @param elementToMove
      * @param beforeThis
      * @return true if successfully moved, return false otherwise
      */
     public boolean moveElement(PASVGElement elementToMove, PASVGElement beforeThis)
     {
-        if(svgContainer.remove(elementToMove))
+        if (svgContainer.remove(elementToMove))
         {
             svgContainer.add(svgContainer.indexOf(beforeThis), elementToMove);
         }
-        
+
         return false;
-        
+
     }
-    
+
     /**
      * move a list of elements to other position
+     *
      * @param elementsToMove
      * @param beforeThis
      * @return true if successfully moved, return false otherwise
      */
     public boolean moveElements(LinkedList<PASVGElement> elementsToMove, PASVGElement beforeThis)
     {
-        if(svgContainer.removeAll(elementsToMove))
+        if (svgContainer.removeAll(elementsToMove))
         {
             svgContainer.addAll(svgContainer.indexOf(beforeThis), elementsToMove);
         }
-        
+
         return false;
-        
+
     }
+
 }

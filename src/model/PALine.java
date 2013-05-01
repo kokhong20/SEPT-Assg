@@ -24,19 +24,20 @@ public class PALine extends PASVGElement
     public PALine()
     {
     }
-    
+
     /**
      * Constructor which create a new PALine object with all attributes
+     *
      * @param stroke
      * @param strokeWidth
      * @param x1
      * @param x2
      * @param y1
-     * @param y2 
+     * @param y2
      */
     public PALine(Color stroke, double strokeWidth, double x1, double x2, double y1, double y2)
     {
-        super(stroke,strokeWidth);
+        super(stroke, strokeWidth);
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
@@ -164,20 +165,20 @@ public class PALine extends PASVGElement
         this.y2 = y2;
     }
 
-	/**
-	 * @return the line2D
-	 */
-	public Line2D.Double getLine2D()
-	{
-		return line2D;
-	}
+    /**
+     * @return the line2D
+     */
+    public Line2D.Double getLine2D()
+    {
+        return line2D;
+    }
 
-	/**
-	 * 
-	 */
-	public void setLine2D()
-	{
-		line2D = new Line2D.Double(x1, y1, x2, y2);
-	}
+    /**
+     *
+     */
+    public void setLine2D()
+    {
+        line2D = new Line2D.Double(x1, y1, x2, y2);
+    }
 
 }

@@ -1,9 +1,9 @@
 package controller;
 
 import gui.PADrawingItem;
+import gui.PAMainFrame;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -17,14 +17,11 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JToggleButton;
-
 import model.PACircle;
 import model.PAColor;
 import model.PALine;
@@ -44,12 +41,10 @@ public abstract class PAToolKitAction extends AbstractAction
     protected PASVGPanel drawPanel;
     protected BufferedImage drawImage;
     protected LinkedList<PASVGElement> elementCollection;
-    protected LinkedHashMap<Shape, PASVGElement> shapeCollection;
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
     protected double strokeWidth;
-	protected static int height = -1, width = -1;
-	protected static double scale = 1;
+    protected static int height = -1, width = -1;
 
     public PAToolKitAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -58,7 +53,6 @@ public abstract class PAToolKitAction extends AbstractAction
         this.shapeBar = shapeBar;
         this.drawImage = drawPanel.svgImage;
         elementCollection = drawPanel.svgContainer.getSvgContainer();
-        shapeCollection = drawPanel.svgContainer.getShapesCollection();
     }
 
     public void setShapeAttributes()
@@ -190,8 +184,6 @@ public abstract class PAToolKitAction extends AbstractAction
 
             g2d.setStroke(basicStroke);
             g2d.draw(rect2D);
-
-            shapeCollection.put(rect2D, (PARectangle) rect);
         }
 
     }
@@ -289,8 +281,6 @@ public abstract class PAToolKitAction extends AbstractAction
 
             g2d.setStroke(basicStroke);
             g2d.draw(circle2D);
-
-            shapeCollection.put(circle2D, (PACircle) circle);
         }
 
     }
@@ -377,69 +367,7 @@ public abstract class PAToolKitAction extends AbstractAction
 
             g2d.setStroke(basicStroke);
             g2d.draw(line2D);
-
-            shapeCollection.put(line2D, (PALine) line);
         }
 
     }
-    
-	public static class ZoomIn extends PAToolKitAction
-	{
-
-		public ZoomIn(PASVGPanel drawPanel, JToggleButton button,
-				PAShapeBar shapeBar)
-		{
-			super(drawPanel, button, shapeBar);
-			// TODO Auto-generated constructor stub
-		}
-
-		public void addActionToComponents()
-		{
-			setSize();
-			DecimalFormat form = new DecimalFormat("#.#");  
-			scale += 0.1;
-			scale = Double.valueOf(form.format(scale));
-			System.out.println(scale);
-			overwriteImage();
-			drawPanel.repaint();
-			
-		}
-
-		private void overwriteImage()
-		{
-//			
-//			AffineTransform at = new AffineTransform();
-//			at.scale(scale, scale);
-//			AffineTransformOp scaleOp = new AffineTransformOp(at,
-//					AffineTransformOp.TYPE_BILINEAR);
-//			BufferedImage before = drawPanel.svgImage;
-//			int w = (int) (width * scale);
-//			int h = (int) (height * scale);
-//			BufferedImage after = new BufferedImage(w, h,
-//					BufferedImage.TYPE_INT_ARGB);
-//			after = scaleOp.filter(before, after);
-
-//			drawPanel.svgImage = after;
-			BufferedImage bi = new BufferedImage((int)(scale*width), (int)(scale*height),BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g2d = (Graphics2D) bi.getGraphics();
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			g2d.scale(scale,scale);
-			g2d.drawImage(drawImage, 0, 0, null);
-			drawPanel.paint(g2d);
-			System.out.println(drawPanel.svgImage.getHeight());
-			
-			
-		}
-		private void setSize()
-		{
-			if (height == -1 && width == -1)
-			{
-				height = drawPanel.svgImage.getHeight();
-				width = drawPanel.svgImage.getWidth();
-			}
-		}
-
-	}
 }

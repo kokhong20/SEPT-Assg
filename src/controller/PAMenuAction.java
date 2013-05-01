@@ -6,6 +6,7 @@ package controller;
 
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
+import gui.PASVGPanel;
 import gui.PAStartMenu;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -17,6 +18,7 @@ import javax.swing.AbstractAction;
 import static javax.swing.Action.ACCELERATOR_KEY;
 import static javax.swing.Action.MNEMONIC_KEY;
 import static javax.swing.Action.NAME;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
@@ -399,38 +401,54 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ZoomIn extends PAMenuAction
     {
-        private JDesktopPane parent;
+        private PASVGPanel drawPanel;
         private PAMainFrame onFocusFrame;
 
-        public ZoomIn(JDesktopPane parent)
+        public ZoomIn(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_PLUS, "Zoom In");
-            this.parent = parent;
+            this.drawPanel = drawPanel;
+        }
+        
+        public ZoomIn(PASVGPanel drawPanel, JButton button)
+        {
+            super(KeyEvent.VK_PLUS, "");
+            this.drawPanel = drawPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            double scale = drawPanel.getScale();
+            scale += 0.1;
+            drawPanel.zoomInOutSVG(scale);
         }
 
     }
 
     public static class ZoomOut extends PAMenuAction
     {
-        private JDesktopPane parent;
+        private PASVGPanel drawPanel;
         private PAMainFrame onFocusFrame;
 
-        public ZoomOut(JDesktopPane parent)
+        public ZoomOut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_MINUS, "Zoom Out");
-            this.parent = parent;
+            this.drawPanel = drawPanel;
+        }
+        
+        public ZoomOut(PASVGPanel drawPanel, JButton button)
+        {
+            super(KeyEvent.VK_MINUS, "");
+            this.drawPanel = drawPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            double scale = drawPanel.getScale();
+            scale -= 0.1;
+            drawPanel.zoomInOutSVG(scale);
         }
 
     }

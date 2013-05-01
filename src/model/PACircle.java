@@ -22,19 +22,20 @@ public class PACircle extends PASVGElement
 
     /**
      * Constructor to create a new PACircle object with all the attributes
+     *
      * @param fill
      * @param stroke
      * @param strokeWidth
      * @param cx
      * @param cy
-     * @param r 
+     * @param r
      */
-    public PACircle(Color fill, Color stroke, double strokeWidth , double cx, double cy, double r)
+    public PACircle(Color fill, Color stroke, double strokeWidth, double cx, double cy, double r)
     {
-        super(fill,stroke,strokeWidth);
+        super(fill, stroke, strokeWidth);
         this.cx = cx;
         this.cy = cy;
-        this.r = r ;
+        this.r = r;
     }
 
     /**
@@ -130,23 +131,23 @@ public class PACircle extends PASVGElement
         this.r = r;
     }
 
-	/**
-	 * @return the ellipse2D
-	 */
-	public Ellipse2D.Double getEllipse2D()
-	{
-		return ellipse2D;
-	}
+    /**
+     * @return the ellipse2D
+     */
+    public Ellipse2D.Double getEllipse2D()
+    {
+        return ellipse2D;
+    }
 
-	/**
-	 * 
-	 */
-	public void setEllipse2D()
-	{
+    /**
+     *
+     */
+    public void setEllipse2D()
+    {
         double x = cx - r;
         double y = cy - r;
         double diameter = r * 2;
-		this.ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter); 
-	}
+        this.ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter);
+    }
 
 }

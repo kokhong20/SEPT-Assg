@@ -10,145 +10,155 @@ import org.w3c.dom.Node;
  * @author bryantylai
  *
  */
-public class PARectangle extends PASVGElement {
+public class PARectangle extends PASVGElement
+{
+    private double x;
+    private double y;
+    private double width;
+    private double height;
+    private Rectangle2D.Double rectangle2D;
 
-	private double x;
-	private double y;
-	private double width;
-	private double height;
-	private Rectangle2D.Double rectangle2D;
+    /**
+     *
+     */
+    public PARectangle()
+    {
+    }
 
-        /**
-         * 
-         */
-	public PARectangle()
-	{
-		
-	}
-	
-	public PARectangle(Color fill, Color stroke, double strokeWidth, double x, double y , double width , double height)
-	{
-		super(fill,stroke,strokeWidth);
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
-	
-	/**
-	 * Constructor which receives a node
-	 * 
-	 * @param node
-	 */
-	public PARectangle(Node node) 
-	{
-		// TODO Auto-generated constructor stub
-		super(node);
-	}
-	
-        /**
-	 * Constructor which receives a node and groupFill, groupStroke, groupWidth from parent group
-         * @param node
-         * @param groupFill
-         * @param groupStroke
-         * @param groupWidth
-         * @param parentGroup 
-         */
-	public PARectangle(Node node, Color groupFill, Color groupStroke,
-			double groupWidth, PASVGGroup parentGroup)
-	{
-		// TODO Auto-generated constructor stub
-		super(node, groupFill, groupStroke, groupWidth, parentGroup);
-	}
+    public PARectangle(Color fill, Color stroke, double strokeWidth, double x, double y, double width, double height)
+    {
+        super(fill, stroke, strokeWidth);
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void readAttributes() 
-	{
-		// TODO Auto-generated method stub
-		if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
-		{
-			Element eNode = (Element) this.getNode();
+    /**
+     * Constructor which receives a node
+     *
+     * @param node
+     */
+    public PARectangle(Node node)
+    {
+        // TODO Auto-generated constructor stub
+        super(node);
+    }
 
-			this.setX(PAUnit.setUnit(eNode.getAttribute("x"),DEFAULT_LENGTH));
-			this.setY(PAUnit.setUnit(eNode.getAttribute("y"),DEFAULT_LENGTH));
-			this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"),DEFAULT_LENGTH));
-			this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"),DEFAULT_LENGTH));
-			setRectangle2D();
-		}
-	}
+    /**
+     * Constructor which receives a node and groupFill, groupStroke, groupWidth
+     * from parent group
+     *
+     * @param node
+     * @param groupFill
+     * @param groupStroke
+     * @param groupWidth
+     * @param parentGroup
+     */
+    public PARectangle(Node node, Color groupFill, Color groupStroke,
+            double groupWidth, PASVGGroup parentGroup)
+    {
+        // TODO Auto-generated constructor stub
+        super(node, groupFill, groupStroke, groupWidth, parentGroup);
+    }
 
-	/**
-	 * @return the x
-	 */
-	public double getX() {
-		return x;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void readAttributes()
+    {
+        // TODO Auto-generated method stub
+        if (this.getNode().getNodeType() == Node.ELEMENT_NODE)
+        {
+            Element eNode = (Element) this.getNode();
 
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(double x) {
-		this.x = x;
-	}
+            this.setX(PAUnit.setUnit(eNode.getAttribute("x"), DEFAULT_LENGTH));
+            this.setY(PAUnit.setUnit(eNode.getAttribute("y"), DEFAULT_LENGTH));
+            this.setWidth(PAUnit.setUnit(eNode.getAttribute("width"), DEFAULT_LENGTH));
+            this.setHeight(PAUnit.setUnit(eNode.getAttribute("height"), DEFAULT_LENGTH));
+            setRectangle2D();
+        }
+    }
 
-	/**
-	 * @return the y
-	 */
-	public double getY() {
-		return y;
-	}
+    /**
+     * @return the x
+     */
+    public double getX()
+    {
+        return x;
+    }
 
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(double y) {
-		this.y = y;
-	}
+    /**
+     * @param x the x to set
+     */
+    public void setX(double x)
+    {
+        this.x = x;
+    }
 
-	/**
-	 * @return the width
-	 */
-	public double getWidth() {
-		return width;
-	}
+    /**
+     * @return the y
+     */
+    public double getY()
+    {
+        return y;
+    }
 
-	/**
-	 * @param width the width to set
-	 */
-	public void setWidth(double width) {
-		this.width = width;
-	}
+    /**
+     * @param y the y to set
+     */
+    public void setY(double y)
+    {
+        this.y = y;
+    }
 
-	/**
-	 * @return the height
-	 */
-	public double getHeight() {
-		return height;
-	}
+    /**
+     * @return the width
+     */
+    public double getWidth()
+    {
+        return width;
+    }
 
-	/**
-	 * @param height the height to set
-	 */
-	public void setHeight(double height) {
-		this.height = height;
-	}
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(double width)
+    {
+        this.width = width;
+    }
 
-	/**
-	 * @return the rectangle2D
-	 */
-	public Rectangle2D.Double getRectangle2D()
-	{
-		return rectangle2D;
-	}
+    /**
+     * @return the height
+     */
+    public double getHeight()
+    {
+        return height;
+    }
 
-	/**
-	 * 
-	 */
-	public void setRectangle2D()
-	{
-		rectangle2D = new Rectangle2D.Double(x, y, width, height);
-	}
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(double height)
+    {
+        this.height = height;
+    }
+
+    /**
+     * @return the rectangle2D
+     */
+    public Rectangle2D.Double getRectangle2D()
+    {
+        return rectangle2D;
+    }
+
+    /**
+     *
+     */
+    public void setRectangle2D()
+    {
+        rectangle2D = new Rectangle2D.Double(x, y, width, height);
+    }
+
 }
