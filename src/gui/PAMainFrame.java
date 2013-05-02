@@ -1,5 +1,6 @@
 package gui;
 
+import controller.PAInternalFrameAction;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,6 +28,7 @@ public class PAMainFrame extends JInternalFrame
     public PAShapeBar attributeBar;
     public PASVGPanel svgPanel;
     private Box box;
+    private String fileName;
     private BufferedImage svgImage;
     private PAStatusPanel statusPanel;
     private PASVGContainer svgContainer;
@@ -43,11 +45,12 @@ public class PAMainFrame extends JInternalFrame
      *
      * @param parent
      */
-    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer, BufferedImage svgImage)
+    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer, String fileName)
     {
+        super(fileName);
         this.parent = parent;
         this.svgContainer = svgContainer;
-        this.svgImage = svgImage;
+        this.fileName = fileName;
         initialize();
         customize();
         setFrameLayout();
@@ -62,10 +65,12 @@ public class PAMainFrame extends JInternalFrame
     {
         statusPanel = new PAStatusPanel(this);
         attributeBar = new PAShapeBar(this);
-        svgPanel = new PASVGPanel(svgContainer, svgImage);
+        svgPanel = new PASVGPanel(svgContainer);
         box = new Box(BoxLayout.Y_AXIS);
         mainPanel = new JPanel();
         svgBackPanel = new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        PAInternalFrameAction internalFrameAction = new PAInternalFrameAction(this);
+        this.addInternalFrameListener(internalFrameAction);
     }
 
     private void customize()
@@ -134,7 +139,6 @@ public class PAMainFrame extends JInternalFrame
         int startY = (int) (screenResolution.getHeight() - mainFrameHeight) / 2;
         Point startPoint = new Point(startX, startY);
 
-        setTitle("New SVG");
         setResizable(true);
         setClosable(true);
         setMaximizable(true);

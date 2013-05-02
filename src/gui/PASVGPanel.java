@@ -44,10 +44,9 @@ public class PASVGPanel extends JPanel
      *
      * @param mainFrame
      */
-    public PASVGPanel(PASVGContainer svgContainer, BufferedImage svgImage)
+    public PASVGPanel(PASVGContainer svgContainer)
     {
         this.svgContainer = svgContainer;
-        this.svgImage = svgImage;
         scale = 1.0;
         elementCollection = svgContainer.getSvgContainer();
         initialize();
