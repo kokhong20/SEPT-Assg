@@ -42,6 +42,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
     protected double strokeWidth;
+    protected double scale;
 
     public PADrawingShapeAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -94,13 +95,11 @@ public abstract class PADrawingShapeAction extends AbstractAction
     public static class DrawRectangleAction extends PADrawingShapeAction
     {
         PARectangle rect;
-        double scale;
 
         public DrawRectangleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
             super(drawPanel, button, shapeBar);
-            scale = drawPanel.getScale();
         }
 
         @Override
@@ -115,7 +114,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
                     if (button.isSelected())
                     {
                         scale = drawPanel.getScale();
-                        System.out.println("Mouse Pressed startDrag" + startDrag + "Mouse Pressed endDrag" + endDrag);
                         startDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         endDrag = startDrag;
                         drawPanel.repaint();
@@ -127,9 +125,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        scale = drawPanel.getScale();
-                        System.out.println("Mouse released startDrag" + startDrag + "Mouse released endDrag" + endDrag);
-                        System.out.println("Scale is"+scale);
                         setShapeAttributes();
                         rect = makeRectangle(fill, stroke, strokeWidth,
                                 startDrag.x, startDrag.y, endDrag.x, endDrag.y);
@@ -147,8 +142,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        scale = drawPanel.getScale();
-                        System.out.println("Mouse dragged startDrag" + startDrag + "Mouse dragged endDrag" + endDrag);
                         endDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         drawPanel.repaint();
                     }
@@ -173,9 +166,8 @@ public abstract class PADrawingShapeAction extends AbstractAction
         {
             Rectangle2D.Double rect2D = rect.getRectangle2D();
 
-            BufferedImage drawImage2;
-            drawImage2 = drawPanel.svgImage;
-            Graphics2D g2d = drawImage2.createGraphics();
+            drawImage = drawPanel.svgImage;
+            Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.scale(drawPanel.getScale(), drawPanel.getScale());
             g2d.setColor(fill);
@@ -184,14 +176,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
             g2d.setStroke(new BasicStroke((float) rect.getStrokeWidth()));
             g2d.draw(rect2D);
             
-            System.out.println("Rectangle 2d"+rect2D.getX());
-            System.out.println("Rectangle"+rect.getX());
-//            AffineTransform old = g2d.getTransform();
-////do your changes here
-//            g2d.scale(drawPanel.getScale(), drawPanel.getScale());
-////paint
-//            g2d.setTransform(old);
-
         }
 
     }
@@ -203,7 +187,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
     public static class DrawCircleAction extends PADrawingShapeAction
     {
         PACircle circle;
-
+        
         public DrawCircleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
@@ -220,7 +204,8 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        startDrag = new Point(e.getX(), e.getY());
+                        scale = drawPanel.getScale();
+                        startDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         endDrag = startDrag;
                         drawPanel.repaint();
                     }
@@ -247,7 +232,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        endDrag = new Point(e.getX(), e.getY());
+                        endDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         drawPanel.repaint();
                     }
                 }
@@ -273,14 +258,14 @@ public abstract class PADrawingShapeAction extends AbstractAction
         {
             Ellipse2D.Double circle2D = circle.getEllipse2D();
             BasicStroke basicStroke = new BasicStroke((float) circle.getStrokeWidth());
-
+            
+            drawImage = drawPanel.svgImage;
             Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+            g2d.scale(drawPanel.getScale(), drawPanel.getScale());
             g2d.setColor(fill);
             g2d.fill(circle2D);
             g2d.setColor(stroke);
-
             g2d.setStroke(basicStroke);
             g2d.draw(circle2D);
         }
@@ -307,7 +292,8 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        startDrag = new Point(e.getX(), e.getY());
+                        scale = drawPanel.getScale();
+                        startDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         endDrag = startDrag;
                         drawPanel.repaint();
                     }
@@ -334,7 +320,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        endDrag = new Point(e.getX(), e.getY());
+                        endDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         drawPanel.repaint();
                     }
                 }
@@ -355,11 +341,12 @@ public abstract class PADrawingShapeAction extends AbstractAction
             Line2D.Double line2D = line.getLine2D();
 
             BasicStroke basicStroke = new BasicStroke((float) line.getStrokeWidth());
-
+            
+            drawImage = drawPanel.svgImage;
             Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.scale(drawPanel.getScale(), drawPanel.getScale());
             g2d.setColor(stroke);
-
             g2d.setStroke(basicStroke);
             g2d.draw(line2D);
         }

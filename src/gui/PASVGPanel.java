@@ -97,16 +97,11 @@ public class PASVGPanel extends JPanel
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();
         AffineTransform old = g2d.getTransform();
-//do your changes here
-        //for anti-aliasing for better output.
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.scale(scale, scale);
         g2d.fillRect(0, 0, svgWidth, svgHeight);
         g2d.setPaint(new Color(255, 255, 255, 255));
         iterateList(g2d, elementCollection);
-
-//        g2d.scale(scale, scale);
-////paint
        
     }
 
@@ -197,15 +192,15 @@ public class PASVGPanel extends JPanel
                 case "Line":
                     g2d.setPaint(Color.LIGHT_GRAY);
                     g2d.setStroke(new BasicStroke(2));
-                    Line2D.Double line = makeLine(startDrag.x, startDrag.y,
-                            endDrag.x, endDrag.y);
+                    Line2D.Double line = makeLine((int)((startDrag.x)*scale),
+                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
                     g2d.draw(line);
                     break;
 
                 case "Circle":
                     g2d.setPaint(Color.LIGHT_GRAY);
-                    Ellipse2D.Double circle = makeCircle(startDrag.x, startDrag.y,
-                            endDrag.x, endDrag.y);
+                    Ellipse2D.Double circle = makeCircle((int)((startDrag.x)*scale),
+                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
                     g2d.draw(circle);
                     break;
 
