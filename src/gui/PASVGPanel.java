@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -53,22 +54,22 @@ public class PASVGPanel extends JPanel
         initialize();
         drawToImage();
     }
-    
+
     public double getScale()
     {
         return scale;
     }
-    
+
     public int getSVGWidth()
     {
         return svgWidth;
     }
-    
+
     public int getSVGHeight()
     {
         return svgHeight;
     }
-    
+
     public void zoomInOutSVG(double scale)
     {
         this.scale = scale;
@@ -96,13 +97,18 @@ public class PASVGPanel extends JPanel
     {
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();
-
+        AffineTransform old = g2d.getTransform();
+//do your changes here
         //for anti-aliasing for better output.
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.scale(scale, scale);
         g2d.fillRect(0, 0, svgWidth, svgHeight);
         g2d.setPaint(new Color(255, 255, 255, 255));
         iterateList(g2d, elementCollection);
+
+//        g2d.scale(scale, scale);
+////paint
+       
     }
 
     private void iterateList(Graphics2D g2d, LinkedList<PASVGElement> collection)
@@ -183,8 +189,9 @@ public class PASVGPanel extends JPanel
 
                 case "Rectangle":
                     g2d.setPaint(Color.LIGHT_GRAY);
-                    Rectangle2D.Double rect = makeRectangle(startDrag.x,
-                            startDrag.y, endDrag.x, endDrag.y);
+                    
+                    Rectangle2D.Double rect = makeRectangle((int)((startDrag.x)*scale),
+                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
                     g2d.draw(rect);
                     break;
 
@@ -227,5 +234,5 @@ public class PASVGPanel extends JPanel
                 - x2) : Math.abs(y1 - y2));
         return new Ellipse2D.Double(x, y, width, width);
     }
-    
+
 }

@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -93,11 +94,13 @@ public abstract class PADrawingShapeAction extends AbstractAction
     public static class DrawRectangleAction extends PADrawingShapeAction
     {
         PARectangle rect;
+        double scale;
 
         public DrawRectangleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
             super(drawPanel, button, shapeBar);
+            scale = drawPanel.getScale();
         }
 
         @Override
@@ -108,9 +111,12 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 @Override
                 public void mousePressed(MouseEvent e)
                 {
+
                     if (button.isSelected())
                     {
-                        startDrag = new Point(e.getX(), e.getY());
+                        scale = drawPanel.getScale();
+                        System.out.println("Mouse Pressed startDrag" + startDrag + "Mouse Pressed endDrag" + endDrag);
+                        startDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         endDrag = startDrag;
                         drawPanel.repaint();
                     }
@@ -121,14 +127,18 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
+                        scale = drawPanel.getScale();
+                        System.out.println("Mouse released startDrag" + startDrag + "Mouse released endDrag" + endDrag);
+                        System.out.println("Scale is"+scale);
                         setShapeAttributes();
                         rect = makeRectangle(fill, stroke, strokeWidth,
-                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
+                                startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                         elementCollection.add(rect);
                         overwriteImage();
                         startDrag = null;
                         endDrag = null;
                         drawPanel.repaint();
+
                     }
                 }
 
@@ -137,7 +147,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        endDrag = new Point(e.getX(), e.getY());
+                        scale = drawPanel.getScale();
+                        System.out.println("Mouse dragged startDrag" + startDrag + "Mouse dragged endDrag" + endDrag);
+                        endDrag = new Point((int) (e.getX()/scale), (int) (e.getY()/scale));
                         drawPanel.repaint();
                     }
                 }
@@ -159,16 +171,27 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
         private void overwriteImage()
         {
-           Rectangle2D.Double rect2D = rect.getRectangle2D();
+            Rectangle2D.Double rect2D = rect.getRectangle2D();
 
-            Graphics2D g2d = drawImage.createGraphics();
+            BufferedImage drawImage2;
+            drawImage2 = drawPanel.svgImage;
+            Graphics2D g2d = drawImage2.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+            g2d.scale(drawPanel.getScale(), drawPanel.getScale());
             g2d.setColor(fill);
             g2d.fill(rect2D);
             g2d.setColor(stroke);
             g2d.setStroke(new BasicStroke((float) rect.getStrokeWidth()));
             g2d.draw(rect2D);
+            
+            System.out.println("Rectangle 2d"+rect2D.getX());
+            System.out.println("Rectangle"+rect.getX());
+//            AffineTransform old = g2d.getTransform();
+////do your changes here
+//            g2d.scale(drawPanel.getScale(), drawPanel.getScale());
+////paint
+//            g2d.setTransform(old);
+
         }
 
     }
@@ -210,7 +233,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
                     {
                         setShapeAttributes();
                         circle = makeCircle(fill, stroke, strokeWidth,
-                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
+                                startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                         elementCollection.add(circle);
                         overwriteImage();
                         startDrag = null;
@@ -237,9 +260,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
         private PACircle makeCircle(Color fill, Color stroke, double strokeWidth, int x1, int y1, int x2, int y2)
         {
-            double cx, cy, r,x,y;
-             x = x2 < x1 ? x2 : x1;
-             y = y2 < y1 ? y2 : y1;
+            double cx, cy, r, x, y;
+            x = x2 < x1 ? x2 : x1;
+            y = y2 < y1 ? y2 : y1;
             r = (Math.abs(x1 - x2) > Math.abs(y1 - y2) ? Math.abs(x1 - x2) : Math.abs(y1 - y2)) / 2;
             cx = x + r;
             cy = y + r;
@@ -297,7 +320,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
                     {
                         setShapeAttributes();
                         line = makeLine(stroke, strokeWidth,
-                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
+                                startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                         elementCollection.add(line);
                         overwriteImage();
                         startDrag = null;

@@ -67,7 +67,7 @@ public class PAAttributeItems
         button.setPreferredSize(dim);
         button.setMaximumSize(dim);
         button.setMinimumSize(dim);
-        button.setBackground(Color.WHITE);// default is white color
+        button.setBackground(Color.BLACK);// default is black color
         button.setContentAreaFilled(false);
         button.setOpaque(true);
         button.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 2));
