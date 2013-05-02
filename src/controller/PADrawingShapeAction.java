@@ -1,7 +1,6 @@
 package controller;
 
 import gui.PADrawingItem;
-import gui.PAMainFrame;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.BasicStroke;
@@ -9,7 +8,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,7 +15,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -34,7 +31,7 @@ import model.PAUnit;
  * @author KokHong
  *
  */
-public abstract class PAToolKitAction extends AbstractAction
+public abstract class PADrawingShapeAction extends AbstractAction
 {
     public static Point startDrag, endDrag;
     protected JToggleButton button;
@@ -44,9 +41,8 @@ public abstract class PAToolKitAction extends AbstractAction
     protected PAShapeBar shapeBar;
     protected Color fill, stroke;
     protected double strokeWidth;
-    protected static int height = -1, width = -1;
 
-    public PAToolKitAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
+    public PADrawingShapeAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         this.button = button;
         this.drawPanel = drawPanel;
@@ -85,8 +81,6 @@ public abstract class PAToolKitAction extends AbstractAction
             PADrawingItem.buttonSelected = null;
             button.setBorder(null);
         }
-
-
     }
 
     public abstract void addActionToComponents();
@@ -96,9 +90,9 @@ public abstract class PAToolKitAction extends AbstractAction
      *
      *
      */
-    public static class DrawRectangleAction extends PAToolKitAction
+    public static class DrawRectangleAction extends PADrawingShapeAction
     {
-        PASVGElement rect;
+        PARectangle rect;
 
         public DrawRectangleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
@@ -116,7 +110,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse pressed" + startDrag + "End" + endDrag);
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
                         drawPanel.repaint();
@@ -129,9 +122,8 @@ public abstract class PAToolKitAction extends AbstractAction
                     if (button.isSelected())
                     {
                         setShapeAttributes();
-                        System.out.println("Mouse Released" + startDrag + "End" + endDrag);
                         rect = makeRectangle(fill, stroke, strokeWidth,
-                                startDrag.x, startDrag.y, e.getX(), e.getY());
+                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
                         elementCollection.add(rect);
                         overwriteImage();
                         startDrag = null;
@@ -145,7 +137,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse dragged" + startDrag + "End" + endDrag);
                         endDrag = new Point(e.getX(), e.getY());
                         drawPanel.repaint();
                     }
@@ -168,12 +159,7 @@ public abstract class PAToolKitAction extends AbstractAction
 
         private void overwriteImage()
         {
-            double x = ((PARectangle) rect).getX();
-            double y = ((PARectangle) rect).getY();
-            double shapeWidth = ((PARectangle) rect).getWidth();
-            double shapeHeight = ((PARectangle) rect).getHeight();
-            Rectangle2D.Double rect2D = new Rectangle2D.Double(x, y, shapeWidth, shapeHeight);
-            BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
+           Rectangle2D.Double rect2D = rect.getRectangle2D();
 
             Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -181,8 +167,7 @@ public abstract class PAToolKitAction extends AbstractAction
             g2d.setColor(fill);
             g2d.fill(rect2D);
             g2d.setColor(stroke);
-
-            g2d.setStroke(basicStroke);
+            g2d.setStroke(new BasicStroke((float) rect.getStrokeWidth()));
             g2d.draw(rect2D);
         }
 
@@ -192,9 +177,9 @@ public abstract class PAToolKitAction extends AbstractAction
      *
      *
      */
-    public static class DrawCircleAction extends PAToolKitAction
+    public static class DrawCircleAction extends PADrawingShapeAction
     {
-        PASVGElement circle;
+        PACircle circle;
 
         public DrawCircleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
@@ -212,7 +197,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse pressed" + startDrag + "End" + endDrag);
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
                         drawPanel.repaint();
@@ -225,9 +209,8 @@ public abstract class PAToolKitAction extends AbstractAction
                     if (button.isSelected())
                     {
                         setShapeAttributes();
-                        System.out.println("Mouse Released" + startDrag + "End" + endDrag);
                         circle = makeCircle(fill, stroke, strokeWidth,
-                                startDrag.x, startDrag.y, e.getX(), e.getY());
+                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
                         elementCollection.add(circle);
                         overwriteImage();
                         startDrag = null;
@@ -241,7 +224,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse dragged" + startDrag + "End" + endDrag);
                         endDrag = new Point(e.getX(), e.getY());
                         drawPanel.repaint();
                     }
@@ -255,22 +237,19 @@ public abstract class PAToolKitAction extends AbstractAction
 
         private PACircle makeCircle(Color fill, Color stroke, double strokeWidth, int x1, int y1, int x2, int y2)
         {
-            double cx, cy, r;
+            double cx, cy, r,x,y;
+             x = x2 < x1 ? x2 : x1;
+             y = y2 < y1 ? y2 : y1;
             r = (Math.abs(x1 - x2) > Math.abs(y1 - y2) ? Math.abs(x1 - x2) : Math.abs(y1 - y2)) / 2;
-            cx = x1 + r;
-            cy = y1 + r;
+            cx = x + r;
+            cy = y + r;
             return new PACircle(fill, stroke, (double) strokeWidth, cx, cy, r);
         }
 
         private void overwriteImage()
         {
-            double x = ((PACircle) circle).getCx() - ((PACircle) circle).getR();
-            double y = ((PACircle) circle).getCy() - ((PACircle) circle).getR();
-            double diameter = ((PACircle) circle).getR() * 2;
-
-            Ellipse2D.Double circle2D = new Ellipse2D.Double(x, y, diameter, diameter);
-
-            BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
+            Ellipse2D.Double circle2D = circle.getEllipse2D();
+            BasicStroke basicStroke = new BasicStroke((float) circle.getStrokeWidth());
 
             Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -285,9 +264,9 @@ public abstract class PAToolKitAction extends AbstractAction
 
     }
 
-    public static class DrawLineAction extends PAToolKitAction
+    public static class DrawLineAction extends PADrawingShapeAction
     {
-        PASVGElement line;
+        PALine line;
 
         public DrawLineAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
@@ -305,7 +284,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse pressed" + startDrag + "End" + endDrag);
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
                         drawPanel.repaint();
@@ -318,9 +296,8 @@ public abstract class PAToolKitAction extends AbstractAction
                     if (button.isSelected())
                     {
                         setShapeAttributes();
-                        System.out.println("Mouse Released" + startDrag + "End" + endDrag);
                         line = makeLine(stroke, strokeWidth,
-                                startDrag.x, startDrag.y, e.getX(), e.getY());
+                                startDrag.x, startDrag.y,endDrag.x , endDrag.y);
                         elementCollection.add(line);
                         overwriteImage();
                         startDrag = null;
@@ -334,7 +311,6 @@ public abstract class PAToolKitAction extends AbstractAction
                 {
                     if (button.isSelected())
                     {
-                        System.out.println("Mouse dragged" + startDrag + "End" + endDrag);
                         endDrag = new Point(e.getX(), e.getY());
                         drawPanel.repaint();
                     }
@@ -353,13 +329,9 @@ public abstract class PAToolKitAction extends AbstractAction
 
         private void overwriteImage()
         {
-            double x1 = ((PALine) line).getX1();
-            double y1 = ((PALine) line).getY1();
-            double x2 = ((PALine) line).getX2();
-            double y2 = ((PALine) line).getY2();
-            Line2D.Double line2D = new Line2D.Double(x1, y1, x2, y2);
+            Line2D.Double line2D = line.getLine2D();
 
-            BasicStroke basicStroke = new BasicStroke((float) strokeWidth);
+            BasicStroke basicStroke = new BasicStroke((float) line.getStrokeWidth());
 
             Graphics2D g2d = drawImage.createGraphics();
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

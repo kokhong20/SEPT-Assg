@@ -1,7 +1,8 @@
 package gui;
 
 import controller.PAMenuAction;
-import controller.PAToolKitAction;
+import controller.PADrawingShapeAction;
+import controller.PASelectCursorAction;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
@@ -142,22 +143,28 @@ public class PADrawingItem
     private void addAction()
     {
         //Rectangle
-    	PAToolKitAction.DrawRectangleAction drawRectAction = new PAToolKitAction.DrawRectangleAction(mainFrame.svgPanel,rectangle,mainFrame.attributeBar);
+    	PADrawingShapeAction.DrawRectangleAction drawRectAction = new PADrawingShapeAction.DrawRectangleAction(mainFrame.svgPanel,rectangle,mainFrame.attributeBar);
         rectangle.setAction(drawRectAction);
         
         //Line
-        PAToolKitAction.DrawLineAction drawLineAction = new PAToolKitAction.DrawLineAction(mainFrame.svgPanel,line,mainFrame.attributeBar);
+        PADrawingShapeAction.DrawLineAction drawLineAction = new PADrawingShapeAction.DrawLineAction(mainFrame.svgPanel,line,mainFrame.attributeBar);
         line.setAction(drawLineAction);
         
         //Circle
-        PAToolKitAction.DrawCircleAction drawCircleAction = new PAToolKitAction.DrawCircleAction(mainFrame.svgPanel,circle,mainFrame.attributeBar);
+        PADrawingShapeAction.DrawCircleAction drawCircleAction = new PADrawingShapeAction.DrawCircleAction(mainFrame.svgPanel,circle,mainFrame.attributeBar);
         circle.setAction(drawCircleAction);
         
+        //ZoomIn
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel, zoomIn);
         zoomIn.setAction(zoomInAction);
         
+        //ZoomOut
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel, zoomOut);
         zoomOut.setAction(zoomOutAction);
+        
+        //SelectCursor
+         PASelectCursorAction  selectCusrsorAction = new PASelectCursorAction( mainFrame.svgPanel,  selectCursor,mainFrame.attributeBar);
+         selectCursor.setAction(selectCusrsorAction);
     }
 
 }

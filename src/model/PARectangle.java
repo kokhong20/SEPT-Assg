@@ -32,6 +32,7 @@ public class PARectangle extends PASVGElement
         this.y = y;
         this.width = width;
         this.height = height;
+        setRectangle2D();
     }
 
     /**

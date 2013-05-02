@@ -36,6 +36,8 @@ public class PACircle extends PASVGElement
         this.cx = cx;
         this.cy = cy;
         this.r = r;
+        
+        setEllipse2D();
     }
 
     /**
