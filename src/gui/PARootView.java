@@ -57,24 +57,18 @@ public class PARootView extends JFrame
      */
     private void customize()
     {
-        rootView.setOpaque(false);
         rootView.setSize(PASystem.getScreenDimension());
-        //rootView.add(newFileSetting);
         rootView.add(startMenu);
-        /*JInternalFrame fr = new JInternalFrame("");
-        fr.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-        fr.add(toolBar);
-        //fr.pack();
-        fr.setMaximumSize(new Dimension(80,240));
-        fr.setPreferredSize(new Dimension(80,240));
-        fr.setMinimumSize(new Dimension(80,240));
-        fr.setSize(new Dimension(80,240));
-        fr.setVisible(true);
-        rootView.add(fr);
-        //rootView.add(toolBar);
-        //rootView.add(mainPanel);
-        rootView.add(layerPanel);*/
         rootView.setVisible(true);
+    }
+    
+    private void designForMac()
+    {
+        if (PASystem.getCurrentOS().indexOf("mac") >= 0)
+        {
+            rootView.setOpaque(false);
+            setBackground(new Color(0, 0, 0, 0));
+        }
     }
 
     /**
@@ -86,7 +80,7 @@ public class PARootView extends JFrame
         setJMenuBar(menuBar);
         setSize(PASystem.getScreenDimension());
         setUndecorated(true);
-        setBackground(new Color(0, 0, 0, 0));
+        designForMac();
         setVisible(true);
     }
 }
