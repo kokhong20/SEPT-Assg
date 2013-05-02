@@ -64,6 +64,7 @@ public class PANewFileSettingAction implements ActionListener
         if (e.getActionCommand().equals("OK"))
         {
             HashMap <String, String> textMap = self.getFieldText();
+            String fileName = textMap.get("fileName");
             String width = textMap.get("width");
             String height = textMap.get("height");
             String unit = textMap.get("unit");
@@ -74,7 +75,7 @@ public class PANewFileSettingAction implements ActionListener
             svgHeight = (int) svgTag.getHeight();
             PASVGContainer svgContainer = new PASVGContainer(svgTag);
             drawToImage();
-            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, svgImage);
+            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
             PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
             parent.add(svgDisplay);
             parent.add(drawingKit);

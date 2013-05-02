@@ -71,6 +71,7 @@ public class PAFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
+            String fileName = selectedFile.getName();
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
             Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
             PASVGTag svgTag = new PASVGTag(svgNode);
@@ -78,7 +79,7 @@ public class PAFileChooserAction implements ActionListener
             svgHeight = (int) svgTag.getHeight();
             LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
-            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, svgImage);
+            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
             PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
             parent.add(svgDisplay);
             parent.add(drawingKit);
