@@ -8,6 +8,7 @@ import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -33,11 +34,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Rectangle2D handleRectangle;
     Line2D handleLine;
     PALine selectedLine;
+    double scale;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
-        g2D = (Graphics2D) drawPanel.getGraphics();
     }
 
     @Override
@@ -52,10 +53,26 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 if (button.isSelected())
                 {
                     selectedElement = null;
-                    System.out.println(elementCollection.getFirst());
-
-                    if ((selectedElement = iterateContainer(elementCollection, e.getX(), e.getY())) != null)
+                    scale = drawPanel.getScale();
+//                    startDrag = new Point((int) (e.getX()*scale),e.getY());
+                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX()/scale),  (int) (e.getY()/scale))) != null)&&
+                            (handleRectangle != null || handleLine != null))
                     {
+//                        g2D = (Graphics2D) drawPanel.getGraphics();
+                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
+                        if (selectedElement instanceof PARectangle)
+                        {
+                            drawRectHighlight(handleRectangle);
+                        }
+                        else if (selectedElement instanceof PACircle)
+                        {
+                            drawEllipseHighlight(handleRectangle);
+                        }
+                        else if (selectedElement instanceof PALine)
+                        {
+                            drawLineHighlight(handleLine, selectedLine);
+                        }
+
                         drawPanel.repaint();
                     }
                 }
@@ -89,31 +106,31 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 if (button.isSelected())
                 {
-                    selectedElement = null;
-
-                    if ((selectedElement = iterateContainer(elementCollection, e.getX(), e.getY())) != null)
-                    {
-                        drawPanel.repaint();
-                    }
-                    if (handleRectangle != null || handleLine != null)
-                    {
-
-                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-                        if (selectedElement instanceof PARectangle)
-                        {
-                            drawRectHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PACircle)
-                        {
-                            drawEllipseHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PALine)
-                        {
-                            drawLineHighlight(handleLine, selectedLine);
-                        }
-
-                        drawPanel.repaint();
-                    }
+//                    selectedElement = null;
+//
+//                    if ((selectedElement = iterateContainer(elementCollection, e.getX(), e.getY())) != null)
+//                    {
+//                        drawPanel.repaint();
+//                    }
+//                    if (handleRectangle != null || handleLine != null)
+//                    {
+////                        g2D = (Graphics2D) drawPanel.getGraphics();
+//                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
+//                        if (selectedElement instanceof PARectangle)
+//                        {
+//                            drawRectHighlight(handleRectangle);
+//                        }
+//                        else if (selectedElement instanceof PACircle)
+//                        {
+//                            drawEllipseHighlight(handleRectangle);
+//                        }
+//                        else if (selectedElement instanceof PALine)
+//                        {
+//                            drawLineHighlight(handleLine, selectedLine);
+//                        }
+//
+//                        drawPanel.repaint();
+//                    }
                 }
             }
 
@@ -163,12 +180,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
     public void drawRectHighlight(Rectangle2D r)
     {
         System.out.println("Entered DrawRect");
-        double x = r.getX();
-        double y = r.getY();
-        double w = r.getWidth();
-        double h = r.getHeight();
-        
-        g2D.scale(1.5, 1.5);
+        scale = drawPanel.getScale();
+        double x = r.getX()*scale;
+        double y = r.getY()*scale;
+        double w = r.getWidth()*scale;
+        double h = r.getHeight()*scale;
+
         Rectangle.Double rect1 = new Rectangle.Double(x - 3.0, y - 3.0, 6.0,
                 6.0);
         g2D.setColor(Color.white);
@@ -229,10 +246,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
     private void drawEllipseHighlight(Rectangle2D r)
     {
         // TODO Auto-generated method stub
-        double x = r.getX();
-        double y = r.getY();
-        double w = r.getWidth();
-        double h = r.getHeight();
+        scale = drawPanel.getScale();
+        double x = r.getX()*scale;
+        double y = r.getY()*scale;
+        double w = r.getWidth()*scale;
+        double h = r.getHeight()*scale;
 
         Rectangle.Double rect1 = new Rectangle.Double(x - 3.0, y - 3.0, 6.0,
                 6.0);
@@ -266,12 +284,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
     private void drawLineHighlight(Line2D r, PALine l)
     {
         // TODO Auto-generated method stub
-        double x1 = r.getX1();
-        double x2 = r.getX2();
-        double y1 = r.getY1();
-        double y2 = r.getY2();
+        scale = drawPanel.getScale();
+        double x1 = r.getX1()*scale;
+        double x2 = r.getX2()*scale;
+        double y1 = r.getY1()*scale;
+        double y2 = r.getY2()*scale;
 
-        double w = l.getStrokeWidth();
+        double w = l.getStrokeWidth()*scale;
 
         Rectangle.Double rect1 = new Rectangle.Double(x1 - (w / 2), y1 - (w / 2), 6.0, 6.0);
         g2D.setColor(Color.white);

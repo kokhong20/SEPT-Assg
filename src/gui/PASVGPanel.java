@@ -102,7 +102,7 @@ public class PASVGPanel extends JPanel
         g2d.fillRect(0, 0, svgWidth, svgHeight);
         g2d.setPaint(new Color(255, 255, 255, 255));
         iterateList(g2d, elementCollection);
-       
+
     }
 
     private void iterateList(Graphics2D g2d, LinkedList<PASVGElement> collection)
@@ -182,25 +182,26 @@ public class PASVGPanel extends JPanel
             {
 
                 case "Rectangle":
+                case "Select Cursor":
                     g2d.setPaint(Color.LIGHT_GRAY);
-                    
-                    Rectangle2D.Double rect = makeRectangle((int)((startDrag.x)*scale),
-                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
+
+                    Rectangle2D.Double rect = makeRectangle((int) ((startDrag.x) * scale),
+                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
                     g2d.draw(rect);
                     break;
 
                 case "Line":
                     g2d.setPaint(Color.LIGHT_GRAY);
                     g2d.setStroke(new BasicStroke(2));
-                    Line2D.Double line = makeLine((int)((startDrag.x)*scale),
-                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
+                    Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
+                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
                     g2d.draw(line);
                     break;
 
                 case "Circle":
                     g2d.setPaint(Color.LIGHT_GRAY);
-                    Ellipse2D.Double circle = makeCircle((int)((startDrag.x)*scale),
-                            (int)((startDrag.y)*scale), (int)((endDrag.x)*scale), (int)((endDrag.y)*scale));
+                    Ellipse2D.Double circle = makeCircle((int) ((startDrag.x) * scale),
+                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
                     g2d.draw(circle);
                     break;
 
