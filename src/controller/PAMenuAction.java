@@ -98,7 +98,7 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             PANewFileSetting newFileSetting;
-            
+
             if (startMenu != null)
             {
                 newFileSetting = new PANewFileSetting(parent, startMenu);
@@ -107,7 +107,7 @@ public abstract class PAMenuAction extends AbstractAction
             {
                 newFileSetting = new PANewFileSetting(parent);
             }
-            
+
             parent.add(newFileSetting);
 
             try
@@ -402,14 +402,13 @@ public abstract class PAMenuAction extends AbstractAction
     public static class ZoomIn extends PAMenuAction
     {
         private PASVGPanel drawPanel;
-        private PAMainFrame onFocusFrame;
 
         public ZoomIn(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_PLUS, "Zoom In");
             this.drawPanel = drawPanel;
         }
-        
+
         public ZoomIn(PASVGPanel drawPanel, JButton button)
         {
             super(KeyEvent.VK_PLUS, "");
@@ -429,14 +428,13 @@ public abstract class PAMenuAction extends AbstractAction
     public static class ZoomOut extends PAMenuAction
     {
         private PASVGPanel drawPanel;
-        private PAMainFrame onFocusFrame;
 
         public ZoomOut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_MINUS, "Zoom Out");
             this.drawPanel = drawPanel;
         }
-        
+
         public ZoomOut(PASVGPanel drawPanel, JButton button)
         {
             super(KeyEvent.VK_MINUS, "");
@@ -455,19 +453,36 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ActualSize extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
+        private PASVGPanel drawPanel;
 
-        public ActualSize(JDesktopPane parent)
+        public ActualSize(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_0, "Actual Size");
-            this.parent = parent;
+            this.drawPanel = drawPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            double scale = 1.0;
+            drawPanel.zoomInOutSVG(scale);
+        }
+
+    }
+
+    public static class RemoveAction extends PAMenuAction
+    {
+        private int keyEvent;
+        private String name;
+
+        public RemoveAction(int keyEvent, String name)
+        {
+            super(keyEvent, name);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
         }
 
     }

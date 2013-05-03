@@ -5,6 +5,7 @@
 package controller;
 
 import gui.PAMainFrame;
+import gui.PAMenuBar;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -24,10 +25,12 @@ public class PAInternalFrameAction extends InternalFrameAdapter
     @Override
     public void internalFrameActivated(InternalFrameEvent e)
     {
+        PAMenuBar.updateAction(mainFrame);
     }
     
     @Override
     public void internalFrameDeactivated(InternalFrameEvent e)
     {
+        PAMenuBar.removeUpdatedAction();
     }
 }

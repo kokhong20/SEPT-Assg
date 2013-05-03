@@ -5,6 +5,7 @@
 package gui;
 
 import controller.PAMenuAction;
+import java.awt.event.KeyEvent;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,6 +17,9 @@ import javax.swing.JMenuItem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem zoomInView;
+    private static JMenuItem zoomOutView;
+    private static JMenuItem actualSizeView;
     private JMenu fileMenu;
     private JMenu editMenu;
     private JMenu imageMenu;
@@ -35,9 +39,6 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem deleteEdit;
     private JMenuItem imageSizeImage;
     private JMenuItem viewBoxImage;
-    private JMenuItem zoomInView;
-    private JMenuItem zoomOutView;
-    private JMenuItem actualSizeView;
     private JDesktopPane parent;
 
     /**
@@ -52,6 +53,32 @@ public class PAMenuBar extends JMenuBar
         addMenuItem();
         setUpMenuBar();
         addAction();
+    }
+    
+    public static void updateAction(PAMainFrame mainFrame)
+    {
+        PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
+        PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
+        PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        zoomInView.setAction(zoomInAction);
+        zoomOutView.setAction(zoomOutAction);
+        actualSizeView.setAction(actualSizeAction);
+        zoomInView.setEnabled(true);
+        zoomOutView.setEnabled(true);
+        actualSizeView.setEnabled(true);
+    }
+    
+    public static void removeUpdatedAction()
+    {
+        PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
+        PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
+        PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        zoomInView.setAction(removeZoomInAction);
+        zoomOutView.setAction(removeZoomOutAction);
+        actualSizeView.setAction(removeActualSizeAction);
+        zoomInView.setEnabled(false);
+        zoomOutView.setEnabled(false);
+        actualSizeView.setEnabled(false);
     }
 
     /**
@@ -136,15 +163,11 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(parent);
         PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(parent);
         PAMenuAction.ExitProgram exitAction = new PAMenuAction.ExitProgram(parent);
-        //PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
-        //PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         newFile.setAction(newAction);
         openFile.setAction(openAction);
         saveFile.setAction(saveAction);
         saveAsFile.setAction(saveAsAction);
         exitFile.setAction(exitAction);
-        //zoomInView.setAction(zoomInAction);
-        //zoomOutView.setAction(zoomOutAction);
     }
 
     /**
