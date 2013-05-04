@@ -7,6 +7,7 @@ package controller;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -34,7 +35,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Rectangle2D handleRectangle;
     Line2D handleLine;
     PALine selectedLine;
-    double scale;
+    Point initialMouse;
+    Cursor cursor;
+    int elementIndex, changeX, changeY;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -52,13 +55,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 // TODO Auto-generated method stub
                 if (button.isSelected())
                 {
-                    selectedElement = null;
                     scale = drawPanel.getScale();
-//                    startDrag = new Point((int) (e.getX()*scale),e.getY());
-                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX()/scale),  (int) (e.getY()/scale))) != null)&&
-                            (handleRectangle != null || handleLine != null))
+                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
+                            && (handleRectangle != null || handleLine != null))
                     {
-//                        g2D = (Graphics2D) drawPanel.getGraphics();
                         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
                         if (selectedElement instanceof PARectangle)
                         {
@@ -81,6 +81,15 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mousePressed(MouseEvent e)
             {
+                if (button.isSelected())
+                {
+                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
+                    {
+                        scale = drawPanel.getScale();
+                        initialMouse = new Point(e.getX(), e.getY());
+                        drawPanel.repaint();
+                    }
+                }
                 // TODO Auto-generated method stub
 //			for (Shape shapes : svgContainer.getShapesCollection().keySet())
 //			{
@@ -106,6 +115,24 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 if (button.isSelected())
                 {
+                    if ((handleRectangle != null || handleLine != null))
+                    {
+                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
+                        if (selectedElement instanceof PARectangle)
+                        {
+                            drawRectHighlight(handleRectangle);
+                        }
+                        else if (selectedElement instanceof PACircle)
+                        {
+                            drawEllipseHighlight(handleRectangle);
+                        }
+                        else if (selectedElement instanceof PALine)
+                        {
+                            drawLineHighlight(handleLine, selectedLine);
+                        }
+
+                        drawPanel.repaint();
+                    }
 //                    selectedElement = null;
 //
 //                    if ((selectedElement = iterateContainer(elementCollection, e.getX(), e.getY())) != null)
@@ -137,6 +164,23 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseDragged(MouseEvent e)
             {
+                if (button.isSelected())
+                {
+                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
+                    {
+
+                        ((PARectangle) selectedElement).setX(((PARectangle) selectedElement).getX() + changeX);
+                        ((PARectangle) selectedElement).setY(((PARectangle) selectedElement).getY() + changeY);
+                        System.out.println(((PARectangle) selectedElement).getX() + "selectedlement gex x");
+                        changeX = e.getX() - initialMouse.x;
+                        changeY = e.getY() - initialMouse.y;
+
+                        initialMouse.x = e.getX();
+                        initialMouse.y = e.getY();
+                        overWriteListElement(selectedElement, drawPanel.svgContainer.getSvgContainer());
+                        drawPanel.repaint();
+                    }
+                }
                 // TODO Auto-generated method stub
 //			for (Shape shapes : svgContainer.getShapesCollection().keySet())
 //			{
@@ -169,22 +213,30 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseMoved(MouseEvent e)
             {
+                if (button.isSelected())
+                {
+                    cursor = selectedElement != null ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR) : Cursor.getDefaultCursor();
+                    drawPanel.setCursor(cursor);
+                    drawPanel.repaint();
+                }
             }
 
         };
 
         drawPanel.addMouseListener(mouseAdapter);
+
         drawPanel.addMouseMotionListener(mouseAdapter);
+
     }
 
     public void drawRectHighlight(Rectangle2D r)
     {
         System.out.println("Entered DrawRect");
         scale = drawPanel.getScale();
-        double x = r.getX()*scale;
-        double y = r.getY()*scale;
-        double w = r.getWidth()*scale;
-        double h = r.getHeight()*scale;
+        double x = r.getX() * scale;
+        double y = r.getY() * scale;
+        double w = r.getWidth() * scale;
+        double h = r.getHeight() * scale;
 
         Rectangle.Double rect1 = new Rectangle.Double(x - 3.0, y - 3.0, 6.0,
                 6.0);
@@ -247,10 +299,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         // TODO Auto-generated method stub
         scale = drawPanel.getScale();
-        double x = r.getX()*scale;
-        double y = r.getY()*scale;
-        double w = r.getWidth()*scale;
-        double h = r.getHeight()*scale;
+        double x = r.getX() * scale;
+        double y = r.getY() * scale;
+        double w = r.getWidth() * scale;
+        double h = r.getHeight() * scale;
 
         Rectangle.Double rect1 = new Rectangle.Double(x - 3.0, y - 3.0, 6.0,
                 6.0);
@@ -285,12 +337,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         // TODO Auto-generated method stub
         scale = drawPanel.getScale();
-        double x1 = r.getX1()*scale;
-        double x2 = r.getX2()*scale;
-        double y1 = r.getY1()*scale;
-        double y2 = r.getY2()*scale;
+        double x1 = r.getX1() * scale;
+        double x2 = r.getX2() * scale;
+        double y1 = r.getY1() * scale;
+        double y2 = r.getY2() * scale;
 
-        double w = l.getStrokeWidth()*scale;
+        double w = l.getStrokeWidth() * scale;
 
         Rectangle.Double rect1 = new Rectangle.Double(x1 - (w / 2), y1 - (w / 2), 6.0, 6.0);
         g2D.setColor(Color.white);
@@ -319,6 +371,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     handleLine = line;
                     selectedLine = ((PALine) element);
                     handleRectangle = null;
+                    elementIndex = index;
                     return element;
                 }
             }
@@ -330,6 +383,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     handleLine = null;
                     selectedLine = null;
                     handleRectangle = ellipse.getBounds2D();
+                    elementIndex = index;
                     return element;
                 }
             }
@@ -341,6 +395,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     handleLine = null;
                     selectedLine = null;
                     handleRectangle = rect.getBounds2D();
+                    elementIndex = index;
                     return element;
                 }
             }
@@ -350,12 +405,30 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 PASVGElement ele = null;
                 if ((ele = iterateContainer(groupList, x, y)) != null)
                 {
+                    elementIndex = index;
                     return ele;
                 }
             }
         }
 
         return null;
+    }
+
+    private void overWriteListElement(PASVGElement elementItem, LinkedList<PASVGElement> elementList)
+    {
+        if (elementItem instanceof PACircle)
+        {
+        }
+        else if (elementItem instanceof PARectangle)
+        {
+            ((PARectangle) elementList.get(elementIndex)).setX(((PARectangle) elementList.get(elementIndex)).getX());
+            ((PARectangle) elementList.get(elementIndex)).setY(((PARectangle) elementList.get(elementIndex)).getY());
+            ((PARectangle) elementList.get(elementIndex)).setRectangle2D();
+            drawPanel.zoomInOutSVG(scale);
+        }
+        else if (elementItem instanceof PALine)
+        {
+        }
     }
 
 }
