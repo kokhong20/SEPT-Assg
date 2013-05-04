@@ -1,7 +1,6 @@
 package gui;
 
 import controller.PAInternalFrameAction;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -183,7 +182,7 @@ public class PAMainFrame extends JInternalFrame
 
         layout.setVerticalGroup(vGroup);
 
-        this.add(mainPanel);
+        add(mainPanel);
     }
 
     public JDesktopPane getParentView()

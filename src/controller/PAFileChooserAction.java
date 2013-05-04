@@ -10,6 +10,7 @@ import gui.PAStartMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.util.LinkedList;
 import javax.swing.JDesktopPane;
@@ -80,12 +81,22 @@ public class PAFileChooserAction implements ActionListener
             LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
             PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
-            PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+            
+            try
+            {
+                svgDisplay.setSelected(true);
+            }
+            catch (PropertyVetoException ex)
+            {
+                System.err.println(ex.getMessage());
+            }
+            
             parent.add(svgDisplay);
-            parent.add(drawingKit);
 
             if (startMenu != null)
             {
+                PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+                parent.add(drawingKit);
                 startMenu.setVisible(false);
                 startMenu.dispose();
             }

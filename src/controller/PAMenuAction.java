@@ -4,6 +4,7 @@
  */
 package controller;
 
+import gui.PADrawingItem;
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
@@ -23,6 +24,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -401,6 +403,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ZoomIn extends PAMenuAction
     {
+        private JButton button;
         private PASVGPanel drawPanel;
 
         public ZoomIn(PASVGPanel drawPanel)
@@ -413,11 +416,19 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_PLUS, "");
             this.drawPanel = drawPanel;
+            this.button = button;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            if (button != null)
+            {
+                JToggleButton zoomIn = new JToggleButton();
+                zoomIn.setToolTipText("Zoom In");
+                PADrawingItem.buttonSelected = zoomIn;
+            }
+
             double scale = drawPanel.getScale();
             scale += 0.1;
             drawPanel.zoomInOutSVG(scale);
@@ -427,6 +438,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ZoomOut extends PAMenuAction
     {
+        private JButton button;
         private PASVGPanel drawPanel;
 
         public ZoomOut(PASVGPanel drawPanel)
@@ -439,11 +451,19 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_MINUS, "");
             this.drawPanel = drawPanel;
+            this.button = button;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            if (button != null)
+            {
+                JToggleButton zoomOut = new JToggleButton();
+                zoomOut.setToolTipText("Zoom Out");
+                PADrawingItem.buttonSelected = zoomOut;
+            }
+
             double scale = drawPanel.getScale();
             scale -= 0.1;
             drawPanel.zoomInOutSVG(scale);
