@@ -40,6 +40,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Point initialMouse;
     Cursor cursor;
     int elementIndex, changeX, changeY;
+    LinkedList<PASVGElement> elementTemp;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -151,6 +152,33 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     }
                     else
                     {
+
+                        if ((elementTemp = iterateContainer(elementCollection, startDrag, endDrag)) != null)
+                        {
+
+                            for (int index = elementTemp.size() - 1; index >= 0; index--)
+                            {
+                                PASVGElement element = elementTemp.get(index);
+                                System.out.println("Element in elementList"+element);
+                                g2D = drawPanel.svgImage.createGraphics();
+                                if (element instanceof PALine)
+                                {
+                                    drawLineHighlight(handleLine, selectedLine);
+
+                                }
+                                else if (element instanceof PACircle)
+                                {
+                                    drawEllipseHighlight(handleRectangle);
+                                }
+                                else if (element instanceof PARectangle)
+                                {
+                                    drawRectHighlight(((PARectangle) element).getRectangle2D().getBounds2D());
+                                }
+                                else if (element instanceof PASVGGroup)
+                                {
+                                }
+                            }
+                        }
                         startDrag = null;
                         endDrag = null;
                         drawPanel.repaint();
@@ -450,59 +478,63 @@ public class PASelectCursorAction extends PADrawingShapeAction
         return null;
     }
 
-    private PASVGElement[] iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
+    private LinkedList<PASVGElement> iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
     {
+        LinkedList<PASVGElement> elementArray = new LinkedList<>();
+        Rectangle2D.Double rectPoint = drawPanel.makeRectangle(start.x, start.y, end.x, end.y);
+        System.out.println(rectPoint.getBounds2D());
         for (int index = elementList.size() - 1; index >= 0; index--)
         {
             PASVGElement element = elementList.get(index);
-            LinkedList<PASVGElement> elementArray = new LinkedList<>();
 
 
-//            if (element instanceof PALine)
-//            {
-//                Line2D line = ((PALine) element).getLine2D();
-//                if (line.intersects(new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0)))
-//                {
-//                    handleLine = line;
-//                    selectedLine = ((PALine) element);
-//                    handleRectangle = null;
-//                    elementIndex = index;
-//                    if (!elementArray.contains(element))
-//                    {
-//                        elementArray.add(element);
-//                    }
-//                }
-//            }
-//            else if (element instanceof PACircle)
-//            {
-//                Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
-//                if (ellipse.contains(x, y))
-//                {
-//                    handleLine = null;
-//                    selectedLine = null;
-//                    handleRectangle = ellipse.getBounds2D();
-//                    elementIndex = index;
-//                    if (!elementArray.contains(element))
-//                    {
-//                        elementArray.add(element);
-//                    }
-//                }
-//            }
-//            else if (element instanceof PARectangle)
-//            {
-//                Rectangle2D rect = ((PARectangle) element).getRectangle2D();
-//                if (rect.contains(x, y))
-//                {
-//                    handleLine = null;
-//                    selectedLine = null;
-//                    handleRectangle = rect.getBounds2D();
-//                    elementIndex = index;
-//                    if (!elementArray.contains(element))
-//                    {
-//                        elementArray.add(element);
-//                    }
-//                }
-//            }
+            if (element instanceof PALine)
+            {
+                Line2D line = ((PALine) element).getLine2D();
+                if (line.intersects(new Rectangle2D.Double((double) start.x - 3.0, (double) start.y - 3.0, 6.0, 6.0)))
+                {
+                    handleLine = line;
+                    selectedLine = ((PALine) element);
+                    handleRectangle = null;
+                    elementIndex = index;
+                    if (!elementArray.contains(element))
+                    {
+                        elementArray.add(element);
+                    }
+                }
+            }
+            else if (element instanceof PACircle)
+            {
+                Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
+                if (rectPoint.contains(ellipse.getBounds2D()))
+                {
+                    handleLine = null;
+                    selectedLine = null;
+                    handleRectangle = ellipse.getBounds2D();
+                    elementIndex = index;
+                    if (!elementArray.contains(element))
+                    {
+                        elementArray.add(element);
+                    }
+                }
+            }
+            else if (element instanceof PARectangle)
+            {
+                Rectangle2D rect = ((PARectangle) element).getRectangle2D();
+                if (rectPoint.contains(rect))
+                {
+                    System.out.println("DEteceted");
+                    handleLine = null;
+                    selectedLine = null;
+                    handleRectangle = rect.getBounds2D();
+                    elementIndex = index;
+                    if (!elementArray.contains(element))
+                    {
+                        System.out.println("ADded");
+                        elementArray.add(element);
+                    }
+                }
+            }
 //            else if (element instanceof PASVGGroup)
 //            {
 //                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
@@ -517,9 +549,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
 //                }
 //            }
         }
-        handleRectangle = null;
-        handleLine = null;
-        return null;
+//        handleRectangle = null;
+//        handleLine = null;
+        return elementArray;
     }
 
     private void overWriteListElement(PASVGElement elementItem, LinkedList<PASVGElement> elementList)
