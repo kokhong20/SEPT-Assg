@@ -30,31 +30,31 @@ public class PAInternalFrameAction extends InternalFrameAdapter
         PADrawingItem.addAction(mainFrame);
         PADrawingItem.setUpButton();
 
-//        if (PADrawingItem.buttonSelected != null)
-//        {
-//            switch (PADrawingItem.buttonSelected.getToolTipText())
-//            {
-//                case "Select Cursor":
-//                    PADrawingItem.selectCursor.doClick();
-//                    PADrawingItem.selectCursor.doClick();
-//                    break;
-//
-//                case "Line":
-//                    PADrawingItem.line.doClick();
-//                    PADrawingItem.line.doClick();
-//                    break;
-//
-//                case "Rectangle":
-//                    PADrawingItem.rectangle.doClick();
-//                    PADrawingItem.rectangle.doClick();
-//                    break;
-//
-//                case "Circle":
-//                    PADrawingItem.circle.doClick();
-//                    PADrawingItem.circle.doClick();
-//                    break;
-//            }
-//        }
+        if (PADrawingItem.buttonSelected != null)
+        {
+            switch (PADrawingItem.buttonSelected.getToolTipText())
+            {
+                case "Select Cursor":
+                    PADrawingItem.selectCursor.doClick();
+                    PADrawingItem.selectCursor.doClick();
+                    break;
+
+                case "Line":
+                    PADrawingItem.line.doClick();
+                    PADrawingItem.line.doClick();
+                    break;
+
+                case "Rectangle":
+                    PADrawingItem.rectangle.doClick();
+                    PADrawingItem.rectangle.doClick();
+                    break;
+
+                case "Circle":
+                    PADrawingItem.circle.doClick();
+                    PADrawingItem.circle.doClick();
+                    break;
+            }
+        }
     }
 
     @Override

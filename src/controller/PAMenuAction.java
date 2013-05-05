@@ -422,12 +422,12 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if (button != null)
-            {
-                JToggleButton zoomIn = new JToggleButton();
-                zoomIn.setToolTipText("Zoom In");
-                PADrawingItem.buttonSelected = zoomIn;
-            }
+//            if (button != null)
+//            {
+//                JToggleButton zoomIn = new JToggleButton();
+//                zoomIn.setToolTipText("Zoom In");
+//                PADrawingItem.buttonSelected = zoomIn;
+//            }
 
             double scale = drawPanel.getScale();
             scale += 0.1;
@@ -457,12 +457,12 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            if (button != null)
-            {
-                JToggleButton zoomOut = new JToggleButton();
-                zoomOut.setToolTipText("Zoom Out");
-                PADrawingItem.buttonSelected = zoomOut;
-            }
+//            if (button != null)
+//            {
+//                JToggleButton zoomOut = new JToggleButton();
+//                zoomOut.setToolTipText("Zoom Out");
+//                PADrawingItem.buttonSelected = zoomOut;
+//            }
 
             double scale = drawPanel.getScale();
             scale -= 0.1;
