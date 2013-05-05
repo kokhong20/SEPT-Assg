@@ -76,13 +76,18 @@ public abstract class PADrawingShapeAction extends AbstractAction
             button.setBorder(BorderFactory.createLineBorder(new Color(35, 192, 255, 100), 1));
 
             PADrawingItem.buttonSelected = button;
+
             addActionToComponents();
+
         }
         else
         {
             PADrawingItem.buttonSelected = null;
             button.setBorder(null);
         }
+
+
+        System.out.println("outside" + drawPanel.getMouseListeners());
     }
 
     public abstract void addActionToComponents();
@@ -111,51 +116,55 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 public void mousePressed(MouseEvent e)
                 {
 
-                    if (button.isSelected())
-                    {
-                        scale = drawPanel.getScale();
-                        startDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
-                        endDrag = startDrag;
-                        drawPanel.repaint();
-                    }
+                    scale = drawPanel.getScale();
+                    Point temp = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    startDrag = temp;
+                    endDrag = startDrag;
+                    drawPanel.repaint();
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e)
                 {
-                    if (button.isSelected())
-                    {
-                        setShapeAttributes();
-                        System.out.println("endPoint" + endDrag);
-                        if (startDrag != null && endDrag != null)
-                        {
-                            rect = makeRectangle(fill, stroke, strokeWidth,
-                                    startDrag.x, startDrag.y, e.getX(), e.getY());
-                        }
-                        elementCollection.add(rect);
-                        overwriteImage();
-                        startDrag = null;
-                        endDrag = null;
-                        drawPanel.repaint();
+                    setShapeAttributes();
+                    rect = makeRectangle(fill, stroke, strokeWidth,
+                            startDrag.x, startDrag.y, endDrag.x, endDrag.y);
 
-                    }
+                    elementCollection.add(rect);
+                    overwriteImage();
+
+                    System.out.println(1);
+                    startDrag = null;
+                    endDrag = null;
+                    drawPanel.repaint();
+
+
+
                 }
 
                 @Override
                 public void mouseDragged(MouseEvent e)
                 {
-                    if (button.isSelected())
-                    {
-                        endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
-                        drawPanel.repaint();
-                    }
+                    endDrag= new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    drawPanel.repaint();
+
                 }
 
             };
 
+            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+            {
+                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+            }
+
+            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+            {
+                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+            }
+
             drawPanel.addMouseListener(mouseRectAction);
             drawPanel.addMouseMotionListener(mouseRectAction);
-
         }
 
         private PARectangle makeRectangle(Color fill, Color stroke,
@@ -242,6 +251,16 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 }
 
             };
+
+            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+            {
+                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+            }
+
+            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+            {
+                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+            }
 
             drawPanel.addMouseListener(mouseRectAction);
             drawPanel.addMouseMotionListener(mouseRectAction);
@@ -330,6 +349,16 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 }
 
             };
+
+            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+            {
+                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+            }
+
+            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+            {
+                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+            }
 
             drawPanel.addMouseListener(mouseRectAction);
             drawPanel.addMouseMotionListener(mouseRectAction);

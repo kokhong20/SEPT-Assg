@@ -4,6 +4,8 @@
  */
 package controller;
 
+import static controller.PADrawingShapeAction.endDrag;
+import static controller.PADrawingShapeAction.startDrag;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Color;
@@ -56,8 +58,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 if (button.isSelected())
                 {
                     scale = drawPanel.getScale();
-                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
-                            && (handleRectangle != null || handleLine != null))
+                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                     {
                         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
                         if (selectedElement instanceof PARectangle)
@@ -73,6 +74,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
                             drawLineHighlight(handleLine, selectedLine);
                         }
 
+
+
+                        drawPanel.repaint();
+                    }
+                    else
+                    {
+                        drawPanel.zoomInOutSVG(scale);
                         drawPanel.repaint();
                     }
                 }
@@ -83,10 +91,17 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 if (button.isSelected())
                 {
-                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
+                    if (selectedElement != null)
                     {
                         scale = drawPanel.getScale();
                         initialMouse = new Point(e.getX(), e.getY());
+                        drawPanel.repaint();
+                    }
+                    else
+                    {
+                        scale = drawPanel.getScale();
+                        startDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                        endDrag = startDrag;
                         drawPanel.repaint();
                     }
                 }
@@ -115,7 +130,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 if (button.isSelected())
                 {
-                    if ((handleRectangle != null || handleLine != null))
+                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
                     {
                         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
                         if (selectedElement instanceof PARectangle)
@@ -130,7 +145,14 @@ public class PASelectCursorAction extends PADrawingShapeAction
                         {
                             drawLineHighlight(handleLine, selectedLine);
                         }
+                        drawPanel.repaint();
 
+
+                    }
+                    else
+                    {
+                        startDrag = null;
+                        endDrag = null;
                         drawPanel.repaint();
                     }
 //                    selectedElement = null;
@@ -166,18 +188,22 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 if (button.isSelected())
                 {
-                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
+                    if ((handleRectangle != null || handleLine != null))
                     {
-
                         ((PARectangle) selectedElement).setX(((PARectangle) selectedElement).getX() + changeX);
                         ((PARectangle) selectedElement).setY(((PARectangle) selectedElement).getY() + changeY);
-                        System.out.println(((PARectangle) selectedElement).getX() + "selectedlement gex x");
+
                         changeX = e.getX() - initialMouse.x;
                         changeY = e.getY() - initialMouse.y;
 
-                        initialMouse.x = e.getX();
-                        initialMouse.y = e.getY();
-                        overWriteListElement(selectedElement, drawPanel.svgContainer.getSvgContainer());
+                        initialMouse = new Point(e.getX(), e.getY());
+
+                        overWriteListElement(selectedElement, elementCollection);
+                        drawPanel.repaint();
+                    }
+                    else
+                    {
+                        endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
                         drawPanel.repaint();
                     }
                 }
@@ -223,6 +249,16 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
         };
 
+        for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+        {
+            drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+        }
+
+        for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+        {
+            drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+        }
+
         drawPanel.addMouseListener(mouseAdapter);
 
         drawPanel.addMouseMotionListener(mouseAdapter);
@@ -231,7 +267,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     public void drawRectHighlight(Rectangle2D r)
     {
-        System.out.println("Entered DrawRect");
         scale = drawPanel.getScale();
         double x = r.getX() * scale;
         double y = r.getY() * scale;
@@ -410,7 +445,80 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 }
             }
         }
+        handleRectangle = null;
+        handleLine = null;
+        return null;
+    }
 
+    private PASVGElement[] iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
+    {
+        for (int index = elementList.size() - 1; index >= 0; index--)
+        {
+            PASVGElement element = elementList.get(index);
+            LinkedList<PASVGElement> elementArray = new LinkedList<>();
+
+
+//            if (element instanceof PALine)
+//            {
+//                Line2D line = ((PALine) element).getLine2D();
+//                if (line.intersects(new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0)))
+//                {
+//                    handleLine = line;
+//                    selectedLine = ((PALine) element);
+//                    handleRectangle = null;
+//                    elementIndex = index;
+//                    if (!elementArray.contains(element))
+//                    {
+//                        elementArray.add(element);
+//                    }
+//                }
+//            }
+//            else if (element instanceof PACircle)
+//            {
+//                Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
+//                if (ellipse.contains(x, y))
+//                {
+//                    handleLine = null;
+//                    selectedLine = null;
+//                    handleRectangle = ellipse.getBounds2D();
+//                    elementIndex = index;
+//                    if (!elementArray.contains(element))
+//                    {
+//                        elementArray.add(element);
+//                    }
+//                }
+//            }
+//            else if (element instanceof PARectangle)
+//            {
+//                Rectangle2D rect = ((PARectangle) element).getRectangle2D();
+//                if (rect.contains(x, y))
+//                {
+//                    handleLine = null;
+//                    selectedLine = null;
+//                    handleRectangle = rect.getBounds2D();
+//                    elementIndex = index;
+//                    if (!elementArray.contains(element))
+//                    {
+//                        elementArray.add(element);
+//                    }
+//                }
+//            }
+//            else if (element instanceof PASVGGroup)
+//            {
+//                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
+//                PASVGElement ele = null;
+//                if ((ele = iterateContainer(groupList, x, y)) != null)
+//                {
+//                    elementIndex = index;
+//                                        if(!elementArray.contains(element))
+//                    {
+//                        elementArray.add(element);
+//                    }
+//                }
+//            }
+        }
+        handleRectangle = null;
+        handleLine = null;
         return null;
     }
 
@@ -421,9 +529,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else if (elementItem instanceof PARectangle)
         {
-            ((PARectangle) elementList.get(elementIndex)).setX(((PARectangle) elementList.get(elementIndex)).getX());
-            ((PARectangle) elementList.get(elementIndex)).setY(((PARectangle) elementList.get(elementIndex)).getY());
+            PARectangle element = ((PARectangle) elementItem);
+            ((PARectangle) elementList.get(elementIndex)).setX(element.getX());
+            ((PARectangle) elementList.get(elementIndex)).setY(element.getY());
             ((PARectangle) elementList.get(elementIndex)).setRectangle2D();
+
+            System.out.println();
             drawPanel.zoomInOutSVG(scale);
         }
         else if (elementItem instanceof PALine)

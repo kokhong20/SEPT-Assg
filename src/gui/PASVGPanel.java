@@ -209,14 +209,6 @@ public class PASVGPanel extends JPanel
             }
         }
 
-        for (int index = elementCollection.size() - 1; index >= 0; index--)
-        {
-            if(elementCollection.get(index) instanceof PARectangle)
-                System.out.println(((PARectangle)elementCollection.get(index)).getX()+"SVGPANEL");
-            else
-                System.out.println(elementCollection.get(index));
-        }
-
     }
 
     private Rectangle2D.Double makeRectangle(int x1, int y1, int x2, int y2)
