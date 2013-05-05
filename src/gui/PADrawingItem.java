@@ -174,13 +174,4 @@ public class PADrawingItem
         zoomOut.setAction(zoomOutAction);
         
     }
-    
-    public static void removeAction()
-    {
-        PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "");
-        PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "");
-        zoomIn.setAction(removeZoomInAction);
-        zoomOut.setAction(removeZoomOutAction);
-    }
-
 }

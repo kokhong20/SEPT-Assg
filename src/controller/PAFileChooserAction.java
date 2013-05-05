@@ -106,6 +106,7 @@ public class PAFileChooserAction implements ActionListener
         // need to do for both Cancel and Open button.
         frame.setVisible(false);
         frame.dispose();
+        PAMenuAction.OpenFile.fcInternal = null;
     }
 
 }

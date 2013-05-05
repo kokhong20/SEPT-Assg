@@ -61,7 +61,5 @@ public class PAInternalFrameAction extends InternalFrameAdapter
     public void internalFrameDeactivated(InternalFrameEvent e)
     {
         PAMenuBar.removeUpdatedAction();
-        //PADrawingItem.removeAction();
     }
-
 }

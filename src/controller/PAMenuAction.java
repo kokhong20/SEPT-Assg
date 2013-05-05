@@ -4,7 +4,6 @@
  */
 package controller;
 
-import gui.PADrawingItem;
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
@@ -24,7 +23,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -80,6 +78,7 @@ public abstract class PAMenuAction extends AbstractAction
      */
     public static class NewFile extends PAMenuAction
     {
+        protected static PANewFileSetting newFileSetting;
         private JDesktopPane parent;
         private PAStartMenu startMenu;
 
@@ -99,18 +98,19 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PANewFileSetting newFileSetting;
-
-            if (startMenu != null)
+            if (newFileSetting == null)
             {
-                newFileSetting = new PANewFileSetting(parent, startMenu);
-            }
-            else
-            {
-                newFileSetting = new PANewFileSetting(parent);
-            }
+                if (startMenu != null)
+                {
+                    newFileSetting = new PANewFileSetting(parent, startMenu);
+                }
+                else
+                {
+                    newFileSetting = new PANewFileSetting(parent);
+                }
 
-            parent.add(newFileSetting);
+                parent.add(newFileSetting);
+            }
 
             try
             {
@@ -130,6 +130,7 @@ public abstract class PAMenuAction extends AbstractAction
      */
     public static class OpenFile extends PAMenuAction
     {
+        protected static JInternalFrame fcInternal;
         private JDesktopPane parent;
         private PAStartMenu startMenu;
 
@@ -149,38 +150,41 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            JInternalFrame fcInternal = new JInternalFrame("Open...");
-            JFileChooser fileChooser = new JFileChooser();
-            FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
-            FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
-            FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
-            Dimension screenResolution = PASystem.getScreenDimension();
-            PAFileChooserAction fcAction;
-
-            if (startMenu != null)
+            if (fcInternal == null)
             {
-                fcAction = new PAFileChooserAction(parent, startMenu, fileChooser, fcInternal);
-            }
-            else
-            {
-                fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
-            }
+                fcInternal = new JInternalFrame("Open...");
+                JFileChooser fileChooser = new JFileChooser();
+                FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
+                FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
+                FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
+                Dimension screenResolution = PASystem.getScreenDimension();
+                PAFileChooserAction fcAction;
 
-            fileChooser.addActionListener(fcAction);
-            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            fileChooser.setAcceptAllFileFilterUsed(false);
-            fileChooser.setFileFilter(xmlFilter);
-            fileChooser.setFileFilter(svgFilter);
-            fileChooser.setFileFilter(allFilter);
-            fcInternal.add(fileChooser);
-            fcInternal.pack();
+                if (startMenu != null)
+                {
+                    fcAction = new PAFileChooserAction(parent, startMenu, fileChooser, fcInternal);
+                }
+                else
+                {
+                    fcAction = new PAFileChooserAction(parent, fileChooser, fcInternal);
+                }
 
-            int startX = (int) (screenResolution.getWidth() - fcInternal.getWidth()) / 2;
-            int startY = (int) (screenResolution.getHeight() - fcInternal.getHeight()) / 2;
-            Point startPoint = new Point(startX, startY);
-            fcInternal.setLocation(startPoint);
-            fcInternal.setVisible(true);
-            parent.add(fcInternal);
+                fileChooser.addActionListener(fcAction);
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                fileChooser.setFileFilter(xmlFilter);
+                fileChooser.setFileFilter(svgFilter);
+                fileChooser.setFileFilter(allFilter);
+                fcInternal.add(fileChooser);
+                fcInternal.pack();
+
+                int startX = (int) (screenResolution.getWidth() - fcInternal.getWidth()) / 2;
+                int startY = (int) (screenResolution.getHeight() - fcInternal.getHeight()) / 2;
+                Point startPoint = new Point(startX, startY);
+                fcInternal.setLocation(startPoint);
+                fcInternal.setVisible(true);
+                parent.add(fcInternal);
+            }
 
             try
             {
