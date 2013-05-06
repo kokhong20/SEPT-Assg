@@ -32,14 +32,15 @@ import java.awt.event.MouseEvent;
  */
 public class PASelectCursorAction extends PADrawingShapeAction
 {
+    boolean isResize;
+    int elementIndex, changeX, changeY;
+    double pointX, pointY;
     PASVGElement selectedElement;
     Graphics2D g2D;
     Rectangle2D handleRectangle;
     Line2D handleLine;
     PALine selectedLine;
-    Point initialMouse, startSelect, endSelect, resizeStart;
-    int elementIndex, changeX, changeY;
-    boolean isResize;
+    Point initialMouse, startSelect, endSelect, resizeStart;   
     LinkedList<PASVGElement> elementTemp;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
@@ -70,7 +71,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
             public void mousePressed(MouseEvent e)
             {
                 scale = drawPanel.getScale();
-
+                pointX = e.getX();
+                pointY = e.getY();
+                
                 // for resizing use
                 if (isResize)
                 {
@@ -364,6 +367,42 @@ public class PASelectCursorAction extends PADrawingShapeAction
         g2D.draw(rect2);
     }
 
+    private void drawGroupHighlight(double[] arrayOfDouble)
+    {
+        double startX = arrayOfDouble[0];
+        double startY = arrayOfDouble[1];
+        double endX = arrayOfDouble[2];
+        double endY = arrayOfDouble[3];
+
+        Rectangle.Double rect1 = new Rectangle.Double(startX - 3.0, startY - 3.0, 6.0,
+                6.0);
+        g2D.setColor(Color.white);
+        g2D.fill(rect1);
+        g2D.setColor(Color.black);
+        g2D.draw(rect1);
+
+        Rectangle.Double rect2 = new Rectangle.Double(endX - 3.0, startY - 3.0,
+                6.0, 6.0);
+        g2D.setColor(Color.white);
+        g2D.fill(rect2);
+        g2D.setColor(Color.black);
+        g2D.draw(rect2);
+
+        Rectangle.Double rect3 = new Rectangle.Double(startX - 3.0, endY - 3.0,
+                6.0, 6.0);
+        g2D.setColor(Color.white);
+        g2D.fill(rect3);
+        g2D.setColor(Color.black);
+        g2D.draw(rect3);
+
+        Rectangle.Double rect4 = new Rectangle.Double(endX - 3.0, endY - 3.0,
+                6.0, 6.0);
+        g2D.setColor(Color.white);
+        g2D.fill(rect4);
+        g2D.setColor(Color.black);
+        g2D.draw(rect4);
+    }
+
     private PASVGElement iterateContainer(LinkedList<PASVGElement> elementList, int x, int y)
     {
         for (int index = elementList.size() - 1; index >= 0; index--)
@@ -509,18 +548,29 @@ public class PASelectCursorAction extends PADrawingShapeAction
     private void drawBoundsForElement()
     {
         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-        if (selectedElement instanceof PARectangle)
+        
+        if (selectedElement.isGrouped())
         {
-            drawRectHighlight(((PARectangle) selectedElement));
+            PASVGGroup headGroup = getHeadGroup(selectedElement);
+            double[] arrayOfXY = getGroupBounds(headGroup, pointX, pointY);
+            drawGroupHighlight(arrayOfXY);
         }
-        else if (selectedElement instanceof PACircle)
+        else
         {
-            drawEllipseHighlight(((PACircle) selectedElement).getEllipse2D().getBounds2D());
+            if (selectedElement instanceof PARectangle)
+            {
+                drawRectHighlight(((PARectangle) selectedElement));
+            }
+            else if (selectedElement instanceof PACircle)
+            {
+                drawEllipseHighlight(((PACircle) selectedElement).getEllipse2D().getBounds2D());
+            }
+            else if (selectedElement instanceof PALine)
+            {
+                drawLineHighlight(((PALine) selectedElement).getLine2D(), ((PALine) selectedElement));
+            }
         }
-        else if (selectedElement instanceof PALine)
-        {
-            drawLineHighlight(((PALine) selectedElement).getLine2D(), ((PALine) selectedElement));
-        }
+
     }
 
     private void detectElementBounds(PASVGElement boundsElement, int x, int y)
@@ -636,9 +686,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     break;
                 // South West
                 case Cursor.SW_RESIZE_CURSOR:
-                    ((PARectangle) selectedElement).setX(x +changeX);
-                    ((PARectangle) selectedElement).setHeight((height+ changeY));
-                    ((PARectangle) selectedElement).setWidth((width -changeX));
+                    ((PARectangle) selectedElement).setX(x + changeX);
+                    ((PARectangle) selectedElement).setHeight((height + changeY));
+                    ((PARectangle) selectedElement).setWidth((width - changeX));
                     break;
                 // West
                 case Cursor.W_RESIZE_CURSOR:
@@ -649,6 +699,98 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
             overWriteListElement(selectedElement, elementCollection);
         }
+    }
+
+    private PASVGGroup getHeadGroup(PASVGElement selectedElement)
+    {
+        PASVGGroup headGroup = selectedElement.getParentGroup();
+
+        while (headGroup.isGrouped())
+        {
+            headGroup = headGroup.getParentGroup();
+        }
+
+        return headGroup;
+    }
+
+    private double[] getGroupBounds(PASVGGroup groupElement, double x, double y)
+    {
+        LinkedList<PASVGElement> groupElementList = groupElement.getGroupElementList();
+        double startX = x, startY = y, endX = x, endY = y;
+
+        for (int index = groupElementList.size() - 1; index >= 0; index--)
+        {
+            PASVGElement element = groupElementList.get(index);
+
+            if (element instanceof PALine)
+            {
+                double x1 = ((PALine) element).getX1() * scale;
+                double x2 = ((PALine) element).getX2() * scale;
+                double y1 = ((PALine) element).getY1() * scale;
+                double y2 = ((PALine) element).getY2() * scale;
+
+                if (x1 > x2)
+                {
+                    startX = startX > x2 ? x2 : startX;
+                    endX = x1 > endX ? x1 : endX;
+                }
+                else
+                {
+                    startX = startX > x1 ? x1 : startX;
+                    endX = x2 > endX ? x2 : endX;
+                }
+                if (y1 > y2)
+                {
+                    startY = startY > y2 ? y2 : startY;
+                    endY = y1 > endY ? y1 : endY;
+                }
+                else
+                {
+                    startY = startY > y1 ? y1 : startY;
+                    endY = y2 > endY ? y2 : endY;
+                }
+            }
+            else if (element instanceof PACircle)
+            {
+                double startCX = ((PACircle) element).getCx() * scale;
+                double startCY = ((PACircle) element).getCy() * scale;
+                double endCX = startCX + ((PACircle) element).getR() * scale * 2;
+                double endCY = startCY + ((PACircle) element).getR() * scale * 2;
+
+                startX = startX > startCX ? startCX : startX;
+                startY = startY > startCY ? startCY : startY;
+                endX = endX > endCX ? endX : endCX;
+                endY = endY > endCY ? endY : endCY;
+            }
+            else if (element instanceof PARectangle)
+            {
+                double startRX = ((PARectangle) element).getX() * scale;
+                double startRY = ((PARectangle) element).getY() * scale;
+                double endRX = startRX + ((PARectangle) element).getWidth() * scale;
+                double endRY = startRY + ((PARectangle) element).getHeight() * scale;
+
+                startX = startX > startRX ? startRX : startX;
+                startY = startY > startRY ? startRY : startY;
+                endX = endX > endRX ? endX : endRX;
+                endY = endY > endRY ? endY : endRY;
+            }
+            else if (element instanceof PASVGGroup)
+            {
+                double[] arrayOfDouble = getGroupBounds((PASVGGroup) element, x, y);
+
+                startX = startX > arrayOfDouble[0] ? arrayOfDouble[0] : startX;
+                startY = startY > arrayOfDouble[1] ? arrayOfDouble[1] : startY;
+                endX = endX > arrayOfDouble[2] ? endX : arrayOfDouble[2];
+                endY = endY > arrayOfDouble[3] ? endY : arrayOfDouble[3];
+            }
+        }
+
+        double[] arrayOfDouble =
+        {
+            startX, startY, endX, endY
+        };
+
+        return arrayOfDouble;
     }
 
 }
