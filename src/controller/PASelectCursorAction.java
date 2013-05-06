@@ -38,7 +38,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Line2D handleLine;
     PALine selectedLine;
     Point initialMouse, startSelect, endSelect;
-    Cursor cursor;
     int elementIndex, changeX, changeY;
     boolean isDraged;
     LinkedList<PASVGElement> elementTemp;
@@ -52,22 +51,20 @@ public class PASelectCursorAction extends PADrawingShapeAction
     @Override
     public void addActionToComponents()
     {
+        cursor = Cursor.getDefaultCursor();
+        drawPanel.setCursor(cursor);
         MouseAdapter mouseAdapter = new MouseAdapter()
         {
             @Override
-            public void mouseClicked(MouseEvent e)
+            public void mouseMoved(MouseEvent e)
             {
-//                scale = drawPanel.getScale();
-//                if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
-//                {
-//                    
-//                }
-//                else
-//                {
-//                   
-//                }
-//
-//                drawPanel.repaint();
+                System.out.println("MouseEntered" + e.getPoint());
+                if (selectedElement != null)
+                {
+                    detectElementBounds(selectedElement, e.getX(), e.getY());
+                }
+
+                drawPanel.repaint();
             }
 
             @Override
@@ -135,7 +132,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                             }
                             else if (element instanceof PARectangle)
                             {
-                                drawRectHighlight(((PARectangle) element).getRectangle2D().getBounds2D());
+                                drawRectHighlight(((PARectangle) element));
                             }
                             else if (element instanceof PASVGGroup)
                             {
@@ -239,92 +236,41 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 drawPanel.repaint();
             }
 
-            @Override
-            public void mouseMoved(MouseEvent e)
-            {
-                if (button.isSelected())
-                {
-                    cursor = selectedElement != null ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR) : Cursor.getDefaultCursor();
-                    drawPanel.setCursor(cursor);
-                    drawPanel.repaint();
-                }
-            }
-
+//            @Override
+//            public void mouseMoved(MouseEvent e)
+//            {
+//                if (button.isSelected())
+//                {
+//                    cursor = selectedElement != null ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR) : Cursor.getDefaultCursor();
+//                    drawPanel.setCursor(cursor);
+//                    drawPanel.repaint();
+//                }
+//            }
         };
 
-            removeAllActions();
+        removeAllActions();
 
-            if (button.isSelected())
-            {
-                drawPanel.addMouseListener(mouseAdapter);
-                drawPanel.addMouseMotionListener(mouseAdapter);
-            }
+        if (button.isSelected())
+        {
+            drawPanel.addMouseListener(mouseAdapter);
+            drawPanel.addMouseMotionListener(mouseAdapter);
+        }
 
     }
 
-    public void drawRectHighlight(Rectangle2D r)
+    public void drawRectHighlight(PARectangle rectangle)
     {
         scale = drawPanel.getScale();
-        double x = r.getX() * scale;
-        double y = r.getY() * scale;
-        double w = r.getWidth() * scale;
-        double h = r.getHeight() * scale;
+        rectangle.setHandleArray(scale);
 
-        Rectangle.Double rect1 = new Rectangle.Double(x - 3.0, y - 3.0, 6.0,
-                6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect1);
-        g2D.setColor(Color.black);
-        g2D.draw(rect1);
-
-        Rectangle.Double rect2 = new Rectangle.Double(x + w - 3.0, y - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect2);
-        g2D.setColor(Color.black);
-        g2D.draw(rect2);
-
-        Rectangle.Double rect3 = new Rectangle.Double(x - 3.0, y + h - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect3);
-        g2D.setColor(Color.black);
-        g2D.draw(rect3);
-
-        Rectangle.Double rect4 = new Rectangle.Double(x + w - 3.0, y + h - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect4);
-        g2D.setColor(Color.black);
-        g2D.draw(rect4);
-
-        Rectangle.Double rect5 = new Rectangle.Double(x + (w / 2) - 3.0, y - 3.0, 6.0,
-                6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect5);
-        g2D.setColor(Color.black);
-        g2D.draw(rect5);
-
-        Rectangle.Double rect6 = new Rectangle.Double(x - 3.0, y + (h / 2) - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect6);
-        g2D.setColor(Color.black);
-        g2D.draw(rect6);
-
-        Rectangle.Double rect7 = new Rectangle.Double(x + w - 3.0, y + (h / 2) - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect7);
-        g2D.setColor(Color.black);
-        g2D.draw(rect7);
-
-        Rectangle.Double rect8 = new Rectangle.Double(x + (w / 2) - 3.0, y + h - 3.0,
-                6.0, 6.0);
-        g2D.setColor(Color.white);
-        g2D.fill(rect8);
-        g2D.setColor(Color.black);
-        g2D.draw(rect8);
+        for (int i = 0; i < rectangle.getHandleArray().length; i++)
+        {
+            Rectangle2D.Double rect = rectangle.getHandleArray()[i];
+            g2D.setColor(Color.white);
+            g2D.fill(rect);
+            g2D.setColor(Color.black);
+            g2D.draw(rect);
+        }
     }
 
     private void drawEllipseHighlight(Rectangle2D r)
@@ -433,8 +379,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 }
             }
         }
-        handleRectangle = null;
-        handleLine = null;
+
         return null;
     }
 
@@ -535,15 +480,82 @@ public class PASelectCursorAction extends PADrawingShapeAction
         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
         if (selectedElement instanceof PARectangle)
         {
-            drawRectHighlight(((PARectangle) selectedElement).getRectangle2D().getBounds2D());
+            drawRectHighlight(((PARectangle) selectedElement));
         }
         else if (selectedElement instanceof PACircle)
         {
-            drawRectHighlight(((PACircle) selectedElement).getEllipse2D().getBounds2D());
+            drawEllipseHighlight(((PACircle) selectedElement).getEllipse2D().getBounds2D());
         }
         else if (selectedElement instanceof PALine)
         {
             drawLineHighlight(((PALine) selectedElement).getLine2D(), ((PALine) selectedElement));
+        }
+    }
+
+    private void detectElementBounds(PASVGElement boundsElement, int x, int y)
+    {
+        if (boundsElement instanceof PARectangle)
+        {
+            int handlePosition;
+            PARectangle rect = (PARectangle) boundsElement;
+            Rectangle2D.Double handle = null;
+            for (handlePosition = 0; handlePosition < rect.getHandleArray().length; handlePosition++)
+            {
+                if (rect.getHandleArray()[handlePosition].contains(x, y))
+                {
+                    handle = rect.getHandleArray()[handlePosition];
+                    break;
+                }
+
+            }
+
+            if (handle == null)
+            {
+                cursor = Cursor.getDefaultCursor();
+                drawPanel.setCursor(cursor);
+                return;
+            }
+
+            switch (handlePosition)
+            {
+                // North West
+                case 0:
+                    cursor = Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR);
+                    break;
+                // North
+                case 1:
+                    cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
+                    break;
+                // North East
+                case 2:
+                    cursor = Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR);
+                    break;
+                // East
+                case 3:
+                    cursor = Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR);
+                    break;
+                // South East
+                case 4:
+                    cursor = Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR);
+                    break;
+                // South
+                case 5:
+                    cursor = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
+                    break;
+                // South West
+                case 6:
+                    cursor = Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR);
+                    break;
+                // West
+                case 7:
+                    cursor = Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR);
+                    break;
+
+            }
+            
+            drawPanel.setCursor(cursor);
+
+
         }
     }
 
