@@ -82,10 +82,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     endSelect = startSelect;
 
                 }
-                
-                
+
+
                 if ((!elementTemp.isEmpty())
-                        ||((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
+                        || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                 {
 //                    startDrag = null;
 //                    endDrag = null;
@@ -105,7 +105,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     endDrag = startDrag;
 
                 }
-                
+
                 drawPanel.repaint();
             }
 
@@ -167,20 +167,23 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 }
                 else if (!elementTemp.isEmpty())
                 {
-                    LinkedList<PASVGElement> elementArray = new LinkedList<>();
-                    for (int index = elementCollection.size() - 1; index >= 0; index--)
+                    for (int index = elementTemp.size() - 1; index >= 0; index--)
                     {
-                        PASVGElement element = elementCollection.get(index);
-
-                        if (element instanceof PALine)
+                        for (int i = elementCollection.size() - 1; i >= 0; i--)
                         {
-                            Line2D line = ((PALine) element).getLine2D();
+                            PASVGElement element = elementCollection.get(i);
+
+                            if (element.equals(elementTemp.get(index)))
+                            {
+                                if (element instanceof PALine)
+                                {
+                                    Line2D line = ((PALine) element).getLine2D();
 
 
 
-                        }
-                        else if (element instanceof PACircle)
-                        {
+                                }
+                                else if (element instanceof PACircle)
+                                {
 //                            Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
 //                            if (rectPoint.contains(ellipse.getBounds2D()))
 //                            {
@@ -193,15 +196,15 @@ public class PASelectCursorAction extends PADrawingShapeAction
 //                                    elementArray.add(element);
 //                                }
 //                            }
-                        }
-                        else if (element instanceof PARectangle)
-                        {
-                            PARectangle rect = ((PARectangle) element);
-                            ((PARectangle) elementCollection.get(index)).setX(rect.getX() + changeX);
-                            ((PARectangle) elementCollection.get(index)).setY(rect.getY() + changeY);
-                            ((PARectangle) elementCollection.get(index)).setRectangle2D();
-                            drawPanel.zoomInOutSVG(scale);
-                        }
+                                }
+                                else if (element instanceof PARectangle)
+                                {
+                                    PARectangle rect = ((PARectangle) element);
+                                    ((PARectangle) elementCollection.get(i)).setX(rect.getX() + changeX);
+                                    ((PARectangle) elementCollection.get(i)).setY(rect.getY() + changeY);
+                                    ((PARectangle) elementCollection.get(i)).setRectangle2D();
+                                    drawPanel.zoomInOutSVG(scale);
+                                }
 //            else if (element instanceof PASVGGroup)
 //            {
 //                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
@@ -215,6 +218,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
 //                    }
 //                }
 //            }
+                            }
+                        }
                     }
 
 
