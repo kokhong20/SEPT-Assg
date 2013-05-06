@@ -89,6 +89,7 @@ public class PANewFileSettingAction implements ActionListener
         
         self.setVisible(false);
         self.dispose();
+        PAMenuAction.NewFile.newFileSetting = null;
     }
     
 }
