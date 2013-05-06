@@ -37,9 +37,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Rectangle2D handleRectangle;
     Line2D handleLine;
     PALine selectedLine;
-    Point initialMouse, startSelect, endSelect;
+    Point initialMouse, startSelect, endSelect, resizeStart;
     int elementIndex, changeX, changeY;
-    boolean isDraged;
+    boolean isResize;
     LinkedList<PASVGElement> elementTemp;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
@@ -58,7 +58,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseMoved(MouseEvent e)
             {
-                System.out.println("MouseEntered" + e.getPoint());
                 if (selectedElement != null)
                 {
                     detectElementBounds(selectedElement, e.getX(), e.getY());
@@ -72,19 +71,18 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 scale = drawPanel.getScale();
 
-                if (startSelect == null && endSelect == null)
+                // for resizing use
+                if (isResize)
                 {
-                    startSelect = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
-                    endSelect = startSelect;
-
+                    resizeStart = new Point(e.getX(), e.getY());
+                    drawPanel.repaint();
+                    return;
                 }
 
-
+                // For panning object use
                 if ((!elementTemp.isEmpty())
                         || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                 {
-//                    startDrag = null;
-//                    endDrag = null;
                     drawBoundsForElement();
 
                     initialMouse = new Point(e.getX(), e.getY());
@@ -94,11 +92,20 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     drawPanel.zoomInOutSVG(scale);
                 }
 
-
+                //for Rectangle helper use
                 if (startDrag == null && endDrag == null)
                 {
+                    System.out.println("abc");
                     startDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
                     endDrag = startDrag;
+
+                }
+
+                // For select group use
+                if (startSelect == null && endSelect == null)
+                {
+                    startSelect = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    endSelect = startSelect;
 
                 }
 
@@ -108,13 +115,19 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseReleased(MouseEvent e)
             {
+                if (isResize)
+                {
+                    isResize = false;
+                    return;
+                }
+
                 if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
                 {
                     drawBoundsForElement();
                 }
                 else
                 {
-                    if (!((elementTemp = iterateContainer(elementCollection, startDrag, endDrag)).isEmpty()))
+                    if (!((elementTemp = iterateContainer(elementCollection, startSelect, endSelect)).isEmpty()))
                     {
 
                         for (int index = elementTemp.size() - 1; index >= 0; index--)
@@ -141,6 +154,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     }
                     startDrag = null;
                     endDrag = null;
+                    startSelect = null;
+                    endSelect = null;
                 }
 
                 drawPanel.repaint();
@@ -150,7 +165,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                if ((selectedElement != null))
+                // For panning single object
+                if ((selectedElement != null) && (!isResize))
                 {
                     ((PARectangle) selectedElement).setX(((PARectangle) selectedElement).getX() + changeX);
                     ((PARectangle) selectedElement).setY(((PARectangle) selectedElement).getY() + changeY);
@@ -161,6 +177,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     initialMouse = new Point(e.getX(), e.getY());
 
                 }
+                // For panning multiple object
                 else if (!elementTemp.isEmpty())
                 {
                     for (int index = elementTemp.size() - 1; index >= 0; index--)
@@ -225,9 +242,21 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     initialMouse = new Point(e.getX(), e.getY());
 
                 }
+                // For Resize use
+                else if (isResize)
+                {
+                    resizeElement(selectedElement, changeX, changeY);
+                    changeX = e.getX() - resizeStart.x;
+                    changeY = e.getY() - resizeStart.y;
+
+                    resizeStart = new Point(e.getX(), e.getY());
+                }
+                //For helper rectangle use
                 else
                 {
+                    System.out.println("mousedragged punya");
                     endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    endSelect = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
 
                 }
 
@@ -466,6 +495,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
             PARectangle element = ((PARectangle) elementItem);
             ((PARectangle) elementList.get(elementIndex)).setX(element.getX());
             ((PARectangle) elementList.get(elementIndex)).setY(element.getY());
+            ((PARectangle) elementList.get(elementIndex)).setWidth(element.getWidth());
+            ((PARectangle) elementList.get(elementIndex)).setHeight(element.getHeight());
             ((PARectangle) elementList.get(elementIndex)).setRectangle2D();
 
             drawPanel.zoomInOutSVG(scale);
@@ -513,6 +544,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 cursor = Cursor.getDefaultCursor();
                 drawPanel.setCursor(cursor);
+                isResize = false;
                 return;
             }
 
@@ -552,10 +584,70 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     break;
 
             }
-            
+
+            isResize = true;
             drawPanel.setCursor(cursor);
 
 
+        }
+    }
+
+    private void resizeElement(PASVGElement boundsElement, int changeX, int changeY)
+    {
+        if (boundsElement instanceof PARectangle)
+        {
+            double y = ((PARectangle) selectedElement).getY();
+            double height = ((PARectangle) selectedElement).getHeight();
+            double x = ((PARectangle) selectedElement).getX();
+            double width = ((PARectangle) selectedElement).getWidth();
+            switch (cursor.getType())
+            {
+                //North West
+                case Cursor.NW_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setX(x + changeX);
+                    ((PARectangle) selectedElement).setY(y + changeY);
+                    ((PARectangle) selectedElement).setHeight((height - changeY));
+                    ((PARectangle) selectedElement).setWidth((width - changeX));
+                    break;
+                // North
+                case Cursor.N_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setY(y + changeY);
+                    ((PARectangle) selectedElement).setHeight((height - changeY));
+                    break;
+                // North East
+                case Cursor.NE_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setY(y + changeY);
+                    ((PARectangle) selectedElement).setHeight((height - changeY));
+                    ((PARectangle) selectedElement).setWidth((width + changeX));
+
+                    break;
+                // East
+                case Cursor.E_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setWidth(width + changeX);
+                    break;
+                // South East
+                case Cursor.SE_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setHeight((height + changeY));
+                    ((PARectangle) selectedElement).setWidth((width + changeX));
+                    break;
+                // South
+                case Cursor.S_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setHeight(height + changeY);
+                    break;
+                // South West
+                case Cursor.SW_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setX(x +changeX);
+                    ((PARectangle) selectedElement).setHeight((height+ changeY));
+                    ((PARectangle) selectedElement).setWidth((width -changeX));
+                    break;
+                // West
+                case Cursor.W_RESIZE_CURSOR:
+                    ((PARectangle) selectedElement).setX(x + changeX);
+                    ((PARectangle) selectedElement).setWidth(width - changeX);
+
+                    break;
+            }
+            overWriteListElement(selectedElement, elementCollection);
         }
     }
 
