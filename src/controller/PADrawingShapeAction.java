@@ -5,17 +5,13 @@ import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -47,6 +43,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
     protected Color fill, stroke;
     protected double strokeWidth;
     protected double scale;
+    protected Cursor cursor;
 
     public PADrawingShapeAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -81,8 +78,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
             PADrawingItem.buttonSelected = button;
 
-            addActionToComponents();
-
         }
         else
         {
@@ -90,8 +85,20 @@ public abstract class PADrawingShapeAction extends AbstractAction
             button.setBorder(null);
         }
 
+        addActionToComponents();
+    }
 
-        System.out.println("outside" + drawPanel.getMouseListeners());
+    public void removeAllActions()
+    {
+        for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+        {
+            drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+        }
+
+        for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+        {
+            drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+        }
     }
 
     public abstract void addActionToComponents();
@@ -113,7 +120,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
         @Override
         public void addActionToComponents()
-        {        
+        {
             MouseAdapter mouseRectAction = new MouseAdapter()
             {
                 @Override
@@ -157,18 +164,16 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
             };
 
-            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
+            cursor = button.isSelected() ? Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) : Cursor.getDefaultCursor();
+            drawPanel.setCursor(cursor);
+            removeAllActions();
+
+            if (button.isSelected())
             {
-                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
+                drawPanel.addMouseListener(mouseRectAction);
+                drawPanel.addMouseMotionListener(mouseRectAction);
             }
 
-            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
-            {
-                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
-            }
-
-            drawPanel.addMouseListener(mouseRectAction);
-            drawPanel.addMouseMotionListener(mouseRectAction);
         }
 
         private PARectangle makeRectangle(Color fill, Color stroke,
@@ -214,7 +219,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
         @Override
         public void addActionToComponents()
         {
-            MouseAdapter mouseRectAction = new MouseAdapter()
+            MouseAdapter mouseCircleAction = new MouseAdapter()
             {
                 @Override
                 public void mousePressed(MouseEvent e)
@@ -256,18 +261,15 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
             };
 
-            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
-            {
-                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
-            }
+            cursor = button.isSelected() ? Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) : Cursor.getDefaultCursor();
+            drawPanel.setCursor(cursor);
+            removeAllActions();
 
-            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+            if (button.isSelected())
             {
-                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+                drawPanel.addMouseListener(mouseCircleAction);
+                drawPanel.addMouseMotionListener(mouseCircleAction);
             }
-
-            drawPanel.addMouseListener(mouseRectAction);
-            drawPanel.addMouseMotionListener(mouseRectAction);
         }
 
         private PACircle makeCircle(Color fill, Color stroke, double strokeWidth, int x1, int y1, int x2, int y2)
@@ -312,7 +314,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
         @Override
         public void addActionToComponents()
         {
-            MouseAdapter mouseRectAction = new MouseAdapter()
+            MouseAdapter mouseLineAction = new MouseAdapter()
             {
                 @Override
                 public void mousePressed(MouseEvent e)
@@ -354,18 +356,15 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
             };
 
-            for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
-            {
-                drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
-            }
+            cursor = button.isSelected() ? Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR) : Cursor.getDefaultCursor();
+            drawPanel.setCursor(cursor);
+            removeAllActions();
 
-            for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
+            if (button.isSelected())
             {
-                drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
+                drawPanel.addMouseListener(mouseLineAction);
+                drawPanel.addMouseMotionListener(mouseLineAction);
             }
-
-            drawPanel.addMouseListener(mouseRectAction);
-            drawPanel.addMouseMotionListener(mouseRectAction);
         }
 
         private PALine makeLine(Color stroke, double strokeWidth, int x1, int x2, int y1, int y2)

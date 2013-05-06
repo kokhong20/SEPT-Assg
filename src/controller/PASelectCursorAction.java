@@ -73,7 +73,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mousePressed(MouseEvent e)
             {
-                System.out.println("pressed");
                 scale = drawPanel.getScale();
 
                 if (startSelect == null && endSelect == null)
@@ -253,19 +252,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
         };
 
-        for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
-        {
-            drawPanel.removeMouseListener(drawPanel.getMouseListeners()[i]);
-        }
+            removeAllActions();
 
-        for (int i = 0; i < drawPanel.getMouseMotionListeners().length; i++)
-        {
-            drawPanel.removeMouseMotionListener(drawPanel.getMouseMotionListeners()[i]);
-        }
-
-        drawPanel.addMouseListener(mouseAdapter);
-
-        drawPanel.addMouseMotionListener(mouseAdapter);
+            if (button.isSelected())
+            {
+                drawPanel.addMouseListener(mouseAdapter);
+                drawPanel.addMouseMotionListener(mouseAdapter);
+            }
 
     }
 
@@ -449,7 +442,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         LinkedList<PASVGElement> elementArray = new LinkedList<>();
         Rectangle2D.Double rectPoint = drawPanel.makeRectangle(start.x, start.y, end.x, end.y);
-        System.out.println(rectPoint.getBounds2D());
         for (int index = elementList.size() - 1; index >= 0; index--)
         {
             PASVGElement element = elementList.get(index);
@@ -490,14 +482,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 Rectangle2D rect = ((PARectangle) element).getRectangle2D();
                 if (rectPoint.contains(rect))
                 {
-                    System.out.println("DEteceted");
                     handleLine = null;
                     selectedLine = null;
                     handleRectangle = rect.getBounds2D();
                     elementIndex = index;
                     if (!elementArray.contains(element))
                     {
-                        System.out.println("ADded");
                         elementArray.add(element);
                     }
                 }
@@ -533,7 +523,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             ((PARectangle) elementList.get(elementIndex)).setY(element.getY());
             ((PARectangle) elementList.get(elementIndex)).setRectangle2D();
 
-            System.out.println();
             drawPanel.zoomInOutSVG(scale);
         }
         else if (elementItem instanceof PALine)
