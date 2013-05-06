@@ -9,6 +9,10 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
@@ -109,7 +113,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
         @Override
         public void addActionToComponents()
-        {
+        {        
             MouseAdapter mouseRectAction = new MouseAdapter()
             {
                 @Override
@@ -134,7 +138,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
                     elementCollection.add(rect);
                     overwriteImage();
 
-                    System.out.println(1);
                     startDrag = null;
                     endDrag = null;
                     drawPanel.repaint();
@@ -146,7 +149,8 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 @Override
                 public void mouseDragged(MouseEvent e)
                 {
-                    endDrag= new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+
                     drawPanel.repaint();
 
                 }

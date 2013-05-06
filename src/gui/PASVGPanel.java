@@ -96,6 +96,7 @@ public class PASVGPanel extends JPanel
     {
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();
+       
         AffineTransform old = g2d.getTransform();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.scale(scale, scale);

@@ -37,14 +37,16 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Rectangle2D handleRectangle;
     Line2D handleLine;
     PALine selectedLine;
-    Point initialMouse;
+    Point initialMouse, startSelect, endSelect;
     Cursor cursor;
     int elementIndex, changeX, changeY;
+    boolean isDraged;
     LinkedList<PASVGElement> elementTemp;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
+        elementTemp = new LinkedList<>();
     }
 
     @Override
@@ -55,213 +57,182 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                // TODO Auto-generated method stub
-                if (button.isSelected())
-                {
-                    scale = drawPanel.getScale();
-                    if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
-                    {
-                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-                        if (selectedElement instanceof PARectangle)
-                        {
-                            drawRectHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PACircle)
-                        {
-                            drawEllipseHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PALine)
-                        {
-                            drawLineHighlight(handleLine, selectedLine);
-                        }
-
-
-
-                        drawPanel.repaint();
-                    }
-                    else
-                    {
-                        drawPanel.zoomInOutSVG(scale);
-                        drawPanel.repaint();
-                    }
-                }
+//                scale = drawPanel.getScale();
+//                if (((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
+//                {
+//                    
+//                }
+//                else
+//                {
+//                   
+//                }
+//
+//                drawPanel.repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e)
             {
-                if (button.isSelected())
+                System.out.println("pressed");
+                scale = drawPanel.getScale();
+
+                if (startSelect == null && endSelect == null)
                 {
-                    if (selectedElement != null)
-                    {
-                        scale = drawPanel.getScale();
-                        initialMouse = new Point(e.getX(), e.getY());
-                        drawPanel.repaint();
-                    }
-                    else
-                    {
-                        scale = drawPanel.getScale();
-                        startDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
-                        endDrag = startDrag;
-                        drawPanel.repaint();
-                    }
+                    startSelect = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    endSelect = startSelect;
+
                 }
-                // TODO Auto-generated method stub
-//			for (Shape shapes : svgContainer.getShapesCollection().keySet())
-//			{
-//				if (shapes.contains(e.getX(), e.getY()))
-//				{
-//					selectedShape = shapes;
-//					if (handleRectangle != null)
-//					{
-//						handleRectangle = shapes.getBounds2D();
-//					}
-//				} else
-//				{
-//					handleRectangle = null;
-//				}
-//				repaint();
-//				x1 = e.getX();
-//				y1 = e.getY();
-//			}
+                
+                
+                if ((!elementTemp.isEmpty())
+                        ||((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
+                {
+//                    startDrag = null;
+//                    endDrag = null;
+                    drawBoundsForElement();
+
+                    initialMouse = new Point(e.getX(), e.getY());
+                }
+                else
+                {
+                    drawPanel.zoomInOutSVG(scale);
+                }
+
+
+                if (startDrag == null && endDrag == null)
+                {
+                    startDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+                    endDrag = startDrag;
+
+                }
+                
+                drawPanel.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                if (button.isSelected())
+                if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
                 {
-                    if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
-                    {
-                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-                        if (selectedElement instanceof PARectangle)
-                        {
-                            drawRectHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PACircle)
-                        {
-                            drawEllipseHighlight(handleRectangle);
-                        }
-                        else if (selectedElement instanceof PALine)
-                        {
-                            drawLineHighlight(handleLine, selectedLine);
-                        }
-                        drawPanel.repaint();
-
-
-                    }
-                    else
+                    drawBoundsForElement();
+                }
+                else
+                {
+                    if (!((elementTemp = iterateContainer(elementCollection, startDrag, endDrag)).isEmpty()))
                     {
 
-                        if ((elementTemp = iterateContainer(elementCollection, startDrag, endDrag)) != null)
+                        for (int index = elementTemp.size() - 1; index >= 0; index--)
                         {
-
-                            for (int index = elementTemp.size() - 1; index >= 0; index--)
+                            PASVGElement element = elementTemp.get(index);
+                            g2D = drawPanel.svgImage.createGraphics();
+                            if (element instanceof PALine)
                             {
-                                PASVGElement element = elementTemp.get(index);
-                                System.out.println("Element in elementList"+element);
-                                g2D = drawPanel.svgImage.createGraphics();
-                                if (element instanceof PALine)
-                                {
-                                    drawLineHighlight(handleLine, selectedLine);
+                                drawLineHighlight(handleLine, selectedLine);
 
-                                }
-                                else if (element instanceof PACircle)
-                                {
-                                    drawEllipseHighlight(handleRectangle);
-                                }
-                                else if (element instanceof PARectangle)
-                                {
-                                    drawRectHighlight(((PARectangle) element).getRectangle2D().getBounds2D());
-                                }
-                                else if (element instanceof PASVGGroup)
-                                {
-                                }
+                            }
+                            else if (element instanceof PACircle)
+                            {
+                                drawEllipseHighlight(handleRectangle);
+                            }
+                            else if (element instanceof PARectangle)
+                            {
+                                drawRectHighlight(((PARectangle) element).getRectangle2D().getBounds2D());
+                            }
+                            else if (element instanceof PASVGGroup)
+                            {
                             }
                         }
-                        startDrag = null;
-                        endDrag = null;
-                        drawPanel.repaint();
                     }
-//                    selectedElement = null;
-//
-//                    if ((selectedElement = iterateContainer(elementCollection, e.getX(), e.getY())) != null)
-//                    {
-//                        drawPanel.repaint();
-//                    }
-//                    if (handleRectangle != null || handleLine != null)
-//                    {
-////                        g2D = (Graphics2D) drawPanel.getGraphics();
-//                        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-//                        if (selectedElement instanceof PARectangle)
-//                        {
-//                            drawRectHighlight(handleRectangle);
-//                        }
-//                        else if (selectedElement instanceof PACircle)
-//                        {
-//                            drawEllipseHighlight(handleRectangle);
-//                        }
-//                        else if (selectedElement instanceof PALine)
-//                        {
-//                            drawLineHighlight(handleLine, selectedLine);
-//                        }
-//
-//                        drawPanel.repaint();
-//                    }
+                    startDrag = null;
+                    endDrag = null;
                 }
+
+                drawPanel.repaint();
+
             }
 
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                if (button.isSelected())
+                if ((selectedElement != null))
                 {
-                    if ((handleRectangle != null || handleLine != null))
-                    {
-                        ((PARectangle) selectedElement).setX(((PARectangle) selectedElement).getX() + changeX);
-                        ((PARectangle) selectedElement).setY(((PARectangle) selectedElement).getY() + changeY);
+                    ((PARectangle) selectedElement).setX(((PARectangle) selectedElement).getX() + changeX);
+                    ((PARectangle) selectedElement).setY(((PARectangle) selectedElement).getY() + changeY);
+                    overWriteListElement(selectedElement, elementCollection);
+                    changeX = e.getX() - initialMouse.x;
+                    changeY = e.getY() - initialMouse.y;
 
-                        changeX = e.getX() - initialMouse.x;
-                        changeY = e.getY() - initialMouse.y;
+                    initialMouse = new Point(e.getX(), e.getY());
 
-                        initialMouse = new Point(e.getX(), e.getY());
-
-                        overWriteListElement(selectedElement, elementCollection);
-                        drawPanel.repaint();
-                    }
-                    else
-                    {
-                        endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
-                        drawPanel.repaint();
-                    }
                 }
-                // TODO Auto-generated method stub
-//			for (Shape shapes : svgContainer.getShapesCollection().keySet())
-//			{
-//				if (shapes.contains(e.getX(), e.getY()))
-//				{
-//					PASVGElement svgElement;
-//					svgElement = svgContainer.getShapesCollection().get(shapes);
-//					int x = (int) ((PARectangle) svgElement).getX();
-//					int y = (int) ((PARectangle) svgElement).getY();
-//
-//					handleRectangle = null;
-//					selectedShape = shapes;
-//					x2 = e.getX();
-//					y2 = e.getY();
-//
-//					x = x + x2 - x1;
-//					y = y + y2 - y1;
-//
-//					((PARectangle) svgElement).setX(x);
-//					((PARectangle) svgElement).setY(y);
-//
-//					x1 = x2;
-//					y1 = y2;
-//					repaint();
-//					return;
-//				}
-//			}
+                else if (!elementTemp.isEmpty())
+                {
+                    LinkedList<PASVGElement> elementArray = new LinkedList<>();
+                    for (int index = elementCollection.size() - 1; index >= 0; index--)
+                    {
+                        PASVGElement element = elementCollection.get(index);
+
+                        if (element instanceof PALine)
+                        {
+                            Line2D line = ((PALine) element).getLine2D();
+
+
+
+                        }
+                        else if (element instanceof PACircle)
+                        {
+//                            Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
+//                            if (rectPoint.contains(ellipse.getBounds2D()))
+//                            {
+//                                handleLine = null;
+//                                selectedLine = null;
+//                                handleRectangle = ellipse.getBounds2D();
+//                                elementIndex = index;
+//                                if (!elementArray.contains(element))
+//                                {
+//                                    elementArray.add(element);
+//                                }
+//                            }
+                        }
+                        else if (element instanceof PARectangle)
+                        {
+                            PARectangle rect = ((PARectangle) element);
+                            ((PARectangle) elementCollection.get(index)).setX(rect.getX() + changeX);
+                            ((PARectangle) elementCollection.get(index)).setY(rect.getY() + changeY);
+                            ((PARectangle) elementCollection.get(index)).setRectangle2D();
+                            drawPanel.zoomInOutSVG(scale);
+                        }
+//            else if (element instanceof PASVGGroup)
+//            {
+//                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
+//                PASVGElement ele = null;
+//                if ((ele = iterateContainer(groupList, x, y)) != null)
+//                {
+//                    elementIndex = index;
+//                                        if(!elementArray.contains(element))
+//                    {
+//                        elementArray.add(element);
+//                    }
+//                }
+//            }
+                    }
+
+
+                    changeX = e.getX() - initialMouse.x;
+                    changeY = e.getY() - initialMouse.y;
+
+                    initialMouse = new Point(e.getX(), e.getY());
+
+                }
+                else
+                {
+                    endDrag = new Point((int) (e.getX() / scale), (int) (e.getY() / scale));
+
+                }
+
+
+
+                drawPanel.repaint();
             }
 
             @Override
@@ -431,9 +402,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 Line2D line = ((PALine) element).getLine2D();
                 if (line.intersects(new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0)))
                 {
-                    handleLine = line;
-                    selectedLine = ((PALine) element);
-                    handleRectangle = null;
                     elementIndex = index;
                     return element;
                 }
@@ -443,9 +411,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 Ellipse2D ellipse = ((PACircle) element).getEllipse2D();
                 if (ellipse.contains(x, y))
                 {
-                    handleLine = null;
-                    selectedLine = null;
-                    handleRectangle = ellipse.getBounds2D();
                     elementIndex = index;
                     return element;
                 }
@@ -455,9 +420,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 Rectangle2D rect = ((PARectangle) element).getRectangle2D();
                 if (rect.contains(x, y))
                 {
-                    handleLine = null;
-                    selectedLine = null;
-                    handleRectangle = rect.getBounds2D();
                     elementIndex = index;
                     return element;
                 }
@@ -571,6 +533,23 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else if (elementItem instanceof PALine)
         {
+        }
+    }
+
+    private void drawBoundsForElement()
+    {
+        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
+        if (selectedElement instanceof PARectangle)
+        {
+            drawRectHighlight(((PARectangle) selectedElement).getRectangle2D().getBounds2D());
+        }
+        else if (selectedElement instanceof PACircle)
+        {
+            drawRectHighlight(((PACircle) selectedElement).getEllipse2D().getBounds2D());
+        }
+        else if (selectedElement instanceof PALine)
+        {
+            drawLineHighlight(((PALine) selectedElement).getLine2D(), ((PALine) selectedElement));
         }
     }
 

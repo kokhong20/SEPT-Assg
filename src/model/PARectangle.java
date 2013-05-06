@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
@@ -17,6 +19,7 @@ public class PARectangle extends PASVGElement
     private double width;
     private double height;
     private Rectangle2D.Double rectangle2D;
+    private Rectangle2D.Double[] rectHandleArray;
 
     /**
      *
@@ -162,4 +165,56 @@ public class PARectangle extends PASVGElement
         rectangle2D = new Rectangle2D.Double(x, y, width, height);
     }
 
+    public Rectangle2D.Double[] createRectHandle(double scale)
+    {
+        Rectangle2D r = this.rectangle2D.getBounds2D();
+        double xPoint = r.getX() * scale;
+        double yPoint = r.getY() * scale;
+        double w = r.getWidth() * scale;
+        double h = r.getHeight() * scale;
+        
+        Rectangle2D.Double rect1 = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0,
+                6.0);
+
+
+        Rectangle2D.Double rect2 = new Rectangle2D.Double(xPoint + w - 3.0, yPoint - 3.0,
+                6.0, 6.0);
+
+
+        Rectangle2D.Double rect3 = new Rectangle2D.Double(xPoint - 3.0, yPoint + h - 3.0,
+                6.0, 6.0);
+
+
+        Rectangle2D.Double rect4 = new Rectangle2D.Double(xPoint + w - 3.0, yPoint + h - 3.0,
+                6.0, 6.0);
+
+
+        Rectangle2D.Double rect5 = new Rectangle2D.Double(xPoint + (w / 2) - 3.0, yPoint - 3.0, 6.0,
+                6.0);
+
+
+        Rectangle2D.Double rect6 = new Rectangle2D.Double(xPoint - 3.0, yPoint + (h / 2) - 3.0,
+                6.0, 6.0);
+
+
+        Rectangle2D.Double rect7 = new Rectangle2D.Double(xPoint + w - 3.0, yPoint + (h / 2) - 3.0,
+                6.0, 6.0);
+
+
+        Rectangle2D.Double rect8 = new Rectangle2D.Double(xPoint + (w / 2) - 3.0, yPoint + h - 3.0,
+                6.0, 6.0);
+        
+        return new Rectangle2D.Double[]{rect1,rect2,rect3,rect4,rect5,rect6,rect7,rect8};
+
+    }
+    
+    public void setHandleArray(Rectangle2D.Double[] handleArray)
+    {
+        this.rectHandleArray = handleArray;
+    }
+    
+    public Rectangle2D.Double[] getHandleArray()
+    {
+        return this.rectHandleArray;
+    }
 }
