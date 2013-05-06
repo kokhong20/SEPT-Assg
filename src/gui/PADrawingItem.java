@@ -1,5 +1,6 @@
 package gui;
 
+import controller.PAHandCursor;
 import controller.PAMenuAction;
 import controller.PADrawingShapeAction;
 import controller.PASelectCursorAction;
@@ -22,7 +23,7 @@ public class PADrawingItem
     public static JButton zoomIn;
     public static JButton zoomOut;
     public JToggleButton fill;
-    public JToggleButton handCursor;
+    public static JToggleButton handCursor;
     public static JToggleButton selectCursor;
     public static JToggleButton line;
     public static JToggleButton rectangle;
@@ -79,7 +80,7 @@ public class PADrawingItem
         drawKitPanel.add(zoomIn);
         drawKitPanel.add(zoomOut);
         setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0, 100);
-        setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
+        //setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
         
         
         
@@ -112,6 +113,7 @@ public class PADrawingItem
         setToggleButtonAttribute("resources/circle 30x30.png", circle, "Circle", 40, 140);
         setButtonAttribute("resources/zoomin.png", zoomIn, "Zoom In", 0, 60);
         setButtonAttribute("resources/zoomout.png", zoomOut, "Zoom Out", 40, 60);
+        setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
     }
 
     /**
@@ -172,6 +174,10 @@ public class PADrawingItem
         //ZoomOut
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel, zoomOut);
         zoomOut.setAction(zoomOutAction);
+        
+        //Pan
+        PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel, handCursor,  mainFrame.attributeBar);
+        handCursor.setAction(panAction);
         
     }
 }
