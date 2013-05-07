@@ -28,7 +28,7 @@ public class PADrawingItem
     public static JToggleButton line;
     public static JToggleButton rectangle;
     public static JToggleButton circle;
-    public JToggleButton group;
+    public static JButton group;
     public JToggleButton ungroup;
     private static final int maxWidth = 40;
     private static final int maxHeight = 40;
@@ -84,7 +84,7 @@ public class PADrawingItem
         
         
         
-        setToggleButtonAttribute("resources/group.png", group, "Group", 0, 180);
+        
         setToggleButtonAttribute("resources/ungroup.png", ungroup, "Ungroup", 40, 180);
     }
 
@@ -101,7 +101,7 @@ public class PADrawingItem
         line = new JToggleButton();
         rectangle = new JToggleButton();
         circle = new JToggleButton();
-        group = new JToggleButton();
+        group = new JButton();
         ungroup = new JToggleButton();
     }
     
@@ -113,6 +113,7 @@ public class PADrawingItem
         setToggleButtonAttribute("resources/circle 30x30.png", circle, "Circle", 40, 140);
         setButtonAttribute("resources/zoomin.png", zoomIn, "Zoom In", 0, 60);
         setButtonAttribute("resources/zoomout.png", zoomOut, "Zoom Out", 40, 60);
+        setButtonAttribute("resources/group.png", group, "Group", 0, 180);
         setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
     }
 
@@ -179,5 +180,8 @@ public class PADrawingItem
         PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel, handCursor,  mainFrame.attributeBar);
         handCursor.setAction(panAction);
         
+        //Group
+        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel, group);
+        group.setAction(groupAction);
     }
 }

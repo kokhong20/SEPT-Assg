@@ -38,7 +38,7 @@ public class PASVGPanel extends JPanel
     private double scale;
     private PAMainFrame mainFrame;
     private Rectangle2D handleRectangle;
-    private LinkedList<PASVGElement> elementCollection;
+    public LinkedList<PASVGElement> elementCollection;
 
     /**
      * constructor to define PASVGPanel for PAMainFrame
@@ -92,7 +92,7 @@ public class PASVGPanel extends JPanel
         setPreferredSize(size);
     }
 
-    private void drawToImage()
+    public void drawToImage()
     {
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();

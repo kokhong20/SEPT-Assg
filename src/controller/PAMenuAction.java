@@ -14,6 +14,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import java.util.LinkedList;
 import javax.swing.AbstractAction;
 import static javax.swing.Action.ACCELERATOR_KEY;
 import static javax.swing.Action.MNEMONIC_KEY;
@@ -26,6 +27,8 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import model.PASVGElement;
+import model.PASVGGroup;
 import model.PASystem;
 
 /**
@@ -490,6 +493,61 @@ public abstract class PAMenuAction extends AbstractAction
         {
             double scale = 1.0;
             drawPanel.zoomInOutSVG(scale);
+        }
+
+    }
+
+    public static class GroupAction extends PAMenuAction
+    {
+        private JButton button;
+        private LinkedList<PASVGElement> elementList;
+        private PASVGPanel drawPanel;
+
+        public GroupAction(PASVGPanel drawPanel, LinkedList<PASVGElement> elementList)
+        {
+            super(KeyEvent.VK_G, "Group");
+            this.drawPanel = drawPanel;
+            this.elementList = elementList;
+        }
+
+        public GroupAction(PASVGPanel drawPanel, JButton button)
+        {
+            super(KeyEvent.VK_G, "");
+            this.drawPanel = drawPanel;
+            //this.elementList = elementList;
+            this.button = button;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
+            elementList = PASelectCursorAction.elementTemp;
+
+            if (elementList != null)
+            {
+                PASVGGroup newGroup = new PASVGGroup(elementList);
+                LinkedList<PASVGElement> groupList = newGroup.getGroupElementList();
+                mainList.addLast(newGroup);
+
+                for (int index = groupList.size() - 1; index >= 0; index--)
+                {
+                    groupList.get(index).setGrouped(true);
+                    groupList.get(index).setParentGroup(newGroup);
+                    
+                    for (int j = mainList.size() - 1; j >= 0; j--)
+                    {
+                        if (groupList.get(index) == mainList.get(j))
+                        {
+                            mainList.remove(j);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            drawPanel.drawToImage();
+            drawPanel.repaint();
         }
 
     }

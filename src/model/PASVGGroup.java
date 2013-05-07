@@ -23,7 +23,7 @@ public class PASVGGroup extends PASVGElement
      */
     public PASVGGroup()
     {
-        setGroupElementList(new LinkedList<PASVGElement>());
+        this.groupElementList = new LinkedList<>();
     }
 
     /**
@@ -34,7 +34,7 @@ public class PASVGGroup extends PASVGElement
     public PASVGGroup(Node node)
     {
         super(node);
-        setGroupElementList(new LinkedList<PASVGElement>());
+        this.groupElementList = new LinkedList<>();
     }
 
     /**
@@ -51,13 +51,19 @@ public class PASVGGroup extends PASVGElement
     {
         super(node, groupFill, groupStroke, groupWidth, parentGroup);
 
-        Element gElement = (Element) node;
+//        Element gElement = (Element) node;
+//
+//        setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : (this.isGrouped()) ? getFill() : null);
+//        setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : (this.isGrouped()) ? getStroke() : null);
+//        setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : (this.isGrouped()) ? getStrokeWidth() : null);
 
-        setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : (this.isGrouped()) ? getFill() : null);
-        setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : (this.isGrouped()) ? getStroke() : null);
-        setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : (this.isGrouped()) ? getStrokeWidth() : null);
-
-        setGroupElementList(new LinkedList<PASVGElement>());
+        this.groupElementList = new LinkedList<>();
+    }
+    
+    public PASVGGroup(LinkedList<PASVGElement> elementList)
+    {
+        super(null, null, 0);
+        this.groupElementList = elementList;
     }
 
     /**

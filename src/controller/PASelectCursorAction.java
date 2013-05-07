@@ -41,7 +41,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     Line2D handleLine;
     PALine selectedLine;
     Point initialMouse, startSelect, endSelect, resizeStart;
-    LinkedList<PASVGElement> elementTemp;
+    static LinkedList<PASVGElement> elementTemp;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -502,7 +502,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 if (element instanceof PALine)
                 {
                     drawLineHighlight((PALine)element);
-
                 }
                 else if (element instanceof PACircle)
                 {
