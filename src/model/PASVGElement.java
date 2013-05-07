@@ -41,6 +41,7 @@ public abstract class PASVGElement implements PAAttributeConstant  {
 		this.fill = fill;
 		this.stroke = stroke;
 		this.strokeWidth = strokeWidth;
+                isGrouped = false;
 	}
         
         /**
@@ -132,7 +133,7 @@ public abstract class PASVGElement implements PAAttributeConstant  {
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(String id) {
+	private void setId(String id) {
 		this.id = id;
 	}
 

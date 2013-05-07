@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -12,6 +13,7 @@ public class PACircle extends PASVGElement
     private double cy;
     private double r;
     private Ellipse2D.Double ellipse2D;
+    private Rectangle2D.Double[] ellipseHandleArray;
 
     /**
      *
@@ -36,7 +38,7 @@ public class PACircle extends PASVGElement
         this.cx = cx;
         this.cy = cy;
         this.r = r;
-        
+
         setEllipse2D();
     }
 
@@ -149,7 +151,37 @@ public class PACircle extends PASVGElement
         double x = cx - r;
         double y = cy - r;
         double diameter = r * 2;
-        this.ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter);
+        ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter);
+    }
+
+    private Rectangle2D.Double[] createEllipseHandle(double scale)
+    {
+        Rectangle2D rect = this.ellipse2D.getBounds2D();
+        double xPoint = rect.getX() * scale;
+        double yPoint = rect.getY() * scale;
+        double w = rect.getWidth() * scale;
+        double h = rect.getHeight() * scale;
+
+        Rectangle2D.Double NW = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0, 6.0);
+        Rectangle2D.Double NE = new Rectangle2D.Double(xPoint + w - 3.0, yPoint - 3.0, 6.0, 6.0);
+        Rectangle2D.Double SW = new Rectangle2D.Double(xPoint - 3.0, yPoint + h - 3.0, 6.0, 6.0);
+        Rectangle2D.Double SE = new Rectangle2D.Double(xPoint + w - 3.0, yPoint + h - 3.0, 6.0, 6.0);
+
+        return new Rectangle2D.Double[]
+        {
+            NW, NE, SE, SW
+        };
+
+    }
+
+    public void setHandleArray(double scale)
+    {
+        this.ellipseHandleArray = createEllipseHandle(scale);
+    }
+
+    public Rectangle2D.Double[] getHandleArray()
+    {
+        return this.ellipseHandleArray;
     }
 
 }

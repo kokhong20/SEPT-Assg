@@ -184,11 +184,11 @@ public class PASVGPanel extends JPanel
             {
                 case "Rectangle":
                 case "Select Cursor":
-                    g2d.setPaint(Color.LIGHT_GRAY);
+                    g2d.setPaint(new Color(180,180,180,80));
 
                     Rectangle2D.Double rect = makeRectangle((int) ((startDrag.x) * scale),
                             (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
-                    g2d.draw(rect);
+                    g2d.fill(rect);
                     break;
 
                 case "Line":

@@ -1,7 +1,9 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -17,6 +19,7 @@ public class PALine extends PASVGElement
     private double y1;
     private double y2;
     private Line2D.Double line2D;
+    private Rectangle2D.Double[] lineHandleArray;
 
     /**
      *
@@ -42,7 +45,7 @@ public class PALine extends PASVGElement
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
-        
+
         setLine2D();
     }
 
@@ -181,6 +184,58 @@ public class PALine extends PASVGElement
     public void setLine2D()
     {
         line2D = new Line2D.Double(x1, y1, x2, y2);
+    }
+    
+    private void drawLineHighlight(Line2D r, PALine l)
+    {
+        // TODO Auto-generated method stub
+//        scale = drawPanel.getScale();
+//        double x1 = r.getX1() * scale;
+//        double x2 = r.getX2() * scale;
+//        double y1 = r.getY1() * scale;
+//        double y2 = r.getY2() * scale;
+//
+//        double w = l.getStrokeWidth() * scale;
+//
+//        Rectangle.Double rect1 = new Rectangle.Double(x1 - (w / 2), y1 - (w / 2), 6.0, 6.0);
+//        g2D.setColor(Color.white);
+//        g2D.fill(rect1);
+//        g2D.setColor(Color.black);
+//        g2D.draw(rect1);
+//
+//        Rectangle.Double rect2 = new Rectangle.Double(x2 + 3.0, y2 + 3.0, 6.0, 6.0);
+//        g2D.setColor(Color.white);
+//        g2D.fill(rect2);
+//        g2D.setColor(Color.black);
+//        g2D.draw(rect2);
+    }
+
+    private Rectangle2D.Double[] createLineHandle(double scale)
+    {
+        double x_1 = line2D.getX1() * scale;
+        double x_2 = line2D.getX2() * scale;
+        double y_1 = line2D.getY1() * scale;
+        double y_2 = line2D.getY2() * scale;
+        double w = this.getStrokeWidth() * scale;
+
+        Rectangle2D.Double rect1 = new Rectangle.Double(x_1 - (w / 2), y_1 - (w / 2), 6.0, 6.0);
+        Rectangle.Double rect2 = new Rectangle.Double(x_2 + 3.0, y_2 + 3.0, 6.0, 6.0);
+        
+        return new Rectangle2D.Double[]
+        {
+            rect1,rect2
+        };
+
+    }
+
+    public void setHandleArray(double scale)
+    {
+        this.lineHandleArray = createLineHandle(scale);
+    }
+
+    public Rectangle2D.Double[] getHandleArray()
+    {
+        return this.lineHandleArray;
     }
 
 }

@@ -20,10 +20,8 @@ import javax.swing.JToggleButton;
 
 public class PAHandCursor extends PADrawingShapeAction
 {
-	public static Point startDrag, endDrag;
 	public static Point oriPosition;
 	public Point diff;
-	public double scale;
 
 	public PAHandCursor(PASVGPanel drawPanel, JToggleButton button,
 			PAShapeBar shapeBar)
@@ -31,7 +29,8 @@ public class PAHandCursor extends PADrawingShapeAction
 		super(drawPanel, button, shapeBar);
 
 	}
-
+        
+        @Override
 	public void addActionToComponents()
 	{
 		MouseAdapter mouseRectAction = new MouseAdapter()
@@ -101,10 +100,10 @@ public class PAHandCursor extends PADrawingShapeAction
 
 		};
 		cursor = button.isSelected() ? Cursor
-				.getPredefinedCursor(Cursor.MOVE_CURSOR) : Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR) : Cursor
 				.getDefaultCursor();
 		drawPanel.setCursor(cursor);
-		
+                
 		removeAllActions();
 		if (button.isSelected())
 		{
