@@ -13,7 +13,6 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
@@ -120,6 +119,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 // Resize to default
                 if (isResize)
                 {
+                    startDrag = null;
+                    endDrag = null;
+                    startSelect = null;
+                    endSelect = null;
                     isResize = false;
                     return;
                 }
@@ -353,13 +356,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 PALine line = ((PALine) element);
                 line.setHandleArray(scale);
                 Rectangle2D.Double lineRectangle = new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0);
-                if (line.getLine2D().intersects(lineRectangle) || line.getLine2D().getBounds2D().contains(x, y))
+                if (line.getLine2D().intersects(lineRectangle))
                 {
-                    System.out.println("detect line");
-                    g2D = drawPanel.svgImage.createGraphics();
-                    g2D.setPaint(new Color(180, 180, 180, 80));
-                    g2D.fill(line.getLine2D().getBounds2D());
-                    drawPanel.repaint();
                     elementIndex = index;
                     return element;
                 }
@@ -407,7 +405,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
         for (int index = elementList.size() - 1; index >= 0; index--)
         {
             PASVGElement element = elementList.get(index);
-
 
             if (element instanceof PALine)
             {
@@ -673,16 +670,21 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 return;
             }
 
+//            Toolkit toolkit = Toolkit.getDefaultToolkit();
+//            Image image = toolkit.getImage("icons/handwriting.gif");
+//            cursor = toolkit.createCustomCursor(image, new oint(x,
+//                    y), "img");
+
             switch (handlePosition)
             {
                 // North West
 
                 case 0:
-                    cursor = Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR);
+                    cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
                     break;
                 // North
                 case 1:
-                    cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
+                    cursor = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
                     break;
             }
             isResize = true;
@@ -754,6 +756,26 @@ public class PASelectCursorAction extends PADrawingShapeAction
             circle.setR(radius + (changeX > changeY ? changeX : changeY) / 2);
 
 
+        }
+        else if (boundsElement instanceof PALine)
+        {
+            PALine line = ((PALine) selectedElement);
+            double x1 = line.getX1();
+            double x2 = line.getX2();
+            double y1 = line.getY1();
+            double y2 = line.getY2();
+
+            switch (cursor.getType())
+            {
+                case Cursor.N_RESIZE_CURSOR:
+                    line.setX1(x1 + changeX);
+                    line.setY1(y1 + changeY);
+                    break;
+                case Cursor.S_RESIZE_CURSOR:
+                    line.setX2(x2 + changeX);
+                    line.setY2(y2 + changeY);
+                    break;
+            }
         }
 
         overWriteListElement(selectedElement, elementCollection);
