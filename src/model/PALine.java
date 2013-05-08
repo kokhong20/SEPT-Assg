@@ -186,9 +186,9 @@ public class PALine extends PASVGElement
         line2D = new Line2D.Double(x1, y1, x2, y2);
     }
     
-    private void drawLineHighlight(Line2D r, PALine l)
-    {
-        // TODO Auto-generated method stub
+//    private void drawLineHighlight(Line2D r, PALine l)
+//    {
+//         TODO Auto-generated method stub
 //        scale = drawPanel.getScale();
 //        double x1 = r.getX1() * scale;
 //        double x2 = r.getX2() * scale;
@@ -208,7 +208,7 @@ public class PALine extends PASVGElement
 //        g2D.fill(rect2);
 //        g2D.setColor(Color.black);
 //        g2D.draw(rect2);
-    }
+//    }
 
     private Rectangle2D.Double[] createLineHandle(double scale)
     {
@@ -218,8 +218,8 @@ public class PALine extends PASVGElement
         double y_2 = line2D.getY2() * scale;
         double w = this.getStrokeWidth() * scale;
 
-        Rectangle2D.Double rect1 = new Rectangle.Double(x_1 - (w / 2), y_1 - (w / 2), 6.0, 6.0);
-        Rectangle.Double rect2 = new Rectangle.Double(x_2 + 3.0, y_2 + 3.0, 6.0, 6.0);
+        Rectangle2D.Double rect1 = new Rectangle.Double(x_1 -(w/2) , y_1-(w/2), w*2, w*2);
+        Rectangle.Double rect2 = new Rectangle.Double(x_2-(w/2), y_2-(w/2), w*2, w*2);
         
         return new Rectangle2D.Double[]
         {

@@ -192,11 +192,11 @@ public class PASVGPanel extends JPanel
                     break;
 
                 case "Line":
-                    g2d.setPaint(Color.LIGHT_GRAY);
+                    g2d.setPaint(new Color(180,180,180,80));
                     g2d.setStroke(new BasicStroke(2));
                     Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
                             (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
-                    g2d.draw(line);
+                    g2d.fill(line);
                     break;
 
                 case "Circle":
