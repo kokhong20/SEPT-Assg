@@ -155,11 +155,11 @@ public class PACircle extends PASVGElement
 
     private Rectangle2D.Double[] createEllipseHandle(double scale)
     {
-        Rectangle2D rect = this.ellipse2D.getBounds2D();
-        double xPoint = rect.getX() * scale;
-        double yPoint = rect.getY() * scale;
-        double w = rect.getWidth() * scale;
-        double h = rect.getHeight() * scale;
+        Ellipse2D.Double rect = this.ellipse2D;
+        double xPoint = (rect.getX()-strokeWidth/2) * scale;
+        double yPoint = (rect.getY()-strokeWidth/2) * scale;
+        double w = (rect.getWidth()+strokeWidth) * scale;
+        double h = (rect.getHeight()+strokeWidth) * scale;
 
         Rectangle2D.Double NW = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0, 6.0);
         Rectangle2D.Double NE = new Rectangle2D.Double(xPoint + w - 3.0, yPoint - 3.0, 6.0, 6.0);

@@ -165,6 +165,14 @@ public class PASelectCursorAction extends PADrawingShapeAction
                             circle.setCx(circle.getCx() + changeX);
                             circle.setCy(circle.getCy() + changeY);
                         }
+                        else if (selectedElement instanceof PALine)
+                        {
+                            PALine line = ((PALine) selectedElement);
+                            line.setX1(line.getX1() + changeX);
+                            line.setX2(line.getX2() + changeX);
+                            line.setY1(line.getY1() + changeY);
+                            line.setY2(line.getY2() + changeY);
+                        }
 
                         overWriteListElement(selectedElement, elementCollection);
                     }
@@ -193,8 +201,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
                             {
                                 if (element instanceof PALine)
                                 {
-                                    Line2D line = ((PALine) element).getLine2D();
-
+                                    PALine lineList = ((PALine) elementCollection.get(i));
+                                    lineList.setX1(lineList.getX1() + changeX);
+                                    lineList.setX2(lineList.getX2() + changeX);
+                                    lineList.setY1(lineList.getY1() + changeY);
+                                    lineList.setY2(lineList.getY2() + changeY);
+                                    lineList.setLine2D();
                                 }
                                 else if (element instanceof PACircle)
                                 {
@@ -286,7 +298,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
         for (int i = 0; i < line.getHandleArray().length; i++)
         {
             Rectangle2D.Double rect = line.getHandleArray()[i];
-            g2D.setColor(i == 2 ? Color.white : Color.black);
+            g2D.setColor(Color.white);
             g2D.fill(rect);
             g2D.setColor(Color.black);
             g2D.draw(rect);
@@ -340,9 +352,14 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 PALine line = ((PALine) element);
                 line.setHandleArray(scale);
-
-                if (line.getLine2D().intersects(new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0)))
+                Rectangle2D.Double lineRectangle = new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0);
+                if (line.getLine2D().intersects(lineRectangle) || line.getLine2D().getBounds2D().contains(x, y))
                 {
+                    System.out.println("detect line");
+                    g2D = drawPanel.svgImage.createGraphics();
+                    g2D.setPaint(new Color(180, 180, 180, 80));
+                    g2D.fill(line.getLine2D().getBounds2D());
+                    drawPanel.repaint();
                     elementIndex = index;
                     return element;
                 }
@@ -396,7 +413,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 PALine line = ((PALine) element);
                 line.setHandleArray(scale);
-                if (line.getLine2D().intersects(new Rectangle2D.Double((double) start.x - 3.0, (double) start.y - 3.0, 6.0, 6.0)))
+                if (rectPoint.contains(line.getLine2D().getBounds2D()))
                 {
                     if (!elementArray.contains(element))
                     {
@@ -438,9 +455,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     for (int i = ele.size() - 1; i >= 0; i--)
                     {
                         PASVGElement elementInsideList = ele.get(i);
-
                         elementArray.add(elementInsideList);
-
                     }
                 }
             }
@@ -451,11 +466,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     private void overWriteListElement(PASVGElement elementItem, LinkedList<PASVGElement> elementList)
     {
-        if (elementItem.isGrouped())
-        {
-            System.out.println("IS GROUPED");
-        }
-        else
+        if (!elementItem.isGrouped())
         {
             if (elementItem instanceof PACircle)
             {
@@ -481,6 +492,15 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
             else if (elementItem instanceof PALine)
             {
+                PALine element = ((PALine) elementItem);
+                PALine listLine = ((PALine) elementList.get(elementIndex));
+                listLine.setX1(element.getX1());
+                listLine.setX2(element.getX2());
+                listLine.setY1(element.getY1());
+                listLine.setY2(element.getY2());
+                listLine.setLine2D();
+
+                drawPanel.zoomInOutSVG(scale);
             }
         }
     }
@@ -502,7 +522,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 PASVGElement element = elementTemp.get(index);
                 g2D = drawPanel.svgImage.createGraphics();
 
-               drawBoundsChecking(element);
+                drawBoundsChecking(element);
             }
         }
 
@@ -628,6 +648,43 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
 
             cursor = Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR);
+            isResize = true;
+            drawPanel.setCursor(cursor);
+        }
+        else if (boundsElement instanceof PALine)
+        {
+            PALine line = (PALine) boundsElement;
+
+            Rectangle2D.Double handle = null;
+            for (handlePosition = 0; handlePosition < line.getHandleArray().length; handlePosition++)
+            {
+                if (line.getHandleArray()[handlePosition].contains(x, y))
+                {
+                    handle = line.getHandleArray()[handlePosition];
+                    break;
+                }
+
+            }
+            if (handle == null)
+            {
+                cursor = Cursor.getDefaultCursor();
+                drawPanel.setCursor(cursor);
+                isResize = false;
+                return;
+            }
+
+            switch (handlePosition)
+            {
+                // North West
+
+                case 0:
+                    cursor = Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR);
+                    break;
+                // North
+                case 1:
+                    cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
+                    break;
+            }
             isResize = true;
             drawPanel.setCursor(cursor);
         }
@@ -807,7 +864,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
             if (element instanceof PALine)
             {
-//                PALine lineElement = (PALine) element;
+                PALine line = ((PALine) element);
+                line.setX1(line.getX1() + changeX);
+                line.setX2(line.getX2() + changeX);
+                line.setY1(line.getY1() + changeY);
+                line.setY2(line.getY2() + changeY);
+                line.setLine2D();
             }
             else if (element instanceof PACircle)
             {

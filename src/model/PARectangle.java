@@ -165,11 +165,11 @@ public class PARectangle extends PASVGElement
 
     private Rectangle2D.Double[] createRectHandle(double scale)
     {
-        Rectangle2D r = this.rectangle2D.getBounds2D();
-        double xPoint = r.getX() * scale;
-        double yPoint = r.getY() * scale;
-        double w = r.getWidth() * scale;
-        double h = r.getHeight() * scale;
+        Rectangle2D rect = this.rectangle2D.getBounds2D();
+        double xPoint = (rect.getX()-strokeWidth/2) * scale;
+        double yPoint = (rect.getY()-strokeWidth/2) * scale;
+        double w = (rect.getWidth()+strokeWidth) * scale;
+        double h = (rect.getHeight()+strokeWidth) * scale;
         
         Rectangle2D.Double NW = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0,
                 6.0);

@@ -185,7 +185,7 @@ public class PALine extends PASVGElement
     {
         line2D = new Line2D.Double(x1, y1, x2, y2);
     }
-    
+
 //    private void drawLineHighlight(Line2D r, PALine l)
 //    {
 //         TODO Auto-generated method stub
@@ -209,23 +209,43 @@ public class PALine extends PASVGElement
 //        g2D.setColor(Color.black);
 //        g2D.draw(rect2);
 //    }
-
     private Rectangle2D.Double[] createLineHandle(double scale)
     {
+//        double x_1 = line2D.getX1() * scale;
+//        double x_2 = line2D.getX2() * scale;
+//        double y_1 = line2D.getY1() * scale;
+//        double y_2 = line2D.getY2() * scale;
+//        double w = this.getStrokeWidth() * scale;
+//
+//        Rectangle2D.Double rect1 = new Rectangle.Double(x_1 -(w/2) , y_1-(w/2), w, w);
+//        Rectangle.Double rect2 = new Rectangle.Double(x_2-(w/2), y_2-(w/2), w, w);
+//        
+//        return new Rectangle2D.Double[]
+//        {
+//            rect1,rect2
+//        };
         double x_1 = line2D.getX1() * scale;
         double x_2 = line2D.getX2() * scale;
         double y_1 = line2D.getY1() * scale;
         double y_2 = line2D.getY2() * scale;
-        double w = this.getStrokeWidth() * scale;
 
-        Rectangle2D.Double rect1 = new Rectangle.Double(x_1 -(w/2) , y_1-(w/2), w*2, w*2);
-        Rectangle.Double rect2 = new Rectangle.Double(x_2-(w/2), y_2-(w/2), w*2, w*2);
-        
+        Rectangle2D rect = this.getLine2D().getBounds2D();
+        double strokewidth = this.getStrokeWidth();
+        double xPoint = (rect.getX() + (strokewidth/2)) * scale;
+        double yPoint = (rect.getY() + (strokewidth/2)) * scale;
+        double w =(rect.getWidth() + (strokewidth/2)) * scale;
+        double h = (rect.getHeight() + (strokewidth/2)) * scale;
+
+        Rectangle2D.Double NW = new Rectangle2D.Double(x_1, y_1 , 6.0, 6.0);
+        Rectangle2D.Double NE = new Rectangle2D.Double(x_2, y_2, 6.0, 6.0);
+//        Rectangle2D.Double SW = new Rectangle2D.Double(xPoint - 3.0, yPoint + h - 3.0, 6.0, 6.0);
+//        Rectangle2D.Double SE = new Rectangle2D.Double(xPoint + w - 3.0, yPoint + h - 3.0, 6.0, 6.0);
+
         return new Rectangle2D.Double[]
         {
-            rect1,rect2
+            NW, NE
         };
-
+       
     }
 
     public void setHandleArray(double scale)
