@@ -74,10 +74,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 PADrawingItem.buttonSelected.setSelected(false);
                 PADrawingItem.buttonSelected.setBorder(null);
             }
+            
             button.setBorder(BorderFactory.createLineBorder(new Color(35, 192, 255, 100), 1));
-
             PADrawingItem.buttonSelected = button;
-
         }
         else
         {

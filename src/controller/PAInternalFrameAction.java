@@ -54,7 +54,7 @@ public class PAInternalFrameAction extends InternalFrameAdapter
                     PADrawingItem.circle.doClick();
                     break;
                 
-                case "HandCursor":
+                case "Hand Cursor":
                     PADrawingItem.handCursor.doClick();
                     PADrawingItem.handCursor.doClick();
                     break;
