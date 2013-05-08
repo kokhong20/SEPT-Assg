@@ -14,13 +14,13 @@ import org.w3c.dom.Node;
  */
 public abstract class PASVGElement implements PAAttributeConstant
 {
-    private PASVGGroup parentGroup;
-    private String id;
-    private Color fill;
-    private Color stroke;
-    private double strokeWidth;
-    private boolean isGrouped;
-    private Node node;
+    protected PASVGGroup parentGroup;
+    protected String id;
+    protected Color fill;
+    protected Color stroke;
+    protected double strokeWidth;
+    protected boolean isGrouped;
+    protected Node node;
 
     /**
      *
@@ -44,6 +44,7 @@ public abstract class PASVGElement implements PAAttributeConstant
         this.stroke = stroke;
         this.strokeWidth = strokeWidth;
         isGrouped = false;
+        parentGroup = null;
     }
 
     /**

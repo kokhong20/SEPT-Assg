@@ -50,16 +50,13 @@ public class PASVGGroup extends PASVGElement
     public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth, PASVGGroup parentGroup)
     {
         super(node, groupFill, groupStroke, groupWidth, parentGroup);
-
-//        Element gElement = (Element) node;
-//
-//        setFill(gElement.hasAttribute("fill") ? PAColor.setColor(gElement.getAttribute("fill"), FILL) : (this.isGrouped()) ? getFill() : null);
-//        setStroke(gElement.hasAttribute("stroke") ? PAColor.setColor(gElement.getAttribute("stroke"), STROKE) : (this.isGrouped()) ? getStroke() : null);
-//        setStrokeWidth(gElement.hasAttribute("stroke-width") ? PAUnit.setUnit(gElement.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH) : (this.isGrouped()) ? getStrokeWidth() : null);
-
         this.groupElementList = new LinkedList<>();
     }
     
+    /**
+     * Constructor create new Group
+     * @param elementList 
+     */
     public PASVGGroup(LinkedList<PASVGElement> elementList)
     {
         super(null, null, 0);
@@ -85,53 +82,35 @@ public class PASVGGroup extends PASVGElement
 
         for (int index = 0; index < gList.getLength(); index++)
         {
-            Node node = gList.item(index);
-            switch (node.getNodeName())
+            Node listNode = gList.item(index);
+            switch (listNode.getNodeName())
             {
                 case "g":
-                    PASVGGroup nestedGroup = new PASVGGroup(node, groupFill, groupStroke, groupWidth, this);
+                    PASVGGroup nestedGroup = new PASVGGroup(listNode, groupFill, groupStroke, groupWidth, this);
                     nestedGroup.readAttributes();
-
                     groupElementList.add(nestedGroup);
                     break;
+                    
                 case "rect":
-                    PARectangle newRect = new PARectangle(node, groupFill, groupStroke, groupWidth, this);
+                    System.out.println(groupFill);
+                    PARectangle newRect = new PARectangle(listNode, groupFill, groupStroke, groupWidth, this);
                     newRect.readAttributes();
-
-                    groupElementList.add(newRect);
+                    groupElementList.add(newRect);                
                     break;
+                    
                 case "circle":
-                    PACircle newCirc = new PACircle(node, groupFill, groupStroke, groupWidth, this);
+                    PACircle newCirc = new PACircle(listNode, groupFill, groupStroke, groupWidth, this);
                     newCirc.readAttributes();
-
                     groupElementList.add(newCirc);
                     break;
+                    
                 case "line":
-                    PALine newLine = new PALine(node, groupStroke, groupWidth, this);
+                    PALine newLine = new PALine(listNode, groupStroke, groupWidth, this);
                     newLine.readAttributes();
-
                     groupElementList.add(newLine);
                     break;
             }
         }
-    }
-
-    /**
-     * @return the fill
-     */
-    @Override
-    public Color getFill()
-    {
-        return fill;
-    }
-
-    /**
-     * @param fill the fill to set
-     */
-    @Override
-    public void setFill(Color fill)
-    {
-        this.fill = fill;
     }
 
     /**
