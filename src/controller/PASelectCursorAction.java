@@ -485,7 +485,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
             else if (selectedElement instanceof PALine)
             {
-                drawLineHighlight((PALine)selectedElement);
+                drawLineHighlight((PALine) selectedElement);
             }
         }
 
@@ -501,7 +501,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 g2D = drawPanel.svgImage.createGraphics();
                 if (element instanceof PALine)
                 {
-                    drawLineHighlight((PALine)element);
+                    drawLineHighlight((PALine) element);
                 }
                 else if (element instanceof PACircle)
                 {
@@ -691,10 +691,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
             if (element instanceof PALine)
             {
-                double x1 = ((PALine) element).getX1() * scale;
-                double x2 = ((PALine) element).getX2() * scale;
-                double y1 = ((PALine) element).getY1() * scale;
-                double y2 = ((PALine) element).getY2() * scale;
+                PALine lineElement = (PALine) element;
+                double x1 = lineElement.getX1() * scale;
+                double x2 = lineElement.getX2() * scale;
+                double y1 = lineElement.getY1() * scale;
+                double y2 = lineElement.getY2() * scale;
 
                 if (x1 > x2)
                 {
@@ -719,10 +720,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
             else if (element instanceof PACircle)
             {
-                double startCX = ((PACircle) element).getCx() * scale;
-                double startCY = ((PACircle) element).getCy() * scale;
-                double endCX = startCX + ((PACircle) element).getR() * scale * 2;
-                double endCY = startCY + ((PACircle) element).getR() * scale * 2;
+                PACircle circleElement = (PACircle) element;
+                Rectangle2D rect = circleElement.getEllipse2D().getBounds2D();
+                double startCX = rect.getX() * scale;
+                double startCY = rect.getY() * scale;
+                double endCX = startCX + rect.getWidth() * scale;
+                double endCY = startCY + rect.getHeight() * scale;
 
                 startX = startX > startCX ? startCX : startX;
                 startY = startY > startCY ? startCY : startY;

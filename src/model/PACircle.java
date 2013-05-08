@@ -38,7 +38,6 @@ public class PACircle extends PASVGElement
         this.cx = cx;
         this.cy = cy;
         this.r = r;
-
         setEllipse2D();
     }
 
@@ -146,7 +145,7 @@ public class PACircle extends PASVGElement
     /**
      *
      */
-    public void setEllipse2D()
+    public final void setEllipse2D()
     {
         double x = cx - r;
         double y = cy - r;
