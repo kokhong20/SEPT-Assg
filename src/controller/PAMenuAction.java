@@ -429,13 +429,6 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-//            if (button != null)
-//            {
-//                JToggleButton zoomIn = new JToggleButton();
-//                zoomIn.setToolTipText("Zoom In");
-//                PADrawingItem.buttonSelected = zoomIn;
-//            }
-
             double scale = drawPanel.getScale();
             scale += 0.1;
             drawPanel.zoomInOutSVG(scale);
@@ -464,13 +457,6 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-//            if (button != null)
-//            {
-//                JToggleButton zoomOut = new JToggleButton();
-//                zoomOut.setToolTipText("Zoom Out");
-//                PADrawingItem.buttonSelected = zoomOut;
-//            }
-
             double scale = drawPanel.getScale();
             scale -= 0.1;
             drawPanel.zoomInOutSVG(scale);
@@ -500,14 +486,12 @@ public abstract class PAMenuAction extends AbstractAction
     public static class GroupAction extends PAMenuAction
     {
         private JButton button;
-        private LinkedList<PASVGElement> elementList;
         private PASVGPanel drawPanel;
 
-        public GroupAction(PASVGPanel drawPanel, LinkedList<PASVGElement> elementList)
+        public GroupAction(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_G, "Group");
             this.drawPanel = drawPanel;
-            this.elementList = elementList;
         }
 
         public GroupAction(PASVGPanel drawPanel, JButton button)
@@ -522,7 +506,7 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
-            elementList = PASelectCursorAction.elementTemp;
+            LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
 
             if (elementList != null)
             {
@@ -549,7 +533,56 @@ public abstract class PAMenuAction extends AbstractAction
             drawPanel.drawToImage();
             drawPanel.repaint();
         }
+    }
+    
+    public static class UnGroupAction extends PAMenuAction
+    {
+        private JButton button;
+        private PASVGPanel drawPanel;
+        
+        public UnGroupAction(PASVGPanel drawPanel)
+        {
+            super(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
+            this.drawPanel = drawPanel;
+        }
 
+        public UnGroupAction(PASVGPanel drawPanel, JButton button)
+        {
+            super(KeyEvent.VK_G, Event.SHIFT_MASK, "");
+            this.drawPanel = drawPanel;
+            this.button = button;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            PASVGGroup selectedGroup = PASelectCursorAction.headGroup;
+            LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
+            LinkedList<PASVGElement> groupList = selectedGroup.getGroupElementList();
+            
+            for (int index = mainList.size() - 1; index >= 0; index--)
+            {
+                PASVGElement element = mainList.get(index);
+                System.out.println("main :"+mainList.size());
+                if (element == selectedGroup)
+                {
+                    mainList.remove(index);
+                    System.out.println("remove :"+mainList.size());
+                    System.out.println("groupList :"+groupList.size());
+                    for(int j = groupList.size() - 1; j >= 0; j--)
+                    {
+                        groupList.get(j).setGrouped(false);
+                        groupList.get(j).setParentGroup(null);
+                    }
+                    
+                    mainList.addAll(index, groupList);
+                    System.out.println("add :"+mainList.size());
+                }
+            }
+            
+            drawPanel.drawToImage();
+            drawPanel.repaint();
+        }
     }
 
     public static class RemoveAction extends PAMenuAction
