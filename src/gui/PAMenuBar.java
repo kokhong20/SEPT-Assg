@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem deleteEdit;
     private static JMenuItem zoomInView;
     private static JMenuItem zoomOutView;
     private static JMenuItem actualSizeView;
@@ -36,7 +37,6 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem cutEdit;
     private JMenuItem copyEdit;
     private JMenuItem pasteEdit;
-    private JMenuItem deleteEdit;
     private JMenuItem imageSizeImage;
     private JMenuItem viewBoxImage;
     private JDesktopPane parent;
@@ -57,12 +57,15 @@ public class PAMenuBar extends JMenuBar
     
     public static void updateAction(PAMainFrame mainFrame)
     {
+        PAMenuAction.Delete deleteAction = new PAMenuAction.Delete(mainFrame.svgPanel);
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        deleteEdit.setAction(deleteAction);
         zoomInView.setAction(zoomInAction);
         zoomOutView.setAction(zoomOutAction);
         actualSizeView.setAction(actualSizeAction);
+        deleteEdit.setEnabled(true);
         zoomInView.setEnabled(true);
         zoomOutView.setEnabled(true);
         actualSizeView.setEnabled(true);
@@ -70,12 +73,15 @@ public class PAMenuBar extends JMenuBar
     
     public static void removeUpdatedAction()
     {
+        PAMenuAction.RemoveAction removeDeleteAction = new PAMenuAction.RemoveAction(KeyEvent.VK_DELETE, "Delete");
         PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
         PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
         PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        deleteEdit.setAction(removeDeleteAction);
         zoomInView.setAction(removeZoomInAction);
         zoomOutView.setAction(removeZoomOutAction);
         actualSizeView.setAction(removeActualSizeAction);
+        deleteEdit.setEnabled(false);
         zoomInView.setEnabled(false);
         zoomOutView.setEnabled(false);
         actualSizeView.setEnabled(false);
