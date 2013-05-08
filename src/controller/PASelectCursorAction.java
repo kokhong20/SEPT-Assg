@@ -438,10 +438,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     for (int i = ele.size() - 1; i >= 0; i--)
                     {
                         PASVGElement elementInsideList = ele.get(i);
-                        if (!elementArray.contains(elementInsideList))
-                        {
-                            elementArray.add(elementInsideList);
-                        }
+
+                        elementArray.add(elementInsideList);
+
                     }
                 }
             }
@@ -490,27 +489,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
 
-        if (selectedElement.isGrouped())
-        {
-            headGroup = getHeadGroup(selectedElement);
-            double[] arrayOfXY = getGroupBounds(headGroup, pointX, pointY);
-            drawGroupHighlight(arrayOfXY);
-        }
-        else
-        {
-            if (selectedElement instanceof PARectangle)
-            {
-                drawRectHighlight(((PARectangle) selectedElement));
-            }
-            else if (selectedElement instanceof PACircle)
-            {
-                drawEllipseHighlight((PACircle) selectedElement);
-            }
-            else if (selectedElement instanceof PALine)
-            {
-                drawLineHighlight((PALine) selectedElement);
-            }
-        }
+        drawBoundsChecking(selectedElement);
 
     }
 
@@ -522,24 +501,56 @@ public class PASelectCursorAction extends PADrawingShapeAction
             {
                 PASVGElement element = elementTemp.get(index);
                 g2D = drawPanel.svgImage.createGraphics();
-                if (element instanceof PALine)
-                {
-                    drawLineHighlight((PALine) element);
-                }
-                else if (element instanceof PACircle)
-                {
-                    drawEllipseHighlight((PACircle) element);
-                }
-                else if (element instanceof PARectangle)
-                {
-                    drawRectHighlight(((PARectangle) element));
-                }
-                else if (element instanceof PASVGGroup)
-                {
-                }
+
+               drawBoundsChecking(element);
             }
         }
 
+    }
+
+    private void drawBoundsChecking(PASVGElement element)
+    {
+        if (element.isGrouped())
+        {
+            double tempX = 0, tempY = 0;
+            headGroup = getHeadGroup(element);
+
+            if (element instanceof PARectangle)
+            {
+                PARectangle rect = ((PARectangle) element);
+                tempX = rect.getX();
+                tempY = rect.getY();
+            }
+            else if (element instanceof PACircle)
+            {
+                PACircle circle = ((PACircle) element);
+                tempX = circle.getCx();
+                tempY = circle.getCy();
+            }
+            else if (element instanceof PALine)
+            {
+                PALine line = ((PALine) element);
+                tempX = line.getX1();
+                tempY = line.getY1();
+            }
+            double[] arrayOfXY = getGroupBounds(headGroup, tempX, tempY);
+            drawGroupHighlight(arrayOfXY);
+        }
+        else
+        {
+            if (element instanceof PARectangle)
+            {
+                drawRectHighlight(((PARectangle) element));
+            }
+            else if (element instanceof PACircle)
+            {
+                drawEllipseHighlight((PACircle) element);
+            }
+            else if (element instanceof PALine)
+            {
+                drawLineHighlight((PALine) element);
+            }
+        }
     }
 
     private void detectElementBounds(PASVGElement boundsElement, int x, int y)
