@@ -3,10 +3,10 @@ package gui;
 import controller.PAHandCursor;
 import controller.PAMenuAction;
 import controller.PADrawingShapeAction;
+import controller.PAFillBucketAction;
 import controller.PASelectCursorAction;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,7 +22,7 @@ public class PADrawingItem
     public static JToggleButton buttonSelected;
     public static JButton zoomIn;
     public static JButton zoomOut;
-    public JToggleButton fill;
+    public static JToggleButton fill;
     public static JToggleButton handCursor;
     public static JToggleButton selectCursor;
     public static JToggleButton line;
@@ -68,7 +68,7 @@ public class PADrawingItem
      * add all buttons to drawing kit
      */
     public void addButton()
-    {     
+    {
         drawKitPanel.add(fill);
         drawKitPanel.add(handCursor);
         drawKitPanel.add(selectCursor);
@@ -79,7 +79,7 @@ public class PADrawingItem
         drawKitPanel.add(ungroup);
         drawKitPanel.add(zoomIn);
         drawKitPanel.add(zoomOut);
-        setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0, 100);
+
     }
 
     /**
@@ -98,7 +98,7 @@ public class PADrawingItem
         group = new JButton();
         ungroup = new JButton();
     }
-    
+
     public static void setUpButton()
     {
         setToggleButtonAttribute("resources/select.png", selectCursor, "Select Cursor", 40, 20);
@@ -110,6 +110,7 @@ public class PADrawingItem
         setButtonAttribute("resources/group.png", group, "Group", 0, 180);
         setButtonAttribute("resources/ungroup.png", ungroup, "Ungroup", 40, 180);
         setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
+        setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0, 100);
     }
 
     /**
@@ -144,25 +145,25 @@ public class PADrawingItem
         button.setToolTipText(toolTip);
         button.setBounds(x, y, maxWidth, maxHeight);
     }
-    
+
     public static void addAction(PAMainFrame mainFrame)
     {
         //SelectCursor
         PASelectCursorAction selectCusrsorAction = new PASelectCursorAction(mainFrame.svgPanel, selectCursor, mainFrame.attributeBar);
         selectCursor.setAction(selectCusrsorAction);
-        
+
         //Line
         PADrawingShapeAction.DrawLineAction drawLineAction = new PADrawingShapeAction.DrawLineAction(mainFrame.svgPanel, line, mainFrame.attributeBar);
         line.setAction(drawLineAction);
-        
+
         //Rectangle
         PADrawingShapeAction.DrawRectangleAction drawRectAction = new PADrawingShapeAction.DrawRectangleAction(mainFrame.svgPanel, rectangle, mainFrame.attributeBar);
         rectangle.setAction(drawRectAction);
-                
+
         //Circle
         PADrawingShapeAction.DrawCircleAction drawCircleAction = new PADrawingShapeAction.DrawCircleAction(mainFrame.svgPanel, circle, mainFrame.attributeBar);
         circle.setAction(drawCircleAction);
-        
+
         //ZoomIn
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel, zoomIn);
         zoomIn.setAction(zoomInAction);
@@ -170,17 +171,22 @@ public class PADrawingItem
         //ZoomOut
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel, zoomOut);
         zoomOut.setAction(zoomOutAction);
-        
+
         //Pan
-        PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel, handCursor,  mainFrame.attributeBar);
+        PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel, handCursor, mainFrame.attributeBar);
         handCursor.setAction(panAction);
-        
+
         //Group
         PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel, group);
         group.setAction(groupAction);
-        
+
         //UnGroup
         PAMenuAction.UnGroupAction unGroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel, ungroup);
         ungroup.setAction(unGroupAction);
+
+        //Fill
+        PAFillBucketAction fillAction = new PAFillBucketAction(mainFrame.svgPanel, fill, mainFrame.attributeBar);
+        fill.setAction(fillAction);
     }
+
 }

@@ -52,6 +52,8 @@ public abstract class PADrawingShapeAction extends AbstractAction
         this.shapeBar = shapeBar;
         this.drawImage = drawPanel.svgImage;
         elementCollection = drawPanel.svgContainer.getSvgContainer();
+        scale = drawPanel.getScale();
+        drawPanel.reDrawImage(scale);
     }
 
     public void setShapeAttributes()

@@ -78,6 +78,13 @@ public class PASVGPanel extends JPanel
         repaint();
     }
 
+    public void reDrawImage(double scale)
+    {
+        this.scale = scale;
+        drawToImage();
+        repaint();
+    }
+
     /**
      * Initialize SVG Panel.
      */
@@ -96,7 +103,7 @@ public class PASVGPanel extends JPanel
     {
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();
-       
+
         AffineTransform old = g2d.getTransform();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.scale(scale, scale);
@@ -184,7 +191,7 @@ public class PASVGPanel extends JPanel
             {
                 case "Rectangle":
                 case "Select Cursor":
-                    g2d.setPaint(new Color(180,180,180,80));
+                    g2d.setPaint(new Color(180, 180, 180, 80));
 
                     Rectangle2D.Double rect = makeRectangle((int) ((startDrag.x) * scale),
                             (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
@@ -192,7 +199,7 @@ public class PASVGPanel extends JPanel
                     break;
 
                 case "Line":
-                    g2d.setColor(new Color(180,180,180,80));
+                    g2d.setColor(new Color(180, 180, 180, 80));
                     g2d.setStroke(new BasicStroke(2));
                     Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
                             (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
@@ -200,7 +207,7 @@ public class PASVGPanel extends JPanel
                     break;
 
                 case "Circle":
-                    g2d.setPaint(new Color(180,180,180,80));
+                    g2d.setPaint(new Color(180, 180, 180, 80));
                     Ellipse2D.Double circle = makeCircle((int) ((startDrag.x) * scale),
                             (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
                     g2d.fill(circle);
@@ -208,7 +215,7 @@ public class PASVGPanel extends JPanel
 
             }
         }
-        
+
         g2d.dispose();
     }
 

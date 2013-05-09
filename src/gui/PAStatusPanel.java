@@ -51,9 +51,6 @@ public class PAStatusPanel extends JPanel
 
         add(statusMsg);
 
-        //Test
-        setLabelText("Testing");
-
     }
 
     /**

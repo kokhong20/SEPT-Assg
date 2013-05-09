@@ -58,6 +58,10 @@ public class PAInternalFrameAction extends InternalFrameAdapter
                     PADrawingItem.handCursor.doClick();
                     PADrawingItem.handCursor.doClick();
                     break;
+                    
+                case "Fill":
+                    PADrawingItem.fill.doClick();
+                    PADrawingItem.fill.doClick();
             }
         }
     }

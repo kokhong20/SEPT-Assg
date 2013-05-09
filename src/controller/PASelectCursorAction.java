@@ -34,7 +34,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     boolean isResize;
     int elementIndex, changeX, changeY;
     double pointX, pointY;
-    PASVGElement selectedElement;
+    static PASVGElement selectedElement;
     Graphics2D g2D;
     Rectangle2D handleRectangle;
     Line2D handleLine;
@@ -86,12 +86,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 if ((!elementTemp.isEmpty())
                         || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                 {
-                    drawPanel.zoomInOutSVG(scale);
+                    drawPanel.reDrawImage(scale);
                     initialMouse = new Point(e.getX(), e.getY());
                 }
                 else
                 {
-                    drawPanel.zoomInOutSVG(scale);
+                    drawPanel.reDrawImage(scale);
                 }
 
                 //for Rectangle helper use
@@ -183,7 +183,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     else
                     {
                         moveAllGroupElements(headGroup);
-                        drawPanel.zoomInOutSVG(scale);
+                        drawPanel.reDrawImage(scale);
                     }
 
                     changeX = e.getX() - initialMouse.x;
@@ -228,7 +228,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                                     rectList.setY(rect.getY() + changeY);
                                     rectList.setRectangle2D();
                                 }
-                                drawPanel.zoomInOutSVG(scale);
+                                drawPanel.reDrawImage(scale);
                             }
                         }
                     }
@@ -473,7 +473,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 listCircle.setCy(element.getCy());
                 listCircle.setEllipse2D();
 
-                drawPanel.zoomInOutSVG(scale);
+                drawPanel.reDrawImage(scale);
             }
             else if (elementItem instanceof PARectangle)
             {
@@ -485,7 +485,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 listRect.setHeight(element.getHeight());
                 listRect.setRectangle2D();
 
-                drawPanel.zoomInOutSVG(scale);
+                drawPanel.reDrawImage(scale);
             }
             else if (elementItem instanceof PALine)
             {
@@ -497,7 +497,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 listLine.setY2(element.getY2());
                 listLine.setLine2D();
 
-                drawPanel.zoomInOutSVG(scale);
+                drawPanel.reDrawImage(scale);
             }
         }
     }
