@@ -332,6 +332,7 @@ public abstract class PAMenuAction extends AbstractAction
             PASVGPanel drawPanel = mainFrame.svgPanel;
             PASelectCursorAction selectAllAction = new PASelectCursorAction(
                     drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction.elementTemp.clear();
             PASelectCursorAction.elementTemp = drawPanel.elementCollection;
             int panelWidth = drawPanel.getWidth();
             int panelHeight = drawPanel.getHeight();
@@ -470,24 +471,20 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            PASVGElement selectedElement = PASelectCursorAction.selectedElement;
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
             LinkedList<PASVGElement> selectedList = PASelectCursorAction.elementTemp;
 
             if (selectedList != null)
             {
-                for (int index = selectedList.size() - 1; index >= 0; index--)
-                {
-                    PASVGElement element = selectedList.get(index);
-
-                    for (int j = mainList.size() - 1; j >= 0; j--)
-                    {
-                        if (element == mainList.get(j))
-                        {
-                            mainList.remove(j);
-                        }
-                    }
-                }
-
+                mainList.removeAll(selectedList);
+                drawPanel.drawToImage();
+                drawPanel.repaint();
+            }
+            
+            if (selectedElement != null)
+            {
+                mainList.remove(selectedElement);
                 drawPanel.drawToImage();
                 drawPanel.repaint();
             }
