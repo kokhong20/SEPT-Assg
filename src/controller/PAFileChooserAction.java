@@ -38,6 +38,7 @@ public class PAFileChooserAction implements ActionListener
     private PASVGImport svgImport;
     private PAStartMenu startMenu;
     private String fileName;
+    private Document svgDoc;
 
     /**
      *
@@ -60,13 +61,14 @@ public class PAFileChooserAction implements ActionListener
         this.frame = frame;
         this.startMenu = startMenu;
     }
-    
+
     public PAFileChooserAction(JDesktopPane parent, String fileName)
     {
         this.fileName = fileName;
         this.parent = parent;
-        
+
     }
+
     /**
      * action in file chooser (Cancel and Open button)
      *
@@ -75,15 +77,15 @@ public class PAFileChooserAction implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        
+
         // Open Button Action
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
-            String fileName = selectedFile.getName();
+            fileName = selectedFile.getName();
             PASVGContainer svgContainer = setUpContainer(selectedFile);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
-            
+
             try
             {
                 svgDisplay.setSelected(true);
@@ -92,7 +94,7 @@ public class PAFileChooserAction implements ActionListener
             {
                 System.err.println(ex.getMessage());
             }
-            
+
             parent.add(svgDisplay);
             svgDisplay.toFront();
 
@@ -103,7 +105,7 @@ public class PAFileChooserAction implements ActionListener
                 startMenu.setVisible(false);
                 startMenu.dispose();
             }
-           
+
         }
 
         // need to do for both Cancel and Open button.
@@ -111,17 +113,26 @@ public class PAFileChooserAction implements ActionListener
         frame.dispose();
         PAMenuAction.OpenFile.fcInternal = null;
     }
-    
+
     public PASVGContainer setUpContainer(File selectedFile)
     {
-        Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-        Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
-        PASVGTag svgTag = new PASVGTag(svgNode);
-        int svgWidth = (int) svgTag.getWidth();
-        int svgHeight = (int) svgTag.getHeight();
-        LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
-        PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
-        return svgContainer;
-        
+        if (selectedFile != null)
+        {
+            svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+            if (svgDoc != null)
+            {
+                Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
+                PASVGTag svgTag = new PASVGTag(svgNode);
+                svgWidth = (int) svgTag.getWidth();
+                svgHeight = (int) svgTag.getHeight();
+                LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
+                PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+                return svgContainer;
+            }
+        }
+
+        return null;
+
     }
+
 }

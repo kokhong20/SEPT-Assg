@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.AbstractAction;
 import static javax.swing.Action.ACCELERATOR_KEY;
@@ -29,12 +30,16 @@ import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import model.PASVGElement;
 import model.PASVGGroup;
 import model.PASystem;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
- * 
+ *
  * @author LiHao
  */
 public abstract class PAMenuAction extends AbstractAction
@@ -43,13 +48,11 @@ public abstract class PAMenuAction extends AbstractAction
     protected KeyStroke keyStroke;
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, String name)
     {
@@ -62,15 +65,12 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param event
-     *            event want to add
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param event event want to add
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, int event, String name)
     {
@@ -90,7 +90,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "New"
      */
     public static class NewFile extends PAMenuAction
@@ -142,7 +142,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Open..."
      */
     public static class OpenFile extends PAMenuAction
@@ -223,7 +223,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save"
      */
     public static class SaveFile extends PAMenuAction
@@ -240,22 +240,92 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+//            try
+//            {
+//                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//
+////                root elements
+//                Document doc = docBuilder.newDocument();
+//
+//                Element svg = doc.createElement("svg");
+//                doc.appendChild(svg);
+//
+//                Iterator<Drawings> it = drawings.iterator();
+//
+//                while (it.hasNext())
+//                {
+//                    Drawings draw = it.next();
+//
+//                    if (draw instanceof Rectangles)
+//                    {
+//                        Rectangles saveRect = (Rectangles) draw;
+//
+//                        Element rect = doc.createElement("rect");
+//                        rect.setAttribute("width", String.valueOf(saveRect.getWidth()));
+//                        rect.setAttribute("height", String.valueOf(saveRect.getHeight()));
+//                        rect.setAttribute("x", String.valueOf(saveRect.getX()));
+//                        rect.setAttribute("y", String.valueOf(saveRect.getY()));
+//                        rect.setAttribute("fill", String.valueOf("rgb(" + saveRect.getFill().getRed() + "," + saveRect.getFill().getGreen() + "," + saveRect.getFill().getBlue()) + ")");
+//                        rect.setAttribute("stroke", String.valueOf("rgb(" + saveRect.getStrokeColor().getRed() + "," + saveRect.getStrokeColor().getGreen() + "," + saveRect.getStrokeColor().getBlue()) + ")");
+//                        rect.setAttribute("stroke-width", String.valueOf(saveRect.getStrokeWidth()));
+//
+//                        svg.appendChild(rect);
+//
+//                    }
+//                    else if (draw instanceof Circles)
+//                    {
+//                        Circles saveCircle = (Circles) draw;
+//
+//                        Element circle = doc.createElement("circle");
+//                        circle.setAttribute("cx", String.valueOf(saveCircle.getCX()));
+//                        circle.setAttribute("cy", String.valueOf(saveCircle.getCY()));
+//                        circle.setAttribute("r", String.valueOf(saveCircle.getR()));
+//                        circle.setAttribute("fill", String.valueOf("rgb(" + saveCircle.getFill().getRed() + "," + saveCircle.getFill().getGreen() + "," + saveCircle.getFill().getBlue()) + ")");
+//                        circle.setAttribute("stroke", String.valueOf("rgb(" + saveCircle.getStrokeColor().getRed() + "," + saveCircle.getStrokeColor().getGreen() + "," + saveCircle.getStrokeColor().getBlue()) + ")");
+//                        circle.setAttribute("stroke-width", String.valueOf(saveCircle.getStrokeWidth()));
+//
+//                        svg.appendChild(circle);
+//                    }
+//                    else if (draw instanceof Lines)
+//                    {
+//                        Lines saveLine = (Lines) draw;
+//
+//                        Element line = doc.createElement("line");
+//                        line.setAttribute("x1", String.valueOf(saveLine.getX1()));
+//                        line.setAttribute("x2", String.valueOf(saveLine.getX2()));
+//                        line.setAttribute("y1", String.valueOf(saveLine.getY1()));
+//                        line.setAttribute("y2", String.valueOf(saveLine.getY2()));
+//                        line.setAttribute("stroke", String.valueOf("rgb(" + saveLine.getStrokeColor().getRed() + "," + saveLine.getStrokeColor().getGreen() + "," + saveLine.getStrokeColor().getBlue()) + ")");
+//                        line.setAttribute("stroke-width", String.valueOf(saveLine.getStrokeWidth()));
+//
+//                        svg.appendChild(line);
+//                    }
+//                }
+//
+//                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//                Transformer transformer = transformerFactory.newTransformer();
+//                DOMSource source = new DOMSource(doc);
+//
+//                StreamResult result = new StreamResult(new File(path));
+//                transformer.transform(source, result);
+//
+//                System.out.println("Done");
+//            }
+//            catch (ParserConfigurationException pce)
+//            {
+//                pce.printStackTrace();
+//            }
+//            catch (TransformerException tfe)
+//            {
+//                tfe.printStackTrace();
+//            }
         }
 
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save As..."
      */
     public static class SaveAsFile extends PAMenuAction
@@ -287,7 +357,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Exit"
      */
     public static class ExitProgram extends PAMenuAction
@@ -359,8 +429,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             JToggleButton virtualButton = new JToggleButton();
             PASVGPanel drawPanel = mainFrame.svgPanel;
-            PASelectCursorAction selectAllAction = new PASelectCursorAction
-                    (drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction selectAllAction = new PASelectCursorAction(drawPanel, virtualButton, mainFrame.attributeBar);
             PASelectCursorAction.elementTemp.clear();
             int panelWidth = drawPanel.getWidth();
             int panelHeight = drawPanel.getHeight();
@@ -481,7 +550,7 @@ public abstract class PAMenuAction extends AbstractAction
                 drawPanel.drawToImage();
                 drawPanel.repaint();
             }
-            
+
             if (selectedElement != null)
             {
                 mainList.remove(selectedElement);
@@ -615,9 +684,13 @@ public abstract class PAMenuAction extends AbstractAction
             if (scale > 0.1)
             {
                 if (scale > 2)
+                {
                     scale -= 0.5;
+                }
                 else
+                {
                     scale -= 0.1;
+                }
             }
             drawPanel.zoomInOutSVG(scale);
 
@@ -763,7 +836,7 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
     public static class RemoveEventAction extends PAMenuAction
     {
         public RemoveEventAction(int keyEvent, int event, String name)
