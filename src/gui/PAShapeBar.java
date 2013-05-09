@@ -5,7 +5,6 @@ import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ public class PAShapeBar extends JPanel
      */
     private static final long serialVersionUID = 1474246142443123659L;
     private PAMainFrame mainFrame;
-    public JButton strokeButton, fillButton, inspectButton;
+    public JButton strokeButton, fillButton;
     public JCheckBox fillCheck, strokeCheck;
     public JSpinner strokeWidthBox;
 
@@ -76,19 +75,9 @@ public class PAShapeBar extends JPanel
         // JButton
         strokeButton = new JButton();
         fillButton = new JButton();
-        inspectButton = new JButton();
 
         attrItems.setButtonAttributes("Fill Color", fillButton, new Dimension(40, 17));
         attrItems.setButtonAttributes("Stroke Color", strokeButton, new Dimension(40, 17));
-        attrItems.setButtonAttributes("Inspect", inspectButton, new Dimension(70, 30));
-        
-        //Inspect Button customization	
-        ImageIcon icon = new ImageIcon("resources/inspect.png");
-        inspectButton.setBackground(this.getBackground());
-        inspectButton.setIcon(icon);
-        inspectButton.setBorder(null);
-        inspectButton.setBorderPainted(false);
-
     }
     
     /**
@@ -123,8 +112,6 @@ public class PAShapeBar extends JPanel
         this.add(strokeWidthBox);
         this.add(Box.createRigidArea(new Dimension(5, 0)));
         this.add(strokeButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
-        this.add(inspectButton);
 
     }
 

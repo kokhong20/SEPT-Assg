@@ -35,7 +35,6 @@ public class PARootView extends JFrame
     private PAMainFrame mainPanel;
     private PALayerPanel layerPanel;
     private PANewFileSetting newFileSetting;
-    private PAInspectFrame inspectFrame;
     private String fileName;
 
     /**

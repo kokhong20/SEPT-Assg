@@ -4,12 +4,10 @@
  */
 package controller;
 
-import static controller.PASelectCursorAction.elementTemp;
 import static controller.PASelectCursorAction.selectedElement;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Cursor;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -57,8 +55,6 @@ public class PAFillBucketAction extends PADrawingShapeAction
             @Override
             public void mouseReleased(MouseEvent e)
             {
-
-
                 // If Single object is selected
                 if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
                 {
