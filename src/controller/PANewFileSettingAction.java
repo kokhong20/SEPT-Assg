@@ -79,6 +79,7 @@ public class PANewFileSettingAction implements ActionListener
             PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
             parent.add(svgDisplay);
             parent.add(drawingKit);
+            svgDisplay.toFront();
             
             if (startMenu != null)
             {
