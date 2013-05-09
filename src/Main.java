@@ -9,11 +9,11 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
 
-   public static void main(String[] args) {
+   public static void main(final String[] args) {
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
-            PARootView root = new PARootView();
+            PARootView root = new PARootView(args);
             root.setVisible(true);
          }
       });

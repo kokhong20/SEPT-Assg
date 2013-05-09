@@ -6,8 +6,19 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.File;
+import java.util.LinkedList;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import model.PASVGContainer;
+import model.PASVGElement;
+import model.PASVGImport;
+import model.PASVGTag;
 import model.PASystem;
 
 /**
@@ -25,15 +36,26 @@ public class PARootView extends JFrame
     private PALayerPanel layerPanel;
     private PANewFileSetting newFileSetting;
     private PAInspectFrame inspectFrame;
+    private String fileName;
 
     /**
      * constructor to create PARootView
      */
-    public PARootView()
+    public PARootView(String[] args)
     {
         PASystem.setLookandFeel();
+        if(args.length !=0)
+        {
+            fileName = args[0];
+            init();
+            cust();
+        }
+        else
+        {
         initialize();
         customize();
+        
+        }
         setUpRootView();
     }
 
@@ -52,6 +74,26 @@ public class PARootView extends JFrame
         //inspectFrame = new PAInspectFrame(rootView);
     }
 
+    public void init()
+    {
+        rootView = new JDesktopPane();
+        menuBar = new PAMenuBar(rootView);
+        File selectedFile = new File(fileName);
+        Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+        Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
+        PASVGTag svgTag = new PASVGTag(svgNode);
+        int svgWidth = (int) svgTag.getWidth();
+        int svgHeight = (int) svgTag.getHeight();
+        LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
+        PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+        PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer, fileName);
+        rootView.add(svgDisplay);
+    }
+    public void cust()
+    {
+        rootView.setSize(PASystem.getScreenDimension());
+        rootView.setVisible(true);
+    }
     /**
      * customization of PARootView
      */

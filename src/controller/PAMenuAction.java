@@ -34,7 +34,7 @@ import model.PASVGGroup;
 import model.PASystem;
 
 /**
- *
+ * 
  * @author LiHao
  */
 public abstract class PAMenuAction extends AbstractAction
@@ -43,11 +43,13 @@ public abstract class PAMenuAction extends AbstractAction
     protected KeyStroke keyStroke;
 
     /**
-     *
+     * 
      * Constructor of Menu Action.
-     *
-     * @param keyEvent keyEvent want to use
-     * @param name menu item's name
+     * 
+     * @param keyEvent
+     *            keyEvent want to use
+     * @param name
+     *            menu item's name
      */
     public PAMenuAction(int keyEvent, String name)
     {
@@ -60,12 +62,15 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * Constructor of Menu Action.
-     *
-     * @param keyEvent keyEvent want to use
-     * @param event event want to add
-     * @param name menu item's name
+     * 
+     * @param keyEvent
+     *            keyEvent want to use
+     * @param event
+     *            event want to add
+     * @param name
+     *            menu item's name
      */
     public PAMenuAction(int keyEvent, int event, String name)
     {
@@ -85,7 +90,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * action class for menu item "New"
      */
     public static class NewFile extends PAMenuAction
@@ -137,7 +142,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * action class for menu item "Open..."
      */
     public static class OpenFile extends PAMenuAction
@@ -218,7 +223,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * action class for menu item "Save"
      */
     public static class SaveFile extends PAMenuAction
@@ -250,7 +255,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * action class for menu item "Save As..."
      */
     public static class SaveAsFile extends PAMenuAction
@@ -282,7 +287,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     *
+     * 
      * action class for menu item "Exit"
      */
     public static class ExitProgram extends PAMenuAction
@@ -325,8 +330,8 @@ public abstract class PAMenuAction extends AbstractAction
         {
             JToggleButton virtualButton = new JToggleButton();
             PASVGPanel drawPanel = mainFrame.svgPanel;
-            PASelectCursorAction selectAllAction = new PASelectCursorAction
-                    (drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction selectAllAction = new PASelectCursorAction(
+                    drawPanel, virtualButton, mainFrame.attributeBar);
             PASelectCursorAction.elementTemp = drawPanel.elementCollection;
             int panelWidth = drawPanel.getWidth();
             int panelHeight = drawPanel.getHeight();
@@ -612,7 +617,10 @@ public abstract class PAMenuAction extends AbstractAction
             scale = Double.parseDouble(df.format(scale));
             if (scale > 0.1)
             {
-                scale -= 0.1;
+                if (scale > 2)
+                    scale -= 0.5;
+                else
+                    scale -= 0.1;
             }
             drawPanel.zoomInOutSVG(scale);
 
