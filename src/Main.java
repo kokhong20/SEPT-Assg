@@ -7,15 +7,20 @@ import javax.swing.SwingUtilities;
  * @author KokHong
  *
  */
-public class Main {
+public class Main
+{
+    public static void main(final String[] args)
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                PARootView root = new PARootView(args);
+                root.setVisible(true);
+            }
 
-   public static void main(final String[] args) {
-      SwingUtilities.invokeLater(new Runnable() {
-         @Override
-         public void run() {
-            PARootView root = new PARootView(args);
-            root.setVisible(true);
-         }
-      });
-   }
+        });
+    }
+
 }
