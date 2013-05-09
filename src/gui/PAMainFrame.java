@@ -49,7 +49,7 @@ public class PAMainFrame extends JInternalFrame
         super(fileName);
         this.parent = parent;
         this.svgContainer = svgContainer;
-        this.fileName = fileName;
+        this.setFileName(fileName);
         initialize();
         customize();
         setFrameLayout();
@@ -190,5 +190,21 @@ public class PAMainFrame extends JInternalFrame
     {
         return this.parent;
     }
+
+	/**
+	 * @return the fileName
+	 */
+	public String getFileName()
+	{
+		return fileName;
+	}
+
+	/**
+	 * @param fileName the fileName to set
+	 */
+	public void setFileName(String fileName)
+	{
+		this.fileName = fileName;
+	}
 
 }
