@@ -143,8 +143,6 @@ public class PAMainFrame extends JInternalFrame
         setMaximizable(true);
         setBackground(new Color(38, 38, 38));
         setVisible(true);
-
-        System.out.println(mainFrameSize);
         setSize(mainFrameSize);
         setMinimumSize(new Dimension(300,300));
         setLocation(startPoint);

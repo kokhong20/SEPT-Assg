@@ -92,7 +92,6 @@ public class PASVGGroup extends PASVGElement
                     break;
                     
                 case "rect":
-                    System.out.println(groupFill);
                     PARectangle newRect = new PARectangle(listNode, groupFill, groupStroke, groupWidth, this);
                     newRect.readAttributes();
                     groupElementList.add(newRect);                

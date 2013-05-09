@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import controller.PAFileChooserAction;
+
 import model.PASVGContainer;
 import model.PASVGElement;
 import model.PASVGImport;
@@ -77,14 +79,9 @@ public class PARootView extends JFrame
     {
         rootView = new JDesktopPane();
         menuBar = new PAMenuBar(rootView);
-        File selectedFile = new File(fileName);
-        Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-        Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
-        PASVGTag svgTag = new PASVGTag(svgNode);
-        int svgWidth = (int) svgTag.getWidth();
-        int svgHeight = (int) svgTag.getHeight();
-        LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
-        PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+        PAFileChooserAction cmd = new PAFileChooserAction(rootView, fileName);
+        File cmdFile = new File(fileName);
+        PASVGContainer svgContainer = cmd.setUpContainer(cmdFile);
         PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer, fileName);
         rootView.add(svgDisplay);
     }
