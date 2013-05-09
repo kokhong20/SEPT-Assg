@@ -10,6 +10,8 @@ import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import model.PASystem;
 
 /**
  *
@@ -17,6 +19,7 @@ import javax.swing.JMenuItem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem selectAllEdit;
     private static JMenuItem deleteEdit;
     private static JMenuItem zoomInView;
     private static JMenuItem zoomOutView;
@@ -31,8 +34,6 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem saveFile;
     private JMenuItem saveAsFile;
     private JMenuItem exitFile;
-    private JMenuItem editEdit;
-    private JMenuItem selectAllEdit;
     private JMenuItem deselectAllEdit;
     private JMenuItem cutEdit;
     private JMenuItem copyEdit;
@@ -53,34 +54,41 @@ public class PAMenuBar extends JMenuBar
         addMenuItem();
         setUpMenuBar();
         addAction();
+        initKeyStroke();
     }
-    
+
     public static void updateAction(PAMainFrame mainFrame)
     {
+        PAMenuAction.SelectAll selectAllAction = new PAMenuAction.SelectAll(mainFrame);
         PAMenuAction.Delete deleteAction = new PAMenuAction.Delete(mainFrame.svgPanel);
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        selectAllEdit.setAction(selectAllAction);
         deleteEdit.setAction(deleteAction);
         zoomInView.setAction(zoomInAction);
         zoomOutView.setAction(zoomOutAction);
         actualSizeView.setAction(actualSizeAction);
+        selectAllEdit.setEnabled(true);
         deleteEdit.setEnabled(true);
         zoomInView.setEnabled(true);
         zoomOutView.setEnabled(true);
         actualSizeView.setEnabled(true);
     }
-    
+
     public static void removeUpdatedAction()
     {
+        PAMenuAction.RemoveAction removeSelectAllAction = new PAMenuAction.RemoveAction(KeyEvent.VK_A, "Select All");
         PAMenuAction.RemoveAction removeDeleteAction = new PAMenuAction.RemoveAction(KeyEvent.VK_DELETE, "Delete");
         PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
         PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
         PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        selectAllEdit.setAction(removeSelectAllAction);
         deleteEdit.setAction(removeDeleteAction);
         zoomInView.setAction(removeZoomInAction);
         zoomOutView.setAction(removeZoomOutAction);
         actualSizeView.setAction(removeActualSizeAction);
+        selectAllEdit.setEnabled(false);
         deleteEdit.setEnabled(false);
         zoomInView.setEnabled(false);
         zoomOutView.setEnabled(false);
@@ -112,7 +120,6 @@ public class PAMenuBar extends JMenuBar
         exitFile = new JMenuItem("Exit");
 
         // Edit's MenuItem
-        editEdit = new JMenuItem("Edit");
         selectAllEdit = new JMenuItem("Select All");
         deselectAllEdit = new JMenuItem("Deselect All");
         cutEdit = new JMenuItem("Cut");
@@ -128,7 +135,11 @@ public class PAMenuBar extends JMenuBar
         zoomInView = new JMenuItem("Zoom In");
         zoomOutView = new JMenuItem("Zoom Out");
         actualSizeView = new JMenuItem("Actual Size");
-
+        
+        deleteEdit.setEnabled(false);
+        zoomInView.setEnabled(false);
+        zoomOutView.setEnabled(false);
+        actualSizeView.setEnabled(false);
     }
 
     /**
@@ -138,13 +149,15 @@ public class PAMenuBar extends JMenuBar
     {
         fileMenu.add(newFile);
         fileMenu.add(openFile);
+        fileMenu.addSeparator();
         fileMenu.add(saveFile);
         fileMenu.add(saveAsFile);
+        fileMenu.addSeparator();
         fileMenu.add(exitFile);
 
-        editMenu.add(editEdit);
         editMenu.add(selectAllEdit);
         editMenu.add(deselectAllEdit);
+        editMenu.addSeparator();
         editMenu.add(cutEdit);
         editMenu.add(copyEdit);
         editMenu.add(pasteEdit);
@@ -188,4 +201,13 @@ public class PAMenuBar extends JMenuBar
         add(helpMenu);
     }
 
+    private void initKeyStroke()
+    {
+        int keyMask = PASystem.keyMask;
+        selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
+        deleteEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
+        zoomInView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, keyMask));
+        zoomOutView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, keyMask));
+        actualSizeView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, keyMask));
+    }
 }

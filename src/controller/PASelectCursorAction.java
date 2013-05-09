@@ -510,7 +510,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     }
 
-    private void drawBoundsForElements()
+    protected void drawBoundsForElements()
     {
         if (!((elementTemp = iterateContainer(elementCollection, startSelect, endSelect)).isEmpty()))
         {

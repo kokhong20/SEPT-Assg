@@ -92,7 +92,7 @@ public class PASVGPanel extends JPanel
         setPreferredSize(size);
     }
 
-    public void drawToImage()
+    public final void drawToImage()
     {
         svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();

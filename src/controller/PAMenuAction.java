@@ -4,6 +4,7 @@
  */
 package controller;
 
+import gui.PADrawingItem;
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
@@ -25,6 +26,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,7 +35,7 @@ import model.PASVGGroup;
 import model.PASystem;
 
 /**
- * 
+ *
  * @author LiHao
  */
 public abstract class PAMenuAction extends AbstractAction
@@ -42,13 +44,11 @@ public abstract class PAMenuAction extends AbstractAction
     protected KeyStroke keyStroke;
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, String name)
     {
@@ -61,15 +61,12 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param event
-     *            event want to add
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param event event want to add
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, int event, String name)
     {
@@ -89,7 +86,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "New"
      */
     public static class NewFile extends PAMenuAction
@@ -141,7 +138,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Open..."
      */
     public static class OpenFile extends PAMenuAction
@@ -222,7 +219,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save"
      */
     public static class SaveFile extends PAMenuAction
@@ -240,21 +237,21 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save As..."
      */
     public static class SaveAsFile extends PAMenuAction
@@ -272,21 +269,21 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
 
     /**
-     * 
+     *
      * action class for menu item "Exit"
      */
     public static class ExitProgram extends PAMenuAction
@@ -316,28 +313,28 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class SelectAll extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
+        private PAMainFrame mainFrame;
 
-        public SelectAll(JDesktopPane parent)
+        public SelectAll(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_A, "Select All");
-            this.parent = parent;
+            this.mainFrame = mainFrame;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            JToggleButton virtualButton = new JToggleButton();
+            PASVGPanel drawPanel = mainFrame.svgPanel;
+            PASelectCursorAction selectAllAction = new PASelectCursorAction
+                    (drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction.elementTemp = drawPanel.elementCollection;
+            int panelWidth = drawPanel.getWidth();
+            int panelHeight = drawPanel.getHeight();
+            selectAllAction.startSelect = new Point(0, 0);
+            selectAllAction.endSelect = new Point(panelWidth, panelHeight);
+            selectAllAction.drawBoundsForElements();
+            drawPanel.repaint();
         }
 
     }
@@ -357,15 +354,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -385,15 +382,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -413,15 +410,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -441,15 +438,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -508,15 +505,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -536,15 +533,15 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             throw new UnsupportedOperationException("Not supported yet."); // To
-                                                                           // change
-                                                                           // body
-                                                                           // of
-                                                                           // generated
-                                                                           // methods,
-                                                                           // choose
-                                                                           // Tools
-                                                                           // |
-                                                                           // Templates.
+            // change
+            // body
+            // of
+            // generated
+            // methods,
+            // choose
+            // Tools
+            // |
+            // Templates.
         }
 
     }
@@ -580,7 +577,9 @@ public abstract class PAMenuAction extends AbstractAction
                     scale += 0.5;
                 }
                 else
+                {
                     scale += 0.1;
+                }
             }
             drawPanel.zoomInOutSVG(scale);
         }
@@ -612,7 +611,9 @@ public abstract class PAMenuAction extends AbstractAction
             DecimalFormat df = new DecimalFormat("##.#");
             scale = Double.parseDouble(df.format(scale));
             if (scale > 0.1)
+            {
                 scale -= 0.1;
+            }
             drawPanel.zoomInOutSVG(scale);
 
         }
@@ -746,9 +747,6 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class RemoveAction extends PAMenuAction
     {
-        private int keyEvent;
-        private String name;
-
         public RemoveAction(int keyEvent, String name)
         {
             super(keyEvent, name);
