@@ -92,6 +92,7 @@ public class PAFileChooserAction implements ActionListener
             }
             
             parent.add(svgDisplay);
+            svgDisplay.toFront();
 
             if (startMenu != null)
             {

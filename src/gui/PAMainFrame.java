@@ -183,6 +183,7 @@ public class PAMainFrame extends JInternalFrame
         layout.setVerticalGroup(vGroup);
 
         add(mainPanel);
+        
     }
 
     public JDesktopPane getParentView()
