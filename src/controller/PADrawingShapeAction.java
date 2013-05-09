@@ -53,7 +53,6 @@ public abstract class PADrawingShapeAction extends AbstractAction
         this.drawImage = drawPanel.svgImage;
         elementCollection = drawPanel.svgContainer.getSvgContainer();
         scale = drawPanel.getScale();
-        drawPanel.reDrawImage(scale);
     }
 
     public void setShapeAttributes()
@@ -69,6 +68,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        drawPanel.reDrawImage(scale);
         if (button.isSelected())
         {
             if ((PADrawingItem.buttonSelected != null) && (!PADrawingItem.buttonSelected.equals(button)))
@@ -76,7 +76,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
                 PADrawingItem.buttonSelected.setSelected(false);
                 PADrawingItem.buttonSelected.setBorder(null);
             }
-            
+
             button.setBorder(BorderFactory.createLineBorder(new Color(35, 192, 255, 100), 1));
             PADrawingItem.buttonSelected = button;
         }
