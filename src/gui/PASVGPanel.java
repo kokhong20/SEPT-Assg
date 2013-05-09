@@ -208,7 +208,8 @@ public class PASVGPanel extends JPanel
 
             }
         }
-
+        
+        g2d.dispose();
     }
 
     public Rectangle2D.Double makeRectangle(int x1, int y1, int x2, int y2)
