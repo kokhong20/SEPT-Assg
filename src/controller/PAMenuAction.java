@@ -4,7 +4,6 @@
  */
 package controller;
 
-import gui.PADrawingItem;
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
@@ -341,28 +340,29 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class DeselectAll extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
+        private PAMainFrame mainFrame;
 
-        public DeselectAll(JDesktopPane parent)
+        public DeselectAll(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
-            this.parent = parent;
+            this.mainFrame = mainFrame;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+            JToggleButton virtualButton = new JToggleButton();
+            PASVGPanel drawPanel = mainFrame.svgPanel;
+            PASelectCursorAction selectAllAction = new PASelectCursorAction
+                    (drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction.elementTemp.clear();
+            int panelWidth = drawPanel.getWidth();
+            int panelHeight = drawPanel.getHeight();
+            selectAllAction.startSelect = new Point(0, 0);
+            selectAllAction.endSelect = new Point(panelWidth, panelHeight);
+            selectAllAction.drawBoundsForElements();
+            drawPanel.drawToImage();
+            drawPanel.repaint();
         }
 
     }
@@ -750,6 +750,20 @@ public abstract class PAMenuAction extends AbstractAction
         public RemoveAction(int keyEvent, String name)
         {
             super(keyEvent, name);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+        }
+
+    }
+    
+    public static class RemoveEventAction extends PAMenuAction
+    {
+        public RemoveEventAction(int keyEvent, int event, String name)
+        {
+            super(keyEvent, event, name);
         }
 
         @Override
