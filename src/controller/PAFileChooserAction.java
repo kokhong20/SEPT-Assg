@@ -102,15 +102,12 @@ public class PAFileChooserAction implements ActionListener
 
             parent.add(svgDisplay);
             svgDisplay.toFront();
-
             
-//            if (startMenu != null)
-//            {
-//                PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
-//                parent.add(drawingKit);
-//                startMenu.setVisible(false);
-//                startMenu.dispose();
-//            }
+            if (startMenu != null)
+            {
+                startMenu.setVisible(false);
+                startMenu.dispose();
+            }
             
             for(int i=0;i<parent.getComponentCount();i++)
             {
