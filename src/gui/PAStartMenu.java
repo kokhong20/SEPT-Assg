@@ -4,8 +4,10 @@
  */
 package gui;
 
+import controller.PAMenuAction.ExitProgram;
 import controller.PAMenuAction.NewFile;
 import controller.PAMenuAction.OpenFile;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,12 +15,16 @@ import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+
 import model.PASystem;
 
 /**
@@ -52,9 +58,10 @@ public class PAStartMenu extends JInternalFrame
         mainPanel = setUpMainPanel();
         openFileButton = new JButton();
         newFileButton = new JButton();
+        setJMenuBar(setUpMenuBar());
     }
 
-    /**
+	/**
      *
      * draw Logo to Panel.
      *
@@ -82,6 +89,25 @@ public class PAStartMenu extends JInternalFrame
 
         };
     }
+
+    /**
+     * 
+     * creates a new JMenuBar with close Menu
+     * 
+     * @return JMenuBar
+     */
+    private JMenuBar setUpMenuBar()
+    {
+    	return new JMenuBar()
+    	{
+    		public JMenu add(JMenu c)
+    		{
+    			c = new JMenu("Close");
+    	        c.setAction(new ExitProgram(parent));
+				return c;
+    		}
+    	};
+	}
 
     /**
      *
