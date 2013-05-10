@@ -83,7 +83,7 @@ public abstract class PAMenuAction extends AbstractAction
         putValue(MNEMONIC_KEY, keyEvent);
         putValue(NAME, name);
     }
- 
+
     /**
      *
      * Constructor of Menu Action.
@@ -260,10 +260,10 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	/*
-        	 * Need to replace argument, doesnt prompt user, just save
-        	 */
-        	saveToFile("");
+            /*
+             * Need to replace argument, doesnt prompt user, just save
+             */
+            saveToFile("");
         }
 
     }
@@ -286,10 +286,10 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	/*
-        	 * Need to replace argument, prompt user file name first
-        	 */
-        	saveToFile("");
+            /*
+             * Need to replace argument, prompt user file name first
+             */
+            saveToFile("");
         }
 
     }
@@ -677,6 +677,7 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            PASVGElement selectedElement = PASelectCursorAction.selectedElement;
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
             LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
 
@@ -686,23 +687,36 @@ public abstract class PAMenuAction extends AbstractAction
                 LinkedList<PASVGElement> groupList = newGroup
                         .getGroupElementList();
                 mainList.addLast(newGroup);
+                mainList.removeAll(groupList);
 
                 for (int index = groupList.size() - 1; index >= 0; index--)
                 {
                     groupList.get(index).setGrouped(true);
                     groupList.get(index).setParentGroup(newGroup);
-
-                    for (int j = mainList.size() - 1; j >= 0; j--)
-                    {
-                        if (groupList.get(index) == mainList.get(j))
-                        {
-                            mainList.remove(j);
-                            break;
-                        }
-                    }
                 }
             }
 
+            if (selectedElement != null)
+            {
+                LinkedList<PASVGElement> selectedElementList = new LinkedList<>();
+                selectedElementList.add(selectedElement);
+                PASVGGroup newGroup = new PASVGGroup(selectedElementList);
+                mainList.addLast(newGroup);
+                mainList.remove(selectedElement);
+                LinkedList<PASVGElement> groupList = newGroup
+                        .getGroupElementList();
+                groupList.getFirst().setGrouped(true);
+                groupList.getFirst().setParentGroup(newGroup);
+            }
+            System.out.println(drawPanel.elementCollection.size());
+            for (int i = drawPanel.elementCollection.size() - 1; i >= 0; i--)
+            {
+                System.out.println(drawPanel.elementCollection.get(i));
+                if (drawPanel.elementCollection.get(i) instanceof PASVGGroup)
+                {
+                    System.out.println(((PASVGGroup) drawPanel.elementCollection.get(i)).getGroupElementList());
+                }
+            }
             drawPanel.drawToImage();
             drawPanel.repaint();
         }
@@ -789,19 +803,19 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
-	public void iterateList(Document doc, Element ele, LinkedList<PASVGElement> elements)
-	{
-		// TODO Auto-generated method stub
-		Iterator<PASVGElement> iterator = elements.iterator();
-		System.out.println("Parent : " + ele);
-		while(iterator.hasNext())
-		{
-			PASVGElement element = iterator.next();
-			System.out.println(element);
-			if(element instanceof PARectangle)
-			{                        
-				PARectangle saveRect = (PARectangle) element;
-			
+    public void iterateList(Document doc, Element ele, LinkedList<PASVGElement> elements)
+    {
+        // TODO Auto-generated method stub
+        Iterator<PASVGElement> iterator = elements.iterator();
+        System.out.println("Parent : " + ele);
+        while (iterator.hasNext())
+        {
+            PASVGElement element = iterator.next();
+            System.out.println(element);
+            if (element instanceof PARectangle)
+            {
+                PARectangle saveRect = (PARectangle) element;
+
                 Element rect = doc.createElement("rect");
                 rect.setAttribute("width", String.valueOf(saveRect.getWidth()));
                 rect.setAttribute("height", String.valueOf(saveRect.getHeight()));
@@ -812,94 +826,95 @@ public abstract class PAMenuAction extends AbstractAction
                 rect.setAttribute("stroke-width", String.valueOf(saveRect.getStrokeWidth()));
 
                 ele.appendChild(rect);
-			}
-			else if(element instanceof PACircle)
-			{
-				PACircle saveCircle = (PACircle) element;
+            }
+            else if (element instanceof PACircle)
+            {
+                PACircle saveCircle = (PACircle) element;
 
-				Element circle = doc.createElement("circle");
-				circle.setAttribute("cx", String.valueOf(saveCircle.getCx()));
-				circle.setAttribute("cy", String.valueOf(saveCircle.getCy()));
-				circle.setAttribute("r", String.valueOf(saveCircle.getR()));
-				circle.setAttribute("fill", saveCircle.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getFill().getRed() + "," + saveCircle.getFill().getGreen() + "," + saveCircle.getFill().getBlue()) + ")");
-				circle.setAttribute("stroke", saveCircle.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getStroke().getRed() + "," + saveCircle.getStroke().getGreen() + "," + saveCircle.getStroke().getBlue()) + ")");
-				circle.setAttribute("stroke-width", String.valueOf(saveCircle.getStrokeWidth()));
-				
-				ele.appendChild(circle);
-			}
-			else if(element instanceof PALine)
-			{
-				PALine saveLine = (PALine) element;
-				
-				Element line = doc.createElement("line");
-				line.setAttribute("x1", String.valueOf(saveLine.getX1()));
-				line.setAttribute("x2", String.valueOf(saveLine.getX2()));
-				line.setAttribute("y1", String.valueOf(saveLine.getY1()));
-				line.setAttribute("y2", String.valueOf(saveLine.getY2()));
-				line.setAttribute("stroke", saveLine.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveLine.getStroke().getRed() + "," + saveLine.getStroke().getGreen() + "," + saveLine.getStroke().getBlue()) + ")");
-				line.setAttribute("stroke-width", String.valueOf(saveLine.getStrokeWidth()));
-				
-				ele.appendChild(line);
-			}
-			else if(element instanceof PASVGGroup)
-			{
-				System.out.println("Entered");
-				
-				PASVGGroup saveGroup = (PASVGGroup) element;
-				
-				Element group = doc.createElement("g");
-				group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
-				group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
-				group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
-				
-				LinkedList<PASVGElement> groupElements = saveGroup.getGroupElementList();
-				
-				iterateList(doc, group, groupElements);
-				
-				ele.appendChild(group);
-			}
-		}
-	}
+                Element circle = doc.createElement("circle");
+                circle.setAttribute("cx", String.valueOf(saveCircle.getCx()));
+                circle.setAttribute("cy", String.valueOf(saveCircle.getCy()));
+                circle.setAttribute("r", String.valueOf(saveCircle.getR()));
+                circle.setAttribute("fill", saveCircle.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getFill().getRed() + "," + saveCircle.getFill().getGreen() + "," + saveCircle.getFill().getBlue()) + ")");
+                circle.setAttribute("stroke", saveCircle.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getStroke().getRed() + "," + saveCircle.getStroke().getGreen() + "," + saveCircle.getStroke().getBlue()) + ")");
+                circle.setAttribute("stroke-width", String.valueOf(saveCircle.getStrokeWidth()));
 
-	public void saveToFile(String filename)
-	{
-		// TODO Auto-generated method stub
+                ele.appendChild(circle);
+            }
+            else if (element instanceof PALine)
+            {
+                PALine saveLine = (PALine) element;
+
+                Element line = doc.createElement("line");
+                line.setAttribute("x1", String.valueOf(saveLine.getX1()));
+                line.setAttribute("x2", String.valueOf(saveLine.getX2()));
+                line.setAttribute("y1", String.valueOf(saveLine.getY1()));
+                line.setAttribute("y2", String.valueOf(saveLine.getY2()));
+                line.setAttribute("stroke", saveLine.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveLine.getStroke().getRed() + "," + saveLine.getStroke().getGreen() + "," + saveLine.getStroke().getBlue()) + ")");
+                line.setAttribute("stroke-width", String.valueOf(saveLine.getStrokeWidth()));
+
+                ele.appendChild(line);
+            }
+            else if (element instanceof PASVGGroup)
+            {
+                System.out.println("Entered");
+
+                PASVGGroup saveGroup = (PASVGGroup) element;
+
+                Element group = doc.createElement("g");
+                group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
+                group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
+                group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
+
+                LinkedList<PASVGElement> groupElements = saveGroup.getGroupElementList();
+
+                iterateList(doc, group, groupElements);
+
+                ele.appendChild(group);
+            }
+        }
+    }
+
+    public void saveToFile(String filename)
+    {
+        // TODO Auto-generated method stub
     	/*
-    	 * Testing PASVGContainer, need to get the container
-    	 */
-    	PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), new LinkedList<PASVGElement>());
-		PASVGTag svgTag = svgContainer.getSvgTag();
-		LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
-		
-    	try
-		{
-    		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+         * Testing PASVGContainer, need to get the container
+         */
+        PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), new LinkedList<PASVGElement>());
+        PASVGTag svgTag = svgContainer.getSvgTag();
+        LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
 
-			Document doc = docBuilder.newDocument();
-			
-			Element svg = doc.createElement("svg");
-			svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
-			svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
-			svg.setAttribute("fill", String.valueOf(svgTag.getFill()));
-			svg.setAttribute("stroke", String.valueOf(svgTag.getStroke()));
-			svg.setAttribute("stroke-width", String.valueOf(svgTag.getStrokeWidth()));
-			doc.appendChild(svg);
-			
-			iterateList(doc, svg, elements);
-			
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        try
+        {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            Document doc = docBuilder.newDocument();
+
+            Element svg = doc.createElement("svg");
+            svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
+            svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
+            svg.setAttribute("fill", String.valueOf(svgTag.getFill()));
+            svg.setAttribute("stroke", String.valueOf(svgTag.getStroke()));
+            svg.setAttribute("stroke-width", String.valueOf(svgTag.getStrokeWidth()));
+            doc.appendChild(svg);
+
+            iterateList(doc, svg, elements);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File(filename + ".svg"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
-		} 
-    	catch (ParserConfigurationException | TransformerException ex)
-		{
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-	}
+        }
+        catch (ParserConfigurationException | TransformerException ex)
+        {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+        }
+    }
+
 }
