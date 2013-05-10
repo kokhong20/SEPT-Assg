@@ -92,82 +92,159 @@ public enum PAColor implements PAAttributeConstant {
 	 * @param constant constant is return if error in setting color
 	 * @return a Color object
 	 */
-	public static Color setColor(String value, int constant) {
-		
+	public static Color setColor(String value, int constant)
+	{
 		value = value.toLowerCase();
+		try
+		{
+			if (value.startsWith("#") || value.startsWith("0x"))
+			{
+				if (value.length() > 6)
+					return Color.decode(value);
+				else
+				{
+					return Color.decode("#"
+							+ value.substring(value.length() - 3,
+									value.length() - 2)
+							+ value.substring(value.length() - 3,
+									value.length() - 2)
+							+ value.substring(value.length() - 2,
+									value.length() - 1)
+							+ value.substring(value.length() - 2,
+									value.length() - 1)
+							+ value.substring(value.length() - 1)
+							+ value.substring(value.length() - 1));
+				}
+			} else if (value.startsWith("rgba"))
+			{
+				value = value.replace(" ", "");
+				value = value.replace("rgba(", "");
+				value = value.replace(")", "");
 
-		if(value.startsWith("#") || value.startsWith("0x"))
-		{
-			if(value.length() > 6)
-				return Color.decode(value);
-			else
-			{
-				return Color.decode("#" + value.substring(value.length() - 3, value.length() - 2) + value.substring(value.length() - 3, value.length() - 2) + 
-						value.substring(value.length() - 2, value.length() - 1) + value.substring(value.length() - 2, value.length() - 1) +
-						value.substring(value.length() - 1) + value.substring(value.length() - 1));
-			}
-		}
-		else if(value.startsWith("rgb"))
-		{
-			value = value.replace(" ", "");
-			value = value.replace("rgb(", "");
-			value = value.replace(")", "");
-			
-			if(value.contains("%"))
-			{
-				value = value.replace("%", "");
-				String[] rgbString = value.split(",");
-				int[] rgb = {
-					Integer.parseInt(rgbString[0]),
-					Integer.parseInt(rgbString[1]),
-					Integer.parseInt(rgbString[2])
-				};
-					
-				for(int i = 0; i < rgb.length; i++)
+				if (value.contains("%"))
 				{
-					if(rgb[i] < 0)
-						rgb[i] = 0;
-					
-					if(rgb[i] > 100)
-						rgb[i] = 100;
-				}
-				
-				return new Color((int) Math.round(rgb[0] * 2.55), (int) Math.round(rgb[1] * 2.55), (int) Math.round(rgb[2] * 2.55), 255);
-			}
-			else
-			{
-				String[] rgbString = value.split(",");
-				int[] rgb = {
-					Integer.parseInt(rgbString[0]),
-					Integer.parseInt(rgbString[1]),
-					Integer.parseInt(rgbString[2])
-				};
-					
-				for(int i = 0; i < rgb.length; i++)
+					value = value.replace("%", "");
+					String[] rgbaString = value.split(",");
+					int[] rgba = { Integer.parseInt(rgbaString[0]),
+							Integer.parseInt(rgbaString[1]),
+							Integer.parseInt(rgbaString[2]),
+							Integer.parseInt(rgbaString[3]) };
+
+					for (int i = 0; i < rgba.length; i++)
+					{
+						if (rgba[i] < 0)
+							rgba[i] = 0;
+
+						if (rgba[i] > 100)
+							rgba[i] = 100;
+					}
+
+					if (rgba[3] == 0)
+						return PAColor.none.getColor();
+
+					return new Color((int) Math.round(rgba[0] * 2.55),
+							(int) Math.round(rgba[1] * 2.55),
+							(int) Math.round(rgba[2] * 2.55), 255);
+				} else
 				{
-					if(rgb[i] < 0)
-						rgb[i] = 0;
-					
-					if(rgb[i] > 255)
-						rgb[i] = 255;
+					String[] rgbaString = value.split(",");
+					int[] rgba = { Integer.parseInt(rgbaString[0]),
+							Integer.parseInt(rgbaString[1]),
+							Integer.parseInt(rgbaString[2]),
+							Integer.parseInt(rgbaString[3]) };
+
+					for (int i = 0; i < rgba.length; i++)
+					{
+						if (rgba[i] < 0)
+							rgba[i] = 0;
+
+						if (rgba[i] > 100)
+							rgba[i] = 100;
+					}
+
+					for (int i = 0; i < rgba.length; i++)
+					{
+						if (rgba[i] < 0)
+							rgba[i] = 0;
+
+						if (rgba[i] > 255)
+							rgba[i] = 255;
+					}
+
+					if (rgba[3] == 0)
+						return PAColor.none.getColor();
+
+					return new Color(rgba[0], rgba[1], rgba[2]);
 				}
-				return new Color(rgb[0], rgb[1], rgb[2]);
-			}
-		}
-		else
-		{
-			for (PAColor c : PAColor.values())
-				if(c.name().equals(value))
-					return c.getColor();
-	
-			switch(constant)
+			} else if (value.startsWith("rgb"))
 			{
+				value = value.replace(" ", "");
+				value = value.replace("rgb(", "");
+				value = value.replace(")", "");
+
+				if (value.contains("%"))
+				{
+					value = value.replace("%", "");
+					String[] rgbString = value.split(",");
+					int[] rgb = { Integer.parseInt(rgbString[0]),
+							Integer.parseInt(rgbString[1]),
+							Integer.parseInt(rgbString[2]) };
+
+					for (int i = 0; i < rgb.length; i++)
+					{
+						if (rgb[i] < 0)
+							rgb[i] = 0;
+
+						if (rgb[i] > 100)
+							rgb[i] = 100;
+					}
+
+					return new Color((int) Math.round(rgb[0] * 2.55),
+							(int) Math.round(rgb[1] * 2.55),
+							(int) Math.round(rgb[2] * 2.55), 255);
+				} else
+				{
+					String[] rgbString = value.split(",");
+					int[] rgb = { Integer.parseInt(rgbString[0]),
+							Integer.parseInt(rgbString[1]),
+							Integer.parseInt(rgbString[2]) };
+
+					for (int i = 0; i < rgb.length; i++)
+					{
+						if (rgb[i] < 0)
+							rgb[i] = 0;
+
+						if (rgb[i] > 255)
+							rgb[i] = 255;
+					}
+					return new Color(rgb[0], rgb[1], rgb[2]);
+				}
+			} else
+			{
+				for (PAColor c : PAColor.values())
+					if (c.name().equals(value))
+						return c.getColor();
+
+				switch (constant)
+				{
 				case FILL:
 					return DEFAULT_FILL;
 				case STROKE:
 					return DEFAULT_STROKE;
 				default:
 					return DEFAULT_STROKE;
+				}
+			}
+		} catch (NumberFormatException nfe)
+		{
+			switch (constant)
+			{
+			case FILL:
+				return DEFAULT_FILL;
+			case STROKE:
+				return DEFAULT_STROKE;
+			default:
+				return DEFAULT_STROKE;
 			}
 		}
 	}
