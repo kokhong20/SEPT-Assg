@@ -85,6 +85,7 @@ public class PAFileChooserAction implements ActionListener
 
             String fileName = selectedFile.getName();
             Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+            boolean check = false;
 			if(svgDoc !=null)
 			{
             PASVGContainer svgContainer = setUpContainer(svgDoc);
@@ -102,12 +103,26 @@ public class PAFileChooserAction implements ActionListener
             parent.add(svgDisplay);
             svgDisplay.toFront();
 
-            if (startMenu != null)
+            
+//            if (startMenu != null)
+//            {
+//                PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+//                parent.add(drawingKit);
+//                startMenu.setVisible(false);
+//                startMenu.dispose();
+//            }
+            
+            for(int i=0;i<parent.getComponentCount();i++)
+            {
+                if(parent.getComponent(i) instanceof PADrawingKit)
+                {
+                    check = true;
+                }
+            }
+            if(check == false)
             {
                 PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
                 parent.add(drawingKit);
-                startMenu.setVisible(false);
-                startMenu.dispose();
             }
 
         }
