@@ -48,6 +48,7 @@ public class PARootView extends JFrame
         if(args.length !=0)
         {
             fileName = args[0];
+            
             init();
             cust();
         }
@@ -81,9 +82,15 @@ public class PARootView extends JFrame
         menuBar = new PAMenuBar(rootView);
         PAFileChooserAction cmd = new PAFileChooserAction(rootView, fileName);
         File cmdFile = new File(fileName);
-        PASVGContainer svgContainer = cmd.setUpContainer(cmdFile);
+        Document svgDoc = PASVGImport.processFiletoDoc(cmdFile);
+        if(svgDoc !=null)
+        {
+        PASVGContainer svgContainer = cmd.setUpContainer(svgDoc);
         PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer, fileName);
         rootView.add(svgDisplay);
+        PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+        rootView.add(drawingKit);
+        }
     }
     public void cust()
     {

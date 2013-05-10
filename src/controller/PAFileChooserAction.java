@@ -82,8 +82,12 @@ public class PAFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
-            fileName = selectedFile.getName();
-            PASVGContainer svgContainer = setUpContainer(selectedFile);
+
+            String fileName = selectedFile.getName();
+            Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+			if(svgDoc !=null)
+			{
+            PASVGContainer svgContainer = setUpContainer(svgDoc);
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
 
             try
@@ -112,27 +116,28 @@ public class PAFileChooserAction implements ActionListener
         frame.setVisible(false);
         frame.dispose();
         PAMenuAction.OpenFile.fcInternal = null;
+		}
     }
 
-    public PASVGContainer setUpContainer(File selectedFile)
+
+
+    
+    public PASVGContainer setUpContainer(Document svgDoc)
     {
-        if (selectedFile != null)
-        {
-            svgDoc = PASVGImport.processFiletoDoc(selectedFile);
-            if (svgDoc != null)
-            {
-                Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
-                PASVGTag svgTag = new PASVGTag(svgNode);
-                svgWidth = (int) svgTag.getWidth();
-                svgHeight = (int) svgTag.getHeight();
-                LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
-                PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
-                return svgContainer;
-            }
-        }
+        
 
-        return null;
+
+        Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
+        PASVGTag svgTag = new PASVGTag(svgNode);
+        int svgWidth = (int) svgTag.getWidth();
+        int svgHeight = (int) svgTag.getHeight();
+        LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
+        PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+        return svgContainer;
+
+
 
     }
-
 }
+
+
