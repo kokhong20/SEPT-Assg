@@ -8,18 +8,24 @@ import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
+
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.LinkedList;
+
 import javax.swing.AbstractAction;
+
 import static javax.swing.Action.ACCELERATOR_KEY;
 import static javax.swing.Action.MNEMONIC_KEY;
 import static javax.swing.Action.NAME;
+
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
@@ -29,12 +35,31 @@ import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import model.PASVGContainer;
 import model.PASVGElement;
 import model.PASVGGroup;
+import model.PARectangle;
+import model.PALine;
+import model.PACircle;
+import model.PASVGTag;
 import model.PASystem;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
- * 
+ *
  * @author LiHao
  */
 public abstract class PAMenuAction extends AbstractAction
@@ -43,13 +68,11 @@ public abstract class PAMenuAction extends AbstractAction
     protected KeyStroke keyStroke;
 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, String name)
     {
@@ -60,17 +83,14 @@ public abstract class PAMenuAction extends AbstractAction
         putValue(MNEMONIC_KEY, keyEvent);
         putValue(NAME, name);
     }
-
+ 
     /**
-     * 
+     *
      * Constructor of Menu Action.
-     * 
-     * @param keyEvent
-     *            keyEvent want to use
-     * @param event
-     *            event want to add
-     * @param name
-     *            menu item's name
+     *
+     * @param keyEvent keyEvent want to use
+     * @param event event want to add
+     * @param name menu item's name
      */
     public PAMenuAction(int keyEvent, int event, String name)
     {
@@ -90,7 +110,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "New"
      */
     public static class NewFile extends PAMenuAction
@@ -142,7 +162,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Open..."
      */
     public static class OpenFile extends PAMenuAction
@@ -223,7 +243,7 @@ public abstract class PAMenuAction extends AbstractAction
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save"
      */
     public static class SaveFile extends PAMenuAction
@@ -240,22 +260,16 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+        	/*
+        	 * Need to replace argument, doesnt prompt user, just save
+        	 */
+        	saveToFile("");
         }
 
     }
 
     /**
-     * 
+     *
      * action class for menu item "Save As..."
      */
     public static class SaveAsFile extends PAMenuAction
@@ -272,22 +286,16 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+        	/*
+        	 * Need to replace argument, prompt user file name first
+        	 */
+        	saveToFile("");
         }
 
     }
 
     /**
-     * 
+     *
      * action class for menu item "Exit"
      */
     public static class ExitProgram extends PAMenuAction
@@ -359,8 +367,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             JToggleButton virtualButton = new JToggleButton();
             PASVGPanel drawPanel = mainFrame.svgPanel;
-            PASelectCursorAction selectAllAction = new PASelectCursorAction
-                    (drawPanel, virtualButton, mainFrame.attributeBar);
+            PASelectCursorAction selectAllAction = new PASelectCursorAction(drawPanel, virtualButton, mainFrame.attributeBar);
             PASelectCursorAction.elementTemp.clear();
             int panelWidth = drawPanel.getWidth();
             int panelHeight = drawPanel.getHeight();
@@ -481,7 +488,7 @@ public abstract class PAMenuAction extends AbstractAction
                 drawPanel.drawToImage();
                 drawPanel.repaint();
             }
-            
+
             if (selectedElement != null)
             {
                 mainList.remove(selectedElement);
@@ -615,9 +622,13 @@ public abstract class PAMenuAction extends AbstractAction
             if (scale > 0.1)
             {
                 if (scale > 2)
+                {
                     scale -= 0.5;
+                }
                 else
+                {
                     scale -= 0.1;
+                }
             }
             drawPanel.zoomInOutSVG(scale);
 
@@ -763,7 +774,7 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
     public static class RemoveEventAction extends PAMenuAction
     {
         public RemoveEventAction(int keyEvent, int event, String name)
@@ -777,4 +788,118 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
+
+	public void iterateList(Document doc, Element ele, LinkedList<PASVGElement> elements)
+	{
+		// TODO Auto-generated method stub
+		Iterator<PASVGElement> iterator = elements.iterator();
+		System.out.println("Parent : " + ele);
+		while(iterator.hasNext())
+		{
+			PASVGElement element = iterator.next();
+			System.out.println(element);
+			if(element instanceof PARectangle)
+			{                        
+				PARectangle saveRect = (PARectangle) element;
+			
+                Element rect = doc.createElement("rect");
+                rect.setAttribute("width", String.valueOf(saveRect.getWidth()));
+                rect.setAttribute("height", String.valueOf(saveRect.getHeight()));
+                rect.setAttribute("x", String.valueOf(saveRect.getX()));
+                rect.setAttribute("y", String.valueOf(saveRect.getY()));
+                rect.setAttribute("fill", saveRect.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveRect.getFill().getRed() + "," + saveRect.getFill().getGreen() + "," + saveRect.getFill().getBlue()) + ")");
+                rect.setAttribute("stroke", saveRect.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveRect.getStroke().getRed() + "," + saveRect.getStroke().getGreen() + "," + saveRect.getStroke().getBlue()) + ")");
+                rect.setAttribute("stroke-width", String.valueOf(saveRect.getStrokeWidth()));
+
+                ele.appendChild(rect);
+			}
+			else if(element instanceof PACircle)
+			{
+				PACircle saveCircle = (PACircle) element;
+
+				Element circle = doc.createElement("circle");
+				circle.setAttribute("cx", String.valueOf(saveCircle.getCx()));
+				circle.setAttribute("cy", String.valueOf(saveCircle.getCy()));
+				circle.setAttribute("r", String.valueOf(saveCircle.getR()));
+				circle.setAttribute("fill", saveCircle.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getFill().getRed() + "," + saveCircle.getFill().getGreen() + "," + saveCircle.getFill().getBlue()) + ")");
+				circle.setAttribute("stroke", saveCircle.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveCircle.getStroke().getRed() + "," + saveCircle.getStroke().getGreen() + "," + saveCircle.getStroke().getBlue()) + ")");
+				circle.setAttribute("stroke-width", String.valueOf(saveCircle.getStrokeWidth()));
+				
+				ele.appendChild(circle);
+			}
+			else if(element instanceof PALine)
+			{
+				PALine saveLine = (PALine) element;
+				
+				Element line = doc.createElement("line");
+				line.setAttribute("x1", String.valueOf(saveLine.getX1()));
+				line.setAttribute("x2", String.valueOf(saveLine.getX2()));
+				line.setAttribute("y1", String.valueOf(saveLine.getY1()));
+				line.setAttribute("y2", String.valueOf(saveLine.getY2()));
+				line.setAttribute("stroke", saveLine.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveLine.getStroke().getRed() + "," + saveLine.getStroke().getGreen() + "," + saveLine.getStroke().getBlue()) + ")");
+				line.setAttribute("stroke-width", String.valueOf(saveLine.getStrokeWidth()));
+				
+				ele.appendChild(line);
+			}
+			else if(element instanceof PASVGGroup)
+			{
+				System.out.println("Entered");
+				
+				PASVGGroup saveGroup = (PASVGGroup) element;
+				
+				Element group = doc.createElement("g");
+				group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
+				group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
+				group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
+				
+				LinkedList<PASVGElement> groupElements = saveGroup.getGroupElementList();
+				
+				iterateList(doc, group, groupElements);
+				
+				ele.appendChild(group);
+			}
+		}
+	}
+
+	public void saveToFile(String filename)
+	{
+		// TODO Auto-generated method stub
+    	/*
+    	 * Testing PASVGContainer, need to get the container
+    	 */
+    	PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), new LinkedList<PASVGElement>());
+		PASVGTag svgTag = svgContainer.getSvgTag();
+		LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
+		
+    	try
+		{
+    		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+			Document doc = docBuilder.newDocument();
+			
+			Element svg = doc.createElement("svg");
+			svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
+			svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
+			svg.setAttribute("fill", String.valueOf(svgTag.getFill()));
+			svg.setAttribute("stroke", String.valueOf(svgTag.getStroke()));
+			svg.setAttribute("stroke-width", String.valueOf(svgTag.getStrokeWidth()));
+			doc.appendChild(svg);
+			
+			iterateList(doc, svg, elements);
+			
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(filename + ".svg"));
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            transformer.transform(source, result);
+		} 
+    	catch (ParserConfigurationException | TransformerException ex)
+		{
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+	}
 }
