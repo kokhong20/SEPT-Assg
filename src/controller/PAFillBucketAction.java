@@ -4,7 +4,6 @@
  */
 package controller;
 
-import static controller.PASelectCursorAction.selectedElement;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Cursor;
@@ -26,6 +25,7 @@ import model.PASVGGroup;
 public class PAFillBucketAction extends PADrawingShapeAction
 {
     int elementIndex;
+    PASVGElement selectedElement;
 
     public PAFillBucketAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {

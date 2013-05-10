@@ -31,17 +31,15 @@ import java.awt.event.MouseEvent;
  */
 public class PASelectCursorAction extends PADrawingShapeAction
 {
-    boolean isResize;
-    int elementIndex, changeX, changeY;
-    double pointX, pointY;
-    static PASVGElement selectedElement;
-    Graphics2D g2D;
-    Rectangle2D handleRectangle;
-    Line2D handleLine;
-    PALine selectedLine;
-    Point initialMouse, startSelect, endSelect, resizeStart;
-    static PASVGGroup headGroup;
-    static LinkedList<PASVGElement> elementTemp;
+    public static LinkedList<PASVGElement> elementTemp;
+    private boolean isResize;
+    private int elementIndex, changeX, changeY;
+    private double pointX, pointY;
+    private Graphics2D g2D;
+    private Rectangle2D handleRectangle;
+    private Line2D handleLine;
+    private PALine selectedLine;
+    protected Point initialMouse, startSelect, endSelect, resizeStart;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
@@ -59,9 +57,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseMoved(MouseEvent e)
             {
-                if ((selectedElement != null) && (!selectedElement.isGrouped()))
+                if ((elementTemp != null) && (elementTemp.size() == 1))
                 {
-                    detectElementBounds(selectedElement, e.getX(), e.getY());
+                    detectElementBounds(elementTemp.getFirst(), e.getX(), e.getY());
                 }
 
                 drawPanel.repaint();
@@ -83,8 +81,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 }
 
                 // For panning object use
-                if ((!elementTemp.isEmpty())
-                        || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
+                if (!elementTemp.isEmpty())
+                // || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                 {
                     drawPanel.reDrawImage(scale);
                     initialMouse = new Point(e.getX(), e.getY());
@@ -128,72 +126,18 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     return;
                 }
 
-                // If Single object is selected
-                if ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null)
-                {
-                    drawBoundsForElement();
-                }
-                // Multiple object is selected
-                else
-                {
-                    drawBoundsForElements();
-                    startDrag = null;
-                    endDrag = null;
-                    startSelect = null;
-                    endSelect = null;
-                }
-
+                drawBoundsForElements();
+                startDrag = null;
+                endDrag = null;
+                startSelect = null;
+                endSelect = null;
                 drawPanel.repaint();
-
             }
 
             @Override
             public void mouseDragged(MouseEvent e)
             {
-                // For panning single object
-                if ((selectedElement != null) && (!isResize))
-                {
-                    //selectedElement is not grouped
-                    if (!selectedElement.isGrouped())
-                    {
-                        if (selectedElement instanceof PARectangle)
-                        {
-                            PARectangle rect = ((PARectangle) selectedElement);
-                            rect.setX(rect.getX() + changeX);
-                            rect.setY(rect.getY() + changeY);
-
-                        }
-                        else if (selectedElement instanceof PACircle)
-                        {
-                            PACircle circle = ((PACircle) selectedElement);
-                            circle.setCx(circle.getCx() + changeX);
-                            circle.setCy(circle.getCy() + changeY);
-                        }
-                        else if (selectedElement instanceof PALine)
-                        {
-                            PALine line = ((PALine) selectedElement);
-                            line.setX1(line.getX1() + changeX);
-                            line.setX2(line.getX2() + changeX);
-                            line.setY1(line.getY1() + changeY);
-                            line.setY2(line.getY2() + changeY);
-                        }
-
-                        overWriteListElement(selectedElement, elementCollection);
-                    }
-                    // selectedElement is grouped
-                    else
-                    {
-                        moveAllGroupElements(headGroup);
-                        drawPanel.reDrawImage(scale);
-                    }
-
-                    changeX = e.getX() - initialMouse.x;
-                    changeY = e.getY() - initialMouse.y;
-                    initialMouse = new Point(e.getX(), e.getY());
-
-                }
-                // For moving multiple object
-                else if (!elementTemp.isEmpty())
+                if (!elementTemp.isEmpty() && !isResize)
                 {
                     for (int index = elementTemp.size() - 1; index >= 0; index--)
                     {
@@ -229,22 +173,24 @@ public class PASelectCursorAction extends PADrawingShapeAction
                                     rectList.setY(rect.getY() + changeY);
                                     rectList.setRectangle2D();
                                 }
+                                else if (element instanceof PASVGGroup)
+                                {
+                                    PASVGGroup group = (PASVGGroup) element;
+                                    moveAllGroupElements(group);
+                                }
                                 drawPanel.reDrawImage(scale);
                             }
                         }
                     }
 
-
                     changeX = e.getX() - initialMouse.x;
                     changeY = e.getY() - initialMouse.y;
-
                     initialMouse = new Point(e.getX(), e.getY());
-
                 }
                 // For Resize use
                 else if (isResize)
                 {
-                    resizeElement(selectedElement, changeX, changeY);
+                    resizeElement(elementTemp.getFirst(), changeX, changeY);
                     changeX = e.getX() - resizeStart.x;
                     changeY = e.getY() - resizeStart.y;
 
@@ -258,9 +204,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 }
 
                 drawPanel.repaint();
-
             }
-
         };
 
         removeAllActions();
@@ -270,7 +214,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             drawPanel.addMouseListener(mouseAdapter);
             drawPanel.addMouseMotionListener(mouseAdapter);
         }
-
     }
 
     private void drawRectHighlight(PARectangle rectangle)
@@ -345,176 +288,123 @@ public class PASelectCursorAction extends PADrawingShapeAction
         g2D.draw(rect4);
     }
 
-    private PASVGElement iterateContainer(LinkedList<PASVGElement> elementList, int x, int y)
-    {
-        scale = drawPanel.getScale();
-        for (int index = elementList.size() - 1; index >= 0; index--)
-        {
-            PASVGElement element = elementList.get(index);
-
-            if (element instanceof PALine)
-            {
-                PALine line = ((PALine) element);
-                line.setHandleArray(scale);
-                Rectangle2D.Double lineRectangle = new Rectangle2D.Double((double) x - 3.0, (double) y - 3.0, 6.0, 6.0);
-                if (line.getLine2D().intersects(lineRectangle))
-                {
-                    elementIndex = index;
-                    return element;
-                }
-            }
-            else if (element instanceof PACircle)
-            {
-                PACircle ellipse = ((PACircle) element);
-                ellipse.setHandleArray(scale);
-                if (ellipse.getEllipse2D().contains(x, y))
-                {
-                    elementIndex = index;
-                    return element;
-                }
-            }
-            else if (element instanceof PARectangle)
-            {
-                PARectangle rect = ((PARectangle) element);
-                rect.setHandleArray(scale);
-                if (rect.getRectangle2D().contains(x, y))
-                {
-                    elementIndex = index;
-                    return element;
-                }
-            }
-            else if (element instanceof PASVGGroup)
-            {
-                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
-                PASVGElement ele;
-                if ((ele = iterateContainer(groupList, x, y)) != null)
-                {
-                    elementIndex = index;
-                    return element;
-                }
-            }
-        }
-
-        return null;
-    }
-
     private LinkedList<PASVGElement> iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
     {
-        System.out.println("start  :"+start);
-        System.out.println("end  :"+end);
+        System.out.println("start  :" + start);
+        System.out.println("end  :" + end);
         LinkedList<PASVGElement> elementArray = new LinkedList<>();
         Rectangle2D.Double rectPoint = drawPanel.makeRectangle(start.x, start.y, end.x, end.y);
         scale = drawPanel.getScale();
-        
-        for (int index = elementList.size() - 1; index >= 0; index--)
-        {
-            PASVGElement element = elementList.get(index);
 
-            if (element instanceof PALine)
+        if (start == end)
+        {
+            scale = drawPanel.getScale();
+            for (int index = elementList.size() - 1; index >= 0; index--)
             {
-                PALine line = ((PALine) element);
-                line.setHandleArray(scale);
-                if (rectPoint.contains(line.getLine2D().getBounds2D()))
+                PASVGElement element = elementList.get(index);
+
+                if (element instanceof PALine)
                 {
-                    if (!elementArray.contains(element))
+                    PALine line = ((PALine) element);
+                    line.setHandleArray(scale);
+                    Rectangle2D.Double lineRectangle = new Rectangle2D.Double((double) start.x - 3.0, (double) start.y - 3.0, 6.0, 6.0);
+                    if (line.getLine2D().intersects(lineRectangle))
+                    {
+                        elementIndex = index;
+                        elementArray.add(element);
+                    }
+                }
+                else if (element instanceof PACircle)
+                {
+                    PACircle ellipse = ((PACircle) element);
+                    ellipse.setHandleArray(scale);
+                    if (ellipse.getEllipse2D().contains(start.x, start.y))
+                    {
+                        elementIndex = index;
+                        elementArray.add(element);
+                    }
+                }
+                else if (element instanceof PARectangle)
+                {
+                    PARectangle rect = ((PARectangle) element);
+                    rect.setHandleArray(scale);
+                    if (rect.getRectangle2D().contains(start.x, start.y))
+                    {
+                        elementIndex = index;
+                        elementArray.add(element);
+                    }
+                }
+                else if (element instanceof PASVGGroup)
+                {
+                    PASVGGroup group = (PASVGGroup) element;
+                    double[] tempXY = getTempPoint(element);
+                    double[] gb = getGroupBounds(group, tempXY[0], tempXY[1]);
+                    int[] groupBounds =
+                    {
+                        (int) gb[0], (int) gb[1], (int) gb[2], (int) gb[3]
+                    };
+                    Rectangle2D.Double rectGroup = drawPanel.makeRectangle(groupBounds[0], groupBounds[1], groupBounds[2], groupBounds[3]);
+
+                    if (rectGroup.contains(start.x, start.y))
                     {
                         elementArray.add(element);
                     }
                 }
             }
-            else if (element instanceof PACircle)
+        }
+        else
+        {
+            for (int index = elementList.size() - 1; index >= 0; index--)
             {
-                PACircle ellipse = ((PACircle) element);
-                ellipse.setHandleArray(scale);
-                if (rectPoint.contains(ellipse.getEllipse2D().getBounds2D()))
+                PASVGElement element = elementList.get(index);
+
+                if (element instanceof PALine)
                 {
-                    if (!elementArray.contains(element))
+                    PALine line = ((PALine) element);
+                    line.setHandleArray(scale);
+                    if (rectPoint.contains(line.getLine2D().getBounds2D()))
                     {
                         elementArray.add(element);
                     }
                 }
-            }
-            else if (element instanceof PARectangle)
-            {
-                PARectangle rect = ((PARectangle) element);
-                rect.setHandleArray(scale);
-                if (rectPoint.contains(rect.getRectangle2D()))
+                else if (element instanceof PACircle)
                 {
-                    if (!elementArray.contains(element))
+                    PACircle ellipse = ((PACircle) element);
+                    ellipse.setHandleArray(scale);
+                    if (rectPoint.contains(ellipse.getEllipse2D().getBounds2D()))
                     {
                         elementArray.add(element);
                     }
                 }
-            }
-            else if (element instanceof PASVGGroup)
-            {
-//                System.out.println("detect group .....");
-//                LinkedList<PASVGElement> groupList = ((PASVGGroup) element).getGroupElementList();
-//                LinkedList<PASVGElement> ele;
-//                if ((ele = iterateContainer(groupList, start, end)) != null)
-//                {
-////                    for (int i = ele.size() - 1; i >= 0; i--)
-////                    {
-////                        PASVGElement elementInsideList = ele.get(i);
-////                        elementArray.add(elementInsideList);
-////                    }
-//                    elementArray.add(element);
-//                }
-                PASVGGroup group = ((PASVGGroup)element);
-                if (checkGroupContain(group, rectPoint))
+                else if (element instanceof PARectangle)
                 {
-                    elementArray.add(element);
+                    PARectangle rect = ((PARectangle) element);
+                    rect.setHandleArray(scale);
+                    if (rectPoint.contains(rect.getRectangle2D()))
+                    {
+                        elementArray.add(element);
+                    }
+                }
+                else if (element instanceof PASVGGroup)
+                {
+                    PASVGGroup group = (PASVGGroup) element;
+                    double[] tempXY = getTempPoint(element);
+                    double[] gb = getGroupBounds(group, tempXY[0], tempXY[1]);
+                    int[] groupBounds =
+                    {
+                        (int) gb[0], (int) gb[1], (int) gb[2], (int) gb[3]
+                    };
+                    Rectangle2D.Double rectGroup = drawPanel.makeRectangle(groupBounds[0], groupBounds[1], groupBounds[2], groupBounds[3]);
+
+                    if (rectPoint.contains(rectGroup))
+                    {
+                        elementArray.add(element);
+                    }
                 }
             }
         }
 
         return elementArray;
-    }
-    
-    private boolean checkGroupContain(PASVGGroup group, Rectangle2D rectPoint)
-    {
-        LinkedList<PASVGElement> groupList = group.getGroupElementList();
-        scale = drawPanel.getScale();
-        
-        for (int index = groupList.size() - 1; index >= 0; index--)
-        {
-            PASVGElement element = groupList.get(index);
-            
-            if (element instanceof PALine)
-            {
-                PALine line = ((PALine) element);
-                line.setHandleArray(scale);
-                if (rectPoint.contains(line.getLine2D().getBounds2D()))
-                {
-                    return true;
-                }
-            }
-            else if (element instanceof PACircle)
-            {
-                PACircle ellipse = ((PACircle) element);
-                ellipse.setHandleArray(scale);
-                if (rectPoint.contains(ellipse.getEllipse2D().getBounds2D()))
-                {
-                    return true;
-                }
-            }
-            else if (element instanceof PARectangle)
-            {
-                PARectangle rect = ((PARectangle) element);
-                rect.setHandleArray(scale);
-                if (rectPoint.contains(rect.getRectangle2D()))
-                {
-                    return true;
-                }
-            }
-            else if (element instanceof PASVGGroup)
-            {
-                PASVGGroup groupObj = ((PASVGGroup) element);
-                return checkGroupContain(groupObj, rectPoint);
-            }
-        }
-        
-        return false;
     }
 
     private void overWriteListElement(PASVGElement elementItem, LinkedList<PASVGElement> elementList)
@@ -558,62 +448,23 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
-    private void drawBoundsForElement()
-    {
-        g2D = (Graphics2D) drawPanel.svgImage.createGraphics();
-
-        drawBoundsChecking(selectedElement);
-        System.out.println("haha");
-    }
-
     protected void drawBoundsForElements()
     {
-        System.out.println("haha2");
-        System.out.println(elementCollection);
         elementTemp.clear();
+
         if (!((elementTemp = iterateContainer(elementCollection, startSelect, endSelect)).isEmpty()))
         {
             for (int index = elementTemp.size() - 1; index >= 0; index--)
             {
                 PASVGElement element = elementTemp.get(index);
                 g2D = drawPanel.svgImage.createGraphics();
-
                 drawBoundsChecking(element);
             }
         }
-
     }
 
     private void drawBoundsChecking(PASVGElement element)
     {
-//        if (element.isGrouped())
-//        {
-//            double tempX = 0, tempY = 0;
-//            headGroup = getHeadGroup(element);
-//
-//            if (element instanceof PARectangle)
-//            {
-//                PARectangle rect = ((PARectangle) element);
-//                tempX = rect.getX();
-//                tempY = rect.getY();
-//            }
-//            else if (element instanceof PACircle)
-//            {
-//                PACircle circle = ((PACircle) element);
-//                tempX = circle.getCx();
-//                tempY = circle.getCy();
-//            }
-//            else if (element instanceof PALine)
-//            {
-//                PALine line = ((PALine) element);
-//                tempX = line.getX1();
-//                tempY = line.getY1();
-//            }
-//            double[] arrayOfXY = getGroupBounds(headGroup, tempX, tempY);
-//            drawGroupHighlight(arrayOfXY);
-//        }
-//        else
-//        {
         if (element instanceof PARectangle)
         {
             drawRectHighlight(((PARectangle) element));
@@ -629,15 +480,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else if (element instanceof PASVGGroup)
         {
-            PASVGGroup group = (PASVGGroup)element;
-            double [] pointXY = getTempPoint(element);
-            double [] groupBounds = getGroupBounds(group, pointXY[0], pointXY[1]);
+            PASVGGroup group = (PASVGGroup) element;
+            double[] pointXY = getTempPoint(element);
+            double[] groupBounds = getGroupBounds(group, pointXY[0], pointXY[1]);
             drawGroupHighlight(groupBounds);
-            System.out.println("group");
         }
-//        }
     }
-    
+
     private double[] getTempPoint(PASVGElement element)
     {
         double tempX = 0, tempY = 0;
@@ -666,20 +515,24 @@ public class PASelectCursorAction extends PADrawingShapeAction
         {
             return getTempPoint(eleObj);
         }
-        
-        double [] doubleArray = {tempX, tempY};
-        
+
+        double[] doubleArray =
+        {
+            tempX, tempY
+        };
+
         return doubleArray;
     }
 
     private void detectElementBounds(PASVGElement boundsElement, int x, int y)
     {
         int handlePosition;
+
         if (boundsElement instanceof PARectangle)
         {
-
             PARectangle rect = (PARectangle) boundsElement;
             Rectangle2D.Double handle = null;
+
             for (handlePosition = 0; handlePosition < rect.getHandleArray().length; handlePosition++)
             {
                 if (rect.getHandleArray()[handlePosition].contains(x, y))
@@ -753,8 +606,8 @@ public class PASelectCursorAction extends PADrawingShapeAction
         else if (boundsElement instanceof PALine)
         {
             PALine line = (PALine) boundsElement;
-
             Rectangle2D.Double handle = null;
+
             for (handlePosition = 0; handlePosition < line.getHandleArray().length; handlePosition++)
             {
                 if (line.getHandleArray()[handlePosition].contains(x, y))
@@ -771,16 +624,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 isResize = false;
                 return;
             }
-
-//            Toolkit toolkit = Toolkit.getDefaultToolkit();
-//            Image image = toolkit.getImage("icons/handwriting.gif");
-//            cursor = toolkit.createCustomCursor(image, new oint(x,
-//                    y), "img");
-
             switch (handlePosition)
             {
                 // North West
-
                 case 0:
                     cursor = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
                     break;
@@ -789,6 +635,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     cursor = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
                     break;
             }
+
             isResize = true;
             drawPanel.setCursor(cursor);
         }
@@ -798,7 +645,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         if (boundsElement instanceof PARectangle)
         {
-            PARectangle rect = ((PARectangle) selectedElement);
+            PARectangle rect = ((PARectangle) boundsElement);
             double y = rect.getY();
             double height = rect.getHeight();
             double x = rect.getX();
@@ -853,7 +700,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else if (boundsElement instanceof PACircle)
         {
-            PACircle circle = ((PACircle) selectedElement);
+            PACircle circle = ((PACircle) boundsElement);
             double radius = circle.getR();
             circle.setR(radius + (changeX > changeY ? changeX : changeY) / 2);
 
@@ -861,7 +708,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else if (boundsElement instanceof PALine)
         {
-            PALine line = ((PALine) selectedElement);
+            PALine line = ((PALine) boundsElement);
             double x1 = line.getX1();
             double x2 = line.getX2();
             double y1 = line.getY1();
@@ -880,19 +727,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
             }
         }
 
-        overWriteListElement(selectedElement, elementCollection);
-    }
-
-    private PASVGGroup getHeadGroup(PASVGElement selectedElement)
-    {
-        headGroup = selectedElement.getParentGroup();
-
-        while (headGroup.isGrouped())
-        {
-            headGroup = headGroup.getParentGroup();
-        }
-
-        return headGroup;
+        overWriteListElement(boundsElement, elementCollection);
     }
 
     private double[] getGroupBounds(PASVGGroup groupElement, double x, double y)
@@ -1015,8 +850,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
                 moveAllGroupElements(group);
             }
         }
-
-
     }
 
 }

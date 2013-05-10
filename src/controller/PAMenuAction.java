@@ -478,20 +478,12 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PASVGElement selectedElement = PASelectCursorAction.selectedElement;
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
             LinkedList<PASVGElement> selectedList = PASelectCursorAction.elementTemp;
 
             if (selectedList != null)
             {
                 mainList.removeAll(selectedList);
-                drawPanel.drawToImage();
-                drawPanel.repaint();
-            }
-
-            if (selectedElement != null)
-            {
-                mainList.remove(selectedElement);
                 drawPanel.drawToImage();
                 drawPanel.repaint();
             }
@@ -677,7 +669,6 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PASVGElement selectedElement = PASelectCursorAction.selectedElement;
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
             LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
 
@@ -696,27 +687,6 @@ public abstract class PAMenuAction extends AbstractAction
                 }
             }
 
-            if (selectedElement != null)
-            {
-                LinkedList<PASVGElement> selectedElementList = new LinkedList<>();
-                selectedElementList.add(selectedElement);
-                PASVGGroup newGroup = new PASVGGroup(selectedElementList);
-                mainList.addLast(newGroup);
-                mainList.remove(selectedElement);
-                LinkedList<PASVGElement> groupList = newGroup
-                        .getGroupElementList();
-                groupList.getFirst().setGrouped(true);
-                groupList.getFirst().setParentGroup(newGroup);
-            }
-            System.out.println(drawPanel.elementCollection.size());
-            for (int i = drawPanel.elementCollection.size() - 1; i >= 0; i--)
-            {
-                System.out.println(drawPanel.elementCollection.get(i));
-                if (drawPanel.elementCollection.get(i) instanceof PASVGGroup)
-                {
-                    System.out.println(((PASVGGroup) drawPanel.elementCollection.get(i)).getGroupElementList());
-                }
-            }
             drawPanel.drawToImage();
             drawPanel.repaint();
         }
@@ -744,28 +714,34 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PASVGGroup selectedGroup = PASelectCursorAction.headGroup;
-            LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
-            LinkedList<PASVGElement> groupList = selectedGroup
-                    .getGroupElementList();
-
-            for (int index = mainList.size() - 1; index >= 0; index--)
+            LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
+            
+            if (elementList.size() == 1 && elementList.getFirst() instanceof PASVGGroup)
             {
-                PASVGElement element = mainList.get(index);
-                System.out.println("main :" + mainList.size());
-                if (element == selectedGroup)
-                {
-                    mainList.remove(index);
-                    System.out.println("remove :" + mainList.size());
-                    System.out.println("groupList :" + groupList.size());
-                    for (int j = groupList.size() - 1; j >= 0; j--)
-                    {
-                        groupList.get(j).setGrouped(false);
-                        groupList.get(j).setParentGroup(null);
-                    }
+                PASVGGroup selectedGroup = (PASVGGroup) elementList.getFirst();
+                LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
+                LinkedList<PASVGElement> groupList = selectedGroup
+                        .getGroupElementList();
 
-                    mainList.addAll(index, groupList);
-                    System.out.println("add :" + mainList.size());
+                for (int index = mainList.size() - 1; index >= 0; index--)
+                {
+                    PASVGElement element = mainList.get(index);
+                    System.out.println("main :" + mainList.size());
+                    
+                    if (element == selectedGroup)
+                    {
+                        mainList.remove(index);
+                        System.out.println("remove :" + mainList.size());
+                        System.out.println("groupList :" + groupList.size());
+                        for (int j = groupList.size() - 1; j >= 0; j--)
+                        {
+                            groupList.get(j).setGrouped(false);
+                            groupList.get(j).setParentGroup(null);
+                        }
+
+                        mainList.addAll(index, groupList);
+                        System.out.println("add :" + mainList.size());
+                    }
                 }
             }
 
