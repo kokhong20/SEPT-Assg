@@ -4,6 +4,9 @@
 package model;
 
 import java.awt.Color;
+import static model.PAAttributeConstant.DEFAULT_STROKE_WIDTH;
+import static model.PAAttributeConstant.FILL;
+import static model.PAAttributeConstant.STROKE;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -103,6 +106,30 @@ public abstract class PASVGElement implements PAAttributeConstant
         this.isGrouped = true;
         this.parentGroup = parentGroup;
         this.id = (element.hasAttribute("id") ? ((Element) node).getAttribute("id") : "");
+    }
+    
+    /**
+     * 
+     * Copy a PASVGElement which receives groupFill, groupStroke, groupWidth, id
+     * from another group
+     * 
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
+     * @param id the group id
+     */
+    public PASVGElement(Color groupFill, Color groupStroke,
+            double groupWidth, PASVGGroup parentGroup, String id)
+    {
+        // TODO Auto-generated constructor stub
+        Element element = (Element) node;
+        this.fill = groupFill;
+        this.stroke = groupStroke;
+        this.strokeWidth = groupWidth;
+        this.isGrouped = true;
+        this.parentGroup = parentGroup;
+        this.id = id;
     }
 
     /**

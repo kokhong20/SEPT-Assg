@@ -48,7 +48,6 @@ public class PALine extends PASVGElement
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
-
         setLine2D();
     }
 
@@ -184,7 +183,7 @@ public class PALine extends PASVGElement
     /**
      * The Line2D.Double to set
      */
-    public void setLine2D()
+    public final void setLine2D()
     {
         line2D = new Line2D.Double(x1, y1, x2, y2);
     }

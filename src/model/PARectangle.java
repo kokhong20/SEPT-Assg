@@ -169,7 +169,7 @@ public class PARectangle extends PASVGElement
     /**
      * The Rectangle2D.Double to set
      */
-    public void setRectangle2D()
+    public final void setRectangle2D()
     {
         rectangle2D = new Rectangle2D.Double(x, y, width, height);
     }

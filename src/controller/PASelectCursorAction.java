@@ -13,7 +13,6 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import javax.swing.JToggleButton;
@@ -34,11 +33,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
     public static LinkedList<PASVGElement> elementTemp;
     private boolean isResize;
     private int elementIndex, changeX, changeY;
-    private double pointX, pointY;
     private Graphics2D g2D;
-    private Rectangle2D handleRectangle;
-    private Line2D handleLine;
-    private PALine selectedLine;
     protected Point initialMouse, startSelect, endSelect, resizeStart;
 
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
@@ -69,8 +64,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             public void mousePressed(MouseEvent e)
             {
                 scale = drawPanel.getScale();
-                pointX = e.getX();
-                pointY = e.getY();
 
                 // for resizing use
                 if (isResize)
@@ -311,6 +304,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     {
                         elementIndex = index;
                         elementArray.add(element);
+                        break;
                     }
                 }
                 else if (element instanceof PACircle)
@@ -321,6 +315,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     {
                         elementIndex = index;
                         elementArray.add(element);
+                        break;
                     }
                 }
                 else if (element instanceof PARectangle)
@@ -331,6 +326,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     {
                         elementIndex = index;
                         elementArray.add(element);
+                        break;
                     }
                 }
                 else if (element instanceof PASVGGroup)
@@ -347,6 +343,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
                     if (rectGroup.contains(start.x, start.y))
                     {
                         elementArray.add(element);
+                        break;
                     }
                 }
             }
@@ -449,9 +446,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     protected void drawBoundsForElements()
     {
-        System.out.println(elementCollection);
-        if (elementCollection.getFirst() instanceof PASVGGroup)
-            System.out.println(((PASVGGroup)elementCollection.getFirst()).getGroupElementList());
         elementTemp.clear();
         
         if (!((elementTemp = iterateContainer(elementCollection, startSelect, endSelect)).isEmpty()))

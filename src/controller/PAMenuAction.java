@@ -375,84 +375,115 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class Cut extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
-
-        public Cut(JDesktopPane parent)
+        private PASVGPanel drawPanel;
+        
+        public Cut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_X, "Cut");
-            this.parent = parent;
+            this.drawPanel = drawPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+            LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
+            LinkedList<PASVGElement> eleList = new LinkedList<>();
+            eleList.addAll(PASelectCursorAction.elementTemp);
+            Paste.storeElement = eleList;
+            mainList.removeAll(eleList);
+            
+            drawPanel.reDrawImage(drawPanel.getScale());
         }
 
     }
 
     public static class Copy extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
-
-        public Copy(JDesktopPane parent)
+        public Copy()
         {
             super(KeyEvent.VK_C, "Copy");
-            this.parent = parent;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+            LinkedList<PASVGElement> eleList = new LinkedList<>();
+            eleList.addAll(PASelectCursorAction.elementTemp);
+            Paste.storeElement = eleList;
         }
 
     }
 
     public static class Paste extends PAMenuAction
     {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
+        public static LinkedList<PASVGElement> storeElement;
+        private PASVGPanel drawPanel;
 
-        public Paste(JDesktopPane parent)
+        public Paste(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_V, "Cut");
-            this.parent = parent;
+            super(KeyEvent.VK_V, "Paste");
+            this.drawPanel = drawPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
+            LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
+            
+            for (int index = storeElement.size() - 1; index >= 0; index--)
+            {
+                PASVGElement element = storeElement.get(index);
+                
+                if (mainList.contains(element))
+                {
+                    cloneElement(element, mainList);
+                }
+                
+                else
+                {
+                    mainList.add(element);
+                }
+            }
+            
+            drawPanel.reDrawImage(drawPanel.getScale());
+        }
+        
+        private void cloneElement(PASVGElement element, LinkedList<PASVGElement> mainList)
+        {
+            PASVGElement cloneEle = null;
+            
+            if (element instanceof PALine)
+            {
+                PALine o = (PALine)element;
+                cloneEle = new PALine(o.getStroke(), o.getStrokeWidth(), 
+                        o.getX1()+5, o.getX2()+5, o.getY1()+5, o.getY2()+5);         
+            }
+            
+            else if (element instanceof PACircle)
+            {
+                PACircle o = (PACircle)element;
+                cloneEle = new PACircle(o.getFill(), o.getStroke(), 
+                        o.getStrokeWidth(), o.getCx()+5, o.getCy()+5, o.getR());
+            }
+            
+            else if (element instanceof PARectangle)
+            {
+                PARectangle o = (PARectangle)element;
+                cloneEle = new PARectangle(o.getFill(), o.getStroke(), 
+                        o.getStrokeWidth(), o.getX()+5, o.getY()+5, o.getWidth(), o.getHeight());
+            }
+            
+            else if (element instanceof PASVGGroup)
+            {
+                PASVGGroup o = (PASVGGroup)element;
+                cloneEle = new PASVGGroup(o.getGroupElementList(), o.getFill(), o.getStroke(),
+                        o.getStrokeWidth(), o.getParentGroup(), o.getId());
+            }
+            
+            if (cloneEle != null)
+            {
+                mainList.add(cloneEle);
+            }
         }
 
     }

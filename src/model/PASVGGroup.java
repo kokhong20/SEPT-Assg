@@ -52,6 +52,22 @@ public class PASVGGroup extends PASVGElement
     }
     
     /**
+     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke, groupWidth and parentGroup
+     *
+     * @param groupElementList groupList
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
+     * @param id group id
+     */
+    public PASVGGroup(LinkedList<PASVGElement> groupElementList, Color groupFill, Color groupStroke, double groupWidth, PASVGGroup parentGroup, String id)
+    {
+        super(groupFill, groupStroke, groupWidth, parentGroup, id);
+        this.groupElementList = groupElementList;
+    }
+    
+    /**
      * Creates a new PASVGGroup with existing elements
      * @param elementList 
      */
