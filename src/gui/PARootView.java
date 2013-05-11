@@ -7,20 +7,12 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
-import java.util.LinkedList;
-
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import controller.PAFileChooserAction;
-
 import model.PASVGContainer;
-import model.PASVGElement;
 import model.PASVGImport;
-import model.PASVGTag;
 import model.PASystem;
 
 /**

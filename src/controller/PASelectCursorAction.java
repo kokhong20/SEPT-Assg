@@ -82,7 +82,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
                 // For panning object use
                 if (!elementTemp.isEmpty())
-                // || ((selectedElement = iterateContainer(elementCollection, (int) (e.getX() / scale), (int) (e.getY() / scale))) != null))
                 {
                     drawPanel.reDrawImage(scale);
                     initialMouse = new Point(e.getX(), e.getY());
@@ -114,7 +113,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
             @Override
             public void mouseReleased(MouseEvent e)
             {
-                System.out.println("release");
                 // Resize to default
                 if (isResize)
                 {
@@ -205,6 +203,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
                 drawPanel.repaint();
             }
+
         };
 
         removeAllActions();
@@ -450,8 +449,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     protected void drawBoundsForElements()
     {
+        System.out.println(elementCollection);
+        if (elementCollection.getFirst() instanceof PASVGGroup)
+            System.out.println(((PASVGGroup)elementCollection.getFirst()).getGroupElementList());
         elementTemp.clear();
-
+        
         if (!((elementTemp = iterateContainer(elementCollection, startSelect, endSelect)).isEmpty()))
         {
             for (int index = elementTemp.size() - 1; index >= 0; index--)
@@ -468,7 +470,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
         if (element instanceof PARectangle)
         {
             drawRectHighlight(((PARectangle) element));
-            System.out.println("rec");
         }
         else if (element instanceof PACircle)
         {
@@ -491,31 +492,35 @@ public class PASelectCursorAction extends PADrawingShapeAction
     {
         double tempX = 0, tempY = 0;
         PASVGGroup group = (PASVGGroup) element;
-        PASVGElement eleObj = group.getGroupElementList().getFirst();
 
-        if (eleObj instanceof PARectangle)
+        if (group.getGroupElementList() != null)
         {
-            PARectangle rect = ((PARectangle) eleObj);
-            tempX = rect.getX();
-            tempY = rect.getY();
-        }
-        else if (eleObj instanceof PACircle)
-        {
-            PACircle circle = ((PACircle) eleObj);
-            tempX = circle.getCx();
-            tempY = circle.getCy();
-        }
-        else if (eleObj instanceof PALine)
-        {
-            PALine line = ((PALine) eleObj);
-            tempX = line.getX1();
-            tempY = line.getY1();
-        }
-        else if (eleObj instanceof PASVGGroup)
-        {
-            return getTempPoint(eleObj);
-        }
+            PASVGElement eleObj = group.getGroupElementList().getFirst();
 
+            if (eleObj instanceof PARectangle)
+            {
+                PARectangle rect = ((PARectangle) eleObj);
+                tempX = rect.getX();
+                tempY = rect.getY();
+            }
+            else if (eleObj instanceof PACircle)
+            {
+                PACircle circle = ((PACircle) eleObj);
+                tempX = circle.getCx();
+                tempY = circle.getCy();
+            }
+            else if (eleObj instanceof PALine)
+            {
+                PALine line = ((PALine) eleObj);
+                tempX = line.getX1();
+                tempY = line.getY1();
+            }
+            else if (eleObj instanceof PASVGGroup)
+            {
+                return getTempPoint(eleObj);
+            }
+        }
+        
         double[] doubleArray =
         {
             tempX, tempY

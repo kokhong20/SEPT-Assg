@@ -20,6 +20,8 @@ import model.PASystem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem groupEdit;
+    private static JMenuItem ungroupEdit;
     private static JMenuItem selectAllEdit;
     private static JMenuItem deselectAllEdit;
     private static JMenuItem deleteEdit;
@@ -60,18 +62,24 @@ public class PAMenuBar extends JMenuBar
 
     public static void updateAction(PAMainFrame mainFrame)
     {
+        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel);
+        PAMenuAction.UnGroupAction ungroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel);
         PAMenuAction.SelectAll selectAllAction = new PAMenuAction.SelectAll(mainFrame);
         PAMenuAction.DeselectAll deselectAllAction = new PAMenuAction.DeselectAll(mainFrame);
         PAMenuAction.Delete deleteAction = new PAMenuAction.Delete(mainFrame.svgPanel);
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        groupEdit.setAction(groupAction);
+        ungroupEdit.setAction(ungroupAction);
         selectAllEdit.setAction(selectAllAction);
         deselectAllEdit.setAction(deselectAllAction);
         deleteEdit.setAction(deleteAction);
         zoomInView.setAction(zoomInAction);
         zoomOutView.setAction(zoomOutAction);
         actualSizeView.setAction(actualSizeAction);
+        groupEdit.setEnabled(true);
+        ungroupEdit.setEnabled(true);
         deselectAllEdit.setEnabled(true);
         selectAllEdit.setEnabled(true);
         deleteEdit.setEnabled(true);
@@ -82,18 +90,24 @@ public class PAMenuBar extends JMenuBar
 
     public static void removeUpdatedAction()
     {
+        PAMenuAction.RemoveAction removeGroupAction = new PAMenuAction.RemoveAction(KeyEvent.VK_G, "Group");
+        PAMenuAction.RemoveEventAction removeUngroupAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
         PAMenuAction.RemoveAction removeSelectAllAction = new PAMenuAction.RemoveAction(KeyEvent.VK_A, "Select All");
         PAMenuAction.RemoveEventAction removedeselectAllAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
         PAMenuAction.RemoveAction removeDeleteAction = new PAMenuAction.RemoveAction(KeyEvent.VK_DELETE, "Delete");
         PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
         PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
         PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        groupEdit.setAction(removeGroupAction);
+        ungroupEdit.setAction(removeUngroupAction);
         selectAllEdit.setAction(removeSelectAllAction);
         deselectAllEdit.setAction(removedeselectAllAction);
         deleteEdit.setAction(removeDeleteAction);
         zoomInView.setAction(removeZoomInAction);
         zoomOutView.setAction(removeZoomOutAction);
         actualSizeView.setAction(removeActualSizeAction);
+        groupEdit.setEnabled(false);
+        ungroupEdit.setEnabled(false);
         selectAllEdit.setEnabled(false);
         deselectAllEdit.setEnabled(false);
         deleteEdit.setEnabled(false);
@@ -127,6 +141,8 @@ public class PAMenuBar extends JMenuBar
         exitFile = new JMenuItem("Exit");
 
         // Edit's MenuItem
+        groupEdit = new JMenuItem("Group");
+        ungroupEdit = new JMenuItem("Ungroup");
         selectAllEdit = new JMenuItem("Select All");
         deselectAllEdit = new JMenuItem("Deselect All");
         cutEdit = new JMenuItem("Cut");
@@ -143,6 +159,8 @@ public class PAMenuBar extends JMenuBar
         zoomOutView = new JMenuItem("Zoom Out");
         actualSizeView = new JMenuItem("Actual Size");
         
+        groupEdit.setEnabled(false);
+        ungroupEdit.setEnabled(false);
         deleteEdit.setEnabled(false);
         zoomInView.setEnabled(false);
         zoomOutView.setEnabled(false);
@@ -162,6 +180,9 @@ public class PAMenuBar extends JMenuBar
         fileMenu.addSeparator();
         fileMenu.add(exitFile);
 
+        editMenu.add(groupEdit);
+        editMenu.add(ungroupEdit);
+        editMenu.addSeparator();
         editMenu.add(selectAllEdit);
         editMenu.add(deselectAllEdit);
         editMenu.addSeparator();
@@ -211,6 +232,8 @@ public class PAMenuBar extends JMenuBar
     private void initKeyStroke()
     {
         int keyMask = PASystem.keyMask;
+        groupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask));
+        ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask|Event.SHIFT_MASK));
         selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
         deselectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask|Event.SHIFT_MASK));
         deleteEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));

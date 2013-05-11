@@ -67,7 +67,7 @@ public class PADrawingItem
     /**
      * add all buttons to drawing kit
      */
-    public void addButton()
+    private void addButton()
     {
         drawKitPanel.add(fill);
         drawKitPanel.add(handCursor);

@@ -4,11 +4,13 @@
  */
 package controller;
 
+import static javax.swing.Action.ACCELERATOR_KEY;
+import static javax.swing.Action.MNEMONIC_KEY;
+import static javax.swing.Action.NAME;
 import gui.PAMainFrame;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
-
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Point;
@@ -19,13 +21,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import javax.swing.AbstractAction;
-
-import static javax.swing.Action.ACCELERATOR_KEY;
-import static javax.swing.Action.MNEMONIC_KEY;
-import static javax.swing.Action.NAME;
-
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
@@ -40,12 +36,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import model.PASVGContainer;
 import model.PASVGElement;
 import model.PASVGGroup;
@@ -54,7 +48,6 @@ import model.PALine;
 import model.PACircle;
 import model.PASVGTag;
 import model.PASystem;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -662,7 +655,6 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_G, "");
             this.drawPanel = drawPanel;
-            // this.elementList = elementList;
             this.button = button;
         }
 
@@ -670,21 +662,18 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
-            LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
+            LinkedList<PASVGElement> elementList = new LinkedList<>();
+            elementList.addAll(PASelectCursorAction.elementTemp);
+            PASVGGroup newGroup = new PASVGGroup(elementList);
+            LinkedList<PASVGElement> groupList = newGroup
+                    .getGroupElementList();
+            mainList.addLast(newGroup);
+            mainList.removeAll(groupList);
 
-            if (elementList != null)
+            for (int index = groupList.size() - 1; index >= 0; index--)
             {
-                PASVGGroup newGroup = new PASVGGroup(elementList);
-                LinkedList<PASVGElement> groupList = newGroup
-                        .getGroupElementList();
-                mainList.addLast(newGroup);
-                mainList.removeAll(groupList);
-
-                for (int index = groupList.size() - 1; index >= 0; index--)
-                {
-                    groupList.get(index).setGrouped(true);
-                    groupList.get(index).setParentGroup(newGroup);
-                }
+                groupList.get(index).setGrouped(true);
+                groupList.get(index).setParentGroup(newGroup);
             }
 
             drawPanel.drawToImage();
@@ -715,7 +704,7 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             LinkedList<PASVGElement> elementList = PASelectCursorAction.elementTemp;
-            
+
             if (elementList.size() == 1 && elementList.getFirst() instanceof PASVGGroup)
             {
                 PASVGGroup selectedGroup = (PASVGGroup) elementList.getFirst();
@@ -726,13 +715,11 @@ public abstract class PAMenuAction extends AbstractAction
                 for (int index = mainList.size() - 1; index >= 0; index--)
                 {
                     PASVGElement element = mainList.get(index);
-                    System.out.println("main :" + mainList.size());
-                    
+
                     if (element == selectedGroup)
                     {
                         mainList.remove(index);
-                        System.out.println("remove :" + mainList.size());
-                        System.out.println("groupList :" + groupList.size());
+
                         for (int j = groupList.size() - 1; j >= 0; j--)
                         {
                             groupList.get(j).setGrouped(false);
@@ -740,7 +727,6 @@ public abstract class PAMenuAction extends AbstractAction
                         }
 
                         mainList.addAll(index, groupList);
-                        System.out.println("add :" + mainList.size());
                     }
                 }
             }
