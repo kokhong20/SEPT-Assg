@@ -7,6 +7,13 @@ import java.awt.geom.Rectangle2D;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+/**
+ * 
+ * @author bryantylai
+ * @since 1.0
+ * @version 1.1
+ * <p>This class creates a new PACircle as a PASVGElement</p>
+ */
 public class PACircle extends PASVGElement
 {
     private double cx;
@@ -16,21 +23,21 @@ public class PACircle extends PASVGElement
     private Rectangle2D.Double[] ellipseHandleArray;
 
     /**
-     *
+     * Creates a new empty PACircle
      */
     public PACircle()
     {
     }
 
     /**
-     * Constructor to create a new PACircle object with all the attributes
+     * Creates a new PACircle object with all the attributes
      *
-     * @param fill
-     * @param stroke
-     * @param strokeWidth
-     * @param cx
-     * @param cy
-     * @param r
+     * @param fill the color fill
+     * @param stroke the color stroke
+     * @param strokeWidth the stroke width
+     * @param cx the cx coordinate
+     * @param cy the cy coordinate
+     * @param r the radius
      */
     public PACircle(Color fill, Color stroke, double strokeWidth, double cx, double cy, double r)
     {
@@ -42,9 +49,9 @@ public class PACircle extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node
+     * Creates a new PACircle which receives a node
      *
-     * @param node
+     * @param node the Element node
      */
     public PACircle(Node node)
     {
@@ -52,14 +59,14 @@ public class PACircle extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node and groupFill, groupStroke, groupWidth
+     * Creates a new PACircle which receives a node and groupFill, groupStroke, groupWidth
      * from parent group
      *
-     * @param node
-     * @param groupFill
-     * @param groupStroke
-     * @param groupWidth
-     * @param parentGroup
+     * @param node an Element node
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
      */
     public PACircle(Node node, Color groupFill, Color groupStroke,
             double groupWidth, PASVGGroup parentGroup)
@@ -143,7 +150,7 @@ public class PACircle extends PASVGElement
     }
 
     /**
-     *
+     * The Ellipse2D.Double to set
      */
     public final void setEllipse2D()
     {
@@ -153,6 +160,11 @@ public class PACircle extends PASVGElement
         ellipse2D = new Ellipse2D.Double(x, y, diameter, diameter);
     }
 
+    /**
+     * Drawing of circle handles based on the scale
+     * @param scale the current scale
+     * @return array of handles
+     */
     private Rectangle2D.Double[] createEllipseHandle(double scale)
     {
         Ellipse2D.Double rect = this.ellipse2D;

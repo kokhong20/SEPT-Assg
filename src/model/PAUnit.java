@@ -4,19 +4,15 @@ import java.util.regex.Pattern;
 
 /**
  * @author bryantylai/SaiHoo
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class is to validate and convert unit attributes of svg elements</p>
  */
 public class PAUnit implements PAAttributeConstant
 {
-    /**
-     * create a static variable as this is constantly used across the class
-     *
-     */
     public static double dpi = PASystem.getDotsPerInch();
 
     /**
-     * removed convert the string to lower case as svg is case sensitive
-     *
      * Validate and convert the SVG element attributes value received as String
      * to double
      *
@@ -83,10 +79,10 @@ public class PAUnit implements PAAttributeConstant
     }
 
     /**
-     * To calculate exponential values
+     * To calculate exponential values if any
      *
-     * @param att
-     * @return a String with its exponential value calculated
+     * @param att attribute value
+     * @return a String with its exponential value calculated if any
      */
     private static String calculate(String att)
     {
@@ -214,7 +210,7 @@ public class PAUnit implements PAAttributeConstant
     /**
      * To convert percentage to size
      *
-     * @param att
+     * @param att attribute value
      * @return calculated size with respect to size
      */
     public static double convertPercent(String att)

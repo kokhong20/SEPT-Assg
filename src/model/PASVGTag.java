@@ -2,14 +2,16 @@ package model;
 
 import java.awt.Color;
 import java.util.regex.Pattern;
-import static model.PAAttributeConstant.DEFAULT_SVG_SIZE;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
  *
  * @author LaiSaiHoo
- *
+ * @since 1.1
+ * @version 1.1
+ * <p>This class creates a PASVGTag based on the svg tag read from an existing svg file or
+ * creates a new svg tag for a new svg file</p>
  */
 public class PASVGTag implements PAAttributeConstant
 {
@@ -28,9 +30,9 @@ public class PASVGTag implements PAAttributeConstant
     private Node node;
 
     /**
-     * Constructor which receives a node
+     * Creates a new PASVGTag by setting the node from svg file and read its attributes
      *
-     * @param node
+     * @param node an Element node
      */
     public PASVGTag(Node node)
     {
@@ -38,12 +40,22 @@ public class PASVGTag implements PAAttributeConstant
         readAttributes();
     }
     
+    /**
+     * Creates a new PASVGTag by setting its width, height
+     * 
+     * @param width width of svg
+     * @param height height of svg
+     * @param unit unit length
+     */
     public PASVGTag(String width, String height, String unit)
     {
         setWidth(PAUnit.setUnit(width, DEFAULT_SVG_SIZE));
         setHeight(PAUnit.setUnit(height, DEFAULT_SVG_SIZE));
     }
 
+    /**
+     * Read attributes from the Element node
+     */
     private void readAttributes()
     {
         // TODO Auto-generated method stub
@@ -232,6 +244,7 @@ public class PASVGTag implements PAAttributeConstant
     }
 
     /**
+     * Set scale based on original width and height if view width and view height isn't set
      *
      * @param oriWidth
      * @param oriHeight
@@ -252,12 +265,19 @@ public class PASVGTag implements PAAttributeConstant
             this.setScaleY((oriHeight / viewHeight));
         }
     }
-
+	/**
+	 * @return the scale
+	 */
     public double getScaleXY()
     {
         return scale;
     }
 
+    /**
+     * Scale is set based on scaleX if bigger value than scaleY. Set scaleY if otherwise
+     * @param scaleX the scaleX to set
+     * @param scaleY the scaleY to set
+     */
     public void setScaleXY(double scaleX, double scaleY)
     {
         if (scaleX > scaleY)

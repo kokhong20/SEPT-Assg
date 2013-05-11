@@ -18,6 +18,10 @@ import org.xml.sax.SAXException;
 /**
  * 
  * @author bryantylai/LiHao/Lai Sai Hoo
+ * @since 1.0
+ * @version 1.1
+ * <p>This class reads and validate a file then converts it to be readable in JAVA.
+ * SVG elements are then stored into a list</p>
  */
 public class PASVGImport
 {
@@ -25,8 +29,7 @@ public class PASVGImport
      * 
      * Process current SVG file by parsing the SVG file to be readable in JAVA
      * 
-     * @param svgFile
-     *            file from file chooser
+     * @param svgFile file from file chooser
      * @return svg's Document.
      */
     public static Document processFiletoDoc(File svgFile)
@@ -46,33 +49,20 @@ public class PASVGImport
         }
         else
         {
-
             try
             {
-                svgDBFactory.setFeature(
-                        "http://xml.org/sax/features/namespaces", false);
-                svgDBFactory.setFeature(
-                        "http://xml.org/sax/features/validation", false);
-                svgDBFactory
-                        .setFeature(
-                                "http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
-                                false);
-                svgDBFactory
-                        .setFeature(
-                                "http://apache.org/xml/features/nonvalidating/load-external-dtd",
-                                false);
+                svgDBFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+                svgDBFactory.setFeature("http://xml.org/sax/features/validation", false);
+                svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+                svgDBFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
-                DocumentBuilder svgDocBuilder = svgDBFactory
-                        .newDocumentBuilder();
+                DocumentBuilder svgDocBuilder = svgDBFactory.newDocumentBuilder();
                 svgDoc = svgDocBuilder.parse(svgFile);
                 svgDoc.getDocumentElement().normalize();
             }
             catch (FileNotFoundException fnf)
             {
-                JOptionPane
-                        .showMessageDialog(
-                                null,
-                                "File Not Found, Please check the file's directory is correct.",
+                JOptionPane.showMessageDialog(null, "File Not Found, Please check the file's directory is correct.",
                                 "File Not Found", JOptionPane.WARNING_MESSAGE);
                 svgDoc = null;
             }
@@ -108,21 +98,13 @@ public class PASVGImport
                 case "rect":
                     PARectangle newRect = new PARectangle(drawList.item(index));
                     newRect.readAttributes();
-
-                    // Add new rectangle object to Shapes and put into linked
-                    // list
-                    // Rectangle2D.Double rectShape = new
-                    // Rectangle2D.Double(newRect.getX(),newRect.getY(),newRect.getWidth(),newRect.getHeight());
+                    
                     elementCollection.add(newRect);
                     break;
 
                 case "circle":
                     PACircle newCircle = new PACircle(drawList.item(index));
                     newCircle.readAttributes();
-
-                    // Add new circle object to Shapes and put into linked List
-                    // Ellipse2D.Double circleShape = new
-                    // Ellipse2D.Double(newCircle.getEllipse2DX(),newCircle.getEllipse2DY(),newCircle.getR()*2,newCircle.getR()*2);
 
                     elementCollection.add(newCircle);
                     break;
@@ -139,17 +121,10 @@ public class PASVGImport
                     newGroup.readAttributes();
 
                     elementCollection.add(newGroup);
-                    // NodeList gList = drawList.item(index).getChildNodes();
-                    // createGroups(this.elementCollection, gList,
-                    // drawList.item(index), null, null);
                     break;
                 }
             }
         }
-
-        /**
-         * Reading of svg elements not done yet
-         */
         return elementCollection;
     }
 

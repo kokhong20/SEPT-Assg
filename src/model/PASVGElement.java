@@ -10,7 +10,9 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class provides a skeletal implementation for all svg elements</p>
  */
 public abstract class PASVGElement implements PAAttributeConstant
 {
@@ -23,20 +25,19 @@ public abstract class PASVGElement implements PAAttributeConstant
     protected Node node;
 
     /**
-     *
+     * Creates an empty PASVGElement
      */
     public PASVGElement()
     {
     }
 
     /**
-     * Constructor which receives fill, stroke and strokeWidth for rectangle and
+     * Creates a PASVGElement which receives fill, stroke and strokeWidth for rectangle and
      * circle object
      *
-     * @param fill
-     * @param stroke
-     * @param strokeWidth
-     *
+     * @param fill fill of a svg element
+     * @param stroke stroke of a svg element
+     * @param strokeWidth stroke width of a svg element
      */
     public PASVGElement(Color fill, Color stroke, double strokeWidth)
     {
@@ -48,10 +49,10 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Constructor which receives stoke and strokeWidth for line object
+     * Creates a PASVGElement which receives stoke and strokeWidth for line object
      *
-     * @param stroke
-     * @param strokeWidth
+     * @param stroke stroke of a svg element
+     * @param strokeWidth stroke width of a svg element
      */
     public PASVGElement(Color stroke, double strokeWidth)
     {
@@ -60,9 +61,9 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Constructor which receives a node
+     * Creates a PASVGElement based on a node received
      *
-     * @param node
+     * @param node an Element node
      */
     public PASVGElement(Node node)
     {
@@ -78,14 +79,14 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Constructor which receives a node and groupFill, groupStroke, groupWidth
+     * Creates a PASVGElement which receives a node and groupFill, groupStroke, groupWidth
      * from parent group
      *
-     * @param node
-     * @param groupFill
-     * @param groupStroke
-     * @param groupWidth
-     * @param parentGroup
+     * @param node an Element node
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
      */
     public PASVGElement(Node node, Color groupFill, Color groupStroke,
             double groupWidth, PASVGGroup parentGroup)
@@ -136,7 +137,7 @@ public abstract class PASVGElement implements PAAttributeConstant
     /**
      * @param id the id to set
      */
-    private void setId(String id)
+    public void setId(String id)
     {
         this.id = id;
     }

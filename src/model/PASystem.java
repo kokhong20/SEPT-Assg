@@ -10,7 +10,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * @author bryantylai
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class is for the settings based on screen and operating system of the user's machine</p>
  */
 public class PASystem
 {
@@ -104,8 +106,8 @@ public class PASystem
     }
     
     /**
-     * set Key mask based on currentOS
-     * @return mask constant
+     * Set Key mask based on currentOS
+     * @return mask constant based on currentOS
      */
     public static int setKeyMask()
     {
@@ -118,7 +120,7 @@ public class PASystem
     }
 
     /**
-     * set the look and feel of system based on currentOS
+     * Set the look and feel of system based on currentOS
      */
     public static void setLookandFeel()
     {

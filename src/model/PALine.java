@@ -10,7 +10,9 @@ import org.w3c.dom.Element;
 
 /**
  * @author bryantylai
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class creates a new PALine as a PASVGElement</p>
  */
 public class PALine extends PASVGElement
 {
@@ -23,21 +25,21 @@ public class PALine extends PASVGElement
     private final double rectangleHandleSize = 10f;
 
     /**
-     *
+     * Creates a new empty PALine
      */
     public PALine()
     {
     }
 
     /**
-     * Constructor which create a new PALine object with all attributes
+     * Creates a new PALine with all attributes
      *
      * @param stroke
      * @param strokeWidth
-     * @param x1
-     * @param x2
-     * @param y1
-     * @param y2
+     * @param x1 the x1 coordinate
+     * @param x2 the x2 coordinate
+     * @param y1 the y1 coordinate
+     * @param y2 the y2 coordinate
      */
     public PALine(Color stroke, double strokeWidth, double x1, double x2, double y1, double y2)
     {
@@ -51,7 +53,7 @@ public class PALine extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node
+     * Creates a new PALine which receives a node
      *
      * @param node
      */
@@ -62,13 +64,13 @@ public class PALine extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node and groupStroke, groupWidth from parent
+     * Creates a new PALine which receives a node and groupStroke, groupWidth from parent
      * group
      *
-     * @param node
-     * @param groupStroke
-     * @param groupWidth
-     * @param parentGroup
+     * @param node an Element node
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
      */
     public PALine(Node node, Color groupStroke,
             double groupWidth, PASVGGroup parentGroup)
@@ -180,12 +182,18 @@ public class PALine extends PASVGElement
     }
 
     /**
-     *
+     * The Line2D.Double to set
      */
     public void setLine2D()
     {
         line2D = new Line2D.Double(x1, y1, x2, y2);
     }
+    
+    /**
+     * Drawing of line handles based on the scale
+     * @param scale the current scale
+     * @return array of handles
+     */
     private Rectangle2D.Double[] createLineHandle(double scale)
     {
         Rectangle2D.Double rect1, rect2;

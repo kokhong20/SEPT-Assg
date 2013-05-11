@@ -8,7 +8,9 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class creates a new PARectangle as a PASVGElement</p>
  */
 public class PARectangle extends PASVGElement
 {
@@ -20,12 +22,22 @@ public class PARectangle extends PASVGElement
     private Rectangle2D.Double[] rectHandleArray;
 
     /**
-     *
+     * Creates an empty PARectangle 
      */
     public PARectangle()
     {
     }
 
+    /**
+     * Creates a PARectangle based on attributes given when drawing a new rectangle
+     * @param fill the color fill
+     * @param stroke the color stroke
+     * @param strokeWidth the stroke width
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param width the width
+     * @param height the height
+     */
     public PARectangle(Color fill, Color stroke, double strokeWidth, double x, double y, double width, double height)
     {
         super(fill, stroke, strokeWidth);
@@ -37,9 +49,8 @@ public class PARectangle extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node
-     *
-     * @param node
+     * Creates a PARectangle which receives a node
+     * @param node an Element node
      */
     public PARectangle(Node node)
     {
@@ -48,14 +59,14 @@ public class PARectangle extends PASVGElement
     }
 
     /**
-     * Constructor which receives a node and groupFill, groupStroke, groupWidth
+     * Creates a PARectangle which receives a node and groupFill, groupStroke, groupWidth
      * from parent group
      *
-     * @param node
-     * @param groupFill
-     * @param groupStroke
-     * @param groupWidth
-     * @param parentGroup
+     * @param node an Element node
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
      */
     public PARectangle(Node node, Color groupFill, Color groupStroke,
             double groupWidth, PASVGGroup parentGroup)
@@ -156,13 +167,18 @@ public class PARectangle extends PASVGElement
     }
 
     /**
-     *
+     * The Rectangle2D.Double to set
      */
     public void setRectangle2D()
     {
         rectangle2D = new Rectangle2D.Double(x, y, width, height);
     }
 
+    /**
+     * Drawing of rect handles based on the scale
+     * @param scale the current scale
+     * @return array of handles
+     */
     private Rectangle2D.Double[] createRectHandle(double scale)
     {
         Rectangle2D rect = this.rectangle2D.getBounds2D();

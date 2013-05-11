@@ -11,7 +11,8 @@ import org.w3c.dom.Document;
 
 /**
  * @author LaiSaiHoo
- *
+ * @since 1.0
+ * @version 1.0
  */
 public class PACommandArgument 
 {

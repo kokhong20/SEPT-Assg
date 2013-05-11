@@ -5,47 +5,45 @@ package model;
 
 import java.awt.Color;
 import java.util.LinkedList;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
  * @author bryantylai
- *
+ * @since 1.1
+ * @version 1.1
+ * <p>This class creates a new PASVGGroup element to be stored in the svg file for grouped svg elements</p>
  */
 public class PASVGGroup extends PASVGElement
 {
-    private Color fill;
     private LinkedList<PASVGElement> groupElementList;
 
     /**
-     *
+     * Creates a new PASVGGroup which has an empty list
      */
     public PASVGGroup()
     {
-        this.groupElementList = new LinkedList<>();
+        setGroupElementList(new LinkedList<PASVGElement>());
     }
 
     /**
-     * Constructor which receives a node
-     *
-     * @param node
+     * Creates a new PASVGGroup which receives a node
+     * @param node an Element node
      */
     public PASVGGroup(Node node)
     {
         super(node);
-        this.groupElementList = new LinkedList<>();
+        setGroupElementList(new LinkedList<PASVGElement>());
     }
 
     /**
-     * Constructor which receives a node and groupFill, groupStroke, groupWidth
-     * from parent group
+     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke, groupWidth and parentGroup
      *
-     * @param node
-     * @param groupFill
-     * @param groupStroke
-     * @param groupWidth
-     * @param parentGroup
+     * @param node an Element node
+     * @param groupFill fill of its group
+     * @param groupStroke stroke of its group
+     * @param groupWidth stroke width of its group
+     * @param parentGroup the parent group
      */
     public PASVGGroup(Node node, Color groupFill, Color groupStroke, double groupWidth, PASVGGroup parentGroup)
     {
@@ -54,7 +52,7 @@ public class PASVGGroup extends PASVGElement
     }
     
     /**
-     * Constructor create new Group
+     * Creates a new PASVGGroup with existing elements
      * @param elementList 
      */
     public PASVGGroup(LinkedList<PASVGElement> elementList)

@@ -1,12 +1,12 @@
 package model;
 
-import java.awt.Shape;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
  * @author bryantylai/LaiSaiHoo
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This class creates a container which stores the svg tag and all svg elements</p>
  */
 public class PASVGContainer
 {
@@ -14,9 +14,9 @@ public class PASVGContainer
     private LinkedList<PASVGElement> svgContainer;
 
     /**
-     * constructor with only svgTag such that from a newly created svg
+     * Creates a PASVGContainer with only svgTag such that from a newly created svg
      *
-     * @param svgTag
+     * @param svgTag a PASVGTag created based on the svg tag of svg file
      */
     public PASVGContainer(PASVGTag svgTag)
     {
@@ -25,10 +25,10 @@ public class PASVGContainer
     }
 
     /**
-     * constructor with a pre-created list of shapes such that from existing svg
+     * Creates a PASVGContainer with a pre-created list of shapes such that from existing svg
      *
-     * @param svgTag
-     * @param shapes
+     * @param svgTag a PASVGTag created based on the svg tag of svg file
+     * @param shapes list of shapes from svg file
      */
     public PASVGContainer(PASVGTag svgTag, LinkedList<PASVGElement> shapes)
     {
@@ -93,7 +93,7 @@ public class PASVGContainer
     /**
      * Create a new group and add a single PASVGElement to end of svgContainer
      *
-     * @param shape
+     * @param shape a PASVGElement
      * @return true if shape is added, return false otherwise
      */
     public boolean createGroupAndAddShape(PASVGElement shape)
@@ -107,7 +107,7 @@ public class PASVGContainer
     /**
      * Create a new group and add a group of PASVGElement to end of svgContainer
      *
-     * @param shapes
+     * @param shapes list of PASVGElement
      * @return true if list of shapes is added, return false otherwise
      */
     public boolean createGroupAndAddShapes(LinkedList<PASVGElement> shapes)
@@ -124,10 +124,10 @@ public class PASVGContainer
     }
 
     /**
-     * add a single shape to the end of an existing group
+     * Add a single shape to the end of an existing group
      *
-     * @param group
-     * @param shape
+     * @param group existing PASVGGroup
+     * @param shape a PASVGElement
      * @return true if PASVGElement is added to group, return false otherwise
      */
     public boolean addShapeToGroup(PASVGGroup group, PASVGElement shape)
@@ -136,10 +136,10 @@ public class PASVGContainer
     }
 
     /**
-     * add a group of shapes to the end of an existing group
+     * Add a group of shapes to the end of an existing group
      *
-     * @param group
-     * @param shapes
+     * @param group existing PASVGGroup
+     * @param shape list of PASVGElement
      * @return true if list of PASVGElement is added to group, return false
      * otherwise
      */
@@ -149,9 +149,9 @@ public class PASVGContainer
     }
 
     /**
-     * permanently remove an element
+     * Permanently remove an element
      *
-     * @param element
+     * @param element a PASVGElement
      * @return true if successfully removed, return false otherwise
      */
     public boolean removeElement(PASVGElement element)
@@ -163,8 +163,8 @@ public class PASVGContainer
      * Remove a particular PASVGElement from an existing group and add it
      * directly after that group
      *
-     * @param group
-     * @param shapeToRemove
+     * @param group existing PASVGGroup
+     * @param shapeToRemove a PASVGElement
      * @return true if PASVGElement successfully removed from group, return
      * false otherwise
      */
@@ -180,11 +180,11 @@ public class PASVGContainer
     }
 
     /**
-     * remove a list of PASVGElement from an existing group and add the list
+     * Remove a list of PASVGElement from an existing group and add the list
      * directly after that group
      *
-     * @param group
-     * @param shapes
+     * @param group existing PASVGGroup
+     * @param shapes list of PASVGElement
      * @return true if list of PASVGElement successfully removed from group,
      * return false otherwise
      */
@@ -199,9 +199,9 @@ public class PASVGContainer
     }
 
     /**
-     * remove all PASVGElement from an existing group and keep its position
+     * Remove all PASVGElement from an existing group and keep its position
      *
-     * @param group
+     * @param group existing PASVGGroup
      * @return true if all PASVGElement successfully removed from group, return
      * false otherwise
      */
@@ -218,10 +218,10 @@ public class PASVGContainer
     }
 
     /**
-     * move an element to other position
+     * Move an element to other position
      *
-     * @param elementToMove
-     * @param beforeThis
+     * @param elementToMove a PASVGElement 
+     * @param beforeThis a PASVGElement to be placed before
      * @return true if successfully moved, return false otherwise
      */
     public boolean moveElement(PASVGElement elementToMove, PASVGElement beforeThis)
@@ -232,14 +232,13 @@ public class PASVGContainer
         }
 
         return false;
-
     }
 
     /**
-     * move a list of elements to other position
+     * Move a list of elements to other position
      *
-     * @param elementsToMove
-     * @param beforeThis
+     * @param elementsToMove list of PASVGElement
+     * @param beforeThis a PASVGElement to be placed before
      * @return true if successfully moved, return false otherwise
      */
     public boolean moveElements(LinkedList<PASVGElement> elementsToMove, PASVGElement beforeThis)
@@ -252,5 +251,4 @@ public class PASVGContainer
         return false;
 
     }
-
 }

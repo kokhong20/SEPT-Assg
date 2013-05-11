@@ -4,7 +4,9 @@ import java.awt.Color;
 
 /**
  * @author bryantylai
- *
+ * @since 1.0
+ * @version 1.1
+ * <p>This enum provides Color for all available svg colors and also validate and convert color to be readable in JAVA</p>
  */
 public enum PAColor implements PAAttributeConstant {
 	/**

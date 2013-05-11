@@ -16,6 +16,9 @@ import org.w3c.dom.Element;
 
 /**
  * @author bryantylai
+ * @since 1.1
+ * @version 1.1
+ * <p>This class creates a PASVGExport to save into a svg file</p>
  * 
  */
 public class PASVGExport {
@@ -26,9 +29,9 @@ public class PASVGExport {
 	private PASVGContainer svgContainer;
 
 	/**
-	 * 
-	 * @param container
-	 * @param directory
+	 * Creates a new PASVGExport to save all svg elements to a svg file in a specified directory
+	 * @param container a container which contains all svg elements
+	 * @param directory the path directory for the svg file
 	 * @throws ParserConfigurationException
 	 */
 	public PASVGExport(PASVGContainer container, String directory) throws ParserConfigurationException
