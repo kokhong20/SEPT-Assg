@@ -49,7 +49,7 @@ public class PAMainFrame extends JInternalFrame
         super(fileName);
         this.parent = parent;
         this.svgContainer = svgContainer;
-        this.setFileName(fileName);
+        this.fileName = fileName;
         initialize();
         customize();
         setFrameLayout();
@@ -80,13 +80,10 @@ public class PAMainFrame extends JInternalFrame
         box.add(Box.createVerticalGlue());
         box.add(svgPanel);
         box.add(Box.createVerticalGlue());
-        //svgBackPanel.setLayout(new BorderLayout());
-        //svgBackPanel.add(box, BorderLayout.CENTER);
         svgBackPanel.setMinimumSize(minSize);
         svgBackPanel.revalidate();
         svgBackPanel.setBorder(BorderFactory.createLineBorder(new Color(38, 38, 38), 1));
         svgBackPanel.getViewport().setBackground(new Color(38, 38, 38));
-        //mainPanel.setPreferredSize(new Dimension(800, 600));
     }
 
     /**
@@ -110,17 +107,17 @@ public class PAMainFrame extends JInternalFrame
         {
             mainFrameHeight = 500;
         }
-        
+
         if (mainFrameWidth > maxViewWidth)
         {
             mainFrameWidth = maxViewWidth;
         }
-        
+
         if (mainFrameHeight > maxViewHeight)
         {
             mainFrameHeight = maxViewHeight;
         }
-        
+
         if (PASystem.currentOS.indexOf("mac") >= 0)
         {
             int screenWidth = (int) screenResolution.getWidth();
@@ -129,7 +126,7 @@ public class PAMainFrame extends JInternalFrame
             mainFrameWidth += 28;
             mainFrameHeight += 25;
         }
-        
+
         mainFrameHeight = mainFrameHeight + 30 + 24 * 2;
         Dimension mainFrameSize = new Dimension(mainFrameWidth, mainFrameHeight);
 
@@ -144,7 +141,7 @@ public class PAMainFrame extends JInternalFrame
         setBackground(new Color(38, 38, 38));
         setVisible(true);
         setSize(mainFrameSize);
-        setMinimumSize(new Dimension(300,300));
+        setMinimumSize(new Dimension(300, 300));
         setLocation(startPoint);
     }
 
@@ -183,7 +180,7 @@ public class PAMainFrame extends JInternalFrame
         layout.setVerticalGroup(vGroup);
 
         add(mainPanel);
-        
+
     }
 
     public JDesktopPane getParentView()
@@ -191,20 +188,20 @@ public class PAMainFrame extends JInternalFrame
         return this.parent;
     }
 
-	/**
-	 * @return the fileName
-	 */
-	public String getFileName()
-	{
-		return fileName;
-	}
+    /**
+     * @return the fileName
+     */
+    public String getFileName()
+    {
+        return fileName;
+    }
 
-	/**
-	 * @param fileName the fileName to set
-	 */
-	public void setFileName(String fileName)
-	{
-		this.fileName = fileName;
-	}
+    /**
+     * @param fileName the fileName to set
+     */
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
 
 }

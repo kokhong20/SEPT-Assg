@@ -7,15 +7,16 @@ package gui;
 import controller.PAMenuAction.ExitProgram;
 import controller.PAMenuAction.NewFile;
 import controller.PAMenuAction.OpenFile;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,7 +25,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-
 import model.PASystem;
 
 /**
@@ -43,6 +43,7 @@ public class PAStartMenu extends JInternalFrame
      */
     public PAStartMenu(JDesktopPane parent)
     {
+        super("Start Menu");
         this.parent = parent;
         initialize();
         customize();
@@ -61,7 +62,7 @@ public class PAStartMenu extends JInternalFrame
         setJMenuBar(setUpMenuBar());
     }
 
-	/**
+    /**
      *
      * draw Logo to Panel.
      *
@@ -91,43 +92,23 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * creates a new JMenuBar with close Menu
-     * 
+     *
      * @return JMenuBar
      */
     private JMenuBar setUpMenuBar()
     {
-    	return new JMenuBar()
-    	{
-    		public JMenu add(JMenu c)
-    		{
-    			c = new JMenu("Close");
-    	        c.setAction(new ExitProgram(parent));
-				return c;
-    		}
-    	};
-	}
+        return new JMenuBar()
+        {
+            public JMenu add(JMenu c)
+            {
+                c = new JMenu("Close");
+                c.setAction(new ExitProgram(parent));
+                return c;
+            }
 
-    /**
-     *
-     * initialize button and set size, bounds and icon.
-     *
-     * @param img
-     * @param x
-     * @param y
-     * @return JButton
-     */
-    private JButton setUpButtonWithBounds(Image img, int x, int y)
-    {
-        ImageIcon icon = new ImageIcon(img);
-        JButton button = new JButton(icon);
-        button.setBackground(new Color(0, 0, 0, 0));
-        button.setBorderPainted(false);
-        button.setBounds(x, y, img.getWidth(button), img.getHeight(button));
-        button.setVisible(true);
-
-        return button;
+        };
     }
 
     /**
@@ -182,17 +163,19 @@ public class PAStartMenu extends JInternalFrame
         Dimension screenResolution = PASystem.getScreenDimension();
         int screenWidth = (int) screenResolution.getWidth();
         int screenHeight = (int) screenResolution.getHeight();
-        
+
         if (PASystem.currentOS.indexOf("mac") >= 0)
         {
             screenHeight -= 86;
         }
-        
+
         int width = 650;
         int height = 450;
-        int startX = (int) (screenWidth - width)/2;
-        int startY = (int) (screenHeight - height)/2;
+        int startX = (int) (screenWidth - width) / 2;
+        int startY = (int) (screenHeight - height) / 2;
         Point startPoint = new Point(startX, startY);
+        setClosable(true);
+        setResizable(false);
         setSize(width, height);
         setLocation(startPoint);
         setVisible(true);

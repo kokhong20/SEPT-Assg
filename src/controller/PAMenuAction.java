@@ -333,8 +333,6 @@ public abstract class PAMenuAction extends AbstractAction
             PASVGPanel drawPanel = mainFrame.svgPanel;
             PASelectCursorAction selectAllAction = new PASelectCursorAction(
                     drawPanel, virtualButton, mainFrame.attributeBar);
-            PASelectCursorAction.elementTemp.clear();
-            PASelectCursorAction.elementTemp = drawPanel.elementCollection;
             int panelWidth = drawPanel.getWidth();
             int panelHeight = drawPanel.getHeight();
             selectAllAction.startSelect = new Point(0, 0);
@@ -358,17 +356,9 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            JToggleButton virtualButton = new JToggleButton();
             PASVGPanel drawPanel = mainFrame.svgPanel;
-            PASelectCursorAction selectAllAction = new PASelectCursorAction(drawPanel, virtualButton, mainFrame.attributeBar);
             PASelectCursorAction.elementTemp.clear();
-            int panelWidth = drawPanel.getWidth();
-            int panelHeight = drawPanel.getHeight();
-            selectAllAction.startSelect = new Point(0, 0);
-            selectAllAction.endSelect = new Point(panelWidth, panelHeight);
-            selectAllAction.drawBoundsForElements();
-            drawPanel.drawToImage();
-            drawPanel.repaint();
+            drawPanel.reDrawImage(drawPanel.getScale());
         }
 
     }
@@ -508,65 +498,8 @@ public abstract class PAMenuAction extends AbstractAction
             if (selectedList != null)
             {
                 mainList.removeAll(selectedList);
-                drawPanel.drawToImage();
-                drawPanel.repaint();
+                drawPanel.reDrawImage(drawPanel.getScale());
             }
-        }
-
-    }
-
-    public static class ImageSize extends PAMenuAction
-    {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
-
-        public ImageSize(JDesktopPane parent)
-        {
-            super(KeyEvent.VK_I, Event.ALT_MASK, "Image Size...");
-            this.parent = parent;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
-        }
-
-    }
-
-    public static class Viewbox extends PAMenuAction
-    {
-        private JDesktopPane parent;
-        private PAMainFrame onFocusFrame;
-
-        public Viewbox(JDesktopPane parent)
-        {
-            super(KeyEvent.VK_V, Event.ALT_MASK, "Viewbox");
-            this.parent = parent;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            throw new UnsupportedOperationException("Not supported yet."); // To
-            // change
-            // body
-            // of
-            // generated
-            // methods,
-            // choose
-            // Tools
-            // |
-            // Templates.
         }
 
     }

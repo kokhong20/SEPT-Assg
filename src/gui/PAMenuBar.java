@@ -20,6 +20,7 @@ import model.PASystem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem docFile;
     private static JMenuItem groupEdit;
     private static JMenuItem ungroupEdit;
     private static JMenuItem selectAllEdit;
@@ -33,7 +34,6 @@ public class PAMenuBar extends JMenuBar
     private static JMenuItem actualSizeView;
     private JMenu fileMenu;
     private JMenu editMenu;
-    private JMenu imageMenu;
     private JMenu viewMenu;
     private JMenu helpMenu;
     private JMenuItem newFile;
@@ -41,8 +41,6 @@ public class PAMenuBar extends JMenuBar
     private JMenuItem saveFile;
     private JMenuItem saveAsFile;
     private JMenuItem exitFile;
-    private JMenuItem imageSizeImage;
-    private JMenuItem viewBoxImage;
     private JDesktopPane parent;
 
     /**
@@ -138,7 +136,6 @@ public class PAMenuBar extends JMenuBar
     {
         fileMenu = new JMenu("File");
         editMenu = new JMenu("Edit");
-        imageMenu = new JMenu("Image");
         viewMenu = new JMenu("View");
         helpMenu = new JMenu("Help");
     }
@@ -153,6 +150,7 @@ public class PAMenuBar extends JMenuBar
         openFile = new JMenuItem("Open...");
         saveFile = new JMenuItem("Save");
         saveAsFile = new JMenuItem("Save As...");
+        docFile = new JMenuItem("Document Properties");
         exitFile = new JMenuItem("Exit");
 
         // Edit's MenuItem
@@ -165,15 +163,12 @@ public class PAMenuBar extends JMenuBar
         pasteEdit = new JMenuItem("Paste");
         deleteEdit = new JMenuItem("Delete");
 
-        // Image's MenuItem
-        imageSizeImage = new JMenuItem("Image Size");
-        viewBoxImage = new JMenuItem("ViewBox");
-
         // View's MenuItem
         zoomInView = new JMenuItem("Zoom In");
         zoomOutView = new JMenuItem("Zoom Out");
         actualSizeView = new JMenuItem("Actual Size");
         
+        docFile.setEnabled(false);
         groupEdit.setEnabled(false);
         ungroupEdit.setEnabled(false);
         deleteEdit.setEnabled(false);
@@ -193,6 +188,8 @@ public class PAMenuBar extends JMenuBar
         fileMenu.add(saveFile);
         fileMenu.add(saveAsFile);
         fileMenu.addSeparator();
+        fileMenu.add(docFile);
+        fileMenu.addSeparator();
         fileMenu.add(exitFile);
 
         editMenu.add(groupEdit);
@@ -205,9 +202,6 @@ public class PAMenuBar extends JMenuBar
         editMenu.add(copyEdit);
         editMenu.add(pasteEdit);
         editMenu.add(deleteEdit);
-
-        imageMenu.add(imageSizeImage);
-        imageMenu.add(viewBoxImage);
 
         viewMenu.add(zoomInView);
         viewMenu.add(zoomOutView);
@@ -239,7 +233,6 @@ public class PAMenuBar extends JMenuBar
     {
         add(fileMenu);
         add(editMenu);
-        add(imageMenu);
         add(viewMenu);
         add(helpMenu);
     }
@@ -247,6 +240,7 @@ public class PAMenuBar extends JMenuBar
     private void initKeyStroke()
     {
         int keyMask = PASystem.keyMask;
+        docFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, keyMask));
         groupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask));
         ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask|Event.SHIFT_MASK));
         selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
