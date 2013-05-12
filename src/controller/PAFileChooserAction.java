@@ -139,7 +139,7 @@ public class PAFileChooserAction implements ActionListener
         svgWidth = (int) svgTag.getWidth();
         svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
-        PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+        PASVGContainer svgContainer = new PASVGContainer(svgTag, fileName, elementCollection);
         
         return svgContainer;
     }

@@ -15,6 +15,7 @@ import org.w3c.dom.Node;
  */
 public class PASVGTag implements PAAttributeConstant
 {
+    private String unit;
     private double width;
     private double height;
     private double initX;
@@ -49,8 +50,9 @@ public class PASVGTag implements PAAttributeConstant
      */
     public PASVGTag(String width, String height, String unit)
     {
-        setWidth(PAUnit.setUnit(width, DEFAULT_SVG_SIZE));
-        setHeight(PAUnit.setUnit(height, DEFAULT_SVG_SIZE));
+        this.width = PAUnit.setUnit(width, DEFAULT_SVG_SIZE);
+        this.height = PAUnit.setUnit(height, DEFAULT_SVG_SIZE);
+        this.unit = unit;
     }
 
     /**
@@ -129,6 +131,15 @@ public class PASVGTag implements PAAttributeConstant
     private void setHeight(double height)
     {
         this.height = height;
+    }
+    
+    /**
+     * 
+     * @return the unit
+     */
+    public String getUnit()
+    {
+        return unit;
     }
 
     /**

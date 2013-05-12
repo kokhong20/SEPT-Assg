@@ -11,6 +11,7 @@ import java.util.LinkedList;
 public class PASVGContainer
 {
     private PASVGTag svgTag;
+    private String fileName;
     private LinkedList<PASVGElement> svgContainer;
 
     /**
@@ -18,10 +19,11 @@ public class PASVGContainer
      *
      * @param svgTag a PASVGTag created based on the svg tag of svg file
      */
-    public PASVGContainer(PASVGTag svgTag)
+    public PASVGContainer(PASVGTag svgTag, String fileName)
     {
-        setSvgTag(svgTag);
-        setSvgContainer(new LinkedList<PASVGElement>());
+        this.svgTag = svgTag;
+        this.fileName = fileName;
+        this.svgContainer = new LinkedList<>();
     }
 
     /**
@@ -30,10 +32,11 @@ public class PASVGContainer
      * @param svgTag a PASVGTag created based on the svg tag of svg file
      * @param shapes list of shapes from svg file
      */
-    public PASVGContainer(PASVGTag svgTag, LinkedList<PASVGElement> shapes)
+    public PASVGContainer(PASVGTag svgTag, String fileName, LinkedList<PASVGElement> shapes)
     {
-        setSvgTag(svgTag);
-        setSvgContainer(shapes);
+        this.svgTag = svgTag;
+        this.fileName = fileName;
+        this.svgContainer = shapes;
     }
 
     /**
@@ -42,6 +45,15 @@ public class PASVGContainer
     public PASVGTag getSvgTag()
     {
         return svgTag;
+    }
+    
+    /**
+     * 
+     * @return fileName
+     */
+    public String getFileName()
+    {
+        return fileName;
     }
 
     /**

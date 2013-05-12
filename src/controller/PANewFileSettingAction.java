@@ -74,7 +74,7 @@ public class PANewFileSettingAction implements ActionListener
             PASVGTag svgTag = new PASVGTag(width, height, unit);
             svgWidth = (int) svgTag.getWidth();
             svgHeight = (int) svgTag.getHeight();
-            PASVGContainer svgContainer = new PASVGContainer(svgTag);
+            PASVGContainer svgContainer = new PASVGContainer(svgTag, fileName);
             drawToImage();
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
             parent.add(svgDisplay);

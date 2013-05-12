@@ -287,6 +287,39 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    public static class DocumentProperties extends PAMenuAction
+    {
+        private JDesktopPane parent;
+        private PASVGPanel drawPanel;
+
+        public DocumentProperties(PAMainFrame mainFrame)
+        {
+            super(KeyEvent.VK_D, "Document Properties");
+            this.parent = mainFrame.getParentView();
+            this.drawPanel = mainFrame.svgPanel;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            PANewFileSetting documentSetting = new PANewFileSetting(parent);
+            documentSetting.updateDocument(drawPanel.svgContainer);
+
+            try
+            {
+                documentSetting.setSelected(true);
+            }
+            catch (PropertyVetoException ex)
+            {
+                System.err.println(ex.getMessage());
+            }
+            
+            parent.add(documentSetting);
+            documentSetting.toFront();
+        }
+
+    }
+
     /**
      *
      * action class for menu item "Exit"
@@ -366,7 +399,7 @@ public abstract class PAMenuAction extends AbstractAction
     public static class Cut extends PAMenuAction
     {
         private PASVGPanel drawPanel;
-        
+
         public Cut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_X, "Cut");
@@ -381,7 +414,7 @@ public abstract class PAMenuAction extends AbstractAction
             eleList.addAll(PASelectCursorAction.elementTemp);
             Paste.storeElement = eleList;
             mainList.removeAll(eleList);
-            
+
             drawPanel.reDrawImage(drawPanel.getScale());
         }
 
@@ -419,57 +452,53 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             LinkedList<PASVGElement> mainList = drawPanel.elementCollection;
-            
+
             for (int index = storeElement.size() - 1; index >= 0; index--)
             {
                 PASVGElement element = storeElement.get(index);
-                
+
                 if (mainList.contains(element))
                 {
                     cloneElement(element, mainList);
                 }
-                
                 else
                 {
                     mainList.add(element);
                 }
             }
-            
+
             drawPanel.reDrawImage(drawPanel.getScale());
         }
-        
+
         private void cloneElement(PASVGElement element, LinkedList<PASVGElement> mainList)
         {
             PASVGElement cloneEle = null;
-            
+
             if (element instanceof PALine)
             {
-                PALine o = (PALine)element;
-                cloneEle = new PALine(o.getStroke(), o.getStrokeWidth(), 
-                        o.getX1()+5, o.getX2()+5, o.getY1()+5, o.getY2()+5);         
+                PALine o = (PALine) element;
+                cloneEle = new PALine(o.getStroke(), o.getStrokeWidth(),
+                        o.getX1() + 5, o.getX2() + 5, o.getY1() + 5, o.getY2() + 5);
             }
-            
             else if (element instanceof PACircle)
             {
-                PACircle o = (PACircle)element;
-                cloneEle = new PACircle(o.getFill(), o.getStroke(), 
-                        o.getStrokeWidth(), o.getCx()+5, o.getCy()+5, o.getR());
+                PACircle o = (PACircle) element;
+                cloneEle = new PACircle(o.getFill(), o.getStroke(),
+                        o.getStrokeWidth(), o.getCx() + 5, o.getCy() + 5, o.getR());
             }
-            
             else if (element instanceof PARectangle)
             {
-                PARectangle o = (PARectangle)element;
-                cloneEle = new PARectangle(o.getFill(), o.getStroke(), 
-                        o.getStrokeWidth(), o.getX()+5, o.getY()+5, o.getWidth(), o.getHeight());
+                PARectangle o = (PARectangle) element;
+                cloneEle = new PARectangle(o.getFill(), o.getStroke(),
+                        o.getStrokeWidth(), o.getX() + 5, o.getY() + 5, o.getWidth(), o.getHeight());
             }
-            
             else if (element instanceof PASVGGroup)
             {
-                PASVGGroup o = (PASVGGroup)element;
+                PASVGGroup o = (PASVGGroup) element;
                 cloneEle = new PASVGGroup(o.getGroupElementList(), o.getFill(), o.getStroke(),
                         o.getStrokeWidth(), o.getParentGroup(), o.getId());
             }
-            
+
             if (cloneEle != null)
             {
                 mainList.add(cloneEle);
@@ -801,13 +830,13 @@ public abstract class PAMenuAction extends AbstractAction
         }
     }
 
-    public void saveToFile(String filename)
+    public void saveToFile(String fileName)
     {
         // TODO Auto-generated method stub
     	/*
          * Testing PASVGContainer, need to get the container
          */
-        PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), new LinkedList<PASVGElement>());
+        PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), fileName, new LinkedList<PASVGElement>());
         PASVGTag svgTag = svgContainer.getSvgTag();
         LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
 
@@ -831,7 +860,7 @@ public abstract class PAMenuAction extends AbstractAction
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(filename + ".svg"));
+            StreamResult result = new StreamResult(new File(fileName + ".svg"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
@@ -839,7 +868,7 @@ public abstract class PAMenuAction extends AbstractAction
         catch (ParserConfigurationException | TransformerException ex)
         {
             // TODO Auto-generated catch block
-            ex.printStackTrace();
+            System.err.println(ex.getMessage());
         }
     }
 

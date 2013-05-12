@@ -17,6 +17,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import model.PASVGContainer;
+import model.PASVGTag;
 import model.PASystem;
 
 /**
@@ -38,6 +40,10 @@ public class PANewFileSetting extends JInternalFrame
     private JComboBox unitSelection;
     private JDesktopPane parent;
     private PAStartMenu startMenu;
+    private String[] unitList =
+    {
+        "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
+    };
 
     public PANewFileSetting(JDesktopPane parent)
     {
@@ -92,12 +98,26 @@ public class PANewFileSetting extends JInternalFrame
         return textField;
     }
 
+    public void updateDocument(PASVGContainer svgContainer)
+    {
+        PASVGTag svgTag = svgContainer.getSvgTag();
+        setTitle(svgContainer.getFileName());
+        fileNameField.setText(svgContainer.getFileName());
+        fileNameField.setEditable(false);
+        widthField.setText(Double.toString(svgTag.getWidth()));
+        heightField.setText(Double.toString(svgTag.getHeight()));
+
+        for (int index = 0; index >= 8; index++)
+        {
+            if (unitList[index].equals(svgTag.getUnit()))
+            {
+                unitSelection.setSelectedIndex(index);
+            }
+        }
+    }
+
     private void initialize()
     {
-        String[] unitList =
-        {
-            "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
-        };
         formPane = new JPanel();
         fileNameField = setUpTextField();
         widthField = setUpTextField();
@@ -114,8 +134,6 @@ public class PANewFileSetting extends JInternalFrame
 
     private void customize()
     {
-        Dimension textFieldMax = new Dimension(200, 0);
-
         formPane.setSize(new Dimension(380, 250));
         formPane.setBackground(new Color(28, 28, 28, 240));
         formPane.setVisible(true);

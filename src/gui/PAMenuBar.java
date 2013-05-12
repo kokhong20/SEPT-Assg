@@ -60,6 +60,7 @@ public class PAMenuBar extends JMenuBar
 
     public static void updateAction(PAMainFrame mainFrame)
     {
+        PAMenuAction.DocumentProperties docAction = new PAMenuAction.DocumentProperties(mainFrame);
         PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel);
         PAMenuAction.UnGroupAction ungroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel);
         PAMenuAction.SelectAll selectAllAction = new PAMenuAction.SelectAll(mainFrame);
@@ -71,6 +72,7 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        docFile.setAction(docAction);
         groupEdit.setAction(groupAction);
         ungroupEdit.setAction(ungroupAction);
         selectAllEdit.setAction(selectAllAction);
@@ -82,6 +84,7 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setAction(zoomInAction);
         zoomOutView.setAction(zoomOutAction);
         actualSizeView.setAction(actualSizeAction);
+        docFile.setEnabled(true);
         groupEdit.setEnabled(true);
         ungroupEdit.setEnabled(true);
         deselectAllEdit.setEnabled(true);
@@ -97,6 +100,7 @@ public class PAMenuBar extends JMenuBar
 
     public static void removeUpdatedAction()
     {
+        PAMenuAction.RemoveAction removeDocAction = new PAMenuAction.RemoveAction(KeyEvent.VK_D, "Document Properties");
         PAMenuAction.RemoveAction removeGroupAction = new PAMenuAction.RemoveAction(KeyEvent.VK_G, "Group");
         PAMenuAction.RemoveEventAction removeUngroupAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
         PAMenuAction.RemoveAction removeSelectAllAction = new PAMenuAction.RemoveAction(KeyEvent.VK_A, "Select All");
@@ -107,6 +111,7 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
         PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
         PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        docFile.setAction(removeDocAction);
         groupEdit.setAction(removeGroupAction);
         ungroupEdit.setAction(removeUngroupAction);
         selectAllEdit.setAction(removeSelectAllAction);
@@ -117,6 +122,7 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setAction(removeZoomInAction);
         zoomOutView.setAction(removeZoomOutAction);
         actualSizeView.setAction(removeActualSizeAction);
+        docFile.setEnabled(false);
         groupEdit.setEnabled(false);
         ungroupEdit.setEnabled(false);
         selectAllEdit.setEnabled(false);
