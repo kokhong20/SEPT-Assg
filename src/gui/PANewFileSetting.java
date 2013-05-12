@@ -119,7 +119,7 @@ public class PANewFileSetting extends JInternalFrame
         formPane.setSize(new Dimension(380, 250));
         formPane.setBackground(new Color(28, 28, 28, 240));
         formPane.setVisible(true);
-        fileNameField.setText("Untitled-1");
+        fileNameField.setText("Untitled");
         widthField.setText("500");
         heightField.setText("500");
         unitSelection.setSelectedIndex(2);
@@ -141,7 +141,7 @@ public class PANewFileSetting extends JInternalFrame
         {
             newFileSettingAction = new PANewFileSettingAction(parent, this);
         }
-        
+
         okButton.addActionListener(newFileSettingAction);
         cancelButton.addActionListener(newFileSettingAction);
     }
