@@ -39,10 +39,12 @@ public class PATextFieldFormatter implements KeyListener
         if(ke.getKeyChar()>='0' && ke.getKeyChar()<='9')
         {
             textField.setEditable(true);
+            
         }
         else
         {
             textField.setEditable(false);
+            java.awt.Toolkit.getDefaultToolkit().beep();
         }
         
     }
