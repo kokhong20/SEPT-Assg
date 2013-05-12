@@ -11,7 +11,6 @@ import gui.PAStartMenu;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -28,25 +27,27 @@ public class PANewFileSettingAction implements ActionListener
 {
     private int svgWidth;
     private int svgHeight;
+    private boolean checkDrawingKit;
     private BufferedImage svgImage;
     private JDesktopPane parent;
     private PAStartMenu startMenu;
     private PANewFileSetting self;
-    
-    
+
     public PANewFileSettingAction(JDesktopPane parent, PANewFileSetting self)
     {
         this.parent = parent;
         this.self = self;
+        this.checkDrawingKit = false;
     }
-    
+
     public PANewFileSettingAction(JDesktopPane parent, PANewFileSetting self, PAStartMenu startMenu)
     {
         this.parent = parent;
         this.self = self;
         this.startMenu = startMenu;
+        this.checkDrawingKit = false;
     }
-    
+
     private void drawToImage()
     {
         svgImage = new BufferedImage(svgWidth, svgHeight, BufferedImage.TYPE_INT_ARGB);
@@ -63,7 +64,7 @@ public class PANewFileSettingAction implements ActionListener
     {
         if (e.getActionCommand().equals("OK"))
         {
-            HashMap <String, String> textMap = self.getFieldText();
+            HashMap<String, String> textMap = self.getFieldText();
             String fileName = textMap.get("fileName");
             String width = textMap.get("width");
             String height = textMap.get("height");
@@ -76,21 +77,32 @@ public class PANewFileSettingAction implements ActionListener
             PASVGContainer svgContainer = new PASVGContainer(svgTag);
             drawToImage();
             PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
-            PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
             parent.add(svgDisplay);
-            parent.add(drawingKit);
             svgDisplay.toFront();
-            
+
             if (startMenu != null)
             {
                 startMenu.setVisible(false);
                 startMenu.dispose();
             }
+            
+            for (int i = 0; i < parent.getComponentCount(); i++)
+            {
+                if (parent.getComponent(i) instanceof PADrawingKit)
+                {
+                    checkDrawingKit = true;
+                }
+            }
+            if (checkDrawingKit == false)
+            {
+                PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+                parent.add(drawingKit);
+            }
         }
-        
+
         self.setVisible(false);
         self.dispose();
         PAMenuAction.NewFile.newFileSetting = null;
     }
-    
+
 }

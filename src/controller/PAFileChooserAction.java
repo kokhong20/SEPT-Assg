@@ -83,73 +83,65 @@ public class PAFileChooserAction implements ActionListener
         {
             File selectedFile = fileChooser.getSelectedFile();
 
-            String fileName = selectedFile.getName();
-            Document svgDoc = PASVGImport.processFiletoDoc(selectedFile);
+            fileName = selectedFile.getName();
+            svgDoc = PASVGImport.processFiletoDoc(selectedFile);
             boolean check = false;
-			if(svgDoc !=null)
-			{
-            PASVGContainer svgContainer = setUpContainer(svgDoc);
-            PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
-
-            try
-            {
-                svgDisplay.setSelected(true);
-            }
-            catch (PropertyVetoException ex)
-            {
-                System.err.println(ex.getMessage());
-            }
-
-            parent.add(svgDisplay);
-            svgDisplay.toFront();
             
-            if (startMenu != null)
+            if (svgDoc != null)
             {
-                startMenu.setVisible(false);
-                startMenu.dispose();
-            }
-            
-            for(int i=0;i<parent.getComponentCount();i++)
-            {
-                if(parent.getComponent(i) instanceof PADrawingKit)
+                PASVGContainer svgContainer = setUpContainer(svgDoc);
+                PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
+
+                try
                 {
-                    check = true;
+                    svgDisplay.setSelected(true);
                 }
-            }
-            if(check == false)
-            {
-                PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
-                parent.add(drawingKit);
+                catch (PropertyVetoException ex)
+                {
+                    System.err.println(ex.getMessage());
+                }
+
+                parent.add(svgDisplay);
+                svgDisplay.toFront();
+
+                if (startMenu != null)
+                {
+                    startMenu.setVisible(false);
+                    startMenu.dispose();
+                }
+
+                for (int i = 0; i < parent.getComponentCount(); i++)
+                {
+                    if (parent.getComponent(i) instanceof PADrawingKit)
+                    {
+                        check = true;
+                    }
+                }
+                if (check == false)
+                {
+                    PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+                    parent.add(drawingKit);
+                }
+
             }
 
+            // need to do for both Cancel and Open button.
+            frame.setVisible(false);
+            frame.dispose();
+            PAMenuAction.OpenFile.fcInternal = null;
         }
-
-        // need to do for both Cancel and Open button.
-        frame.setVisible(false);
-        frame.dispose();
-        PAMenuAction.OpenFile.fcInternal = null;
-		}
     }
 
-
-
-    
     public PASVGContainer setUpContainer(Document svgDoc)
     {
-        
-
-
         Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
         PASVGTag svgTag = new PASVGTag(svgNode);
-        int svgWidth = (int) svgTag.getWidth();
-        int svgHeight = (int) svgTag.getHeight();
+        svgWidth = (int) svgTag.getWidth();
+        svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
         PASVGContainer svgContainer = new PASVGContainer(svgTag, elementCollection);
+        
         return svgContainer;
-
-
-
     }
+
 }
-
-
