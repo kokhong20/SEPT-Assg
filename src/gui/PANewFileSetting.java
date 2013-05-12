@@ -5,6 +5,7 @@
 package gui;
 
 import controller.PANewFileSettingAction;
+import controller.PATextFieldFormatter;
 import controller.PAUpdateDocAction;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -180,6 +181,9 @@ public class PANewFileSetting extends JInternalFrame
 
         okButton.addActionListener(newFileSettingAction);
         cancelButton.addActionListener(newFileSettingAction);
+        
+        heightField.addKeyListener(new PATextFieldFormatter(heightField));
+        widthField.addKeyListener(new PATextFieldFormatter(widthField));
     }
 
     private void setUpMainLayout()
