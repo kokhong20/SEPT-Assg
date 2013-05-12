@@ -302,8 +302,10 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            PANewFileSetting documentSetting = new PANewFileSetting(parent);
-            documentSetting.updateDocument(drawPanel.svgContainer);
+            PASVGContainer svgContainer = drawPanel.svgContainer;
+            PANewFileSetting documentSetting = new PANewFileSetting();
+            documentSetting.updateDocument(svgContainer);
+            documentSetting.setUpdateDocAction(svgContainer.getSvgTag(), drawPanel);
 
             try
             {

@@ -99,7 +99,7 @@ public class PANewFileSettingAction implements ActionListener
                 parent.add(drawingKit);
             }
         }
-
+        
         self.setVisible(false);
         self.dispose();
         PAMenuAction.NewFile.newFileSetting = null;

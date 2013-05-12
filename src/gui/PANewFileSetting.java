@@ -5,6 +5,7 @@
 package gui;
 
 import controller.PANewFileSettingAction;
+import controller.PAUpdateDocAction;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -45,6 +46,14 @@ public class PANewFileSetting extends JInternalFrame
         "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
     };
 
+    public PANewFileSetting()
+    {
+        initialize();
+        customize();
+        setUpMainLayout();
+        setUpNewFile();
+    }
+    
     public PANewFileSetting(JDesktopPane parent)
     {
         super("New");
@@ -106,14 +115,23 @@ public class PANewFileSetting extends JInternalFrame
         fileNameField.setEditable(false);
         widthField.setText(Double.toString(svgTag.getWidth()));
         heightField.setText(Double.toString(svgTag.getHeight()));
+        unitSelection.setSelectedIndex(2);
+        unitSelection.setEnabled(false);
 
-        for (int index = 0; index >= 8; index++)
-        {
-            if (unitList[index].equals(svgTag.getUnit()))
-            {
-                unitSelection.setSelectedIndex(index);
-            }
-        }
+//        for (int index = 0; index >= 8; index++)
+//        {
+//            if (unitList[index].equals(svgTag.getUnit()))
+//            {
+//                unitSelection.setSelectedIndex(index);
+//            }
+//        }
+    }
+    
+    public void setUpdateDocAction(PASVGTag svgTag, PASVGPanel drawPanel)
+    {
+        PAUpdateDocAction updateDocAction = new PAUpdateDocAction(svgTag, drawPanel, this);
+        okButton.addActionListener(updateDocAction);
+        cancelButton.addActionListener(updateDocAction);
     }
 
     private void initialize()

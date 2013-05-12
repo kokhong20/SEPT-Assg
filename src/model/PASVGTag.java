@@ -50,8 +50,8 @@ public class PASVGTag implements PAAttributeConstant
      */
     public PASVGTag(String width, String height, String unit)
     {
-        this.width = PAUnit.setUnit(width, DEFAULT_SVG_SIZE);
-        this.height = PAUnit.setUnit(height, DEFAULT_SVG_SIZE);
+        this.width = PAUnit.setUnit(width+unit, DEFAULT_SVG_SIZE);
+        this.height = PAUnit.setUnit(height+unit, DEFAULT_SVG_SIZE);
         this.unit = unit;
     }
 
@@ -112,7 +112,7 @@ public class PASVGTag implements PAAttributeConstant
     /**
      * @param width the width to set
      */
-    private void setWidth(double width)
+    public void setWidth(double width)
     {
         this.width = width;
     }
@@ -128,7 +128,7 @@ public class PASVGTag implements PAAttributeConstant
     /**
      * @param height the height to set
      */
-    private void setHeight(double height)
+    public void setHeight(double height)
     {
         this.height = height;
     }
