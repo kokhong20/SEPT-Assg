@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import model.PASVGContainer;
 import model.PASVGTag;
 import model.PASystem;
+import model.PAUnit;
 
 /**
  *
@@ -114,18 +115,20 @@ public class PANewFileSetting extends JInternalFrame
         setTitle(svgContainer.getFileName());
         fileNameField.setText(svgContainer.getFileName());
         fileNameField.setEditable(false);
-        widthField.setText(Double.toString(svgTag.getWidth()));
-        heightField.setText(Double.toString(svgTag.getHeight()));
-        unitSelection.setSelectedIndex(2);
-        unitSelection.setEnabled(false);
+        String oriWidth = Double.toString(svgTag.getWidth());
+        String oriHeight = Double.toString(svgTag.getHeight());
+        double convtWidth = PAUnit.changeUnit(oriWidth, svgTag.getUnit());
+        double convtHeight = PAUnit.changeUnit(oriHeight, svgTag.getUnit());
+        widthField.setText(Double.toString(convtWidth));
+        heightField.setText(Double.toString(convtHeight));
 
-//        for (int index = 0; index >= 8; index++)
-//        {
-//            if (unitList[index].equals(svgTag.getUnit()))
-//            {
-//                unitSelection.setSelectedIndex(index);
-//            }
-//        }
+        for (int index = 0; index <= 8; index++)
+        {
+            if (unitList[index].equals(svgTag.getUnit()))
+            {
+                unitSelection.setSelectedIndex(index);
+            }
+        }
     }
     
     public void setUpdateDocAction(PASVGTag svgTag, PASVGPanel drawPanel)
@@ -133,6 +136,8 @@ public class PANewFileSetting extends JInternalFrame
         PAUpdateDocAction updateDocAction = new PAUpdateDocAction(svgTag, drawPanel, this);
         okButton.addActionListener(updateDocAction);
         cancelButton.addActionListener(updateDocAction);
+        heightField.addKeyListener(new PATextFieldFormatter(heightField));
+        widthField.addKeyListener(new PATextFieldFormatter(widthField));
     }
 
     private void initialize()

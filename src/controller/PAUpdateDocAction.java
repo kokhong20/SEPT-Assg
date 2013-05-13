@@ -9,7 +9,9 @@ import gui.PASVGPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import static model.PAAttributeConstant.DEFAULT_SVG_SIZE;
 import model.PASVGTag;
+import model.PAUnit;
 
 /**
  *
@@ -34,13 +36,18 @@ public class PAUpdateDocAction implements ActionListener
         if (e.getActionCommand().equals("OK"))
         {
             HashMap<String, String> textMap = self.getFieldText();
-            double width = Double.parseDouble(textMap.get("width"));
-            double height = Double.parseDouble(textMap.get("height"));
-            svgTag.setWidth(width);
-            svgTag.setHeight(height);
+            String width = textMap.get("width");
+            String height = textMap.get("height");
+            String unit = textMap.get("unit");
+            width = width.concat(unit);
+            height = height.concat(unit);
+            svgTag.setWidth(PAUnit.setUnit(width, DEFAULT_SVG_SIZE));
+            svgTag.setHeight(PAUnit.setUnit(height, DEFAULT_SVG_SIZE));
+            svgTag.setUnit(unit);
             drawPanel.zoomInOutSVG(drawPanel.getScale());
+            drawPanel.reDrawImage(drawPanel.getScale());
         }
-        
+
         self.setVisible(false);
         self.dispose();
     }
