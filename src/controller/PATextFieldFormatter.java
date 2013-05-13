@@ -15,12 +15,11 @@ public class PATextFieldFormatter implements KeyListener
     @Override
     public void keyPressed(KeyEvent ke)
     {
-        System.out.println("press" + ke.getKeyCode());
         if(ke.getKeyChar()>='0' && ke.getKeyChar()<='9')
         {
             textField.setEditable(true);
         }
-        else if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_TAB|| ke.getKeyCode() == KeyEvent.VK_DELETE)
+        else if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_TAB|| ke.getKeyCode() == KeyEvent.VK_DELETE || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)
         {
             textField.setEditable(true);
         }
