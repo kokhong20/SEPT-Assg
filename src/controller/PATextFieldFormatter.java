@@ -15,13 +15,23 @@ public class PATextFieldFormatter implements KeyListener
     @Override
     public void keyPressed(KeyEvent ke)
     {
+        System.out.println("press" + ke.getKeyCode());
         if(ke.getKeyChar()>='0' && ke.getKeyChar()<='9')
+        {
+            textField.setEditable(true);
+        }
+        else if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_TAB|| ke.getKeyCode() == KeyEvent.VK_DELETE)
+        {
+            textField.setEditable(true);
+        }
+        else if (!textField.getText().contains(".") && ke.getKeyChar() == '.')
         {
             textField.setEditable(true);
         }
         else
         {
             textField.setEditable(false);
+            java.awt.Toolkit.getDefaultToolkit().beep();
         }
         
     }
@@ -41,10 +51,15 @@ public class PATextFieldFormatter implements KeyListener
             textField.setEditable(true);
             
         }
+        else if (!textField.getText().contains(".") && ke.getKeyChar() == '.')
+        {
+            
+            textField.setEditable(true);
+        }
         else
         {
             textField.setEditable(false);
-            java.awt.Toolkit.getDefaultToolkit().beep();
+            
         }
         
     }
