@@ -17,13 +17,13 @@ public interface PAAttributeConstant {
 	public int FILL = 1; // SVG elements fill
 	public Color DEFAULT_FILL = Color.black; // SVG default fill color
 	public Color DEFAULT_STROKE = PAColor.none.getColor(); // SVG default stroke color
-	public int UNIT_EM = 0 ;
-	public int UNIT_EX = 1;
-	public int UNIT_PX = 2;
-	public int UNIT_IN = 3;
-	public int UNIT_CM = 4;
-	public int UNIT_MM = 5;
-	public int UNIT_PT = 6;
-	public int UNIT_PC = 7;
-	public int UNIT_PERCENT = 8;
+//	public int UNIT_EM = 0 ;
+//	public int UNIT_EX = 1;
+//	public int UNIT_PX = 2;
+//	public int UNIT_IN = 3;
+//	public int UNIT_CM = 4;
+//	public int UNIT_MM = 5;
+//	public int UNIT_PT = 6;
+//	public int UNIT_PC = 7;
+//	public int UNIT_PERCENT = 8;
 }

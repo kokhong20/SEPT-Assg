@@ -83,30 +83,29 @@ public class PAUnit implements PAAttributeConstant
         }
     }
 
-    public static double changeUnit(String att, int constant)
+    public static double changeUnit(String att, String constant)
     {
         if (!att.isEmpty())
         {
             switch (constant)
             {
-            case UNIT_EM:
+            case "em":
                 return convertToEM(calculate(removeUnits(att)));
-            case UNIT_EX:
+            case "ex":
                 return convertToEX(calculate(removeUnits(att)));
-            case UNIT_PX:
+            case "px":
                 return convertToPX(calculate(removeUnits(att)));
-            case UNIT_IN:
+            case "in":
                 return convertToIN(calculate(removeUnits(att)));
-            case UNIT_CM:
+            case "cm":
                 return convertToCM(calculate(removeUnits(att)));
-            case UNIT_MM:
+            case "mm":
                 return convertToMM(calculate(removeUnits(att)));
-            case UNIT_PT:
+            case "pt":
                 return convertToPT(calculate(removeUnits(att)));
-            case UNIT_PC:
+            case "pc":
                 return convertToPC(calculate(removeUnits(att)));
-            case UNIT_PERCENT:
-                return convertToPercent(calculate(removeUnits(att)));
+
             }
         }
         return 0;

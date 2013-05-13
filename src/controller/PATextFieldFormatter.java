@@ -5,6 +5,13 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author SaiHoo
+ * @version 1.1
+ * @since 1.1
+ *
+ */
 public class PATextFieldFormatter implements KeyListener
 {
     private JTextField textField;
@@ -13,7 +20,7 @@ public class PATextFieldFormatter implements KeyListener
     {
         this.textField = textField;
     }
-
+    
     @Override
     public void keyPressed(KeyEvent ke)
     {
