@@ -4,9 +4,6 @@
 package model;
 
 import java.awt.Color;
-import static model.PAAttributeConstant.DEFAULT_STROKE_WIDTH;
-import static model.PAAttributeConstant.FILL;
-import static model.PAAttributeConstant.STROKE;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

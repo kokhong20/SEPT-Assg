@@ -23,7 +23,7 @@ public class PASVGGroup extends PASVGElement
      */
     public PASVGGroup()
     {
-        setGroupElementList(new LinkedList<PASVGElement>());
+        this.groupElementList = new LinkedList<>();
     }
 
     /**
@@ -33,7 +33,7 @@ public class PASVGGroup extends PASVGElement
     public PASVGGroup(Node node)
     {
         super(node);
-        setGroupElementList(new LinkedList<PASVGElement>());
+        this.groupElementList = new LinkedList<>();
     }
 
     /**
@@ -133,73 +133,4 @@ public class PASVGGroup extends PASVGElement
     {
         return groupElementList;
     }
-
-    /**
-     * @param groupElementList the groupElementList to set
-     */
-    private void setGroupElementList(LinkedList<PASVGElement> groupElementList)
-    {
-        this.groupElementList = groupElementList;
-    }
-
-    /**
-     * add a new element to group
-     *
-     * @param element PASVGElement to add
-     * @return true if successfully added to groupElementList, return false
-     * otherwise
-     */
-    public boolean addNewElementToGroup(PASVGElement element)
-    {
-        return groupElementList.add(element);
-    }
-
-    /**
-     * add a new list of elements to group
-     *
-     * @param elementsList list of PASVGElements to add
-     * @return true if successfully added to groupElementList, return false
-     * otherwise
-     */
-    public boolean addNewElementsToGroup(LinkedList<PASVGElement> elementsList)
-    {
-        return groupElementList.addAll(elementsList);
-    }
-
-    /**
-     * remove a specific element from PASVGGroup
-     *
-     * @param element PASVGElement to remove
-     * @return true if successfully removed from groupElementList, return false
-     * otherwise
-     */
-    public boolean removeElementFromGroup(PASVGElement element)
-    {
-        return groupElementList.remove(element);
-    }
-
-    /**
-     * remove a specific list of element from PASVGGroup
-     *
-     * @param elementList list of PASVGElement to remove
-     * @return true if successfully removed from groupElementList, return false
-     * otherwise
-     */
-    public boolean removeElementsFromGroup(LinkedList<PASVGElement> elementsList)
-    {
-        return groupElementList.removeAll(elementsList);
-    }
-
-    /**
-     * remove all elements from PASVGGroup
-     *
-     * @return all elements removed from PASVGGroup
-     */
-    public LinkedList<PASVGElement> removeAllElementsFromGroup()
-    {
-        LinkedList<PASVGElement> elements = groupElementList;
-        groupElementList.clear();
-        return elements;
-    }
-
 }
