@@ -25,6 +25,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
@@ -184,12 +185,9 @@ public abstract class PAMenuAction extends AbstractAction
             {
                 fcInternal = new JInternalFrame("Open...");
                 JFileChooser fileChooser = new JFileChooser();
-                FileFilter allFilter = new FileNameExtensionFilter("All files",
-                        "svg", "xml");
-                FileFilter svgFilter = new FileNameExtensionFilter("SVG files",
-                        "svg");
-                FileFilter xmlFilter = new FileNameExtensionFilter("XML files",
-                        "xml");
+                FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
+                FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
+                FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
                 Dimension screenResolution = PASystem.getScreenDimension();
                 PAFileChooserAction fcAction;
 
@@ -210,6 +208,8 @@ public abstract class PAMenuAction extends AbstractAction
                 fileChooser.setFileFilter(xmlFilter);
                 fileChooser.setFileFilter(svgFilter);
                 fileChooser.setFileFilter(allFilter);
+                fcInternal.setClosable(true);
+                fcInternal.setResizable(false);
                 fcInternal.add(fileChooser);
                 fcInternal.pack();
 
@@ -267,22 +267,55 @@ public abstract class PAMenuAction extends AbstractAction
      */
     public static class SaveAsFile extends PAMenuAction
     {
+        protected static JInternalFrame fcInternal;
         private JDesktopPane parent;
-        private JInternalFrame onFocusFrame;
+        private PAMainFrame mainFrame;
 
-        public SaveAsFile(JDesktopPane parent)
+        public SaveAsFile(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As...");
-            this.parent = parent;
+            this.mainFrame = mainFrame;
+            this.parent = mainFrame.getParentView();
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            /*
-             * Need to replace argument, prompt user file name first
-             */
-            saveToFile("");
+            if (fcInternal == null)
+            {
+                fcInternal = new JInternalFrame("Save As...");
+                JFileChooser fileChooser = new JFileChooser();
+                FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
+                FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
+                PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
+                PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, svgContainer);
+                fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                fileChooser.setFileFilter(xmlFilter);
+                fileChooser.setFileFilter(svgFilter);
+                fileChooser.addActionListener(saveFileAction);
+                fcInternal.add(fileChooser);
+                fcInternal.pack();
+                Dimension screenResolution = PASystem.getScreenDimension();
+                int startX = (int) (screenResolution.getWidth() - fcInternal
+                        .getWidth()) / 2;
+                int startY = (int) (screenResolution.getHeight() - fcInternal
+                        .getHeight()) / 2;
+                Point startPoint = new Point(startX, startY);
+                fcInternal.setLocation(startPoint);
+                fcInternal.setClosable(true);
+                fcInternal.setResizable(false);
+                fcInternal.setVisible(true);
+                parent.add(fcInternal);
+            }
+
+            try
+            {
+                fcInternal.setSelected(true);
+            }
+            catch (PropertyVetoException ex)
+            {
+                System.err.println(ex.getMessage());
+            }
         }
 
     }
@@ -315,7 +348,7 @@ public abstract class PAMenuAction extends AbstractAction
             {
                 System.err.println(ex.getMessage());
             }
-            
+
             parent.add(documentSetting);
             documentSetting.toFront();
         }

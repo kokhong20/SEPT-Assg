@@ -20,6 +20,8 @@ import model.PASystem;
  */
 public class PAMenuBar extends JMenuBar
 {
+    private static JMenuItem saveFile;
+    private static JMenuItem saveAsFile;
     private static JMenuItem docFile;
     private static JMenuItem groupEdit;
     private static JMenuItem ungroupEdit;
@@ -38,8 +40,6 @@ public class PAMenuBar extends JMenuBar
     private JMenu helpMenu;
     private JMenuItem newFile;
     private JMenuItem openFile;
-    private JMenuItem saveFile;
-    private JMenuItem saveAsFile;
     private JMenuItem exitFile;
     private JDesktopPane parent;
 
@@ -60,6 +60,8 @@ public class PAMenuBar extends JMenuBar
 
     public static void updateAction(PAMainFrame mainFrame)
     {
+        //PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(mainFrame);
+        PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(mainFrame);
         PAMenuAction.DocumentProperties docAction = new PAMenuAction.DocumentProperties(mainFrame);
         PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel);
         PAMenuAction.UnGroupAction ungroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel);
@@ -72,6 +74,8 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        //saveFile.setAction(saveAction);
+        saveAsFile.setAction(saveAsAction);
         docFile.setAction(docAction);
         groupEdit.setAction(groupAction);
         ungroupEdit.setAction(ungroupAction);
@@ -84,6 +88,8 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setAction(zoomInAction);
         zoomOutView.setAction(zoomOutAction);
         actualSizeView.setAction(actualSizeAction);
+        saveFile.setEnabled(true);
+        saveAsFile.setEnabled(true);
         docFile.setEnabled(true);
         groupEdit.setEnabled(true);
         ungroupEdit.setEnabled(true);
@@ -222,13 +228,9 @@ public class PAMenuBar extends JMenuBar
     {
         PAMenuAction.NewFile newAction = new PAMenuAction.NewFile(parent);
         PAMenuAction.OpenFile openAction = new PAMenuAction.OpenFile(parent);
-        PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(parent);
-        PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(parent);
         PAMenuAction.ExitProgram exitAction = new PAMenuAction.ExitProgram(parent);
         newFile.setAction(newAction);
         openFile.setAction(openAction);
-        saveFile.setAction(saveAction);
-        saveAsFile.setAction(saveAsAction);
         exitFile.setAction(exitAction);
     }
 

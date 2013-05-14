@@ -86,7 +86,7 @@ public class PAFileChooserAction implements ActionListener
             fileName = selectedFile.getName();
             svgDoc = PASVGImport.processFiletoDoc(selectedFile);
             boolean check = false;
-            
+
             if (svgDoc != null)
             {
                 PASVGContainer svgContainer = setUpContainer(svgDoc);
@@ -124,12 +124,12 @@ public class PAFileChooserAction implements ActionListener
                 }
 
             }
-
-            // need to do for both Cancel and Open button.
-            frame.setVisible(false);
-            frame.dispose();
-            PAMenuAction.OpenFile.fcInternal = null;
         }
+
+        // need to do for both Cancel and Open button.
+        frame.setVisible(false);
+        frame.dispose();
+        PAMenuAction.OpenFile.fcInternal = null;
     }
 
     public PASVGContainer setUpContainer(Document svgDoc)
@@ -140,7 +140,7 @@ public class PAFileChooserAction implements ActionListener
         svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
         PASVGContainer svgContainer = new PASVGContainer(svgTag, fileName, elementCollection);
-        
+
         return svgContainer;
     }
 
