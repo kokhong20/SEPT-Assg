@@ -159,14 +159,6 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * @param id the id to set
-     */
-    public void setId(String id)
-    {
-        this.id = id;
-    }
-
-    /**
      * @return the fill
      */
     public Color getFill()
@@ -220,14 +212,6 @@ public abstract class PASVGElement implements PAAttributeConstant
     public Node getNode()
     {
         return node;
-    }
-
-    /**
-     * @param node the node to set
-     */
-    public void setNode(Node node)
-    {
-        this.node = node;
     }
 
     /**
