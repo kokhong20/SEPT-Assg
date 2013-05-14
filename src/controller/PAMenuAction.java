@@ -860,7 +860,7 @@ public abstract class PAMenuAction extends AbstractAction
 		public void actionPerformed(ActionEvent e)
 		{
 			// TODO Auto-generated method stub
-			PASystem.setCurrentResource(PASystem.allLanguages.get(languageToSet));
+			PASystem.setCurrentResource(languageToSet);
 			/*
 			 * e.GetSource() returns a null, dunno why?
 			 */

@@ -21,24 +21,16 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
-	public static LinkedHashMap<String, String> allLanguages;
-	static
-	{
-		allLanguages = new LinkedHashMap<String, String>();
-		allLanguages.put("English (US)", "en_US");
-		allLanguages.put("Malay (Malaysia)", "my_MY");
-	}
 	
 	private static LinkedHashMap<String, ResourceBundle> allResources;
 	static
     {
 		allResources = new LinkedHashMap<String, ResourceBundle>();
-		allResources.put("en_US", ResourceBundle.getBundle("resources/en_US"));
-		allResources.put("my_MY", ResourceBundle.getBundle("resources/my_MY"));
+		allResources.put("English (US)", ResourceBundle.getBundle("resources/en_US"));
+		allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/my_MY"));
     }
 
-	public static ResourceBundle currentResource = ResourceBundle.getBundle("resources/my_MY");
-//	public static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "my_MY"));
+	private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "my_MY"));
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -47,7 +39,15 @@ public class PASystem
     private static final double screenSize = Math.sqrt((screenDimension.height * screenDimension.width));
     private static final double screenRatio = (screenResolution / screenSize) + 1;
     private static final double dotsPerInch = screenResolution * screenRatio;
-    
+
+	/**
+	 * @return the allResources
+	 */
+	public static LinkedHashMap<String, ResourceBundle> getAllResources()
+	{
+		return allResources;
+	}
+
     /**
      * Change current ResourceBundle based on language set
      * @param language the language set by user

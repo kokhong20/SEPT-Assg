@@ -159,11 +159,11 @@ public class PAMenuBar extends JMenuBar
      */
     private void initMenu()
     {
-		fileMenu = new JMenu(PASystem.currentResource.getString("File"));
-		editMenu = new JMenu(PASystem.currentResource.getString("Edit"));
-		viewMenu = new JMenu(PASystem.currentResource.getString("View"));
-		helpMenu = new JMenu(PASystem.currentResource.getString("Help"));
-		languageMenu = new JMenu(PASystem.currentResource.getString("Language"));
+		fileMenu = new JMenu(PASystem.getWord("File"));
+		editMenu = new JMenu(PASystem.getWord("Edit"));
+		viewMenu = new JMenu(PASystem.getWord("View"));
+		helpMenu = new JMenu(PASystem.getWord("Help"));
+		languageMenu = new JMenu(PASystem.getWord("Language"));
     }
 
     /**
@@ -172,27 +172,27 @@ public class PAMenuBar extends JMenuBar
     private void initMenuItem()
     {
         // File's MenuItem
-        newFile = new JMenuItem(PASystem.currentResource.getString("New..."));
-        openFile = new JMenuItem(PASystem.currentResource.getString("Open..."));
-        saveFile = new JMenuItem(PASystem.currentResource.getString("Save"));
-        saveAsFile = new JMenuItem(PASystem.currentResource.getString("SaveAs..."));
-        docFile = new JMenuItem(PASystem.currentResource.getString("DocumentProperties"));
-        exitFile = new JMenuItem(PASystem.currentResource.getString("Exit"));
+        newFile = new JMenuItem(PASystem.getWord("New..."));
+        openFile = new JMenuItem(PASystem.getWord("Open..."));
+        saveFile = new JMenuItem(PASystem.getWord("Save"));
+        saveAsFile = new JMenuItem(PASystem.getWord("SaveAs..."));
+        docFile = new JMenuItem(PASystem.getWord("DocumentProperties"));
+        exitFile = new JMenuItem(PASystem.getWord("Exit"));
 
         // Edit's MenuItem
-        groupEdit = new JMenuItem(PASystem.currentResource.getString("Group"));
-        ungroupEdit = new JMenuItem(PASystem.currentResource.getString("Ungroup"));
-        selectAllEdit = new JMenuItem(PASystem.currentResource.getString("SelectAll"));
-        deselectAllEdit = new JMenuItem(PASystem.currentResource.getString("DeselectAll"));
-        cutEdit = new JMenuItem(PASystem.currentResource.getString("Cut"));
-        copyEdit = new JMenuItem(PASystem.currentResource.getString("Copy"));
-        pasteEdit = new JMenuItem(PASystem.currentResource.getString("Paste"));
-        deleteEdit = new JMenuItem(PASystem.currentResource.getString("Delete"));
+        groupEdit = new JMenuItem(PASystem.getWord("Group"));
+        ungroupEdit = new JMenuItem(PASystem.getWord("Ungroup"));
+        selectAllEdit = new JMenuItem(PASystem.getWord("SelectAll"));
+        deselectAllEdit = new JMenuItem(PASystem.getWord("DeselectAll"));
+        cutEdit = new JMenuItem(PASystem.getWord("Cut"));
+        copyEdit = new JMenuItem(PASystem.getWord("Copy"));
+        pasteEdit = new JMenuItem(PASystem.getWord("Paste"));
+        deleteEdit = new JMenuItem(PASystem.getWord("Delete"));
 
         // View's MenuItem
-        zoomInView = new JMenuItem(PASystem.currentResource.getString("ZoomIn"));
-        zoomOutView = new JMenuItem(PASystem.currentResource.getString("ZoomOut"));
-        actualSizeView = new JMenuItem(PASystem.currentResource.getString("ActualSize"));
+        zoomInView = new JMenuItem(PASystem.getWord("ZoomIn"));
+        zoomOutView = new JMenuItem(PASystem.getWord("ZoomOut"));
+        actualSizeView = new JMenuItem(PASystem.getWord("ActualSize"));
         
         docFile.setEnabled(false);
         groupEdit.setEnabled(false);
@@ -205,7 +205,7 @@ public class PAMenuBar extends JMenuBar
         /*
          * 
          */
-        Set<String> languageSet = PASystem.allLanguages.keySet();
+        Set<String> languageSet = PASystem.getAllResources().keySet();
         Iterator<String> languageIterator = languageSet.iterator();
         languages = new JMenuItem[languageSet.size()];
         int index = 0;
@@ -314,33 +314,33 @@ public class PAMenuBar extends JMenuBar
 		// TODO Auto-generated method stub
 		
 		// All Menu
-		fileMenu.setText(PASystem.currentResource.getString("File"));
-		editMenu.setText(PASystem.currentResource.getString("Edit"));
-		viewMenu.setText(PASystem.currentResource.getString("View"));
-		helpMenu.setText(PASystem.currentResource.getString("Help"));
-		languageMenu.setText(PASystem.currentResource.getString("Language"));
+		fileMenu.setText(PASystem.getWord("File"));
+		editMenu.setText(PASystem.getWord("Edit"));
+		viewMenu.setText(PASystem.getWord("View"));
+		helpMenu.setText(PASystem.getWord("Help"));
+		languageMenu.setText(PASystem.getWord("Language"));
 
         // File's MenuItem
-        newFile.setText(PASystem.currentResource.getString("New..."));
-        openFile.setText(PASystem.currentResource.getString("Open..."));
-        saveFile.setText(PASystem.currentResource.getString("Save"));
-        saveAsFile.setText(PASystem.currentResource.getString("SaveAs..."));
-        docFile.setText(PASystem.currentResource.getString("DocumentProperties"));
-        exitFile.setText(PASystem.currentResource.getString("Exit"));
+        newFile.setText(PASystem.getWord("New..."));
+        openFile.setText(PASystem.getWord("Open..."));
+        saveFile.setText(PASystem.getWord("Save"));
+        saveAsFile.setText(PASystem.getWord("SaveAs..."));
+        docFile.setText(PASystem.getWord("DocumentProperties"));
+        exitFile.setText(PASystem.getWord("Exit"));
 
         // Edit's MenuItem
-        groupEdit.setText(PASystem.currentResource.getString("Group"));
-        ungroupEdit.setText(PASystem.currentResource.getString("Ungroup"));
-        selectAllEdit.setText(PASystem.currentResource.getString("SelectAll"));
-        deselectAllEdit.setText(PASystem.currentResource.getString("DeselectAll"));
-        cutEdit.setText(PASystem.currentResource.getString("Cut"));
-        copyEdit.setText(PASystem.currentResource.getString("Copy"));
-        pasteEdit.setText(PASystem.currentResource.getString("Paste"));
-        deleteEdit.setText(PASystem.currentResource.getString("Delete"));
+        groupEdit.setText(PASystem.getWord("Group"));
+        ungroupEdit.setText(PASystem.getWord("Ungroup"));
+        selectAllEdit.setText(PASystem.getWord("SelectAll"));
+        deselectAllEdit.setText(PASystem.getWord("DeselectAll"));
+        cutEdit.setText(PASystem.getWord("Cut"));
+        copyEdit.setText(PASystem.getWord("Copy"));
+        pasteEdit.setText(PASystem.getWord("Paste"));
+        deleteEdit.setText(PASystem.getWord("Delete"));
 
         // View's MenuItem
-        zoomInView.setText(PASystem.currentResource.getString("ZoomIn"));
-        zoomOutView.setText(PASystem.currentResource.getString("ZoomOut"));
-        actualSizeView.setText(PASystem.currentResource.getString("ActualSize"));
+        zoomInView.setText(PASystem.getWord("ZoomIn"));
+        zoomOutView.setText(PASystem.getWord("ZoomOut"));
+        actualSizeView.setText(PASystem.getWord("ActualSize"));
 	}
 }
