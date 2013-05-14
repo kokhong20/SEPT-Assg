@@ -25,29 +25,18 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
-import static javax.swing.JFileChooser.SAVE_DIALOG;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import model.PASVGContainer;
 import model.PASVGElement;
 import model.PASVGGroup;
 import model.PARectangle;
 import model.PALine;
 import model.PACircle;
-import model.PASVGTag;
 import model.PASystem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -854,7 +843,7 @@ public abstract class PAMenuAction extends AbstractAction
         while (iterator.hasNext())
         {
             PASVGElement element = iterator.next();
-            System.out.println(element);
+            
             if (element instanceof PARectangle)
             {
                 PARectangle saveRect = (PARectangle) element;

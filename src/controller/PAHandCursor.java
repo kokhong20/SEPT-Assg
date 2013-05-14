@@ -26,7 +26,6 @@ public class PAHandCursor extends PADrawingShapeAction
             PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
-        System.out.println(drawPanel.getScale());
     }
 
     @Override

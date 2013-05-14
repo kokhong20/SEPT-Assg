@@ -75,9 +75,9 @@ public class PAStartMenu extends JInternalFrame
                 try
                 {
                     Image background = ImageIO.read(new File("resources/background.png"));
-                    Image img = ImageIO.read(new File("resources/MainLogo.png"));
+                    Image img = ImageIO.read(new File("resources/MainLogo2.png"));
                     g.drawImage(background, 0, 0, 650, 450, null);
-                    g.drawImage(img, 154, 20, 341, 160, null);
+                    g.drawImage(img, 149, 20, 352, 157, null);
                 }
                 catch (IOException ex)
                 {
@@ -128,6 +128,24 @@ public class PAStartMenu extends JInternalFrame
             {
                 String imgPath = "resources/OpenImage.png";
                 setImageIcon(imgPath, openFileButton, "Open File");
+            }
+
+        });
+        
+        newFileButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                String imgPath = "resources/NewFileHover.png";
+                setImageIcon(imgPath, newFileButton, "Open File");
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                String imgPath = "resources/NewFile.png";
+                setImageIcon(imgPath, newFileButton, "Open File");
             }
 
         });

@@ -119,14 +119,24 @@ public class PASaveFileChooserAction implements ActionListener
             }
             else if (element instanceof PASVGGroup)
             {
-                System.out.println("Entered");
-
                 PASVGGroup saveGroup = (PASVGGroup) element;
 
                 Element group = doc.createElement("g");
-                group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
-                group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
-                group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
+                
+                if (saveGroup.getFill() != null)
+                {
+                    group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
+                }
+                
+                if (saveGroup.getStroke() != null)
+                {
+                    group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
+                }
+                
+                if (saveGroup.getStrokeWidth() != 0.0)
+                {
+                    group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
+                }
 
                 LinkedList<PASVGElement> groupElements = saveGroup.getGroupElementList();
 

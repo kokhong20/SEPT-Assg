@@ -282,8 +282,6 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
     private LinkedList<PASVGElement> iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
     {
-        System.out.println("start  :" + start);
-        System.out.println("end  :" + end);
         LinkedList<PASVGElement> elementArray = new LinkedList<>();
         Rectangle2D.Double rectPoint = drawPanel.makeRectangle(start.x, start.y, end.x, end.y);
         scale = drawPanel.getScale();
