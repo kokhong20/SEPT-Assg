@@ -6,10 +6,15 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+
 import org.w3c.dom.Document;
+
 import controller.PAFileChooserAction;
 import model.PASVGContainer;
 import model.PASVGImport;
@@ -51,6 +56,15 @@ public class PARootView extends JFrame
         
         }
         setUpRootView();
+        /*
+         * Alt+F4 doesn't close application, use this to closes application not using exit function from menu bar
+         */
+        this.addWindowListener(new WindowAdapter(){
+        	public void windowClosing(WindowEvent e)
+        	{
+        		System.exit(0);
+        	}
+        });
     }
 
     /**

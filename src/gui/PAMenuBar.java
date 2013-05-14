@@ -25,14 +25,6 @@ import model.PASystem;
  */
 public class PAMenuBar extends JMenuBar
 {
-    /*
-     * Temporarily put here until further notice from groupmates
-     */
-	private JMenu languageMenu;
-    private static JMenuItem[] languages;
-    /*
-     * Temporarily put here until further notice from groupmates
-     */
     private static JMenuItem saveFile;
     private static JMenuItem saveAsFile;
     private static JMenuItem docFile;
@@ -51,9 +43,11 @@ public class PAMenuBar extends JMenuBar
     private JMenu editMenu;
     private JMenu viewMenu;
     private JMenu helpMenu;
+	private JMenu languageMenu;
     private JMenuItem newFile;
     private JMenuItem openFile;
     private JMenuItem exitFile;
+    private JMenuItem[] languages;
     private JDesktopPane parent;
 
     /**
