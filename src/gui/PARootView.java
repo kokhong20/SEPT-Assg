@@ -77,7 +77,7 @@ public class PARootView extends JFrame
         Document svgDoc = PASVGImport.processFiletoDoc(cmdFile);
         if(svgDoc !=null)
         {
-        PASVGContainer svgContainer = cmd.setUpContainer(svgDoc);
+        PASVGContainer svgContainer = cmd.setUpContainer(svgDoc, cmdFile);
         PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer, fileName);
         rootView.add(svgDisplay);
         PADrawingKit drawingKit = new PADrawingKit(svgDisplay);

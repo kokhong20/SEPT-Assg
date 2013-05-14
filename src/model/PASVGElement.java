@@ -120,7 +120,6 @@ public abstract class PASVGElement implements PAAttributeConstant
             double groupWidth, PASVGGroup parentGroup, String id)
     {
         // TODO Auto-generated constructor stub
-        Element element = (Element) node;
         this.fill = groupFill;
         this.stroke = groupStroke;
         this.strokeWidth = groupWidth;

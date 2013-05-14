@@ -241,26 +241,74 @@ public abstract class PAMenuAction extends AbstractAction
      */
     public static class SaveFile extends PAMenuAction
     {
+        protected static JInternalFrame fcInternal;
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
 
-        public SaveFile(JDesktopPane parent)
+        public SaveFile(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_S, "Save");
-            this.parent = parent;
+            this.onFocusFrame = mainFrame;
+            this.parent = mainFrame.getParentView();
         }
-
+        
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            /*
-             * Need to replace argument, doesnt prompt user, just save
-             */
-            saveToFile("");
+        	File svgFile = null;
+        	PASVGContainer container = onFocusFrame.svgPanel.svgContainer;
+        	/*
+        	 * If saving file is an existing svg
+        	 */
+        	if((svgFile = container.getSvgFile()) != null)
+        	{
+                PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, null, fcInternal, container);
+                saveFileAction.saveToFile(svgFile, container);
+        	}
+        	/*
+        	 * If saving file is a new svg
+        	 */
+        	else
+        	{
+                if (fcInternal == null)
+                {
+                    fcInternal = new JInternalFrame("Save");
+                    JFileChooser fileChooser = new JFileChooser();
+                    FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
+                    FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
+                    PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, container);
+                    fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                    fileChooser.setFileFilter(xmlFilter);
+                    fileChooser.setFileFilter(svgFilter);
+                    fileChooser.addActionListener(saveFileAction);
+                    fcInternal.add(fileChooser);
+                    fcInternal.pack();
+                    Dimension screenResolution = PASystem.getScreenDimension();
+                    int startX = (int) (screenResolution.getWidth() - fcInternal
+                            .getWidth()) / 2;
+                    int startY = (int) (screenResolution.getHeight() - fcInternal
+                            .getHeight()) / 2;
+                    Point startPoint = new Point(startX, startY);
+                    fcInternal.setLocation(startPoint);
+                    fcInternal.setClosable(true);
+                    fcInternal.setResizable(false);
+                    fcInternal.setVisible(true);
+                    parent.add(fcInternal);
+                }
+
+                try
+                {
+                    fcInternal.setSelected(true);
+                }
+                catch (PropertyVetoException ex)
+                {
+                    System.err.println(ex.getMessage());
+                }
+        	}
         }
 
     }
-
+    
     /**
      *
      * action class for menu item "Save As..."
@@ -281,14 +329,19 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
+        	File svgFile = null;
+        	PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
             if (fcInternal == null)
             {
                 fcInternal = new JInternalFrame("Save As...");
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                 FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
-                PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
                 PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, svgContainer);
+                if((svgFile = svgContainer.getSvgFile()) != null)
+                {
+                	fileChooser.setCurrentDirectory(svgFile);
+                }
                 fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
                 fileChooser.setFileFilter(xmlFilter);
                 fileChooser.setFileFilter(svgFilter);
@@ -865,46 +918,46 @@ public abstract class PAMenuAction extends AbstractAction
         }
     }
 
-    public void saveToFile(String fileName)
-    {
-        // TODO Auto-generated method stub
-    	/*
-         * Testing PASVGContainer, need to get the container
-         */
-        PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), fileName, new LinkedList<PASVGElement>());
-        PASVGTag svgTag = svgContainer.getSvgTag();
-        LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
-
-        try
-        {
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-            Document doc = docBuilder.newDocument();
-
-            Element svg = doc.createElement("svg");
-            svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
-            svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
-            svg.setAttribute("fill", String.valueOf(svgTag.getFill()));
-            svg.setAttribute("stroke", String.valueOf(svgTag.getStroke()));
-            svg.setAttribute("stroke-width", String.valueOf(svgTag.getStrokeWidth()));
-            doc.appendChild(svg);
-
-            iterateList(doc, svg, elements);
-
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(fileName + ".svg"));
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            transformer.transform(source, result);
-        }
-        catch (ParserConfigurationException | TransformerException ex)
-        {
-            // TODO Auto-generated catch block
-            System.err.println(ex.getMessage());
-        }
-    }
+//    public void saveToFile(String fileName)
+//    {
+//        // TODO Auto-generated method stub
+//    	/*
+//         * Testing PASVGContainer, need to get the container
+//         */
+//        PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), fileName, new LinkedList<PASVGElement>());
+//        PASVGTag svgTag = svgContainer.getSvgTag();
+//        LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
+//
+//        try
+//        {
+//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//
+//            Document doc = docBuilder.newDocument();
+//
+//            Element svg = doc.createElement("svg");
+//            svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
+//            svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
+//            svg.setAttribute("fill", String.valueOf(svgTag.getFill()));
+//            svg.setAttribute("stroke", String.valueOf(svgTag.getStroke()));
+//            svg.setAttribute("stroke-width", String.valueOf(svgTag.getStrokeWidth()));
+//            doc.appendChild(svg);
+//
+//            iterateList(doc, svg, elements);
+//
+//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
+//            DOMSource source = new DOMSource(doc);
+//            StreamResult result = new StreamResult(new File(fileName + ".svg"));
+//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+//            transformer.transform(source, result);
+//        }
+//        catch (ParserConfigurationException | TransformerException ex)
+//        {
+//            // TODO Auto-generated catch block
+//            System.err.println(ex.getMessage());
+//        }
+//    }
 
 }

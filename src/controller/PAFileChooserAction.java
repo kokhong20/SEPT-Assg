@@ -89,7 +89,7 @@ public class PAFileChooserAction implements ActionListener
 
             if (svgDoc != null)
             {
-                PASVGContainer svgContainer = setUpContainer(svgDoc);
+                PASVGContainer svgContainer = setUpContainer(svgDoc, selectedFile);
                 PAMainFrame svgDisplay = new PAMainFrame(parent, svgContainer, fileName);
 
                 try
@@ -132,14 +132,14 @@ public class PAFileChooserAction implements ActionListener
         PAMenuAction.OpenFile.fcInternal = null;
     }
 
-    public PASVGContainer setUpContainer(Document svgDoc)
+    public PASVGContainer setUpContainer(Document svgDoc, File svgFile)
     {
         Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
         PASVGTag svgTag = new PASVGTag(svgNode);
         svgWidth = (int) svgTag.getWidth();
         svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
-        PASVGContainer svgContainer = new PASVGContainer(svgTag, fileName, elementCollection);
+        PASVGContainer svgContainer = new PASVGContainer(svgFile, svgTag, fileName, elementCollection);
 
         return svgContainer;
     }

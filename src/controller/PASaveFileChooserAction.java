@@ -57,7 +57,7 @@ public class PASaveFileChooserAction implements ActionListener
         if (!e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
         {
             File selectedFile = fileChooser.getSelectedFile();
-            saveToFile(selectedFile.getName(), svgContainer);
+            saveToFile(selectedFile, svgContainer);
         }
 
         frame.setVisible(false);
@@ -73,7 +73,7 @@ public class PASaveFileChooserAction implements ActionListener
         while (iterator.hasNext())
         {
             PASVGElement element = iterator.next();
-            System.out.println(element);
+
             if (element instanceof PARectangle)
             {
                 PARectangle saveRect = (PARectangle) element;
@@ -137,13 +137,10 @@ public class PASaveFileChooserAction implements ActionListener
         }
     }
 
-    public void saveToFile(String fileName, PASVGContainer svgContainer)
+    public void saveToFile(File file, PASVGContainer svgContainer)
     {
         // TODO Auto-generated method stub
-    	/*
-         * Testing PASVGContainer, need to get the container
-         */
-        //PASVGContainer svgContainer = new PASVGContainer(new PASVGTag("500", "500", "px"), fileName, new LinkedList<PASVGElement>());
+    	
         PASVGTag svgTag = svgContainer.getSvgTag();
         LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
 
@@ -167,7 +164,16 @@ public class PASaveFileChooserAction implements ActionListener
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(fileName + ".svg"));
+            
+            StreamResult result = null;
+            if(file.getPath().contains(".svg"))
+            { 
+                result = new StreamResult(file);
+            }
+            else
+            {
+            	result = new StreamResult(file + ".svg");
+            }
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);

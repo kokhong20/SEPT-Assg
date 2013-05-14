@@ -60,7 +60,7 @@ public class PAMenuBar extends JMenuBar
 
     public static void updateAction(PAMainFrame mainFrame)
     {
-        //PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(mainFrame);
+        PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(mainFrame);
         PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(mainFrame);
         PAMenuAction.DocumentProperties docAction = new PAMenuAction.DocumentProperties(mainFrame);
         PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel);
@@ -74,7 +74,7 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
         PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
         PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
-        //saveFile.setAction(saveAction);
+        saveFile.setAction(saveAction);
         saveAsFile.setAction(saveAsAction);
         docFile.setAction(docAction);
         groupEdit.setAction(groupAction);

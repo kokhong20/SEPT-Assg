@@ -1,6 +1,9 @@
 package model;
 
+import java.io.File;
 import java.util.LinkedList;
+
+import org.w3c.dom.Document;
 
 /**
  * @author bryantylai/LaiSaiHoo
@@ -10,6 +13,7 @@ import java.util.LinkedList;
  */
 public class PASVGContainer
 {
+	private File svgFile;
     private PASVGTag svgTag;
     private String fileName;
     private LinkedList<PASVGElement> svgContainer;
@@ -32,8 +36,9 @@ public class PASVGContainer
      * @param svgTag a PASVGTag created based on the svg tag of svg file
      * @param shapes list of shapes from svg file
      */
-    public PASVGContainer(PASVGTag svgTag, String fileName, LinkedList<PASVGElement> shapes)
+    public PASVGContainer(File svgFile, PASVGTag svgTag, String fileName, LinkedList<PASVGElement> shapes)
     {
+    	this.svgFile = svgFile;
         this.svgTag = svgTag;
         this.fileName = fileName;
         this.svgContainer = shapes;
@@ -63,4 +68,12 @@ public class PASVGContainer
     {
         return svgContainer;
     }
+	
+	/**
+	 * @return the svgFile
+	 */
+	public File getSvgFile()
+	{
+		return svgFile;
+	}
 }
