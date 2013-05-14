@@ -12,11 +12,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -78,9 +75,9 @@ public class PAStartMenu extends JInternalFrame
                 try
                 {
                     Image background = ImageIO.read(new File("resources/background.png"));
-                    Image img = ImageIO.read(new File("resources/mainLogo 128x128.png"));
+                    Image img = ImageIO.read(new File("resources/MainLogo.png"));
                     g.drawImage(background, 0, 0, 650, 450, null);
-                    g.drawImage(img, 80, 20, 180, 180, null);
+                    g.drawImage(img, 154, 20, 341, 160, null);
                 }
                 catch (IOException ex)
                 {
@@ -117,14 +114,32 @@ public class PAStartMenu extends JInternalFrame
      */
     private void setUpButton()
     {
+        openFileButton.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                String imgPath = "resources/OpenImageHover.png";
+                setImageIcon(imgPath, openFileButton, "Open File");
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                String imgPath = "resources/OpenImage.png";
+                setImageIcon(imgPath, openFileButton, "Open File");
+            }
+
+        });
+        
         NewFile newAction = new NewFile(parent, this);
         OpenFile openAction = new OpenFile(parent, this);
         newFileButton.setAction(newAction);
         openFileButton.setAction(openAction);
-        setImageIcon("resources/openFile 150x150.png", openFileButton, "Open File");
-        setImageIcon("resources/newFile 150x150.png", newFileButton, "New File");
-        openFileButton.setBounds(386, 226, 150, 150);
-        newFileButton.setBounds(86, 226, 150, 150);
+        setImageIcon("resources/OpenImage.png", openFileButton, "Open File");
+        setImageIcon("resources/NewFile.png", newFileButton, "New File");
+        openFileButton.setBounds(380, 235, 164, 122);
+        newFileButton.setBounds(100, 235, 122, 122);
         mainPanel.add(openFileButton);
         mainPanel.add(newFileButton);
     }
