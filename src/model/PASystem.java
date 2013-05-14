@@ -41,11 +41,11 @@ public class PASystem
     private static final double dotsPerInch = screenResolution * screenRatio;
 
 	/**
-	 * @return the allResources
+	 * @return the key of allResources
 	 */
-	public static LinkedHashMap<String, ResourceBundle> getAllResources()
+	public static Set<String> getAllResources()
 	{
-		return allResources;
+		return allResources.keySet();
 	}
 
     /**
