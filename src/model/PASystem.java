@@ -4,6 +4,11 @@ import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -16,6 +21,24 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
+	public static LinkedHashMap<String, String> allLanguages;
+	static
+	{
+		allLanguages = new LinkedHashMap<String, String>();
+		allLanguages.put("English (US)", "en_US");
+		allLanguages.put("Malay (Malaysia)", "my_MY");
+	}
+	
+	private static LinkedHashMap<String, ResourceBundle> allResources;
+	static
+    {
+		allResources = new LinkedHashMap<String, ResourceBundle>();
+		allResources.put("en_US", ResourceBundle.getBundle("resources/en_US"));
+		allResources.put("my_MY", ResourceBundle.getBundle("resources/my_MY"));
+    }
+
+	public static ResourceBundle currentResource = ResourceBundle.getBundle("resources/my_MY");
+//	public static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "my_MY"));
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -24,7 +47,26 @@ public class PASystem
     private static final double screenSize = Math.sqrt((screenDimension.height * screenDimension.width));
     private static final double screenRatio = (screenResolution / screenSize) + 1;
     private static final double dotsPerInch = screenResolution * screenRatio;
-
+    
+    /**
+     * Change current ResourceBundle based on language set
+     * @param language the language set by user
+     */
+    public static void setCurrentResource(String language)
+    {
+    	currentResource = allResources.get(language);
+    }
+    
+    /**
+     * Get the word based on current ResourceBundle
+     * @param key
+     * @return the translated word
+     */
+    public static String getWord(String key)
+    {
+    	return currentResource.getString(key);
+    }
+    
     /**
      * @return the currentOS
      */
