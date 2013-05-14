@@ -3,18 +3,13 @@
  */
 package controller;
 
-import gui.PADrawingItem;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
-
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import javax.swing.JViewport;
@@ -31,7 +26,7 @@ public class PAHandCursor extends PADrawingShapeAction
             PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
-
+        System.out.println(drawPanel.getScale());
     }
 
     @Override
