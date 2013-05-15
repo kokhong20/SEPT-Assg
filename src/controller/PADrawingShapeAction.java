@@ -68,6 +68,7 @@ public abstract class PADrawingShapeAction extends AbstractAction
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        scale = drawPanel.getScale();
         drawPanel.reDrawImage(scale);
         if (button.isSelected())
         {
