@@ -30,7 +30,7 @@ public class PASystem
 		allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/my_MY"));
     }
 
-	private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "my_MY"));
+	private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "en_US"));
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();

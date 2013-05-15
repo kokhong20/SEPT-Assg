@@ -42,9 +42,6 @@ import model.PALine;
 import model.PACircle;
 import model.PASystem;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 /**
  *
  * @author LiHao
@@ -54,9 +51,9 @@ public abstract class PAMenuAction extends AbstractAction
     protected int keyMask;
     protected KeyStroke keyStroke;
 
-    public PAMenuAction()
+    public PAMenuAction(String name)
     {
-    	
+        putValue(NAME, name);
     }
     
     /**
@@ -113,13 +110,13 @@ public abstract class PAMenuAction extends AbstractAction
 
         public NewFile(JDesktopPane parent)
         {
-            super(KeyEvent.VK_N, "New");
+            super(KeyEvent.VK_N, PASystem.getWord("New..."));
             this.parent = parent;
         }
 
         public NewFile(JDesktopPane parent, PAStartMenu startMenu)
         {
-            super(KeyEvent.VK_N, "New");
+            super(KeyEvent.VK_N, PASystem.getWord("New..."));
             this.parent = parent;
             this.startMenu = startMenu;
         }
@@ -165,13 +162,13 @@ public abstract class PAMenuAction extends AbstractAction
 
         public OpenFile(JDesktopPane parent)
         {
-            super(KeyEvent.VK_O, "Open...");
+            super(KeyEvent.VK_O, PASystem.getWord("Open..."));
             this.parent = parent;
         }
 
         public OpenFile(JDesktopPane parent, PAStartMenu startMenu)
         {
-            super(KeyEvent.VK_O, "Open...");
+            super(KeyEvent.VK_O, PASystem.getWord("Open..."));
             this.parent = parent;
             this.startMenu = startMenu;
         }
@@ -181,7 +178,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             if (fcInternal == null)
             {
-                fcInternal = new JInternalFrame("Open...");
+                fcInternal = new JInternalFrame(PASystem.getWord("Open..."));
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
@@ -245,7 +242,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public SaveFile(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_S, "Save");
+            super(KeyEvent.VK_S, PASystem.getWord("Save..."));
             this.onFocusFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
@@ -270,7 +267,7 @@ public abstract class PAMenuAction extends AbstractAction
         	{
                 if (fcInternal == null)
                 {
-                    fcInternal = new JInternalFrame("Save");
+                    fcInternal = new JInternalFrame(PASystem.getWord("Save..."));
                     JFileChooser fileChooser = new JFileChooser();
                     FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                     FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
@@ -319,7 +316,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public SaveAsFile(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As...");
+            super(KeyEvent.VK_S, Event.SHIFT_MASK, PASystem.getWord("SaveAs..."));
             this.mainFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
@@ -331,7 +328,7 @@ public abstract class PAMenuAction extends AbstractAction
         	PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
             if (fcInternal == null)
             {
-                fcInternal = new JInternalFrame("Save As...");
+                fcInternal = new JInternalFrame(PASystem.getWord("SaveAs..."));
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                 FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
@@ -378,7 +375,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public DocumentProperties(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_D, "Document Properties");
+            super(KeyEvent.VK_D, PASystem.getWord("DocumentProperties"));
             this.parent = mainFrame.getParentView();
             this.drawPanel = mainFrame.svgPanel;
         }
@@ -416,7 +413,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public ExitProgram(JDesktopPane parent)
         {
-            super(KeyEvent.VK_W, "Exit");
+            super(KeyEvent.VK_W, PASystem.getWord("Exit"));
             this.parent = parent;
         }
 
@@ -424,7 +421,7 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             int selectedOption = JOptionPane.showConfirmDialog(parent,
-                    "Are You Sure You Want To Exit?", "Exit",
+                    "Are You Sure You Want To Exit?", PASystem.getWord("Exit"),
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
             if (selectedOption == 0)
@@ -441,7 +438,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public SelectAll(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_A, "Select All");
+            super(KeyEvent.VK_A, PASystem.getWord("SelectAll"));
             this.mainFrame = mainFrame;
         }
 
@@ -468,7 +465,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public DeselectAll(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
+            super(KeyEvent.VK_A, Event.SHIFT_MASK, PASystem.getWord("DeselectAll"));
             this.mainFrame = mainFrame;
         }
 
@@ -488,7 +485,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public Cut(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_X, "Cut");
+            super(KeyEvent.VK_X, PASystem.getWord("Cut"));
             this.drawPanel = drawPanel;
         }
 
@@ -510,7 +507,7 @@ public abstract class PAMenuAction extends AbstractAction
     {
         public Copy()
         {
-            super(KeyEvent.VK_C, "Copy");
+            super(KeyEvent.VK_C, PASystem.getWord("Copy"));
         }
 
         @Override
@@ -530,7 +527,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public Paste(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_V, "Paste");
+            super(KeyEvent.VK_V, PASystem.getWord("Paste"));
             this.drawPanel = drawPanel;
         }
 
@@ -600,7 +597,7 @@ public abstract class PAMenuAction extends AbstractAction
         public Delete(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_BACK_SPACE, KeyStroke.getKeyStroke(
-                    KeyEvent.VK_BACK_SPACE, 0), "Delete");
+                    KeyEvent.VK_BACK_SPACE, 0), PASystem.getWord("Delete"));
             this.drawPanel = drawPanel;
         }
 
@@ -626,7 +623,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public ZoomIn(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_PLUS, "Zoom In");
+            super(KeyEvent.VK_PLUS, PASystem.getWord("ZoomIn"));
             this.drawPanel = drawPanel;
         }
 
@@ -666,7 +663,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public ZoomOut(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_MINUS, "Zoom Out");
+            super(KeyEvent.VK_MINUS, PASystem.getWord("ZoomOut"));
             this.drawPanel = drawPanel;
         }
 
@@ -706,7 +703,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public ActualSize(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_0, "Actual Size");
+            super(KeyEvent.VK_0, PASystem.getWord("ActualSize"));
             this.drawPanel = drawPanel;
         }
 
@@ -726,7 +723,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public GroupAction(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_G, "Group");
+            super(KeyEvent.VK_G, PASystem.getWord("Group"));
             this.drawPanel = drawPanel;
         }
 
@@ -768,7 +765,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public UnGroupAction(PASVGPanel drawPanel)
         {
-            super(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
+            super(KeyEvent.VK_G, Event.SHIFT_MASK, PASystem.getWord("Ungroup"));
             this.drawPanel = drawPanel;
         }
 
@@ -851,6 +848,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public LanguageAction(PAMenuBar menuBar, String languageToSet)
         {
+            super(languageToSet);
             this.menuBar = menuBar;
             this.languageToSet = languageToSet;
         }
