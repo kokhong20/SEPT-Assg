@@ -3,13 +3,18 @@
  */
 package controller;
 
+import gui.PADrawingItem;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
+
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import javax.swing.JViewport;
@@ -26,6 +31,7 @@ public class PAHandCursor extends PADrawingShapeAction
             PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
+
     }
 
     @Override
@@ -42,8 +48,8 @@ public class PAHandCursor extends PADrawingShapeAction
                 startDrag = new Point((int) (e.getX() / scale),
                         (int) (e.getY() / scale));
                 endDrag = startDrag;
-                drawPanel.repaint();
-
+                drawPanel.reDrawImage(scale);
+                System.out.println(scale);
             }
 
             @Override
@@ -51,7 +57,7 @@ public class PAHandCursor extends PADrawingShapeAction
             {
                 startDrag = null;
                 endDrag = null;
-                drawPanel.repaint();
+                drawPanel.reDrawImage(scale);
             }
 
             @Override
@@ -69,7 +75,7 @@ public class PAHandCursor extends PADrawingShapeAction
 
                 component.scrollRectToVisible(new Rectangle(viewPoint, vp
                         .getSize()));
-                drawPanel.repaint();
+                drawPanel.reDrawImage(scale);
             }
 
         };
@@ -84,6 +90,7 @@ public class PAHandCursor extends PADrawingShapeAction
             drawPanel.addMouseListener(mousePanAction);
             drawPanel.addMouseMotionListener(mousePanAction);
         }
+        System.out.println(scale);
     }
 
 }
