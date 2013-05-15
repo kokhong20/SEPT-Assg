@@ -17,20 +17,21 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author bryantylai
  * @since 1.0
  * @version 1.1
- * <p>This class is for the settings based on screen and operating system of the user's machine</p>
+ * <p>This class is for the settings based on screen and operating system of the
+ * user's machine</p>
  */
 public class PASystem
 {
-	
-	private static LinkedHashMap<String, ResourceBundle> allResources;
-	static
+    private static LinkedHashMap<String, ResourceBundle> allResources;
+
+    static
     {
-		allResources = new LinkedHashMap<String, ResourceBundle>();
-		allResources.put("English (US)", ResourceBundle.getBundle("resources/en_US"));
-		allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/my_MY"));
+        allResources = new LinkedHashMap<String, ResourceBundle>();
+        allResources.put("English (US)", ResourceBundle.getBundle("resources/en_US"));
+        allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/my_MY"));
     }
 
-	private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "en_US"));
+    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "en_US"));
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -40,33 +41,35 @@ public class PASystem
     private static final double screenRatio = (screenResolution / screenSize) + 1;
     private static final double dotsPerInch = screenResolution * screenRatio;
 
-	/**
-	 * @return the key of allResources
-	 */
-	public static Set<String> getAllResources()
-	{
-		return allResources.keySet();
-	}
+    /**
+     * @return the key of allResources
+     */
+    public static Set<String> getAllResources()
+    {
+        return allResources.keySet();
+    }
 
     /**
      * Change current ResourceBundle based on language set
+     *
      * @param language the language set by user
      */
     public static void setCurrentResource(String language)
     {
-    	currentResource = allResources.get(language);
+        currentResource = allResources.get(language);
     }
-    
+
     /**
      * Get the word based on current ResourceBundle
+     *
      * @param key
      * @return the translated word
      */
     public static String getWord(String key)
     {
-    	return currentResource.getString(key);
+        return currentResource.getString(key);
     }
-    
+
     /**
      * @return the currentOS
      */
@@ -146,9 +149,10 @@ public class PASystem
             return path += "\\" + selectedFile.getName();
         }
     }
-    
+
     /**
      * Set Key mask based on currentOS
+     *
      * @return mask constant based on currentOS
      */
     public static int setKeyMask()
@@ -196,4 +200,5 @@ public class PASystem
             System.err.println(ex.getMessage());
         }
     }
+
 }
