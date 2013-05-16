@@ -5,7 +5,6 @@ import java.awt.Event;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -30,8 +29,8 @@ public class PASystem
         allResources.put("English (US)", ResourceBundle.getBundle("resources/PA_en_US"));
         allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/PA_ms_MY"));
         allResources.put("Japanese", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Mandarin (Simplified)", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Mandarin (Traditional)", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Mandarin (Simplified)", ResourceBundle.getBundle("resources/PA_zh_CN"));
+        allResources.put("Mandarin (Traditional)", ResourceBundle.getBundle("resources/PA_zh_TW"));
         allResources.put("Tamil", ResourceBundle.getBundle("resources/PA_ms_MY"));
         allResources.put("Korean", ResourceBundle.getBundle("resources/PA_ms_MY"));
         allResources.put("Thai", ResourceBundle.getBundle("resources/PA_ms_MY"));
@@ -39,7 +38,7 @@ public class PASystem
         allResources.put("Spanish", ResourceBundle.getBundle("resources/PA_ms_MY"));
     }
 
-    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/PA_en_US");
+    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/PA_zh_TW");
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
