@@ -1,32 +1,25 @@
 /**
- * 
+ *
  */
 package controller;
 
-import gui.PADrawingItem;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
-
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import javax.swing.JViewport;
 
 /**
  * @author SaiHoo
- * 
+ *
  */
-
 public class PAHandCursor extends PADrawingShapeAction
 {
-
     public PAHandCursor(PASVGPanel drawPanel, JToggleButton button,
             PAShapeBar shapeBar)
     {
@@ -39,7 +32,6 @@ public class PAHandCursor extends PADrawingShapeAction
     {
         MouseAdapter mousePanAction = new MouseAdapter()
         {
-
             @Override
             public void mousePressed(MouseEvent e)
             {
