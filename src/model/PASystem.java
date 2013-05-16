@@ -27,11 +27,19 @@ public class PASystem
     static
     {
         allResources = new LinkedHashMap<String, ResourceBundle>();
-        allResources.put("English (US)", ResourceBundle.getBundle("resources/en_US"));
-        allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/my_MY"));
+        allResources.put("English (US)", ResourceBundle.getBundle("resources/PA_en_US"));
+        allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Japanese", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Mandarin (Simplified)", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Mandarin (Traditional)", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Tamil", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Korean", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("Thai", ResourceBundle.getBundle("resources/PA_ms_MY"));
+        allResources.put("French", ResourceBundle.getBundle("resources/PA_fr_FR"));
+        allResources.put("Spanish", ResourceBundle.getBundle("resources/PA_ms_MY"));
     }
 
-    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/" + (allResources.containsKey(Locale.getDefault()) ? Locale.getDefault() : "en_US"));
+    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/PA_en_US");
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
