@@ -10,8 +10,7 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- * @since 1.0
- * @version 1.1
+ * @since 23 April 2013
  * <p>This class provides a skeletal implementation for all svg elements</p>
  */
 public abstract class PASVGElement implements PAAttributeConstant
@@ -32,8 +31,8 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Creates a PASVGElement which receives fill, stroke and strokeWidth for rectangle and
-     * circle object
+     * Creates a PASVGElement which receives fill, stroke and strokeWidth for
+     * rectangle and circle object
      *
      * @param fill fill of a svg element
      * @param stroke stroke of a svg element
@@ -49,7 +48,8 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Creates a PASVGElement which receives stoke and strokeWidth for line object
+     * Creates a PASVGElement which receives stoke and strokeWidth for line
+     * object
      *
      * @param stroke stroke of a svg element
      * @param strokeWidth stroke width of a svg element
@@ -79,8 +79,8 @@ public abstract class PASVGElement implements PAAttributeConstant
     }
 
     /**
-     * Creates a PASVGElement which receives a node and groupFill, groupStroke, groupWidth
-     * from parent group
+     * Creates a PASVGElement which receives a node and groupFill, groupStroke,
+     * groupWidth from parent group
      *
      * @param node an Element node
      * @param groupFill fill of its group
@@ -104,12 +104,12 @@ public abstract class PASVGElement implements PAAttributeConstant
         this.parentGroup = parentGroup;
         this.id = (element.hasAttribute("id") ? ((Element) node).getAttribute("id") : "");
     }
-    
+
     /**
-     * 
+     *
      * Copy a PASVGElement which receives groupFill, groupStroke, groupWidth, id
      * from another group
-     * 
+     *
      * @param groupFill fill of its group
      * @param groupStroke stroke of its group
      * @param groupWidth stroke width of its group

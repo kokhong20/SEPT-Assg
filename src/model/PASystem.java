@@ -14,8 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * @author bryantylai
- * @since 1.0
- * @version 1.1
+ * @since 9 April 2013
  * <p>This class is for the settings based on screen and operating system of the
  * user's machine</p>
  */

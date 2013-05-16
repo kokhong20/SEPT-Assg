@@ -4,22 +4,22 @@ import java.io.File;
 import java.util.LinkedList;
 
 //import org.w3c.dom.Document;
-
 /**
  * @author bryantylai/LaiSaiHoo
- * @since 1.0
- * @version 1.1
- * <p>This class creates a container which stores the svg tag and all svg elements</p>
+ * @since 9 April 2013
+ * <p>This class creates a container which stores the svg tag and all svg
+ * elements</p>
  */
 public class PASVGContainer
 {
-	private File svgFile;
+    private File svgFile;
     private PASVGTag svgTag;
     private String fileName;
     private LinkedList<PASVGElement> svgContainer;
 
     /**
-     * Creates a PASVGContainer with only svgTag such that from a newly created svg
+     * Creates a PASVGContainer with only svgTag such that from a newly created
+     * svg
      *
      * @param svgTag a PASVGTag created based on the svg tag of svg file
      */
@@ -31,14 +31,15 @@ public class PASVGContainer
     }
 
     /**
-     * Creates a PASVGContainer with a pre-created list of shapes such that from existing svg
+     * Creates a PASVGContainer with a pre-created list of shapes such that from
+     * existing svg
      *
      * @param svgTag a PASVGTag created based on the svg tag of svg file
      * @param shapes list of shapes from svg file
      */
     public PASVGContainer(File svgFile, PASVGTag svgTag, String fileName, LinkedList<PASVGElement> shapes)
     {
-    	this.svgFile = svgFile;
+        this.svgFile = svgFile;
         this.svgTag = svgTag;
         this.fileName = fileName;
         this.svgContainer = shapes;
@@ -51,9 +52,9 @@ public class PASVGContainer
     {
         return svgTag;
     }
-    
+
     /**
-     * 
+     *
      * @return fileName
      */
     public String getFileName()
@@ -68,12 +69,13 @@ public class PASVGContainer
     {
         return svgContainer;
     }
-	
-	/**
-	 * @return the svgFile
-	 */
-	public File getSvgFile()
-	{
-		return svgFile;
-	}
+
+    /**
+     * @return the svgFile
+     */
+    public File getSvgFile()
+    {
+        return svgFile;
+    }
+
 }
