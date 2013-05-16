@@ -35,7 +35,7 @@ public class PAFileChooserAction implements ActionListener
     private JDesktopPane parent;
     private JFileChooser fileChooser;
     private JInternalFrame frame;
-    private PASVGImport svgImport;
+//    private PASVGImport svgImport;
     private PAStartMenu startMenu;
     private String fileName;
     private Document svgDoc;

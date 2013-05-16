@@ -71,16 +71,7 @@ public class PAUnit implements PAAttributeConstant
                 return Double.parseDouble(calculate(att));
             }
         }
-
-        switch (constant)
-        {
-        case DEFAULT_SVG_SIZE:
-            return DEFAULT_SVG_SIZE;
-        case DEFAULT_STROKE_WIDTH:
-            return DEFAULT_STROKE_WIDTH;
-        default:
-            return DEFAULT_LENGTH;
-        }
+        return constant;
     }
 
     public static double changeUnit(String att, String constant)

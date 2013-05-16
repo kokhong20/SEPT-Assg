@@ -15,9 +15,9 @@ import controller.PAShapeBarAction.FillCheckAction;
 import controller.PAShapeBarAction.StrokeCheckAction;
 
 /**
- *
+ * 
  * @author KokHong
- *
+ * 
  */
 public class PAShapeBar extends JPanel
 {
@@ -32,6 +32,7 @@ public class PAShapeBar extends JPanel
 
     /**
      * constructor to define PAShapeBar for PAMainFrame
+     * 
      * @param mainFrame
      */
     public PAShapeBar(PAMainFrame mainFrame)
@@ -50,7 +51,8 @@ public class PAShapeBar extends JPanel
     {
         this.setBackground(new Color(53, 53, 53));
         this.setPreferredSize(new Dimension(mainFrame.getWidth(), 30));
-        this.setMaximumSize(new Dimension((int) PASystem.getScreenDimension().getWidth(), 30));
+        this.setMaximumSize(new Dimension((int) PASystem.getScreenDimension()
+                .getWidth(), 30));
         this.setMinimumSize(new Dimension(mainFrame.getWidth(), 30));
         this.setVisible(true);
     }
@@ -70,28 +72,35 @@ public class PAShapeBar extends JPanel
 
         // JSpinner
         strokeWidthBox = new JSpinner();
-        attrItems.createSpinner(strokeWidthBox, new Dimension(50, 20), new Color(60, 60, 60), 1f);
+        attrItems.createSpinner(strokeWidthBox, new Dimension(50, 20),
+                new Color(60, 60, 60), 1f);
 
         // JButton
         strokeButton = new JButton();
         fillButton = new JButton();
 
-        attrItems.setButtonAttributes("Fill Color", fillButton, new Dimension(40, 17));
-        attrItems.setButtonAttributes("Stroke Color", strokeButton, new Dimension(40, 17));
+        attrItems.setButtonAttributes("Fill Color", fillButton, new Dimension(
+                40, 17));
+        attrItems.setButtonAttributes("Stroke Color", strokeButton,
+                new Dimension(40, 17));
     }
-    
+
     /**
      * Adding Action to the JComponents
      */
-    
+
     private void addAction()
     {
-    	// strokecheck
-    	StrokeCheckAction strokeCheckAc = new StrokeCheckAction(mainFrame.getParentView(),strokeButton,"Stroke",strokeCheck,strokeWidthBox);
-    	
-    	// fillcheck
-    	FillCheckAction fillCheckAc = new FillCheckAction(mainFrame.getParentView(),fillButton,"Fill",fillCheck);
-    	
+        // strokecheck
+        // StrokeCheckAction strokeCheckAc =
+        new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
+                "Stroke", strokeCheck, strokeWidthBox);
+
+        // fillcheck
+        // FillCheckAction fillCheckAc =
+        new FillCheckAction(mainFrame.getParentView(), fillButton, "Fill",
+                fillCheck);
+
     }
 
     /**

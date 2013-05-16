@@ -4,9 +4,9 @@
  */
 package controller;
 
-import static javax.swing.Action.ACCELERATOR_KEY;
-import static javax.swing.Action.MNEMONIC_KEY;
-import static javax.swing.Action.NAME;
+//import static javax.swing.Action.ACCELERATOR_KEY;
+//import static javax.swing.Action.MNEMONIC_KEY;
+//import static javax.swing.Action.NAME;
 import gui.PAMainFrame;
 import gui.PAMenuBar;
 import gui.PANewFileSetting;

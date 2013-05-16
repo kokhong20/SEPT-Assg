@@ -37,14 +37,14 @@ import org.w3c.dom.Element;
  */
 public class PASaveFileChooserAction implements ActionListener
 {
-    private JDesktopPane parent;
+    //private JDesktopPane parent;
     private JFileChooser fileChooser;
     private JInternalFrame frame;
     private PASVGContainer svgContainer;
 
     public PASaveFileChooserAction(JDesktopPane parent, JFileChooser fileChooser, JInternalFrame frame, PASVGContainer svgContainer)
     {
-        this.parent = parent;
+        //this.parent = parent;
         this.fileChooser = fileChooser;
         this.frame = frame;
         this.svgContainer = svgContainer;

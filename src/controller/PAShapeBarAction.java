@@ -14,10 +14,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
+//import javax.swing.event.InternalFrameListener;
 
 import gui.PAColorChooser;
-import gui.PARootView;
+//import gui.PARootView;
 
 /**
  * 

@@ -147,7 +147,7 @@ public class PANewFileSetting extends JInternalFrame
         fileNameField = setUpTextField();
         widthField = setUpTextField();
         heightField = setUpTextField();
-        unitSelection = new JComboBox(unitList);
+        unitSelection = new JComboBox<Object>(unitList);
         cancelButton = new JButton("Cancel");
         okButton = new JButton("OK");
 

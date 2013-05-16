@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.swing.JDesktopPane;
-import javax.xml.transform.stream.StreamResult;
+//import javax.xml.transform.stream.StreamResult;
 import model.PASVGContainer;
 import model.PASVGTag;
 

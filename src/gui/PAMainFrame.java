@@ -4,7 +4,7 @@ import controller.PAInternalFrameAction;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
+//import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,7 +28,7 @@ public class PAMainFrame extends JInternalFrame
     public PASVGPanel svgPanel;
     private Box box;
     private String fileName;
-    private BufferedImage svgImage;
+//    private BufferedImage svgImage;
     private PAStatusPanel statusPanel;
     private PASVGContainer svgContainer;
     private JPanel mainPanel;
