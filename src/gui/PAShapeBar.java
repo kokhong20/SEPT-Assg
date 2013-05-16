@@ -17,7 +17,9 @@ import controller.PAShapeBarAction.StrokeCheckAction;
 /**
  * 
  * @author KokHong
- * 
+ * @since 1.1
+ * <p>This class creates a PAShapeBar for shape attributes 
+ * fill, stroke and stroke width</p>
  */
 public class PAShapeBar extends JPanel
 {
@@ -33,7 +35,7 @@ public class PAShapeBar extends JPanel
     /**
      * constructor to define PAShapeBar for PAMainFrame
      * 
-     * @param mainFrame
+     * @param mainFrame PAMainFrame
      */
     public PAShapeBar(PAMainFrame mainFrame)
     {
@@ -92,14 +94,11 @@ public class PAShapeBar extends JPanel
     private void addAction()
     {
         // strokecheck
-        // StrokeCheckAction strokeCheckAc =
-        new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
-                "Stroke", strokeCheck, strokeWidthBox);
-
+        StrokeCheckAction strokeCheckAction = new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
+                                                      "Stroke", strokeCheck, strokeWidthBox);
         // fillcheck
-        // FillCheckAction fillCheckAc =
-        new FillCheckAction(mainFrame.getParentView(), fillButton, "Fill",
-                fillCheck);
+        FillCheckAction fillCheckAction = new FillCheckAction(mainFrame.getParentView(), fillButton, "Fill",
+                                                  fillCheck);
 
     }
 

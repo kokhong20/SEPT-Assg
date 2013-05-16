@@ -1,11 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-//import static controller.PADrawingShapeAction.endDrag;
-//import static controller.PADrawingShapeAction.startDrag;
 import gui.PASVGPanel;
 import gui.PAShapeBar;
 import java.awt.Color;
@@ -27,6 +21,9 @@ import java.awt.event.MouseEvent;
 /**
  *
  * @author KokHong
+ * @since 1.1
+ * <p>This class creates a PASelectCursorAction to set action performed by clicking the select cursor
+ * such as resize,select , move elements</p>
  */
 public class PASelectCursorAction extends PADrawingShapeAction
 {
@@ -36,6 +33,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
     private Graphics2D g2D;
     protected Point initialMouse, startSelect, endSelect, resizeStart;
 
+    /**
+     * Creates a new PASelectCursorAction which accept a PASVGPanel , a JToggleButton and a PAShapeBar items
+     * @param drawPanel PASVGPanel 
+     * @param button JToggleButton
+     * @param shapeBar PAShapeBar
+     */
     public PASelectCursorAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
@@ -208,6 +211,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Draw rectangle's handles
+     * @param rectangle The PARectangle object that need to display handles
+     */
     private void drawRectHighlight(PARectangle rectangle)
     {
         for (int i = 0; i < rectangle.getHandleArray().length; i++)
@@ -219,7 +226,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
             g2D.draw(rect);
         }
     }
-
+    
+    /**
+     * Draw circle's handles
+     * @param circle The PACircle object that need to display handles 
+     */
     private void drawEllipseHighlight(PACircle circle)
     {
         for (int i = 0; i < circle.getHandleArray().length; i++)
@@ -232,6 +243,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Draw line's handles
+     * @param line The PALine objects that need to display handles
+     */
     private void drawLineHighlight(PALine line)
     {
         for (int i = 0; i < line.getHandleArray().length; i++)
@@ -244,6 +259,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Draw group's handles
+     * @param arrayOfDouble The selected group handles array for 4 points
+     */
     private void drawGroupHighlight(double[] arrayOfDouble)
     {
         double startX = arrayOfDouble[0];
@@ -280,6 +299,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
         g2D.draw(rect4);
     }
 
+    /**
+     * Detect PASVGElement either by mouse clicked or mouse dragged
+     * @param elementList The linked list that store all PASVGElement
+     * @param start The mouse start point
+     * @param end The mouse end point
+     * @return LinkedList of PASVGElement
+     */
     private LinkedList<PASVGElement> iterateContainer(LinkedList<PASVGElement> elementList, Point start, Point end)
     {
         LinkedList<PASVGElement> elementArray = new LinkedList<>();
@@ -401,6 +427,11 @@ public class PASelectCursorAction extends PADrawingShapeAction
         return elementArray;
     }
 
+    /**
+     * Overwrite existing PASVGElement object by redrawing
+     * @param elementItem The PASVGElement that need to be redraw
+     * @param elementList The linked list that store all PASVGElement
+     */
     private void overWriteListElement(PASVGElement elementItem, LinkedList<PASVGElement> elementList)
     {
         if (!elementItem.isGrouped())
@@ -442,6 +473,9 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Draw Bounds for multiple elements
+     */
     protected void drawBoundsForElements()
     {
         elementTemp.clear();
@@ -457,6 +491,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Check the element is instance of which class to draw
+     * @param element PASVGElement that need to draw handles
+     */
     private void drawBoundsChecking(PASVGElement element)
     {
         if (element instanceof PARectangle)
@@ -480,6 +518,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Get temporary x,y point for element to determine group handle position
+     * @param element The PASVGElement to determine temporary position point
+     * @return array of double temporary point which use to determine group handle
+     *         position
+     */
     private double[] getTempPoint(PASVGElement element)
     {
         double tempX = 0, tempY = 0;
@@ -520,7 +564,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
 
         return doubleArray;
     }
-
+ 
+    /**
+     * Change cursor for element's resize cursor
+     * @param boundsElement The PASVGElement to determine
+     * @param x Mouse X Position
+     * @param y Mouse Y Position
+     */
     private void detectElementBounds(PASVGElement boundsElement, int x, int y)
     {
         int handlePosition;
@@ -638,6 +688,12 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
     }
 
+    /**
+     * Resize PASVGElemenet
+     * @param boundsElement The PASVGElement to resize
+     * @param changeX Mouse Change X value
+     * @param changeY Mouse Change Y value
+     */
     private void resizeElement(PASVGElement boundsElement, int changeX, int changeY)
     {
         if (boundsElement instanceof PARectangle)
@@ -727,6 +783,13 @@ public class PASelectCursorAction extends PADrawingShapeAction
         overWriteListElement(boundsElement, elementCollection);
     }
 
+    /**
+     * Determine group element bounds by point x and point y
+     * @param groupElement The PASVGGroup element
+     * @param x Temporary point x
+     * @param y Temporary point y
+     * @return array of double which consists of group scope
+     */
     private double[] getGroupBounds(PASVGGroup groupElement, double x, double y)
     {
         LinkedList<PASVGElement> groupElementList = groupElement.getGroupElementList();
@@ -810,6 +873,10 @@ public class PASelectCursorAction extends PADrawingShapeAction
         return arrayOfDouble;
     }
 
+    /**
+     * Move all elements inside group 
+     * @param svgGroup The PASVGGroup element to be moved
+     */
     private void moveAllGroupElements(PASVGGroup svgGroup)
     {
         LinkedList<PASVGElement> groupElementList = svgGroup.getGroupElementList();

@@ -8,8 +8,7 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- * @since 1.0
- * @version 1.1
+ * @since 1.1
  * <p>This class creates a new PARectangle as a PASVGElement</p>
  */
 public class PARectangle extends PASVGElement
@@ -22,14 +21,16 @@ public class PARectangle extends PASVGElement
     private Rectangle2D.Double[] rectHandleArray;
 
     /**
-     * Creates an empty PARectangle 
+     * Creates an empty PARectangle
      */
     public PARectangle()
     {
     }
 
     /**
-     * Creates a PARectangle based on attributes given when drawing a new rectangle
+     * Creates a PARectangle based on attributes given when drawing a new
+     * rectangle
+     *
      * @param fill the color fill
      * @param stroke the color stroke
      * @param strokeWidth the stroke width
@@ -50,6 +51,7 @@ public class PARectangle extends PASVGElement
 
     /**
      * Creates a PARectangle which receives a node
+     *
      * @param node an Element node
      */
     public PARectangle(Node node)
@@ -59,8 +61,8 @@ public class PARectangle extends PASVGElement
     }
 
     /**
-     * Creates a PARectangle which receives a node and groupFill, groupStroke, groupWidth
-     * from parent group
+     * Creates a PARectangle which receives a node and groupFill, groupStroke,
+     * groupWidth from parent group
      *
      * @param node an Element node
      * @param groupFill fill of its group
@@ -176,17 +178,18 @@ public class PARectangle extends PASVGElement
 
     /**
      * Drawing of rect handles based on the scale
+     *
      * @param scale the current scale
      * @return array of handles
      */
     private Rectangle2D.Double[] createRectHandle(double scale)
     {
         Rectangle2D rect = this.rectangle2D.getBounds2D();
-        double xPoint = (rect.getX()-strokeWidth/2) * scale;
-        double yPoint = (rect.getY()-strokeWidth/2) * scale;
-        double w = (rect.getWidth()+strokeWidth) * scale;
-        double h = (rect.getHeight()+strokeWidth) * scale;
-        
+        double xPoint = (rect.getX() - strokeWidth / 2) * scale;
+        double yPoint = (rect.getY() - strokeWidth / 2) * scale;
+        double w = (rect.getWidth() + strokeWidth) * scale;
+        double h = (rect.getHeight() + strokeWidth) * scale;
+
         Rectangle2D.Double NW = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0,
                 6.0);
 
@@ -217,18 +220,22 @@ public class PARectangle extends PASVGElement
 
         Rectangle2D.Double S = new Rectangle2D.Double(xPoint + (w / 2) - 3.0, yPoint + h - 3.0,
                 6.0, 6.0);
-        
-        return new Rectangle2D.Double[]{NW,N,NE,E,SE,S,SW,W};
+
+        return new Rectangle2D.Double[]
+        {
+            NW, N, NE, E, SE, S, SW, W
+        };
 
     }
-    
+
     public void setHandleArray(double scale)
     {
         this.rectHandleArray = createRectHandle(scale);
     }
-    
+
     public Rectangle2D.Double[] getHandleArray()
     {
         return this.rectHandleArray;
     }
+
 }

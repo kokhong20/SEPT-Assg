@@ -8,10 +8,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * 
+ *
  * @author bryantylai
- * @since 1.0
- * @version 1.1
+ * @since 1.1
  * <p>This class creates a new PACircle as a PASVGElement</p>
  */
 public class PACircle extends PASVGElement
@@ -59,8 +58,8 @@ public class PACircle extends PASVGElement
     }
 
     /**
-     * Creates a new PACircle which receives a node and groupFill, groupStroke, groupWidth
-     * from parent group
+     * Creates a new PACircle which receives a node and groupFill, groupStroke,
+     * groupWidth from parent group
      *
      * @param node an Element node
      * @param groupFill fill of its group
@@ -162,16 +161,17 @@ public class PACircle extends PASVGElement
 
     /**
      * Drawing of circle handles based on the scale
+     *
      * @param scale the current scale
      * @return array of handles
      */
     private Rectangle2D.Double[] createEllipseHandle(double scale)
     {
         Ellipse2D.Double rect = this.ellipse2D;
-        double xPoint = (rect.getX()-strokeWidth/2) * scale;
-        double yPoint = (rect.getY()-strokeWidth/2) * scale;
-        double w = (rect.getWidth()+strokeWidth) * scale;
-        double h = (rect.getHeight()+strokeWidth) * scale;
+        double xPoint = (rect.getX() - strokeWidth / 2) * scale;
+        double yPoint = (rect.getY() - strokeWidth / 2) * scale;
+        double w = (rect.getWidth() + strokeWidth) * scale;
+        double h = (rect.getHeight() + strokeWidth) * scale;
 
         Rectangle2D.Double NW = new Rectangle2D.Double(xPoint - 3.0, yPoint - 3.0, 6.0, 6.0);
         Rectangle2D.Double NE = new Rectangle2D.Double(xPoint + w - 3.0, yPoint - 3.0, 6.0, 6.0);

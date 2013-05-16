@@ -10,8 +10,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author bryantylai
- * @since 1.0
- * @version 1.1
+ * @since 1.1
  * <p>This class creates a new PALine as a PASVGElement</p>
  */
 public class PALine extends PASVGElement
@@ -63,8 +62,8 @@ public class PALine extends PASVGElement
     }
 
     /**
-     * Creates a new PALine which receives a node and groupStroke, groupWidth from parent
-     * group
+     * Creates a new PALine which receives a node and groupStroke, groupWidth
+     * from parent group
      *
      * @param node an Element node
      * @param groupStroke stroke of its group
@@ -190,9 +189,10 @@ public class PALine extends PASVGElement
     {
         line2D = new Line2D.Double(x1, y1, x2, y2);
     }
-    
+
     /**
      * Drawing of line handles based on the scale
+     *
      * @param scale the current scale
      * @return array of handles
      */
@@ -207,18 +207,16 @@ public class PALine extends PASVGElement
 
         if (x_1 == x_2 || y_1 == y_2)
         {
-            rect1 = new Rectangle2D.Double(x_1, y_1, rectangleHandleSize,rectangleHandleSize);
+            rect1 = new Rectangle2D.Double(x_1, y_1, rectangleHandleSize, rectangleHandleSize);
             rect2 = new Rectangle2D.Double(x_1, y_1, rectangleHandleSize, rectangleHandleSize);
             return new Rectangle2D.Double[]
             {
                 rect1, rect2
             };
         }
-        rect1 = new Rectangle.Double(x_1<x_2 ? x_1 - (strokewidth / 2):x_1 + (strokewidth / 2)
-                , y_1<y_2 ? y_1 - (strokewidth / 2) : y_1 +(strokewidth / 2), rectangleHandleSize, rectangleHandleSize);
+        rect1 = new Rectangle.Double(x_1 < x_2 ? x_1 - (strokewidth / 2) : x_1 + (strokewidth / 2), y_1 < y_2 ? y_1 - (strokewidth / 2) : y_1 + (strokewidth / 2), rectangleHandleSize, rectangleHandleSize);
 
-        rect2 = new Rectangle.Double(x_1<x_2 ? x_2 + (strokewidth / 2):x_2 - (strokewidth / 2)
-                , y_1<y_2 ? y_2 + (strokewidth / 2) : y_2 -(strokewidth / 2), rectangleHandleSize, rectangleHandleSize);
+        rect2 = new Rectangle.Double(x_1 < x_2 ? x_2 + (strokewidth / 2) : x_2 - (strokewidth / 2), y_1 < y_2 ? y_2 + (strokewidth / 2) : y_2 - (strokewidth / 2), rectangleHandleSize, rectangleHandleSize);
 
         return new Rectangle2D.Double[]
         {

@@ -9,9 +9,8 @@ import org.w3c.dom.Node;
  *
  * @author LaiSaiHoo
  * @since 1.1
- * @version 1.1
- * <p>This class creates a PASVGTag based on the svg tag read from an existing svg file or
- * creates a new svg tag for a new svg file</p>
+ * <p>This class creates a PASVGTag based on the svg tag read from an existing
+ * svg file or creates a new svg tag for a new svg file</p>
  */
 public class PASVGTag implements PAAttributeConstant
 {
@@ -31,7 +30,8 @@ public class PASVGTag implements PAAttributeConstant
     private Node node;
 
     /**
-     * Creates a new PASVGTag by setting the node from svg file and read its attributes
+     * Creates a new PASVGTag by setting the node from svg file and read its
+     * attributes
      *
      * @param node an Element node
      */
@@ -40,10 +40,10 @@ public class PASVGTag implements PAAttributeConstant
         setNode(node);
         readAttributes();
     }
-    
+
     /**
      * Creates a new PASVGTag by setting its width, height
-     * 
+     *
      * @param width width of svg
      * @param height height of svg
      * @param unit unit length
@@ -69,7 +69,7 @@ public class PASVGTag implements PAAttributeConstant
             setViewbox(eNode.getAttribute("viewBox"));
             setScale(width, height, viewWidth, viewHeight);
             setScaleXY(getScaleX(), getScaleY());
-            setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"),DEFAULT_STROKE_WIDTH));
+            setStrokeWidth(PAUnit.setUnit(eNode.getAttribute("stroke-width"), DEFAULT_STROKE_WIDTH));
             setStroke(PAColor.setColor(eNode.getAttribute("stroke"), STROKE));
             setFill(PAColor.setColor(eNode.getAttribute("fill"), FILL));
         }
@@ -132,18 +132,18 @@ public class PASVGTag implements PAAttributeConstant
     {
         this.height = height;
     }
-    
+
     /**
-     * 
+     *
      * @return the unit
      */
     public String getUnit()
     {
         return unit;
     }
-    
+
     /**
-     * 
+     *
      * @param unit the unit to set
      */
     public void setUnit(String unit)
@@ -264,7 +264,8 @@ public class PASVGTag implements PAAttributeConstant
     }
 
     /**
-     * Set scale based on original width and height if view width and view height isn't set
+     * Set scale based on original width and height if view width and view
+     * height isn't set
      *
      * @param oriWidth
      * @param oriHeight
@@ -285,16 +286,19 @@ public class PASVGTag implements PAAttributeConstant
             this.setScaleY((oriHeight / viewHeight));
         }
     }
-	/**
-	 * @return the scale
-	 */
+
+    /**
+     * @return the scale
+     */
     public double getScaleXY()
     {
         return scale;
     }
 
     /**
-     * Scale is set based on scaleX if bigger value than scaleY. Set scaleY if otherwise
+     * Scale is set based on scaleX if bigger value than scaleY. Set scaleY if
+     * otherwise
+     *
      * @param scaleX the scaleX to set
      * @param scaleY the scaleY to set
      */

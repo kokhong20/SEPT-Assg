@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -69,7 +65,6 @@ public class PASaveFileChooserAction implements ActionListener
     {
         // TODO Auto-generated method stub
         Iterator<PASVGElement> iterator = elements.iterator();
-        System.out.println("Parent : " + ele);
         while (iterator.hasNext())
         {
             PASVGElement element = iterator.next();
