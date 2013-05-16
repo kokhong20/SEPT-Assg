@@ -136,8 +136,9 @@ public class PANewFileSetting extends JInternalFrame
         PAUpdateDocAction updateDocAction = new PAUpdateDocAction(svgTag, drawPanel, this);
         okButton.addActionListener(updateDocAction);
         cancelButton.addActionListener(updateDocAction);
-        heightField.addKeyListener(new PATextFieldFormatter(heightField));
-        widthField.addKeyListener(new PATextFieldFormatter(widthField));
+        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(heightField));
+        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(widthField));
+        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(fileNameField));
     }
 
     private void initialize()
@@ -187,8 +188,9 @@ public class PANewFileSetting extends JInternalFrame
         okButton.addActionListener(newFileSettingAction);
         cancelButton.addActionListener(newFileSettingAction);
         
-        heightField.addKeyListener(new PATextFieldFormatter(heightField));
-        widthField.addKeyListener(new PATextFieldFormatter(widthField));
+        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(heightField));
+        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(widthField));
+        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(fileNameField));
     }
 
     private void setUpMainLayout()
