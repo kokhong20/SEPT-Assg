@@ -12,6 +12,7 @@ import java.io.File;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 
@@ -37,11 +38,22 @@ public class PARootView extends JFrame
     public PARootView(String[] args)
     {
         PASystem.setLookandFeel();
-        if (args.length != 0)
+        if (args.length == 1)
         {
             fileName = args[0];
 
             init();
+        }
+        else if (args.length > 1)
+        {
+            JOptionPane
+                    .showMessageDialog(
+                            null,
+                            "Wrong command line argument entered. System will start in default configuration.",
+                            "Wrong Command Line Argument",
+                            JOptionPane.WARNING_MESSAGE);
+            initialize();
+            customize();
         }
         else
         {
