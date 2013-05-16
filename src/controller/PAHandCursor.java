@@ -15,8 +15,12 @@ import javax.swing.JToggleButton;
 import javax.swing.JViewport;
 
 /**
+ * <p>
+ * This set the action of Hand Cursor inside the Drawing kit
+ * </p>
+ * 
  * @author SaiHoo
- *
+ * 
  */
 public class PAHandCursor extends PADrawingShapeAction
 {
@@ -27,6 +31,9 @@ public class PAHandCursor extends PADrawingShapeAction
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addActionToComponents()
     {
@@ -41,7 +48,6 @@ public class PAHandCursor extends PADrawingShapeAction
                         (int) (e.getY() / scale));
                 endDrag = startDrag;
                 drawPanel.reDrawImage(scale);
-                System.out.println(scale);
             }
 
             @Override
@@ -82,7 +88,6 @@ public class PAHandCursor extends PADrawingShapeAction
             drawPanel.addMouseListener(mousePanAction);
             drawPanel.addMouseMotionListener(mousePanAction);
         }
-        System.out.println(scale);
     }
 
 }

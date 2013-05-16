@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -34,17 +30,33 @@ import org.w3c.dom.Element;
 /**
  *
  * @author LiHao
+ * @since 1.1
+ *
+ * <p>
+ * This class creates a PASaveFileChooserAction to set action performed for
+ * JFileChooser button and method to save file.
+ * </p>
+ *
  */
 public class PASaveFileChooserAction implements ActionListener
 {
-    private JDesktopPane parent;
     private JFileChooser fileChooser;
     private JInternalFrame frame;
     private PASVGContainer svgContainer;
 
+    /**
+     *
+     * Create a new PASaveFileChooserAction which accept JDeskropPane as parent
+     * to show JInternalFrame, JFileChooser want to perform action,
+     * JInternalFrame on focus and PASVGContainer to process save action.
+     *
+     * @param parent set PASaveFileChooserAction parent
+     * @param fileChooser set JFileChooser want to perform action
+     * @param frame set JInternalFrame want to dispose
+     * @param svgContainer set PASVGContainer want to process save action.
+     */
     public PASaveFileChooserAction(JDesktopPane parent, JFileChooser fileChooser, JInternalFrame frame, PASVGContainer svgContainer)
     {
-        this.parent = parent;
         this.fileChooser = fileChooser;
         this.frame = frame;
         this.svgContainer = svgContainer;
@@ -65,11 +77,10 @@ public class PASaveFileChooserAction implements ActionListener
         PAMenuAction.SaveAsFile.fcInternal = null;
     }
 
-    public void iterateList(Document doc, Element ele, LinkedList<PASVGElement> elements)
+    private void iterateList(Document doc, Element ele, LinkedList<PASVGElement> elements)
     {
         // TODO Auto-generated method stub
         Iterator<PASVGElement> iterator = elements.iterator();
-        System.out.println("Parent : " + ele);
         while (iterator.hasNext())
         {
             PASVGElement element = iterator.next();
@@ -122,17 +133,17 @@ public class PASaveFileChooserAction implements ActionListener
                 PASVGGroup saveGroup = (PASVGGroup) element;
 
                 Element group = doc.createElement("g");
-                
+
                 if (saveGroup.getFill() != null)
                 {
                     group.setAttribute("fill", saveGroup.getFill().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getFill().getRed() + "," + saveGroup.getFill().getGreen() + "," + saveGroup.getFill().getBlue()) + ")");
                 }
-                
+
                 if (saveGroup.getStroke() != null)
                 {
                     group.setAttribute("stroke", saveGroup.getStroke().getAlpha() == 0 ? "none" : String.valueOf("rgb(" + saveGroup.getStroke().getRed() + "," + saveGroup.getStroke().getGreen() + "," + saveGroup.getStroke().getBlue()) + ")");
                 }
-                
+
                 if (saveGroup.getStrokeWidth() != 0.0)
                 {
                     group.setAttribute("stroke-width", String.valueOf(saveGroup.getStrokeWidth()));
@@ -147,10 +158,18 @@ public class PASaveFileChooserAction implements ActionListener
         }
     }
 
+    /**
+     *
+     * This method is used to save a output file which accept File to be updated
+     * and PASVGContainer to convert to .svg File.
+     *
+     * @param file set file to update or create
+     * @param svgContainer set PASVGContainer want to process save action.
+     */
     public void saveToFile(File file, PASVGContainer svgContainer)
     {
         // TODO Auto-generated method stub
-    	
+
         PASVGTag svgTag = svgContainer.getSvgTag();
         LinkedList<PASVGElement> elements = svgContainer.getSvgContainer();
 
@@ -160,7 +179,7 @@ public class PASaveFileChooserAction implements ActionListener
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
             Document doc = docBuilder.newDocument();
-            
+
             Element svg = doc.createElementNS("http://www.w3.org/2000/svg", "svg");
             svg.setAttribute("width", String.valueOf(svgTag.getWidth()));
             svg.setAttribute("height", String.valueOf(svgTag.getHeight()));
@@ -174,15 +193,15 @@ public class PASaveFileChooserAction implements ActionListener
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            
+
             StreamResult result = null;
-            if(file.getPath().contains(".svg"))
-            { 
+            if (file.getPath().contains(".svg"))
+            {
                 result = new StreamResult(file);
             }
             else
             {
-            	result = new StreamResult(file + ".svg");
+                result = new StreamResult(file + ".svg");
             }
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");

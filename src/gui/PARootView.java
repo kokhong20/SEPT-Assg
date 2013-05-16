@@ -5,13 +5,14 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 
@@ -21,7 +22,7 @@ import model.PASVGImport;
 import model.PASystem;
 
 /**
- *
+ * 
  * @author LiHao
  */
 public class PARootView extends JFrame
@@ -37,28 +38,40 @@ public class PARootView extends JFrame
     public PARootView(String[] args)
     {
         PASystem.setLookandFeel();
-        if(args.length !=0)
+        if (args.length == 1)
         {
             fileName = args[0];
-            
+
             init();
-            cust();
+        }
+        else if (args.length > 1)
+        {
+            JOptionPane
+                    .showMessageDialog(
+                            null,
+                            "Wrong command line argument entered. System will start in default configuration.",
+                            "Wrong Command Line Argument",
+                            JOptionPane.WARNING_MESSAGE);
+            initialize();
+            customize();
         }
         else
         {
-        initialize();
-        customize();
-        
+            initialize();
+            customize();
+
         }
         setUpRootView();
         /*
-         * Alt+F4 doesn't close application, use this to closes application not using exit function from menu bar
+         * Alt+F4 doesn't close application, use this to closes application not
+         * using exit function from menu bar
          */
-        this.addWindowListener(new WindowAdapter(){
-        	public void windowClosing(WindowEvent e)
-        	{
-        		System.exit(0);
-        	}
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(0);
+            }
         });
     }
 
@@ -70,34 +83,45 @@ public class PARootView extends JFrame
         rootView = new JDesktopPane();
         menuBar = new PAMenuBar(rootView);
         startMenu = new PAStartMenu(rootView);
-        //toolBar = new PADrawingKit();
-        //mainPanel = new PAMainFrame(rootView);
-        //layerPanel = new PALayerPanel();
-        //newFileSetting = new PANewFileSetting();
-        //inspectFrame = new PAInspectFrame(rootView);
+        // toolBar = new PADrawingKit();
+        // mainPanel = new PAMainFrame(rootView);
+        // layerPanel = new PALayerPanel();
+        // newFileSetting = new PANewFileSetting();
+        // inspectFrame = new PAInspectFrame(rootView);
     }
 
     public void init()
     {
-        rootView = new JDesktopPane();
-        menuBar = new PAMenuBar(rootView);
-        PAFileChooserAction cmd = new PAFileChooserAction(rootView, fileName);
+
         File cmdFile = new File(fileName);
         Document svgDoc = PASVGImport.processFiletoDoc(cmdFile);
-        if(svgDoc !=null)
+        if (svgDoc != null)
         {
-        PASVGContainer svgContainer = cmd.setUpContainer(svgDoc, cmdFile);
-        PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer, fileName);
-        rootView.add(svgDisplay);
-        PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
-        rootView.add(drawingKit);
+            rootView = new JDesktopPane();
+            menuBar = new PAMenuBar(rootView);
+            PAFileChooserAction cmd = new PAFileChooserAction(rootView,
+                    fileName);
+            PASVGContainer svgContainer = cmd.setUpContainer(svgDoc, cmdFile);
+            PAMainFrame svgDisplay = new PAMainFrame(rootView, svgContainer,
+                    fileName);
+            rootView.add(svgDisplay);
+            PADrawingKit drawingKit = new PADrawingKit(svgDisplay);
+            rootView.add(drawingKit);
+            cust();
+        }
+        else
+        {
+            initialize();
+            customize();
         }
     }
+
     public void cust()
     {
         rootView.setSize(PASystem.getScreenDimension());
         rootView.setVisible(true);
     }
+
     /**
      * customization of PARootView
      */
@@ -107,7 +131,7 @@ public class PARootView extends JFrame
         rootView.add(startMenu);
         rootView.setVisible(true);
     }
-    
+
     private void designForMac()
     {
         if (PASystem.getCurrentOS().indexOf("mac") >= 0)

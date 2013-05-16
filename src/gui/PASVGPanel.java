@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -25,9 +24,11 @@ import model.PARectangle;
 import model.PASVGGroup;
 
 /**
- *
+ * 
  * @author KokHong
- *
+ * @since 1.1
+ * <p>This class creates a PASVGPanel for create a JPanel to draw and display
+ * SVG </p>
  */
 public class PASVGPanel extends JPanel
 {
@@ -36,14 +37,12 @@ public class PASVGPanel extends JPanel
     private int svgWidth;
     private int svgHeight;
     private double scale;
-    private PAMainFrame mainFrame;
-    private Rectangle2D handleRectangle;
     public LinkedList<PASVGElement> elementCollection;
 
     /**
-     * constructor to define PASVGPanel for PAMainFrame
-     *
-     * @param mainFrame
+     * constructor to accepts a PASVGContainer
+     * 
+     * @param svgContainer PASVGContainer
      */
     public PASVGPanel(PASVGContainer svgContainer)
     {
@@ -54,21 +53,37 @@ public class PASVGPanel extends JPanel
         drawToImage();
     }
 
+    /**
+     * Get image scale
+     * @return return image scale
+     */
     public double getScale()
     {
         return scale;
     }
 
+    /**
+     * Get SVG width
+     * @return return svg width
+     */
     public int getSVGWidth()
     {
         return svgWidth;
     }
 
+    /**
+     * Get SVG height
+     * @return return svg height
+     */
     public int getSVGHeight()
     {
         return svgHeight;
     }
 
+    /**
+     * Redraw image with scale for zoom in and out action
+     * @param scale image scale
+     */
     public void zoomInOutSVG(double scale)
     {
         this.scale = scale;
@@ -78,6 +93,10 @@ public class PASVGPanel extends JPanel
         repaint();
     }
 
+    /**
+     * Redraw image only
+     * @param scale image scale
+     */
     public void reDrawImage(double scale)
     {
         this.scale = scale;
@@ -92,20 +111,25 @@ public class PASVGPanel extends JPanel
     {
         svgWidth = (int) svgContainer.getSvgTag().getWidth();
         svgHeight = (int) svgContainer.getSvgTag().getHeight();
-        Dimension size = new Dimension((int) (svgWidth * scale), (int) (svgHeight * scale));
+        Dimension size = new Dimension((int) (svgWidth * scale),
+                (int) (svgHeight * scale));
 
         setMaximumSize(size);
         setMinimumSize(size);
         setPreferredSize(size);
     }
 
+    /**
+     * Draw graphics to buffered image
+     */
     public final void drawToImage()
     {
-        svgImage = new BufferedImage((int) (svgWidth * scale), (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
+        svgImage = new BufferedImage((int) (svgWidth * scale),
+                (int) (svgHeight * scale), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = svgImage.createGraphics();
 
-        AffineTransform old = g2d.getTransform();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.scale(scale, scale);
         g2d.fillRect(0, 0, svgWidth, svgHeight);
         g2d.setPaint(new Color(255, 255, 255, 255));
@@ -122,7 +146,8 @@ public class PASVGPanel extends JPanel
             while (it.hasNext())
             {
                 PASVGElement drawItem = it.next();
-                float strokeWidth = (float) ((PASVGElement) drawItem).getStrokeWidth();
+                float strokeWidth = (float) ((PASVGElement) drawItem)
+                        .getStrokeWidth();
                 BasicStroke stroke = new BasicStroke(strokeWidth);
 
                 if (drawItem instanceof PACircle)
@@ -139,16 +164,18 @@ public class PASVGPanel extends JPanel
                 }
                 else if (drawItem instanceof PASVGGroup)
                 {
-                    LinkedList<PASVGElement> groupElement = ((PASVGGroup) drawItem).getGroupElementList();
+                    LinkedList<PASVGElement> groupElement = ((PASVGGroup) drawItem)
+                            .getGroupElementList();
                     iterateList(g2d, groupElement);
                 }
             }
         }
     }
 
-    private void drawCircle(Graphics2D g2d, PASVGElement drawItem, BasicStroke stroke)
+    private void drawCircle(Graphics2D g2d, PASVGElement drawItem,
+            BasicStroke stroke)
     {
-        // creating 2D Shapes object 
+        // creating 2D Shapes object
         Ellipse2D.Double circle = ((PACircle) drawItem).getEllipse2D();
         g2d.setColor(((PASVGElement) drawItem).getFill());
         g2d.fill(circle);
@@ -157,9 +184,10 @@ public class PASVGPanel extends JPanel
         g2d.draw(circle);
     }
 
-    private void drawRect(Graphics2D g2d, PASVGElement drawItem, BasicStroke stroke)
+    private void drawRect(Graphics2D g2d, PASVGElement drawItem,
+            BasicStroke stroke)
     {
-        // creating 2D Shapes object 
+        // creating 2D Shapes object
         Rectangle2D.Double rect = ((PARectangle) drawItem).getRectangle2D();
         g2d.setColor(((PASVGElement) drawItem).getFill());
         g2d.fill(rect);
@@ -168,50 +196,63 @@ public class PASVGPanel extends JPanel
         g2d.draw(rect);
     }
 
-    private void drawLine(Graphics2D g2d, PASVGElement drawItem, BasicStroke stroke)
+    private void drawLine(Graphics2D g2d, PASVGElement drawItem,
+            BasicStroke stroke)
     {
-        // creating 2D Shapes object 
+        // creating 2D Shapes object
         Line2D.Double line = ((PALine) drawItem).getLine2D();
         g2d.setColor(((PASVGElement) drawItem).getStroke());
         g2d.setStroke(stroke);
         g2d.draw(line);
     }
 
+    /**
+     * draw Graphics to JPanel
+     * @param g Graphics 
+     */
     @Override
     public void paintComponent(Graphics g)
     {
         g.drawImage(svgImage, 0, 0, this);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (startDrag != null && endDrag != null)
         {
             switch (buttonSelected.getToolTipText())
             {
-                case "Rectangle":
-                case "Select Cursor":
-                    g2d.setPaint(new Color(180, 180, 180, 80));
+            case "Rectangle":
+            case "Select Cursor":
+                g2d.setPaint(new Color(180, 180, 180, 80));
 
-                    Rectangle2D.Double rect = makeRectangle((int) ((startDrag.x) * scale),
-                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
-                    g2d.fill(rect);
-                    break;
+                Rectangle2D.Double rect = makeRectangle(
+                        (int) ((startDrag.x) * scale),
+                        (int) ((startDrag.y) * scale),
+                        (int) ((endDrag.x) * scale),
+                        (int) ((endDrag.y) * scale));
+                g2d.fill(rect);
+                break;
 
-                case "Line":
-                    g2d.setColor(new Color(180, 180, 180, 80));
-                    g2d.setStroke(new BasicStroke(2));
-                    Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
-                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
-                    g2d.draw(line);
-                    break;
+            case "Line":
+                g2d.setColor(new Color(180, 180, 180, 80));
+                g2d.setStroke(new BasicStroke(2));
+                Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
+                        (int) ((startDrag.y) * scale),
+                        (int) ((endDrag.x) * scale),
+                        (int) ((endDrag.y) * scale));
+                g2d.draw(line);
+                break;
 
-                case "Circle":
-                    g2d.setPaint(new Color(180, 180, 180, 80));
-                    Ellipse2D.Double circle = makeCircle((int) ((startDrag.x) * scale),
-                            (int) ((startDrag.y) * scale), (int) ((endDrag.x) * scale), (int) ((endDrag.y) * scale));
-                    g2d.fill(circle);
-                    break;
+            case "Circle":
+                g2d.setPaint(new Color(180, 180, 180, 80));
+                Ellipse2D.Double circle = makeCircle(
+                        (int) ((startDrag.x) * scale),
+                        (int) ((startDrag.y) * scale),
+                        (int) ((endDrag.x) * scale),
+                        (int) ((endDrag.y) * scale));
+                g2d.fill(circle);
+                break;
 
             }
         }
@@ -219,6 +260,14 @@ public class PASVGPanel extends JPanel
         g2d.dispose();
     }
 
+    /**
+     * Make a rectangle with 4 coordinates
+     * @param x1 start x position
+     * @param y1 start y position
+     * @param x2 end x position
+     * @param y2 end x position
+     * @return Rectangle2D.Double shape
+     */
     public Rectangle2D.Double makeRectangle(int x1, int y1, int x2, int y2)
     {
         return new Rectangle2D.Double(Math.min(x1, x2), Math.min(y1, y2),

@@ -30,7 +30,9 @@ import model.PAUnit;
 /**
  *
  * @author KokHong
- *
+ * @since 1.1
+ * <p>This class creates a PADrawingShapeAction to set action performed to draw
+ * each shape such as Line, Rectangle and circle</p>
  */
 public abstract class PADrawingShapeAction extends AbstractAction
 {
@@ -45,6 +47,14 @@ public abstract class PADrawingShapeAction extends AbstractAction
     protected double scale;
     protected Cursor cursor;
 
+    /**
+     * Creates a new PADrawingShapeAction which accept a PASVGPanel , a
+     * JToggleButton and a PAShapeBar items
+     *
+     * @param drawPanel PASVGPanel
+     * @param button JToggleButton
+     * @param shapeBar PAShapeBar
+     */
     public PADrawingShapeAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         this.button = button;
@@ -55,6 +65,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
         scale = drawPanel.getScale();
     }
 
+    /**
+     * Get shape attributes like fill,stroke and stroke width
+     */
     public void setShapeAttributes()
     {
         fill = shapeBar.fillCheck.isSelected() ? shapeBar.fillButton
@@ -90,6 +103,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
         addActionToComponents();
     }
 
+    /**
+     * remove all existing mouse action listener for draw panel
+     */
     public void removeAllActions()
     {
         for (int i = 0; i < drawPanel.getMouseListeners().length; i++)
@@ -103,17 +119,27 @@ public abstract class PADrawingShapeAction extends AbstractAction
         }
     }
 
+    /**
+     * Add actions to JPanel
+     */
     public abstract void addActionToComponents();
 
     /**
      *
-     *
-     *
+     * This class is use to draw rectangle shape by mouse drag
      */
     public static class DrawRectangleAction extends PADrawingShapeAction
     {
         PARectangle rect;
 
+        /**
+         * Creates a new DrawRectangleAction which accept a PASVGPanel , a
+         * JToggleButton and a PAShapeBar items
+         *
+         * @param drawPanel PASVGPanel
+         * @param button JToggleButton
+         * @param shapeBar PAShapeBar
+         */
         public DrawRectangleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
@@ -206,12 +232,20 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
     /**
      *
-     *
+     * This class is use to draw circle shape by mouse drag
      */
     public static class DrawCircleAction extends PADrawingShapeAction
     {
         PACircle circle;
 
+        /**
+         * Creates a new DrawCircleAction which accept a PASVGPanel , a
+         * JToggleButton and a PAShapeBar items
+         *
+         * @param drawPanel PASVGPanel
+         * @param button JToggleButton
+         * @param shapeBar PAShapeBar
+         */
         public DrawCircleAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {
@@ -303,10 +337,21 @@ public abstract class PADrawingShapeAction extends AbstractAction
 
     }
 
+    /**
+     * This class is use to draw line shape by mouse drag
+     */
     public static class DrawLineAction extends PADrawingShapeAction
     {
         PALine line;
 
+        /**
+         * Creates a new DrawLineAction which accept a PASVGPanel , a
+         * JToggleButton and a PAShapeBar items
+         *
+         * @param drawPanel PASVGPanel
+         * @param button JToggleButton
+         * @param shapeBar PAShapeBar
+         */
         public DrawLineAction(PASVGPanel drawPanel, JToggleButton button,
                 PAShapeBar shapeBar)
         {

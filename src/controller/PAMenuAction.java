@@ -1,12 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import static javax.swing.Action.ACCELERATOR_KEY;
-import static javax.swing.Action.MNEMONIC_KEY;
-import static javax.swing.Action.NAME;
 import gui.PAMainFrame;
 import gui.PAMenuBar;
 import gui.PANewFileSetting;
@@ -45,23 +38,36 @@ import model.PASystem;
 /**
  *
  * @author LiHao
+ * @since 1.1
+ *
+ * <p>
+ * This Abstract class provide skeleton implementation for all menu action.
+ * </p>
+ *
  */
 public abstract class PAMenuAction extends AbstractAction
 {
     protected int keyMask;
     protected KeyStroke keyStroke;
 
+    /**
+     *
+     * Creates a new PAMenuAction which accept a String to set menu item's name.
+     *
+     * @param name set menu item's name
+     */
     public PAMenuAction(String name)
     {
         putValue(NAME, name);
     }
-    
+
     /**
      *
-     * Constructor of Menu Action.
+     * Creates a new PAMenuAction which accept a keyEvent and String for menu
+     * item's short cut and name.
      *
-     * @param keyEvent keyEvent want to use
-     * @param name menu item's name
+     * @param keyEvent set menu item's keyEvent
+     * @param name set menu item's name
      */
     public PAMenuAction(int keyEvent, String name)
     {
@@ -75,11 +81,12 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * Constructor of Menu Action.
+     * Creates a new PAMenuAction which accept a keyEvent, event and String for
+     * menu item's short cut and name.
      *
-     * @param keyEvent keyEvent want to use
-     * @param event event want to add
-     * @param name menu item's name
+     * @param keyEvent set menu item's keyEvent
+     * @param event set menu item's event
+     * @param name set menu item's name
      */
     public PAMenuAction(int keyEvent, int event, String name)
     {
@@ -91,6 +98,14 @@ public abstract class PAMenuAction extends AbstractAction
         putValue(NAME, name);
     }
 
+    /**
+     * Creates a new PAMenuAction which accept a keyEvent, event and String for
+     * menu item's short cut and name, without set keyMask for menu item's.
+     *
+     * @param keyEvent set menu item's keyEvent
+     * @param keyStroke set menu item's event
+     * @param name set menu item's name
+     */
     public PAMenuAction(int keyEvent, KeyStroke keyStroke, String name)
     {
         putValue(ACCELERATOR_KEY, keyStroke);
@@ -100,7 +115,9 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * action class for menu item "New"
+     * This class provide "New" menu item to create a setting frame for new
+     * file.
+     *
      */
     public static class NewFile extends PAMenuAction
     {
@@ -108,12 +125,26 @@ public abstract class PAMenuAction extends AbstractAction
         private JDesktopPane parent;
         private PAStartMenu startMenu;
 
+        /**
+         *
+         * Create a new NewFile which accept JDesktopPane as it's parent.
+         *
+         * @param parent set NewFile parent
+         */
         public NewFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_N, PASystem.getWord("New"));
             this.parent = parent;
         }
 
+        /**
+         *
+         * Create a new NewFile for PAStartMenu New File button which accept
+         * JDesktopPane as it's parent and PAStartMenu for program startup.
+         *
+         * @param parent set NewFile parent
+         * @param startMenu set for program startup
+         */
         public NewFile(JDesktopPane parent, PAStartMenu startMenu)
         {
             super(KeyEvent.VK_N, PASystem.getWord("New"));
@@ -152,7 +183,9 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * action class for menu item "Open"
+     * This class provide "Open" menu item to show a file chooser frame for user
+     * to select file.
+     *
      */
     public static class OpenFile extends PAMenuAction
     {
@@ -160,12 +193,25 @@ public abstract class PAMenuAction extends AbstractAction
         private JDesktopPane parent;
         private PAStartMenu startMenu;
 
+        /**
+         *
+         * Create a OpenFile which accept JDesktopPane as it's parent.
+         *
+         * @param parent set NewFile parent
+         */
         public OpenFile(JDesktopPane parent)
         {
             super(KeyEvent.VK_O, PASystem.getWord("Open"));
             this.parent = parent;
         }
 
+        /**
+         *
+         * Create a new OpenFile which accept JDesktopPane as it's parent.
+         *
+         * @param parent set NewFile parent
+         * @param startMenu set for program startup
+         */
         public OpenFile(JDesktopPane parent, PAStartMenu startMenu)
         {
             super(KeyEvent.VK_O, PASystem.getWord("Open"));
@@ -232,7 +278,9 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * action class for menu item "Save"
+     * This class provide "Save" menu item to save file which will show a file
+     * chooser with save mode for new file or save directly with existing file.
+     *
      */
     public static class SaveFile extends PAMenuAction
     {
@@ -240,31 +288,38 @@ public abstract class PAMenuAction extends AbstractAction
         private JDesktopPane parent;
         private PAMainFrame onFocusFrame;
 
+        /**
+         *
+         * Create a new SaveFile which accept PAMainFrame to know which
+         * JInternalFrame is focus.
+         *
+         * @param mainFrame set which JInternalFrame is focus
+         */
         public SaveFile(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_S, PASystem.getWord("Save"));
             this.onFocusFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	File svgFile = null;
-        	PASVGContainer container = onFocusFrame.svgPanel.svgContainer;
-        	/*
-        	 * If saving file is an existing svg
-        	 */
-        	if((svgFile = container.getSvgFile()) != null)
-        	{
+            File svgFile = null;
+            PASVGContainer container = onFocusFrame.svgPanel.svgContainer;
+            /*
+             * If saving file is an existing svg
+             */
+            if ((svgFile = container.getSvgFile()) != null)
+            {
                 PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, null, fcInternal, container);
                 saveFileAction.saveToFile(svgFile, container);
-        	}
-        	/*
-        	 * If saving file is a new svg
-        	 */
-        	else
-        	{
+            }
+            /*
+             * If saving file is a new svg
+             */
+            else
+            {
                 if (fcInternal == null)
                 {
                     fcInternal = new JInternalFrame(PASystem.getWord("Save"));
@@ -272,6 +327,8 @@ public abstract class PAMenuAction extends AbstractAction
                     FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                     FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
                     PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, container);
+                    svgFile = new File(container.getFileName());
+                    fileChooser.setSelectedFile(svgFile);
                     fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
                     fileChooser.setFileFilter(xmlFilter);
                     fileChooser.setFileFilter(svgFilter);
@@ -299,14 +356,17 @@ public abstract class PAMenuAction extends AbstractAction
                 {
                     System.err.println(ex.getMessage());
                 }
-        	}
+            }
         }
 
     }
-    
+
     /**
      *
-     * action class for menu item "Save As"
+     * This class provide "Save As" menu item to save file which will show a
+     * file chooser with save mode to let user decide where to save and file
+     * name they want.
+     *
      */
     public static class SaveAsFile extends PAMenuAction
     {
@@ -314,6 +374,13 @@ public abstract class PAMenuAction extends AbstractAction
         private JDesktopPane parent;
         private PAMainFrame mainFrame;
 
+        /**
+         *
+         * Create a new SaveAsFile which accept PAMainFrame to know which
+         * JInternalFrame is focus.
+         *
+         * @param mainFrame set which JInternalFrame is focus
+         */
         public SaveAsFile(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_S, Event.SHIFT_MASK, PASystem.getWord("SaveAs"));
@@ -324,8 +391,8 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	File svgFile = null;
-        	PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
+            File svgFile = null;
+            PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
             if (fcInternal == null)
             {
                 fcInternal = new JInternalFrame(PASystem.getWord("SaveAs"));
@@ -333,11 +400,18 @@ public abstract class PAMenuAction extends AbstractAction
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                 FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
                 PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, svgContainer);
-                if((svgFile = svgContainer.getSvgFile()) != null)
+
+                if ((svgFile = svgContainer.getSvgFile()) != null)
                 {
-                	fileChooser.setCurrentDirectory(svgFile);
+                    fileChooser.setCurrentDirectory(svgFile);
                 }
+                else
+                {
+                    svgFile = new File(svgContainer.getFileName());
+                }
+
                 fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                fileChooser.setSelectedFile(svgFile);
                 fileChooser.setFileFilter(xmlFilter);
                 fileChooser.setFileFilter(svgFilter);
                 fileChooser.addActionListener(saveFileAction);
@@ -368,11 +442,24 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Document Properties" menu item which will show a
+     * setting frame for user to set the SVG Tag's Width, Height and Unit.
+     *
+     */
     public static class DocumentProperties extends PAMenuAction
     {
         private JDesktopPane parent;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new DocumentProperties which accept PAMainFrame to know
+         * which JInternalFrame is focus.
+         *
+         * @param mainFrame set which JInternalFrame is focus
+         */
         public DocumentProperties(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_D, PASystem.getWord("DocumentProperties"));
@@ -405,12 +492,20 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * action class for menu item "Exit"
+     * This class provide "Exit" menu item which will show a confirmation dialog
+     * for user to confirm want to exit the program.
+     *
      */
     public static class ExitProgram extends PAMenuAction
     {
         private JDesktopPane parent;
 
+        /**
+         *
+         * Create a new ExitProgram which accept JDesktopPane as it's parent.
+         *
+         * @param parent set ExitProgram parent
+         */
         public ExitProgram(JDesktopPane parent)
         {
             super(KeyEvent.VK_W, PASystem.getWord("Exit"));
@@ -432,10 +527,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Select All" menu item which will select all the
+     * element inside the PASVGPanel that the PAMainFrame is focused.
+     *
+     */
     public static class SelectAll extends PAMenuAction
     {
         private PAMainFrame mainFrame;
 
+        /**
+         *
+         * Create a new SelectAll which accept PAMainFrame to know which
+         * JInternalFrame is focus.
+         *
+         * @param mainFrame set which JInternalFrame is focus
+         */
         public SelectAll(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_A, PASystem.getWord("SelectAll"));
@@ -459,10 +567,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Deselect All" menu item which will deselect all the
+     * element inside the PASVGPanel that the PAMainFrame is focused.
+     *
+     */
     public static class DeselectAll extends PAMenuAction
     {
         private PAMainFrame mainFrame;
 
+        /**
+         *
+         * Create a new DeselectAll which accept PAMainFrame to know which
+         * JInternalFrame is focus.
+         *
+         * @param mainFrame set which JInternalFrame is focus
+         */
         public DeselectAll(PAMainFrame mainFrame)
         {
             super(KeyEvent.VK_A, Event.SHIFT_MASK, PASystem.getWord("DeselectAll"));
@@ -479,10 +600,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Cut" menu item which will allow user to cut the
+     * selected elements inside the PASVGPanel.
+     *
+     */
     public static class Cut extends PAMenuAction
     {
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new Cut which accept PASVGPanel to know which PASVGPanel's
+         * elements want to perform cut action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform cut action
+         */
         public Cut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_X, PASystem.getWord("Cut"));
@@ -503,8 +637,19 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Copy" menu item which will allow user to copy the
+     * selected elements inside the PASVGPanel.
+     *
+     */
     public static class Copy extends PAMenuAction
     {
+        /**
+         *
+         * Create a new Copy.
+         *
+         */
         public Copy()
         {
             super(KeyEvent.VK_C, PASystem.getWord("Copy"));
@@ -520,11 +665,24 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Paste" menu item which will allow user to paste the
+     * copied or cut elements to on focusing PASVGPanel.
+     *
+     */
     public static class Paste extends PAMenuAction
     {
         public static LinkedList<PASVGElement> storeElement;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new Paste which accept PASVGPanel to know which PASVGPanel
+         * to perform paste action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform paste action
+         */
         public Paste(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_V, PASystem.getWord("Paste"));
@@ -590,10 +748,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Delete" menu item which will allow user to delete
+     * selected elements inside the PASVGPanel.
+     *
+     */
     public static class Delete extends PAMenuAction
     {
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new Delete which accept PASVGPanel to know which
+         * PASVGPanel's elements want to perform delete action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform delete action
+         */
         public Delete(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_BACK_SPACE, KeyStroke.getKeyStroke(
@@ -616,11 +787,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Zoom In" menu item which will allow user to zoom in
+     * the PASVGPanel.
+     *
+     */
     public static class ZoomIn extends PAMenuAction
     {
-        private JButton button;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new ZoomIn which accept PASVGPanel to know which PASVGPanel
+         * want to perform zoom in action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform zoom in action
+         */
         public ZoomIn(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_PLUS, PASystem.getWord("ZoomIn"));
@@ -631,7 +814,6 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_PLUS, "");
             this.drawPanel = drawPanel;
-            this.button = button;
         }
 
         @Override
@@ -640,6 +822,7 @@ public abstract class PAMenuAction extends AbstractAction
             double scale = drawPanel.getScale();
             DecimalFormat df = new DecimalFormat("##.#");
             scale = Double.parseDouble(df.format(scale));
+
             if (scale < 10)
             {
                 if (scale > 2)
@@ -651,16 +834,29 @@ public abstract class PAMenuAction extends AbstractAction
                     scale += 0.1;
                 }
             }
+
             drawPanel.zoomInOutSVG(scale);
         }
 
     }
 
+    /**
+     *
+     * This class provide "Zoom In" menu item which will allow user to zoom out
+     * the PASVGPanel.
+     *
+     */
     public static class ZoomOut extends PAMenuAction
     {
-        private JButton button;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new ZoomOut which accept PASVGPanel to know which PASVGPanel
+         * want to perform zoom out action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform zoom out action
+         */
         public ZoomOut(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_MINUS, PASystem.getWord("ZoomOut"));
@@ -671,7 +867,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_MINUS, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
@@ -680,6 +876,7 @@ public abstract class PAMenuAction extends AbstractAction
             double scale = drawPanel.getScale();
             DecimalFormat df = new DecimalFormat("##.#");
             scale = Double.parseDouble(df.format(scale));
+
             if (scale > 0.1)
             {
                 if (scale > 2)
@@ -691,16 +888,30 @@ public abstract class PAMenuAction extends AbstractAction
                     scale -= 0.1;
                 }
             }
-            drawPanel.zoomInOutSVG(scale);
 
+            drawPanel.zoomInOutSVG(scale);
         }
 
     }
 
+    /**
+     *
+     * This class provide "Actual Size" menu item which will allow user to set
+     * the PASVGPanel back to actual size.
+     *
+     */
     public static class ActualSize extends PAMenuAction
     {
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new ActualSize which accept PASVGPanel to know which
+         * PASVGPanel want to perform actual size action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform actual size
+         * action
+         */
         public ActualSize(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_0, PASystem.getWord("ActualSize"));
@@ -716,22 +927,42 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Group" menu item and "Group" button on PADrawingKit
+     * which will allow user to group a set of selected elements inside the
+     * PASVGPanel.
+     *
+     */
     public static class GroupAction extends PAMenuAction
     {
-        private JButton button;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new GroupAction which accept PASVGPanel to know which
+         * PASVGPanel's elements want to perform group action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform group action
+         */
         public GroupAction(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_G, PASystem.getWord("Group"));
             this.drawPanel = drawPanel;
         }
 
+        /**
+         *
+         * Create a new GroupAction which accept PASVGPanel to know which
+         * PASVGPanel's elements want to perform group action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform group action
+         * @param button set the JButton to show it is for PADrawingKitItem
+         */
         public GroupAction(PASVGPanel drawPanel, JButton button)
         {
             super(KeyEvent.VK_G, "");
             this.drawPanel = drawPanel;
-            this.button = button;
         }
 
         @Override
@@ -758,22 +989,43 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class provide "Ungroup" menu item and "Ungroup" button on
+     * PADrawingKit which will allow user to ungroup a selected group element
+     * inside the PASVGPanel.
+     *
+     */
     public static class UnGroupAction extends PAMenuAction
     {
-        private JButton button;
         private PASVGPanel drawPanel;
 
+        /**
+         *
+         * Create a new UnGroupAction which accept PASVGPanel to know which
+         * PASVGPanel's elements want to perform ungroup action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform ungroup action
+         */
         public UnGroupAction(PASVGPanel drawPanel)
         {
             super(KeyEvent.VK_G, Event.SHIFT_MASK, PASystem.getWord("Ungroup"));
             this.drawPanel = drawPanel;
         }
 
+        /**
+         *
+         * Create a new UnGroupAction which accept PASVGPanel to know which
+         * PASVGPanel's elements want to perform ungroup action.
+         *
+         * @param drawPanel set which PASVGPanel want to perform ungroup action
+         * @param button set the JButton to show it is for PADrawingKitItem
+         */
         public UnGroupAction(PASVGPanel drawPanel, JButton button)
         {
             super(KeyEvent.VK_G, Event.SHIFT_MASK, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
@@ -813,8 +1065,21 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class for removing action on menu item when action is not necessary.
+     *
+     */
     public static class RemoveAction extends PAMenuAction
     {
+        /**
+         *
+         * Create new RemoveAction which accept a keyEvent and String for menu
+         * item's short cut and name.
+         *
+         * @param keyEvent set menu item's keyEvent
+         * @param name set menu item's name
+         */
         public RemoveAction(int keyEvent, String name)
         {
             super(keyEvent, name);
@@ -827,8 +1092,23 @@ public abstract class PAMenuAction extends AbstractAction
 
     }
 
+    /**
+     *
+     * This class for removing action on menu item which with event when action
+     * is not necessary.
+     *
+     */
     public static class RemoveEventAction extends PAMenuAction
     {
+        /**
+         *
+         * Create new RemoveAction which accept a keyEvent, event and String for
+         * menu item's short cut and name.
+         *
+         * @param keyEvent set menu item's keyEvent
+         * @param event set menu item's event
+         * @param name set menu item's name
+         */
         public RemoveEventAction(int keyEvent, int event, String name)
         {
             super(keyEvent, event, name);
@@ -840,12 +1120,25 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
+    /**
+     *
+     * This class for changing menu item's language.
+     *
+     */
     public static class LanguageAction extends PAMenuAction
     {
         private PAMenuBar menuBar;
         private String languageToSet;
 
+        /**
+         *
+         * Create a new LanguageAction which accept PAMenuBar for getting menu
+         * item and a String to decide which language to change
+         *
+         * @param menuBar set PAMenuBar want to change language
+         * @param languageToSet set language want to change
+         */
         public LanguageAction(PAMenuBar menuBar, String languageToSet)
         {
             super(languageToSet);
@@ -853,15 +1146,16 @@ public abstract class PAMenuAction extends AbstractAction
             this.languageToSet = languageToSet;
         }
 
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			// TODO Auto-generated method stub
-			PASystem.setCurrentResource(languageToSet);
-			/*
-			 * e.GetSource() returns a null, dunno why?
-			 */
-			menuBar.resetText();
-		}
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            // TODO Auto-generated method stub
+            PASystem.setCurrentResource(languageToSet);
+            /*
+             * e.GetSource() returns a null, dunno why?
+             */
+            menuBar.resetText();
+        }
+
     }
 }

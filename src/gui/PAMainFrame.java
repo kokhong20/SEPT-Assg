@@ -4,7 +4,7 @@ import controller.PAInternalFrameAction;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
+//import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,9 +18,13 @@ import model.PASVGContainer;
 import model.PASystem;
 
 /**
- *
+ * 
  * @author KokHong
- *
+ * 
+ *         <p>
+ *         This is the main frame of the program
+ *         </p>
+ * 
  */
 public class PAMainFrame extends JInternalFrame
 {
@@ -28,7 +32,7 @@ public class PAMainFrame extends JInternalFrame
     public PASVGPanel svgPanel;
     private Box box;
     private String fileName;
-    private BufferedImage svgImage;
+    // private BufferedImage svgImage;
     private PAStatusPanel statusPanel;
     private PASVGContainer svgContainer;
     private JPanel mainPanel;
@@ -40,11 +44,14 @@ public class PAMainFrame extends JInternalFrame
     private static final long serialVersionUID = 6966744942640238103L;
 
     /**
+     * <p>
      * constructor to define PAMainFrame for PARootView
-     *
+     * </p>
+     * 
      * @param parent
      */
-    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer, String fileName)
+    public PAMainFrame(JDesktopPane parent, PASVGContainer svgContainer,
+            String fileName)
     {
         super(fileName);
         this.parent = parent;
@@ -57,7 +64,7 @@ public class PAMainFrame extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * Initialize the instance variables
      */
     private void initialize()
@@ -67,8 +74,11 @@ public class PAMainFrame extends JInternalFrame
         svgPanel = new PASVGPanel(svgContainer);
         box = new Box(BoxLayout.Y_AXIS);
         mainPanel = new JPanel();
-        svgBackPanel = new JScrollPane(box, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        PAInternalFrameAction internalFrameAction = new PAInternalFrameAction(this);
+        svgBackPanel = new JScrollPane(box,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        PAInternalFrameAction internalFrameAction = new PAInternalFrameAction(
+                this);
         this.addInternalFrameListener(internalFrameAction);
     }
 
@@ -82,12 +92,13 @@ public class PAMainFrame extends JInternalFrame
         box.add(Box.createVerticalGlue());
         svgBackPanel.setMinimumSize(minSize);
         svgBackPanel.revalidate();
-        svgBackPanel.setBorder(BorderFactory.createLineBorder(new Color(38, 38, 38), 1));
+        svgBackPanel.setBorder(BorderFactory.createLineBorder(new Color(38, 38,
+                38), 1));
         svgBackPanel.getViewport().setBackground(new Color(38, 38, 38));
     }
 
     /**
-     *
+     * 
      * Set the attributes of the Internal Frame
      */
     private void setUpMainFrame()
@@ -130,7 +141,7 @@ public class PAMainFrame extends JInternalFrame
         mainFrameHeight = mainFrameHeight + 30 + 24 * 2;
         Dimension mainFrameSize = new Dimension(mainFrameWidth, mainFrameHeight);
 
-        //Set location based on user's computer resolution
+        // Set location based on user's computer resolution
         int startX = (int) (screenResolution.getWidth() - mainFrameWidth) / 2;
         int startY = (int) (screenResolution.getHeight() - mainFrameHeight) / 2;
         Point startPoint = new Point(startX, startY);
@@ -146,7 +157,7 @@ public class PAMainFrame extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * Set mainPanel layout
      */
     private void setFrameLayout()
@@ -158,10 +169,8 @@ public class PAMainFrame extends JInternalFrame
 
         GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
-        hGroup.addGroup(layout.createParallelGroup()
-                .addComponent(attributeBar)
-                .addComponent(svgBackPanel)
-                .addComponent(statusPanel));
+        hGroup.addGroup(layout.createParallelGroup().addComponent(attributeBar)
+                .addComponent(svgBackPanel).addComponent(statusPanel));
 
         layout.setHorizontalGroup(hGroup);
 
@@ -183,12 +192,24 @@ public class PAMainFrame extends JInternalFrame
 
     }
 
+    /**
+     * <p>
+     * return the parent of the component
+     * </p>
+     * 
+     * @return the parent
+     */
+
     public JDesktopPane getParentView()
     {
         return this.parent;
     }
 
     /**
+     * <p>
+     * return the file mane of the file
+     * </p>
+     * 
      * @return the fileName
      */
     public String getFileName()
@@ -197,7 +218,12 @@ public class PAMainFrame extends JInternalFrame
     }
 
     /**
-     * @param fileName the fileName to set
+     * <p>
+     * to set the filename
+     * </p>
+     * 
+     * @param fileName
+     *            the fileName to set
      */
     public void setFileName(String fileName)
     {

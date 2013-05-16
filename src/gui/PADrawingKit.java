@@ -6,13 +6,17 @@ import javax.swing.JInternalFrame;
 import model.PASystem;
 
 /**
- *
+ * 
  * @author KokHong
- *
+ * 
+ *         <p>
+ *         A drawing kit consist of the tools to edit or create an SVG
+ *         </p>
+ * 
  */
 public class PADrawingKit extends JInternalFrame
 {
-    private PADrawingItem drawingKitButton;
+    // private PADrawingItem drawingKitButton;
     public PAMainFrame mainFrame;
     /**
      *
@@ -20,7 +24,9 @@ public class PADrawingKit extends JInternalFrame
     private static final long serialVersionUID = -918164000427896948L;
 
     /**
+     * <p>
      * constructor to define PADrawingKit for PARootView
+     * </p>
      */
     public PADrawingKit(PAMainFrame mainFrame)
     {
@@ -34,7 +40,8 @@ public class PADrawingKit extends JInternalFrame
      */
     private void initDrawingKit()
     {
-        drawingKitButton = new PADrawingItem(this);
+        // drawingKitButton =
+        new PADrawingItem(this);
     }
 
     /**
@@ -45,11 +52,13 @@ public class PADrawingKit extends JInternalFrame
         this.setLayout(null);
         this.setBackground(new Color(40, 40, 40));
         this.setVisible(true);
-        this.setSize(80, 240);
+        this.setSize(85, 245);
         this.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-        //Set location based on user's computer resolution
-        this.setLocation(((int) (0.05 * PASystem.getScreenDimension().getWidth())),
-                ((int) (0.2 * PASystem.getScreenDimension().getHeight())));
+        // Set location based on user's computer resolution
+        this.setLocation(((int) (0.05 * PASystem.getScreenDimension()
+                .getWidth())), ((int) (0.2 * PASystem.getScreenDimension()
+                .getHeight())));
+        this.setOpaque(false);
     }
 
 }

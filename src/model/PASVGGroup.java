@@ -11,8 +11,8 @@ import org.w3c.dom.NodeList;
 /**
  * @author bryantylai
  * @since 1.1
- * @version 1.1
- * <p>This class creates a new PASVGGroup element to be stored in the svg file for grouped svg elements</p>
+ * <p>This class creates a new PASVGGroup element to be stored in the svg file
+ * for grouped svg elements</p>
  */
 public class PASVGGroup extends PASVGElement
 {
@@ -28,6 +28,7 @@ public class PASVGGroup extends PASVGElement
 
     /**
      * Creates a new PASVGGroup which receives a node
+     *
      * @param node an Element node
      */
     public PASVGGroup(Node node)
@@ -37,7 +38,8 @@ public class PASVGGroup extends PASVGElement
     }
 
     /**
-     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke, groupWidth and parentGroup
+     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke,
+     * groupWidth and parentGroup
      *
      * @param node an Element node
      * @param groupFill fill of its group
@@ -50,9 +52,10 @@ public class PASVGGroup extends PASVGElement
         super(node, groupFill, groupStroke, groupWidth, parentGroup);
         this.groupElementList = new LinkedList<>();
     }
-    
+
     /**
-     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke, groupWidth and parentGroup
+     * Creates a new PASVGGroup which receives a node, groupFill, groupStroke,
+     * groupWidth and parentGroup
      *
      * @param groupElementList groupList
      * @param groupFill fill of its group
@@ -66,10 +69,11 @@ public class PASVGGroup extends PASVGElement
         super(groupFill, groupStroke, groupWidth, parentGroup, id);
         this.groupElementList = groupElementList;
     }
-    
+
     /**
      * Creates a new PASVGGroup with existing elements
-     * @param elementList 
+     *
+     * @param elementList
      */
     public PASVGGroup(LinkedList<PASVGElement> elementList)
     {
@@ -104,19 +108,19 @@ public class PASVGGroup extends PASVGElement
                     nestedGroup.readAttributes();
                     groupElementList.add(nestedGroup);
                     break;
-                    
+
                 case "rect":
                     PARectangle newRect = new PARectangle(listNode, groupFill, groupStroke, groupWidth, this);
                     newRect.readAttributes();
-                    groupElementList.add(newRect);                
+                    groupElementList.add(newRect);
                     break;
-                    
+
                 case "circle":
                     PACircle newCirc = new PACircle(listNode, groupFill, groupStroke, groupWidth, this);
                     newCirc.readAttributes();
                     groupElementList.add(newCirc);
                     break;
-                    
+
                 case "line":
                     PALine newLine = new PALine(listNode, groupStroke, groupWidth, this);
                     newLine.readAttributes();
@@ -133,4 +137,5 @@ public class PASVGGroup extends PASVGElement
     {
         return groupElementList;
     }
+
 }
