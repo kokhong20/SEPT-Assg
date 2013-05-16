@@ -17,12 +17,18 @@ import javax.swing.SpinnerNumberModel;
 /**
  *
  * @author KokHong
- *
+ * @since 2 May 2013
+ * <p>This class creates a PAAttributeItems which set attribute for each JComponents which used in PAShapeBar
+ * </p>
  */
 public class PAAttributeItems
 {
     private JComponent component;
 
+    /**
+     * Constructor to accept a JComponent
+     * @param component JComponent
+     */
     public PAAttributeItems(JComponent component)
     {
         this.component = component;

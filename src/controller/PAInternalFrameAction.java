@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.PADrawingItem;
@@ -13,11 +9,18 @@ import javax.swing.event.InternalFrameEvent;
 /**
  *
  * @author LiHao
+ * @since 2 May 2013
+ * <p>This class creates a PAInternalFrameAction to set action performed when the 
+ * internal frame is activated(focused)</p>
  */
 public class PAInternalFrameAction extends InternalFrameAdapter
 {
     private PAMainFrame mainFrame;
 
+    /**
+     * This constructor accepts a PAMainFrame object
+     * @param mainFrame PAMainFrame
+     */
     public PAInternalFrameAction(PAMainFrame mainFrame)
     {
         this.mainFrame = mainFrame;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.PASVGPanel;
@@ -21,12 +17,23 @@ import model.PASVGGroup;
 /**
  *
  * @author KokHong
+ * @since 9 May 2013
+ * <p>This class creates a PAFillBucketAction which can fill a element
+ * </p>
  */
 public class PAFillBucketAction extends PADrawingShapeAction
 {
     int elementIndex;
     PASVGElement selectedElement;
 
+    /**
+     * Creates a new PAFillBucketAction which accept a PASVGPanel , a
+     * JToggleButton and a PAShapeBar items
+     *
+     * @param drawPanel PASVGPanel
+     * @param button JToggleButton
+     * @param shapeBar PAShapeBar
+     */
     public PAFillBucketAction(PASVGPanel drawPanel, JToggleButton button, PAShapeBar shapeBar)
     {
         super(drawPanel, button, shapeBar);
