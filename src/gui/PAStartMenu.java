@@ -25,7 +25,10 @@ import javax.swing.JPanel;
 import model.PASystem;
 
 /**
- *
+ * <p>
+ * This is the start menu or welcome screen of the program
+ * </p>
+ * 
  * @author LiHao
  */
 public class PAStartMenu extends JInternalFrame
@@ -36,7 +39,9 @@ public class PAStartMenu extends JInternalFrame
     private JDesktopPane parent;
 
     /**
+     * <p>
      * constructor to create PAStartMenu
+     * </p>
      */
     public PAStartMenu(JDesktopPane parent)
     {
@@ -48,7 +53,7 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * initialize component.
      */
     private void initialize()
@@ -60,9 +65,9 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * draw Logo to Panel.
-     *
+     * 
      * @return JPanel
      */
     private JPanel setUpMainPanel()
@@ -74,8 +79,10 @@ public class PAStartMenu extends JInternalFrame
             {
                 try
                 {
-                    Image background = ImageIO.read(new File("resources/background.png"));
-                    Image img = ImageIO.read(new File("resources/MainLogo2.png"));
+                    Image background = ImageIO.read(new File(
+                            "resources/background.png"));
+                    Image img = ImageIO
+                            .read(new File("resources/MainLogo2.png"));
                     g.drawImage(background, 0, 0, 650, 450, null);
                     g.drawImage(img, 149, 20, 352, 157, null);
                 }
@@ -89,9 +96,9 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * creates a new JMenuBar with close Menu
-     *
+     * 
      * @return JMenuBar
      */
     private JMenuBar setUpMenuBar()
@@ -109,7 +116,7 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * load image to button add button to JPanel.
      */
     private void setUpButton()
@@ -131,7 +138,7 @@ public class PAStartMenu extends JInternalFrame
             }
 
         });
-        
+
         newFileButton.addMouseListener(new java.awt.event.MouseAdapter()
         {
             @Override
@@ -149,7 +156,7 @@ public class PAStartMenu extends JInternalFrame
             }
 
         });
-        
+
         NewFile newAction = new NewFile(parent, this);
         OpenFile openAction = new OpenFile(parent, this);
         newFileButton.setAction(newAction);
@@ -175,7 +182,7 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * customize mainPanel and add to InternalFrame.
      */
     private void customize()
@@ -188,7 +195,7 @@ public class PAStartMenu extends JInternalFrame
     }
 
     /**
-     *
+     * 
      * to show the InternalFrame and set size to it.
      */
     private void setUpStartMenu()

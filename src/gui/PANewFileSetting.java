@@ -25,7 +25,10 @@ import model.PASystem;
 import model.PAUnit;
 
 /**
- *
+ * <p>
+ * Setting for creating a new file
+ * </p>
+ * 
  * @author LiHao
  */
 public class PANewFileSetting extends JInternalFrame
@@ -44,10 +47,14 @@ public class PANewFileSetting extends JInternalFrame
     private JDesktopPane parent;
     private PAStartMenu startMenu;
     private String[] unitList =
-    {
-        "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
-    };
+    { "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%" };
 
+    /**
+     * <p>
+     * Create an instance of New File Setting
+     * </p>
+     * 
+     */
     public PANewFileSetting()
     {
         initialize();
@@ -55,7 +62,15 @@ public class PANewFileSetting extends JInternalFrame
         setUpMainLayout();
         setUpNewFile();
     }
-    
+
+    /**
+     * <p>
+     * create an instance of new file setting with JDektopPane s the parameter
+     * </p>
+     * 
+     * @param parent
+     *            the desktop pane
+     */
     public PANewFileSetting(JDesktopPane parent)
     {
         super("New");
@@ -67,6 +82,17 @@ public class PANewFileSetting extends JInternalFrame
         setUpNewFile();
     }
 
+    /**
+     * <p>
+     * create an instance of new file setting with a JDesktopPane and a start
+     * menu
+     * </p>
+     * 
+     * @param parent
+     *            the desktop pane
+     * @param startMenu
+     *            the start menu
+     */
     public PANewFileSetting(JDesktopPane parent, PAStartMenu startMenu)
     {
         super("New");
@@ -79,6 +105,14 @@ public class PANewFileSetting extends JInternalFrame
         setUpNewFile();
     }
 
+    /**
+     * 
+     * <p>
+     * get the text of the fields
+     * </p>
+     * 
+     * @return the textMap
+     */
     public HashMap getFieldText()
     {
         HashMap<String, String> textMap = new HashMap<>();
@@ -109,6 +143,13 @@ public class PANewFileSetting extends JInternalFrame
         return textField;
     }
 
+    /**
+     * <p>
+     * update the document when object is added
+     * </p>
+     * 
+     * @param svgContainer
+     */
     public void updateDocument(PASVGContainer svgContainer)
     {
         PASVGTag svgTag = svgContainer.getSvgTag();
@@ -130,15 +171,27 @@ public class PANewFileSetting extends JInternalFrame
             }
         }
     }
-    
+
+    /**
+     * <p>
+     * add action to the text fied of the new file setting
+     * </p>
+     * 
+     * @param svgTag
+     * @param drawPanel
+     */
     public void setUpdateDocAction(PASVGTag svgTag, PASVGPanel drawPanel)
     {
-        PAUpdateDocAction updateDocAction = new PAUpdateDocAction(svgTag, drawPanel, this);
+        PAUpdateDocAction updateDocAction = new PAUpdateDocAction(svgTag,
+                drawPanel, this);
         okButton.addActionListener(updateDocAction);
         cancelButton.addActionListener(updateDocAction);
-        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(heightField));
-        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(widthField));
-        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(fileNameField));
+        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(
+                heightField));
+        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(
+                widthField));
+        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(
+                fileNameField));
     }
 
     private void initialize()
@@ -178,7 +231,8 @@ public class PANewFileSetting extends JInternalFrame
 
         if (startMenu != null)
         {
-            newFileSettingAction = new PANewFileSettingAction(parent, this, startMenu);
+            newFileSettingAction = new PANewFileSettingAction(parent, this,
+                    startMenu);
         }
         else
         {
@@ -187,10 +241,13 @@ public class PANewFileSetting extends JInternalFrame
 
         okButton.addActionListener(newFileSettingAction);
         cancelButton.addActionListener(newFileSettingAction);
-        
-        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(heightField));
-        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(widthField));
-        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(fileNameField));
+
+        heightField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(
+                heightField));
+        widthField.addKeyListener(new PATextFieldFormatter.PANumberFormatter(
+                widthField));
+        fileNameField.addKeyListener(new PATextFieldFormatter.PANameFormatter(
+                fileNameField));
     }
 
     private void setUpMainLayout()
@@ -201,20 +258,21 @@ public class PANewFileSetting extends JInternalFrame
         GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
         hGroup.addGap(30);
-        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(fileName)
-                .addComponent(width)
-                .addComponent(height)
-                .addComponent(unit));
+        hGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(fileName).addComponent(width)
+                .addComponent(height).addComponent(unit));
 
-        hGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+        hGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addComponent(fileNameField)
                 .addComponent(widthField)
                 .addComponent(heightField)
                 .addComponent(unitSelection)
-                .addGroup(layout.createSequentialGroup()
-                .addComponent(cancelButton)
-                .addComponent(okButton)));
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addComponent(cancelButton)
+                                .addComponent(okButton)));
 
         layout.setHorizontalGroup(hGroup);
 
@@ -222,27 +280,27 @@ public class PANewFileSetting extends JInternalFrame
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
         vGroup.addGap(20);
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(fileName)
-                .addComponent(fileNameField));
+        vGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(fileName).addComponent(fileNameField));
 
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(width)
-                .addComponent(widthField));
+        vGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(width).addComponent(widthField));
 
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(height)
-                .addComponent(heightField));
+        vGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(height).addComponent(heightField));
 
         vGroup.addGap(5);
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(unit)
-                .addComponent(unitSelection));
+        vGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(unit).addComponent(unitSelection));
 
         vGroup.addGap(20);
-        vGroup.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                .addComponent(cancelButton)
-                .addComponent(okButton));
+        vGroup.addGroup(layout
+                .createParallelGroup(GroupLayout.Alignment.CENTER)
+                .addComponent(cancelButton).addComponent(okButton));
 
         layout.setVerticalGroup(vGroup);
     }

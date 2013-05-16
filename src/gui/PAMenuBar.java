@@ -20,7 +20,10 @@ import javax.swing.KeyStroke;
 import model.PASystem;
 
 /**
- *
+ * <p>
+ * This is the Menu Bar for the program
+ * </p>
+ * 
  * @author LiHao
  */
 public class PAMenuBar extends JMenuBar
@@ -65,22 +68,41 @@ public class PAMenuBar extends JMenuBar
         initKeyStroke();
     }
 
+    /**
+     * <p>
+     * This updates the action listener for the menu bar when the panel changes
+     * </p>
+     * 
+     * @param mainFrame
+     *            pass in the main frame
+     */
     public static void updateAction(PAMainFrame mainFrame)
     {
         PAMenuAction.SaveFile saveAction = new PAMenuAction.SaveFile(mainFrame);
-        PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(mainFrame);
-        PAMenuAction.DocumentProperties docAction = new PAMenuAction.DocumentProperties(mainFrame);
-        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel);
-        PAMenuAction.UnGroupAction ungroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel);
-        PAMenuAction.SelectAll selectAllAction = new PAMenuAction.SelectAll(mainFrame);
-        PAMenuAction.DeselectAll deselectAllAction = new PAMenuAction.DeselectAll(mainFrame);
+        PAMenuAction.SaveAsFile saveAsAction = new PAMenuAction.SaveAsFile(
+                mainFrame);
+        PAMenuAction.DocumentProperties docAction = new PAMenuAction.DocumentProperties(
+                mainFrame);
+        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(
+                mainFrame.svgPanel);
+        PAMenuAction.UnGroupAction ungroupAction = new PAMenuAction.UnGroupAction(
+                mainFrame.svgPanel);
+        PAMenuAction.SelectAll selectAllAction = new PAMenuAction.SelectAll(
+                mainFrame);
+        PAMenuAction.DeselectAll deselectAllAction = new PAMenuAction.DeselectAll(
+                mainFrame);
         PAMenuAction.Cut cutAction = new PAMenuAction.Cut(mainFrame.svgPanel);
         PAMenuAction.Copy copyAction = new PAMenuAction.Copy();
-        PAMenuAction.Paste pasteAction = new PAMenuAction.Paste(mainFrame.svgPanel);
-        PAMenuAction.Delete deleteAction = new PAMenuAction.Delete(mainFrame.svgPanel);
-        PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel);
-        PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel);
-        PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(mainFrame.svgPanel);
+        PAMenuAction.Paste pasteAction = new PAMenuAction.Paste(
+                mainFrame.svgPanel);
+        PAMenuAction.Delete deleteAction = new PAMenuAction.Delete(
+                mainFrame.svgPanel);
+        PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(
+                mainFrame.svgPanel);
+        PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(
+                mainFrame.svgPanel);
+        PAMenuAction.ActualSize actualSizeAction = new PAMenuAction.ActualSize(
+                mainFrame.svgPanel);
         saveFile.setAction(saveAction);
         saveAsFile.setAction(saveAsAction);
         docFile.setAction(docAction);
@@ -111,21 +133,40 @@ public class PAMenuBar extends JMenuBar
         actualSizeView.setEnabled(true);
     }
 
+    /**
+     * <p>
+     * this remove all the action from the menu bar when the panel lost focus
+     * </p>
+     * 
+     */
     public static void removeUpdatedAction()
     {
-        PAMenuAction.RemoveAction removeSaveAction = new PAMenuAction.RemoveAction(KeyEvent.VK_S, "Save");
-        PAMenuAction.RemoveEventAction removeSaveAsAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As");
-        PAMenuAction.RemoveAction removeDocAction = new PAMenuAction.RemoveAction(KeyEvent.VK_D, "Document Properties");
-        PAMenuAction.RemoveAction removeGroupAction = new PAMenuAction.RemoveAction(KeyEvent.VK_G, "Group");
-        PAMenuAction.RemoveEventAction removeUngroupAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
-        PAMenuAction.RemoveAction removeSelectAllAction = new PAMenuAction.RemoveAction(KeyEvent.VK_A, "Select All");
-        PAMenuAction.RemoveEventAction removedeselectAllAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
-        PAMenuAction.RemoveAction removeCutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_X, "Cut");
-        PAMenuAction.RemoveAction removeCopyAction = new PAMenuAction.RemoveAction(KeyEvent.VK_C, "Copy");
-        PAMenuAction.RemoveAction removeDeleteAction = new PAMenuAction.RemoveAction(KeyEvent.VK_DELETE, "Delete");
-        PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
-        PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
-        PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        PAMenuAction.RemoveAction removeSaveAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_S, "Save");
+        PAMenuAction.RemoveEventAction removeSaveAsAction = new PAMenuAction.RemoveEventAction(
+                KeyEvent.VK_S, Event.SHIFT_MASK, "Save As");
+        PAMenuAction.RemoveAction removeDocAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_D, "Document Properties");
+        PAMenuAction.RemoveAction removeGroupAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_G, "Group");
+        PAMenuAction.RemoveEventAction removeUngroupAction = new PAMenuAction.RemoveEventAction(
+                KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
+        PAMenuAction.RemoveAction removeSelectAllAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_A, "Select All");
+        PAMenuAction.RemoveEventAction removedeselectAllAction = new PAMenuAction.RemoveEventAction(
+                KeyEvent.VK_A, Event.SHIFT_MASK, "Deselect All");
+        PAMenuAction.RemoveAction removeCutAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_X, "Cut");
+        PAMenuAction.RemoveAction removeCopyAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_C, "Copy");
+        PAMenuAction.RemoveAction removeDeleteAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_DELETE, "Delete");
+        PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_PLUS, "Zoom In");
+        PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_MINUS, "Zoom Out");
+        PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(
+                KeyEvent.VK_0, "Actual Size");
         saveFile.setAction(removeSaveAction);
         saveAsFile.setAction(removeSaveAsAction);
         docFile.setAction(removeDocAction);
@@ -264,14 +305,15 @@ public class PAMenuBar extends JMenuBar
     }
 
     /**
-     *
+     * 
      * add action to each menu item.
      */
     private void addAction()
     {
         PAMenuAction.NewFile newAction = new PAMenuAction.NewFile(parent);
         PAMenuAction.OpenFile openAction = new PAMenuAction.OpenFile(parent);
-        PAMenuAction.ExitProgram exitAction = new PAMenuAction.ExitProgram(parent);
+        PAMenuAction.ExitProgram exitAction = new PAMenuAction.ExitProgram(
+                parent);
         newFile.setAction(newAction);
         openFile.setAction(openAction);
         exitFile.setAction(exitAction);
@@ -281,7 +323,8 @@ public class PAMenuBar extends JMenuBar
          */
         for (JMenuItem menuItems : languages)
         {
-            menuItems.setAction(new PAMenuAction.LanguageAction(this, menuItems.getText()));
+            menuItems.setAction(new PAMenuAction.LanguageAction(this, menuItems
+                    .getText()));
         }
         /*
          * 
@@ -303,23 +346,39 @@ public class PAMenuBar extends JMenuBar
     private void initKeyStroke()
     {
         int keyMask = PASystem.keyMask;
-        
+
         saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask));
-        saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask | Event.SHIFT_MASK));
+        saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask
+                | Event.SHIFT_MASK));
         docFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, keyMask));
-        groupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask));
-        ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask | Event.SHIFT_MASK));
-        selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
-        deselectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask | Event.SHIFT_MASK));
+        groupEdit
+                .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask));
+        ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G,
+                keyMask | Event.SHIFT_MASK));
+        selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+                keyMask));
+        deselectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+                keyMask | Event.SHIFT_MASK));
         cutEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, keyMask));
         copyEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, keyMask));
-        pasteEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, keyMask));
-        deleteEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0));
-        zoomInView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, keyMask));
-        zoomOutView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, keyMask));
-        actualSizeView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, keyMask));
+        pasteEdit
+                .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, keyMask));
+        deleteEdit.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_BACK_SPACE, 0));
+        zoomInView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,
+                keyMask));
+        zoomOutView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
+                keyMask));
+        actualSizeView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
+                keyMask));
     }
 
+    /**
+     * <p>
+     * Reset the text if the language is not set
+     * </p>
+     * 
+     */
     public void resetText()
     {
         // TODO Auto-generated method stub

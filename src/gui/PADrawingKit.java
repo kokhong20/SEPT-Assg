@@ -9,6 +9,10 @@ import model.PASystem;
  * 
  * @author KokHong
  * 
+ *         <p>
+ *         A drawing kit consist of the tools to edit or create an SVG
+ *         </p>
+ * 
  */
 public class PADrawingKit extends JInternalFrame
 {
@@ -20,7 +24,9 @@ public class PADrawingKit extends JInternalFrame
     private static final long serialVersionUID = -918164000427896948L;
 
     /**
+     * <p>
      * constructor to define PADrawingKit for PARootView
+     * </p>
      */
     public PADrawingKit(PAMainFrame mainFrame)
     {

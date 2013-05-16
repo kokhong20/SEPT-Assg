@@ -13,9 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
 /**
- *
+ * 
  * @author KokHong
- *
+ * @since 1.1
+ *        <p>
+ *        This is the component inside the Drawing Kit
+ *        </p>
+ * 
  */
 public class PADrawingItem
 {
@@ -37,9 +41,12 @@ public class PADrawingItem
     private JLabel title;
 
     /**
+     * <p>
      * construct to define this PADrawingKitButton for the PADrawingKit
-     *
-     * @param drawKitPanel PADrawingKit
+     * </p>
+     * 
+     * @param drawKitPanel
+     *            the initialized PADrawingKit
      */
     public PADrawingItem(PADrawingKit drawKitPanel)
     {
@@ -61,7 +68,7 @@ public class PADrawingItem
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Helvetica", 10, 12));
         title.setBounds(24, 0, 40, 20);
-        title.setBackground(new Color(40,40,40));
+        title.setBackground(new Color(40, 40, 40));
         title.setOpaque(true);
         drawKitPanel.add(title);
     }
@@ -101,30 +108,47 @@ public class PADrawingItem
         ungroup = new JButton();
     }
 
+    /**
+     * <p>
+     * Set up all the component in the Drawing Kit
+     * </p>
+     * 
+     */
     public static void setUpButton()
     {
-        setToggleButtonAttribute("resources/select.png", selectCursor, "Select Cursor", 40, 20);
+        setToggleButtonAttribute("resources/select.png", selectCursor,
+                "Select Cursor", 40, 20);
         setToggleButtonAttribute("resources/line.png", line, "Line", 40, 100);
-        setToggleButtonAttribute("resources/rect.png", rectangle, "Rectangle", 0, 140);
-        setToggleButtonAttribute("resources/circle 30x30.png", circle, "Circle", 40, 140);
+        setToggleButtonAttribute("resources/rect.png", rectangle, "Rectangle",
+                0, 140);
+        setToggleButtonAttribute("resources/circle 30x30.png", circle,
+                "Circle", 40, 140);
         setButtonAttribute("resources/zoomin.png", zoomIn, "Zoom In", 0, 60);
         setButtonAttribute("resources/zoomout.png", zoomOut, "Zoom Out", 40, 60);
         setButtonAttribute("resources/group.png", group, "Group", 0, 180);
         setButtonAttribute("resources/ungroup.png", ungroup, "Ungroup", 40, 180);
-        setToggleButtonAttribute("resources/cursor.png", handCursor, "Hand Cursor", 0, 20);
-        setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0, 100);
+        setToggleButtonAttribute("resources/cursor.png", handCursor,
+                "Hand Cursor", 0, 20);
+        setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0,
+                100);
     }
 
     /**
      * set an image icon, tool tip and position for a JButton
-     *
-     * @param imgPath url path to the image
-     * @param button a JButton
-     * @param toolTip String to set for toolTip
-     * @param x X position for set bounds
-     * @param y Y position for set bounds
+     * 
+     * @param imgPath
+     *            url path to the image
+     * @param button
+     *            a JButton
+     * @param toolTip
+     *            String to set for toolTip
+     * @param x
+     *            X position for set bounds
+     * @param y
+     *            Y position for set bounds
      */
-    private static void setToggleButtonAttribute(String imgPath, JToggleButton button, String toolTip, int x, int y)
+    private static void setToggleButtonAttribute(String imgPath,
+            JToggleButton button, String toolTip, int x, int y)
     {
         ImageIcon imgIcon = new ImageIcon(imgPath);
         button.setIcon(imgIcon);
@@ -136,7 +160,8 @@ public class PADrawingItem
         button.setBounds(x, y, maxWidth, maxHeight);
     }
 
-    private static void setButtonAttribute(String imgPath, JButton button, String toolTip, int x, int y)
+    private static void setButtonAttribute(String imgPath, JButton button,
+            String toolTip, int x, int y)
     {
         ImageIcon imgIcon = new ImageIcon(imgPath);
         button.setIcon(imgIcon);
@@ -148,46 +173,64 @@ public class PADrawingItem
         button.setBounds(x, y, maxWidth, maxHeight);
     }
 
+    /**
+     * <p>
+     * Add action to the component of Drawing Kit
+     * </p>
+     * 
+     * @param mainFrame
+     *            the Active Main Frame
+     */
     public static void addAction(PAMainFrame mainFrame)
     {
-        //SelectCursor
-        PASelectCursorAction selectCusrsorAction = new PASelectCursorAction(mainFrame.svgPanel, selectCursor, mainFrame.attributeBar);
+        // SelectCursor
+        PASelectCursorAction selectCusrsorAction = new PASelectCursorAction(
+                mainFrame.svgPanel, selectCursor, mainFrame.attributeBar);
         selectCursor.setAction(selectCusrsorAction);
 
-        //Line
-        PADrawingShapeAction.DrawLineAction drawLineAction = new PADrawingShapeAction.DrawLineAction(mainFrame.svgPanel, line, mainFrame.attributeBar);
+        // Line
+        PADrawingShapeAction.DrawLineAction drawLineAction = new PADrawingShapeAction.DrawLineAction(
+                mainFrame.svgPanel, line, mainFrame.attributeBar);
         line.setAction(drawLineAction);
 
-        //Rectangle
-        PADrawingShapeAction.DrawRectangleAction drawRectAction = new PADrawingShapeAction.DrawRectangleAction(mainFrame.svgPanel, rectangle, mainFrame.attributeBar);
+        // Rectangle
+        PADrawingShapeAction.DrawRectangleAction drawRectAction = new PADrawingShapeAction.DrawRectangleAction(
+                mainFrame.svgPanel, rectangle, mainFrame.attributeBar);
         rectangle.setAction(drawRectAction);
 
-        //Circle
-        PADrawingShapeAction.DrawCircleAction drawCircleAction = new PADrawingShapeAction.DrawCircleAction(mainFrame.svgPanel, circle, mainFrame.attributeBar);
+        // Circle
+        PADrawingShapeAction.DrawCircleAction drawCircleAction = new PADrawingShapeAction.DrawCircleAction(
+                mainFrame.svgPanel, circle, mainFrame.attributeBar);
         circle.setAction(drawCircleAction);
 
-        //ZoomIn
-        PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(mainFrame.svgPanel, zoomIn);
+        // ZoomIn
+        PAMenuAction.ZoomIn zoomInAction = new PAMenuAction.ZoomIn(
+                mainFrame.svgPanel, zoomIn);
         zoomIn.setAction(zoomInAction);
 
-        //ZoomOut
-        PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(mainFrame.svgPanel, zoomOut);
+        // ZoomOut
+        PAMenuAction.ZoomOut zoomOutAction = new PAMenuAction.ZoomOut(
+                mainFrame.svgPanel, zoomOut);
         zoomOut.setAction(zoomOutAction);
 
-        //Pan
-        PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel, handCursor, mainFrame.attributeBar);
+        // Pan
+        PAHandCursor panAction = new PAHandCursor(mainFrame.svgPanel,
+                handCursor, mainFrame.attributeBar);
         handCursor.setAction(panAction);
 
-        //Group
-        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(mainFrame.svgPanel, group);
+        // Group
+        PAMenuAction.GroupAction groupAction = new PAMenuAction.GroupAction(
+                mainFrame.svgPanel, group);
         group.setAction(groupAction);
 
-        //UnGroup
-        PAMenuAction.UnGroupAction unGroupAction = new PAMenuAction.UnGroupAction(mainFrame.svgPanel, ungroup);
+        // UnGroup
+        PAMenuAction.UnGroupAction unGroupAction = new PAMenuAction.UnGroupAction(
+                mainFrame.svgPanel, ungroup);
         ungroup.setAction(unGroupAction);
 
-        //Fill
-        PAFillBucketAction fillAction = new PAFillBucketAction(mainFrame.svgPanel, fill, mainFrame.attributeBar);
+        // Fill
+        PAFillBucketAction fillAction = new PAFillBucketAction(
+                mainFrame.svgPanel, fill, mainFrame.attributeBar);
         fill.setAction(fillAction);
     }
 

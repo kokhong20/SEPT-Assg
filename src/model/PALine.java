@@ -32,14 +32,14 @@ public class PALine extends PASVGElement
     }
 
     /**
-     * Creates a new PALine with all attributes
+     * <p>Creates a new PALine with all attributes</p>
      *
-     * @param stroke
-     * @param strokeWidth
-     * @param x1 the x1 coordinate
-     * @param x2 the x2 coordinate
-     * @param y1 the y1 coordinate
-     * @param y2 the y2 coordinate
+     * @param stroke is the stroke
+     * @param strokeWidth is the stroke width
+     * @param x1 is the x1 coordinate
+     * @param x2 is the x2 coordinate
+     * @param y1 is the y1 coordinate
+     * @param y2 is the y2 coordinate
      */
     public PALine(Color stroke, double strokeWidth, double x1, double x2, double y1, double y2)
     {
@@ -52,7 +52,7 @@ public class PALine extends PASVGElement
     }
 
     /**
-     * Creates a new PALine which receives a node
+     * <p>Creates a new PALine which receives a node</p>
      *
      * @param node
      */
@@ -80,6 +80,7 @@ public class PALine extends PASVGElement
 
     /**
      * {@inheritDoc}
+     * <p> Read the attribute of the node</p>
      */
     @Override
     public void readAttributes()
@@ -96,7 +97,9 @@ public class PALine extends PASVGElement
             setLine2D();
         }
     }
-
+    /**
+     * <p>Override the 
+     */
     @Override
     public void setFill(Color c)
     {

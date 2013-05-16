@@ -88,7 +88,7 @@ public enum PAColor implements PAAttributeConstant {
 	}
 
 	/**
-	 * Validate and convert the SVG element attributes value received as String to Color
+	 * <p>Validate and convert the SVG element attributes value received as String to Color</p>
 	 * 
 	 * @param value attribute value of an SVG element attribute
 	 * @param constant constant is return if error in setting color
