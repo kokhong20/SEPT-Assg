@@ -166,10 +166,10 @@ public class PAMenuBar extends JMenuBar
     private void initMenuItem()
     {
         // File's MenuItem
-        newFile = new JMenuItem(PASystem.getWord("New..."));
-        openFile = new JMenuItem(PASystem.getWord("Open..."));
+        newFile = new JMenuItem(PASystem.getWord("New"));
+        openFile = new JMenuItem(PASystem.getWord("Open"));
         saveFile = new JMenuItem(PASystem.getWord("Save"));
-        saveAsFile = new JMenuItem(PASystem.getWord("SaveAs..."));
+        saveAsFile = new JMenuItem(PASystem.getWord("SaveAs"));
         docFile = new JMenuItem(PASystem.getWord("DocumentProperties"));
         exitFile = new JMenuItem(PASystem.getWord("Exit"));
 
@@ -315,10 +315,10 @@ public class PAMenuBar extends JMenuBar
 		languageMenu.setText(PASystem.getWord("Language"));
 
         // File's MenuItem
-        newFile.setText(PASystem.getWord("New..."));
-        openFile.setText(PASystem.getWord("Open..."));
+        newFile.setText(PASystem.getWord("New"));
+        openFile.setText(PASystem.getWord("Open"));
         saveFile.setText(PASystem.getWord("Save"));
-        saveAsFile.setText(PASystem.getWord("SaveAs..."));
+        saveAsFile.setText(PASystem.getWord("SaveAs"));
         docFile.setText(PASystem.getWord("DocumentProperties"));
         exitFile.setText(PASystem.getWord("Exit"));
 

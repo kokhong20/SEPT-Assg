@@ -1,5 +1,8 @@
 
+import java.util.Locale;
+
 import gui.PARootView;
+
 import javax.swing.SwingUtilities;
 
 /**
@@ -10,8 +13,7 @@ import javax.swing.SwingUtilities;
 public class Main
 {
     public static void main(final String[] args)
-    {
-        
+    {    	
         SwingUtilities.invokeLater(new Runnable()
         {
             @Override

@@ -110,13 +110,13 @@ public abstract class PAMenuAction extends AbstractAction
 
         public NewFile(JDesktopPane parent)
         {
-            super(KeyEvent.VK_N, PASystem.getWord("New..."));
+            super(KeyEvent.VK_N, PASystem.getWord("New"));
             this.parent = parent;
         }
 
         public NewFile(JDesktopPane parent, PAStartMenu startMenu)
         {
-            super(KeyEvent.VK_N, PASystem.getWord("New..."));
+            super(KeyEvent.VK_N, PASystem.getWord("New"));
             this.parent = parent;
             this.startMenu = startMenu;
         }
@@ -152,7 +152,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     /**
      *
-     * action class for menu item "Open..."
+     * action class for menu item "Open"
      */
     public static class OpenFile extends PAMenuAction
     {
@@ -162,13 +162,13 @@ public abstract class PAMenuAction extends AbstractAction
 
         public OpenFile(JDesktopPane parent)
         {
-            super(KeyEvent.VK_O, PASystem.getWord("Open..."));
+            super(KeyEvent.VK_O, PASystem.getWord("Open"));
             this.parent = parent;
         }
 
         public OpenFile(JDesktopPane parent, PAStartMenu startMenu)
         {
-            super(KeyEvent.VK_O, PASystem.getWord("Open..."));
+            super(KeyEvent.VK_O, PASystem.getWord("Open"));
             this.parent = parent;
             this.startMenu = startMenu;
         }
@@ -178,7 +178,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             if (fcInternal == null)
             {
-                fcInternal = new JInternalFrame(PASystem.getWord("Open..."));
+                fcInternal = new JInternalFrame(PASystem.getWord("Open"));
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter allFilter = new FileNameExtensionFilter("All files", "svg", "xml");
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
@@ -242,7 +242,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public SaveFile(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_S, PASystem.getWord("Save..."));
+            super(KeyEvent.VK_S, PASystem.getWord("Save"));
             this.onFocusFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
@@ -267,7 +267,7 @@ public abstract class PAMenuAction extends AbstractAction
         	{
                 if (fcInternal == null)
                 {
-                    fcInternal = new JInternalFrame(PASystem.getWord("Save..."));
+                    fcInternal = new JInternalFrame(PASystem.getWord("Save"));
                     JFileChooser fileChooser = new JFileChooser();
                     FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                     FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
@@ -306,7 +306,7 @@ public abstract class PAMenuAction extends AbstractAction
     
     /**
      *
-     * action class for menu item "Save As..."
+     * action class for menu item "Save As"
      */
     public static class SaveAsFile extends PAMenuAction
     {
@@ -316,7 +316,7 @@ public abstract class PAMenuAction extends AbstractAction
 
         public SaveAsFile(PAMainFrame mainFrame)
         {
-            super(KeyEvent.VK_S, Event.SHIFT_MASK, PASystem.getWord("SaveAs..."));
+            super(KeyEvent.VK_S, Event.SHIFT_MASK, PASystem.getWord("SaveAs"));
             this.mainFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
@@ -328,7 +328,7 @@ public abstract class PAMenuAction extends AbstractAction
         	PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
             if (fcInternal == null)
             {
-                fcInternal = new JInternalFrame(PASystem.getWord("SaveAs..."));
+                fcInternal = new JInternalFrame(PASystem.getWord("SaveAs"));
                 JFileChooser fileChooser = new JFileChooser();
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                 FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
