@@ -348,7 +348,7 @@ public class PASelectCursorAction extends PADrawingShapeAction
         }
         else
         {
-            for (int index = elementList.size() - 1; index >= 0; index--)
+            for (int index = 0; index < elementList.size(); index++)
             {
                 PASVGElement element = elementList.get(index);
 
