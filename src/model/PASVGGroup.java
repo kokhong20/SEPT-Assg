@@ -10,7 +10,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * @author bryantylai
- * @since 23 April 2013
+ * @since 1.1
  * <p>This class creates a new PASVGGroup element to be stored in the svg file
  * for grouped svg elements</p>
  */

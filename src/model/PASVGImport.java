@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 /**
  *
  * @author bryantylai/LiHao/Lai Sai Hoo
- * @since 8 April 2013
+ * @since 1.1
  * <p>This class reads and validate a file then converts it to be readable in
  * JAVA. SVG elements are then stored into a list</p>
  */

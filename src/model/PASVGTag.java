@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 /**
  *
  * @author LaiSaiHoo
- * @since 8 April 2013
+ * @since 1.1
  * <p>This class creates a PASVGTag based on the svg tag read from an existing
  * svg file or creates a new svg tag for a new svg file</p>
  */

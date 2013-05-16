@@ -30,7 +30,7 @@ import model.PAUnit;
 /**
  *
  * @author KokHong
- * @since 2 May 2013
+ * @since 1.1
  * <p>This class creates a PADrawingShapeAction to set action performed to draw
  * each shape such as Line, Rectangle and circle</p>
  */

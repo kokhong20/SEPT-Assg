@@ -17,7 +17,7 @@ import model.PASVGGroup;
 /**
  *
  * @author KokHong
- * @since 9 May 2013
+ * @since 1.1
  * <p>This class creates a PAFillBucketAction which can fill a element
  * </p>
  */

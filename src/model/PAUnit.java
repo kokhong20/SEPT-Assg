@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author bryantylai/SaiHoo
- * @since 5 April 2013
+ * @since 1.1
  * <p>
  * This class is to validate and convert unit attributes of svg elements
  * </p>

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 //import org.w3c.dom.Document;
 /**
  * @author bryantylai/LaiSaiHoo
- * @since 9 April 2013
+ * @since 1.1
  * <p>This class creates a container which stores the svg tag and all svg
  * elements</p>
  */

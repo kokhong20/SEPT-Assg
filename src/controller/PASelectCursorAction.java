@@ -21,7 +21,7 @@ import java.awt.event.MouseEvent;
 /**
  *
  * @author KokHong
- * @since 2 May 2013
+ * @since 1.1
  * <p>This class creates a PASelectCursorAction to set action performed by clicking the select cursor
  * such as resize,select , move elements</p>
  */

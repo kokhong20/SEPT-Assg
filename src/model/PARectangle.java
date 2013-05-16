@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- * @since 5 April 2013
+ * @since 1.1
  * <p>This class creates a new PARectangle as a PASVGElement</p>
  */
 public class PARectangle extends PASVGElement

@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /**
  * @author bryantylai
- * @since 18 April 2013
+ * @since 1.1
  * <p>This enum provides Color for all available svg colors and also validate
  * and convert color to be readable in JAVA</p>
  */

@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
 
 /**
  * @author bryantylai
- * @since 23 April 2013
+ * @since 1.1
  * <p>This class provides a skeletal implementation for all svg elements</p>
  */
 public abstract class PASVGElement implements PAAttributeConstant

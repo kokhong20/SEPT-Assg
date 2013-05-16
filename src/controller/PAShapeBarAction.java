@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,13 +13,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-
 import gui.PAColorChooser;
 
 /**
  *
  * @author KokHong
- * @since 16 April 2013
+ * @since 1.1
  * <p>This class creates a PAShapeBarAction which get attributes for fill,stroke
  * and stroke width </p>
  */

@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-//import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -27,7 +26,9 @@ import model.PASVGGroup;
 /**
  * 
  * @author KokHong
- * 
+ * @since 1.1
+ * <p>This class creates a PASVGPanel for create a JPanel to draw and display
+ * SVG </p>
  */
 public class PASVGPanel extends JPanel
 {
@@ -36,14 +37,12 @@ public class PASVGPanel extends JPanel
     private int svgWidth;
     private int svgHeight;
     private double scale;
-//    private PAMainFrame mainFrame;
-//    private Rectangle2D handleRectangle;
     public LinkedList<PASVGElement> elementCollection;
 
     /**
-     * constructor to define PASVGPanel for PAMainFrame
+     * constructor to accepts a PASVGContainer
      * 
-     * @param mainFrame
+     * @param svgContainer PASVGContainer
      */
     public PASVGPanel(PASVGContainer svgContainer)
     {
@@ -54,21 +53,37 @@ public class PASVGPanel extends JPanel
         drawToImage();
     }
 
+    /**
+     * Get image scale
+     * @return return image scale
+     */
     public double getScale()
     {
         return scale;
     }
 
+    /**
+     * Get SVG width
+     * @return return svg width
+     */
     public int getSVGWidth()
     {
         return svgWidth;
     }
 
+    /**
+     * Get SVG height
+     * @return return svg height
+     */
     public int getSVGHeight()
     {
         return svgHeight;
     }
 
+    /**
+     * Redraw image with scale for zoom in and out action
+     * @param scale image scale
+     */
     public void zoomInOutSVG(double scale)
     {
         this.scale = scale;
@@ -78,6 +93,10 @@ public class PASVGPanel extends JPanel
         repaint();
     }
 
+    /**
+     * Redraw image only
+     * @param scale image scale
+     */
     public void reDrawImage(double scale)
     {
         this.scale = scale;
@@ -100,6 +119,9 @@ public class PASVGPanel extends JPanel
         setPreferredSize(size);
     }
 
+    /**
+     * Draw graphics to buffered image
+     */
     public final void drawToImage()
     {
         svgImage = new BufferedImage((int) (svgWidth * scale),
@@ -184,6 +206,10 @@ public class PASVGPanel extends JPanel
         g2d.draw(line);
     }
 
+    /**
+     * draw Graphics to JPanel
+     * @param g Graphics 
+     */
     @Override
     public void paintComponent(Graphics g)
     {
@@ -234,6 +260,14 @@ public class PASVGPanel extends JPanel
         g2d.dispose();
     }
 
+    /**
+     * Make a rectangle with 4 coordinates
+     * @param x1 start x position
+     * @param y1 start y position
+     * @param x2 end x position
+     * @param y2 end x position
+     * @return Rectangle2D.Double shape
+     */
     public Rectangle2D.Double makeRectangle(int x1, int y1, int x2, int y2)
     {
         return new Rectangle2D.Double(Math.min(x1, x2), Math.min(y1, y2),

@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 
 /**
  * @author bryantylai
- * @since 5 April 2013
+ * @since 1.1
  * <p>This class creates a new PALine as a PASVGElement</p>
  */
 public class PALine extends PASVGElement

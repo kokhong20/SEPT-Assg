@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
 /**
  *
  * @author bryantylai
- * @since 23 April 2013
+ * @since 1.1
  * <p>This class creates a new PACircle as a PASVGElement</p>
  */
 public class PACircle extends PASVGElement

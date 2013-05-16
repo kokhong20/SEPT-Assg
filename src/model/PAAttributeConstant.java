@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  *
  * @author bryantylai
- * @since 18 April 2013
+ * @since 1.1
  * <p>This interface determines the constants required for svg</p>
  */
 public interface PAAttributeConstant
