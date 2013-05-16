@@ -55,7 +55,7 @@ public abstract class PAMenuAction extends AbstractAction
     {
         putValue(NAME, name);
     }
-    
+
     /**
      *
      * Constructor of Menu Action.
@@ -246,25 +246,26 @@ public abstract class PAMenuAction extends AbstractAction
             this.onFocusFrame = mainFrame;
             this.parent = mainFrame.getParentView();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	File svgFile = null;
-        	PASVGContainer container = onFocusFrame.svgPanel.svgContainer;
-        	/*
-        	 * If saving file is an existing svg
-        	 */
-        	if((svgFile = container.getSvgFile()) != null)
-        	{
+            File svgFile = null;
+            PASVGContainer container = onFocusFrame.svgPanel.svgContainer;
+            /*
+             * If saving file is an existing svg
+             */
+            if ((svgFile = container.getSvgFile()) != null)
+            {
                 PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, null, fcInternal, container);
                 saveFileAction.saveToFile(svgFile, container);
-        	}
-        	/*
-        	 * If saving file is a new svg
-        	 */
-        	else
-        	{
+            }
+            
+            /*
+             * If saving file is a new svg
+             */
+            else
+            {   
                 if (fcInternal == null)
                 {
                     fcInternal = new JInternalFrame(PASystem.getWord("Save"));
@@ -272,6 +273,8 @@ public abstract class PAMenuAction extends AbstractAction
                     FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                     FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
                     PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, container);
+                    svgFile = new File(container.getFileName());
+                    fileChooser.setSelectedFile(svgFile);
                     fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
                     fileChooser.setFileFilter(xmlFilter);
                     fileChooser.setFileFilter(svgFilter);
@@ -299,11 +302,11 @@ public abstract class PAMenuAction extends AbstractAction
                 {
                     System.err.println(ex.getMessage());
                 }
-        	}
+            }
         }
 
     }
-    
+
     /**
      *
      * action class for menu item "Save As"
@@ -324,8 +327,8 @@ public abstract class PAMenuAction extends AbstractAction
         @Override
         public void actionPerformed(ActionEvent e)
         {
-        	File svgFile = null;
-        	PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
+            File svgFile = null;
+            PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
             if (fcInternal == null)
             {
                 fcInternal = new JInternalFrame(PASystem.getWord("SaveAs"));
@@ -333,11 +336,18 @@ public abstract class PAMenuAction extends AbstractAction
                 FileFilter svgFilter = new FileNameExtensionFilter("SVG files", "svg");
                 FileFilter xmlFilter = new FileNameExtensionFilter("XML files", "xml");
                 PASaveFileChooserAction saveFileAction = new PASaveFileChooserAction(parent, fileChooser, fcInternal, svgContainer);
-                if((svgFile = svgContainer.getSvgFile()) != null)
+                
+                if ((svgFile = svgContainer.getSvgFile()) != null)
                 {
-                	fileChooser.setCurrentDirectory(svgFile);
+                    fileChooser.setCurrentDirectory(svgFile);
+                }         
+                else
+                {
+                    svgFile = new File(svgContainer.getFileName());
                 }
+                
                 fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                fileChooser.setSelectedFile(svgFile);
                 fileChooser.setFileFilter(xmlFilter);
                 fileChooser.setFileFilter(svgFilter);
                 fileChooser.addActionListener(saveFileAction);
@@ -840,7 +850,7 @@ public abstract class PAMenuAction extends AbstractAction
         }
 
     }
-    
+
     public static class LanguageAction extends PAMenuAction
     {
         private PAMenuBar menuBar;
@@ -853,15 +863,16 @@ public abstract class PAMenuAction extends AbstractAction
             this.languageToSet = languageToSet;
         }
 
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			// TODO Auto-generated method stub
-			PASystem.setCurrentResource(languageToSet);
-			/*
-			 * e.GetSource() returns a null, dunno why?
-			 */
-			menuBar.resetText();
-		}
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            // TODO Auto-generated method stub
+            PASystem.setCurrentResource(languageToSet);
+            /*
+             * e.GetSource() returns a null, dunno why?
+             */
+            menuBar.resetText();
+        }
+
     }
 }

@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.swing.JDesktopPane;
+import javax.xml.transform.stream.StreamResult;
 import model.PASVGContainer;
 import model.PASVGTag;
 
@@ -66,6 +67,12 @@ public class PANewFileSettingAction implements ActionListener
         {
             HashMap<String, String> textMap = self.getFieldText();
             String fileName = textMap.get("fileName");
+            
+            if(!fileName.contains(".svg"))
+            { 
+                fileName = fileName.concat(".svg");
+            }
+            
             String width = textMap.get("width");
             String height = textMap.get("height");
             String unit = textMap.get("unit");

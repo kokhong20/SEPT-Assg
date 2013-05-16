@@ -43,7 +43,7 @@ public class PAMenuBar extends JMenuBar
     private JMenu editMenu;
     private JMenu viewMenu;
     private JMenu helpMenu;
-	private JMenu languageMenu;
+    private JMenu languageMenu;
     private JMenuItem newFile;
     private JMenuItem openFile;
     private JMenuItem exitFile;
@@ -113,6 +113,8 @@ public class PAMenuBar extends JMenuBar
 
     public static void removeUpdatedAction()
     {
+        PAMenuAction.RemoveAction removeSaveAction = new PAMenuAction.RemoveAction(KeyEvent.VK_S, "Save");
+        PAMenuAction.RemoveEventAction removeSaveAsAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_S, Event.SHIFT_MASK, "Save As");
         PAMenuAction.RemoveAction removeDocAction = new PAMenuAction.RemoveAction(KeyEvent.VK_D, "Document Properties");
         PAMenuAction.RemoveAction removeGroupAction = new PAMenuAction.RemoveAction(KeyEvent.VK_G, "Group");
         PAMenuAction.RemoveEventAction removeUngroupAction = new PAMenuAction.RemoveEventAction(KeyEvent.VK_G, Event.SHIFT_MASK, "Ungroup");
@@ -124,6 +126,8 @@ public class PAMenuBar extends JMenuBar
         PAMenuAction.RemoveAction removeZoomInAction = new PAMenuAction.RemoveAction(KeyEvent.VK_PLUS, "Zoom In");
         PAMenuAction.RemoveAction removeZoomOutAction = new PAMenuAction.RemoveAction(KeyEvent.VK_MINUS, "Zoom Out");
         PAMenuAction.RemoveAction removeActualSizeAction = new PAMenuAction.RemoveAction(KeyEvent.VK_0, "Actual Size");
+        saveFile.setAction(removeSaveAction);
+        saveAsFile.setAction(removeSaveAsAction);
         docFile.setAction(removeDocAction);
         groupEdit.setAction(removeGroupAction);
         ungroupEdit.setAction(removeUngroupAction);
@@ -135,6 +139,8 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setAction(removeZoomInAction);
         zoomOutView.setAction(removeZoomOutAction);
         actualSizeView.setAction(removeActualSizeAction);
+        saveFile.setEnabled(false);
+        saveAsFile.setEnabled(false);
         docFile.setEnabled(false);
         groupEdit.setEnabled(false);
         ungroupEdit.setEnabled(false);
@@ -153,11 +159,11 @@ public class PAMenuBar extends JMenuBar
      */
     private void initMenu()
     {
-		fileMenu = new JMenu(PASystem.getWord("File"));
-		editMenu = new JMenu(PASystem.getWord("Edit"));
-		viewMenu = new JMenu(PASystem.getWord("View"));
-		helpMenu = new JMenu(PASystem.getWord("Help"));
-		languageMenu = new JMenu(PASystem.getWord("Language"));
+        fileMenu = new JMenu(PASystem.getWord("File"));
+        editMenu = new JMenu(PASystem.getWord("Edit"));
+        viewMenu = new JMenu(PASystem.getWord("View"));
+        helpMenu = new JMenu(PASystem.getWord("Help"));
+        languageMenu = new JMenu(PASystem.getWord("Language"));
     }
 
     /**
@@ -187,7 +193,9 @@ public class PAMenuBar extends JMenuBar
         zoomInView = new JMenuItem(PASystem.getWord("ZoomIn"));
         zoomOutView = new JMenuItem(PASystem.getWord("ZoomOut"));
         actualSizeView = new JMenuItem(PASystem.getWord("ActualSize"));
-        
+
+        saveFile.setEnabled(false);
+        saveAsFile.setEnabled(false);
         docFile.setEnabled(false);
         groupEdit.setEnabled(false);
         ungroupEdit.setEnabled(false);
@@ -195,7 +203,7 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setEnabled(false);
         zoomOutView.setEnabled(false);
         actualSizeView.setEnabled(false);
-        
+
         /*
          * 
          */
@@ -203,8 +211,10 @@ public class PAMenuBar extends JMenuBar
         Iterator<String> languageIterator = languageSet.iterator();
         languages = new JMenuItem[languageSet.size()];
         int index = 0;
-        while(languageIterator.hasNext())
-        	languages[index++] = new JMenuItem(languageIterator.next());
+        while (languageIterator.hasNext())
+        {
+            languages[index++] = new JMenuItem(languageIterator.next());
+        }
         /*
          * 
          */
@@ -239,13 +249,15 @@ public class PAMenuBar extends JMenuBar
         viewMenu.add(zoomInView);
         viewMenu.add(zoomOutView);
         viewMenu.add(actualSizeView);
-        
+
         /*
          * 
          */
         helpMenu.add(languageMenu);
-        for(JMenuItem menuItems : languages)
-        	languageMenu.add(menuItems);
+        for (JMenuItem menuItems : languages)
+        {
+            languageMenu.add(menuItems);
+        }
         /*
          * 
          */
@@ -263,16 +275,18 @@ public class PAMenuBar extends JMenuBar
         newFile.setAction(newAction);
         openFile.setAction(openAction);
         exitFile.setAction(exitAction);
-        
+
         /*
          * 
          */
-        for(JMenuItem menuItems : languages)
-        	menuItems.setAction(new PAMenuAction.LanguageAction(this, menuItems.getText()));
+        for (JMenuItem menuItems : languages)
+        {
+            menuItems.setAction(new PAMenuAction.LanguageAction(this, menuItems.getText()));
+        }
         /*
          * 
          */
-        
+
     }
 
     /**
@@ -289,11 +303,14 @@ public class PAMenuBar extends JMenuBar
     private void initKeyStroke()
     {
         int keyMask = PASystem.keyMask;
+        
+        saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask));
+        saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask | Event.SHIFT_MASK));
         docFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, keyMask));
         groupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask));
-        ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask|Event.SHIFT_MASK));
+        ungroupEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, keyMask | Event.SHIFT_MASK));
         selectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask));
-        deselectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask|Event.SHIFT_MASK));
+        deselectAllEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, keyMask | Event.SHIFT_MASK));
         cutEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, keyMask));
         copyEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, keyMask));
         pasteEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, keyMask));
@@ -303,16 +320,16 @@ public class PAMenuBar extends JMenuBar
         actualSizeView.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0, keyMask));
     }
 
-	public void resetText()
-	{
-		// TODO Auto-generated method stub
-		
-		// All Menu
-		fileMenu.setText(PASystem.getWord("File"));
-		editMenu.setText(PASystem.getWord("Edit"));
-		viewMenu.setText(PASystem.getWord("View"));
-		helpMenu.setText(PASystem.getWord("Help"));
-		languageMenu.setText(PASystem.getWord("Language"));
+    public void resetText()
+    {
+        // TODO Auto-generated method stub
+
+        // All Menu
+        fileMenu.setText(PASystem.getWord("File"));
+        editMenu.setText(PASystem.getWord("Edit"));
+        viewMenu.setText(PASystem.getWord("View"));
+        helpMenu.setText(PASystem.getWord("Help"));
+        languageMenu.setText(PASystem.getWord("Language"));
 
         // File's MenuItem
         newFile.setText(PASystem.getWord("New"));
@@ -336,5 +353,6 @@ public class PAMenuBar extends JMenuBar
         zoomInView.setText(PASystem.getWord("ZoomIn"));
         zoomOutView.setText(PASystem.getWord("ZoomOut"));
         actualSizeView.setText(PASystem.getWord("ActualSize"));
-	}
+    }
+
 }
