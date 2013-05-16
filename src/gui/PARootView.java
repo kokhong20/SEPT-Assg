@@ -26,14 +26,9 @@ import model.PASystem;
  */
 public class PARootView extends JFrame
 {
-    private Dimension userScreenSize;
     private JDesktopPane rootView;
     private PAMenuBar menuBar;
     private PAStartMenu startMenu;
-    private PADrawingKit toolBar;
-    private PAMainFrame mainPanel;
-    private PALayerPanel layerPanel;
-    private PANewFileSetting newFileSetting;
     private String fileName;
 
     /**
