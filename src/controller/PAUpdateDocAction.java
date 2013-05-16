@@ -16,6 +16,13 @@ import model.PAUnit;
 /**
  *
  * @author LiHao
+ * @since 1.1
+ *
+ * <p>
+ * This class creates a PAUpdateDocAction to set action performed
+ * PAUpdateDocAction frame.
+ * </p>
+ *
  */
 public class PAUpdateDocAction implements ActionListener
 {
@@ -23,6 +30,16 @@ public class PAUpdateDocAction implements ActionListener
     private PASVGPanel drawPanel;
     private PANewFileSetting self;
 
+    /**
+     *
+     * Create a new PAUpdateDocAction which accept PASVGTag to be updated,
+     * PASVGPanel to update after change and PANewFileSetting to dispose after
+     * complete action.
+     *
+     * @param svgTag set PASVGTag to be updated
+     * @param drawPanel set PASVGPanel to update after change
+     * @param self set PANewFileSetting which perform action
+     */
     public PAUpdateDocAction(PASVGTag svgTag, PASVGPanel drawPanel, PANewFileSetting self)
     {
         this.svgTag = svgTag;

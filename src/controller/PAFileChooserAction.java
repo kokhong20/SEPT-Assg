@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.PADrawingKit;
@@ -26,26 +22,33 @@ import org.w3c.dom.Node;
 /**
  *
  * @author LiHao
+ * @since 1.0
+ *
+ * <p>
+ * This class creates a PAFileChooserAction to set action performed for button
+ * in file chooser.
+ * </p>
+ *
  */
 public class PAFileChooserAction implements ActionListener
 {
-//    private int svgWidth;
-//    private int svgHeight;
     public BufferedImage svgImage;
     private JDesktopPane parent;
     private JFileChooser fileChooser;
     private JInternalFrame frame;
-//    private PASVGImport svgImport;
     private PAStartMenu startMenu;
     private String fileName;
     private Document svgDoc;
 
     /**
      *
-     * Contructor for file chooser's action.
+     * Create a new PAFileChooserAction which accept JDesktopPane as parent to
+     * show JInternalFrame, JFileChooser want to perform action and
+     * JInternalFrame on focus.
      *
-     * @param fileChooser pass existing file chooser.
-     * @param frame internal frame which store file chooser.
+     * @param parent set JInternalFrame parent
+     * @param fileChooser set JFileChooser want to perform action
+     * @param frame set JInternalFrame want to dispose
      */
     public PAFileChooserAction(JDesktopPane parent, JFileChooser fileChooser, JInternalFrame frame)
     {
@@ -54,6 +57,17 @@ public class PAFileChooserAction implements ActionListener
         this.frame = frame;
     }
 
+    /**
+     *
+     * Create a new PAFileChooserAction which accept JDesktopPane as parent to
+     * show JInternalFrame, JFileChooser want to perform action and
+     * JInternalFrame on focus.
+     *
+     * @param parent set JInternalFrame parent
+     * @param startMenu set PAStartMenu for startup
+     * @param fileChooser set JFileChooser want to perform action
+     * @param frame set JInternalFrame want to dispose
+     */
     public PAFileChooserAction(JDesktopPane parent, PAStartMenu startMenu, JFileChooser fileChooser, JInternalFrame frame)
     {
         this.parent = parent;
@@ -62,18 +76,20 @@ public class PAFileChooserAction implements ActionListener
         this.startMenu = startMenu;
     }
 
+    /**
+     *
+     * Create a new PAFileChooserAction which accept JDesktopPane as parent to
+     * show JInternalFrame.
+     *
+     * @param parent
+     * @param fileName
+     */
     public PAFileChooserAction(JDesktopPane parent, String fileName)
     {
         this.fileName = fileName;
         this.parent = parent;
-
     }
 
-    /**
-     * action in file chooser (Cancel and Open button)
-     *
-     * @param e
-     */
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -132,12 +148,18 @@ public class PAFileChooserAction implements ActionListener
         PAMenuAction.OpenFile.fcInternal = null;
     }
 
+    /**
+     *
+     * To initialize PASVGTag and PASVGContatiner from open file.
+     *
+     * @param svgDoc set generated doc
+     * @param svgFile set file opened
+     * @return
+     */
     public PASVGContainer setUpContainer(Document svgDoc, File svgFile)
     {
         Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
         PASVGTag svgTag = new PASVGTag(svgNode);
-//        svgWidth = (int) svgTag.getWidth();
-//        svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
         PASVGContainer svgContainer = new PASVGContainer(svgFile, svgTag, fileName, elementCollection);
 

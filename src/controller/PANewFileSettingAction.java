@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import gui.PADrawingKit;
@@ -16,13 +12,19 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import javax.swing.JDesktopPane;
-//import javax.xml.transform.stream.StreamResult;
 import model.PASVGContainer;
 import model.PASVGTag;
 
 /**
  *
  * @author LiHao
+ * @since 1.1
+ *
+ * <p>
+ * This class creates a PANewFileSettingAction to set action performed
+ * PANewFileSetting frame.
+ * </p>
+ *
  */
 public class PANewFileSettingAction implements ActionListener
 {
@@ -34,6 +36,15 @@ public class PANewFileSettingAction implements ActionListener
     private PAStartMenu startMenu;
     private PANewFileSetting self;
 
+    /**
+     *
+     * Create a PANewFileSettingAction which accept JDeskropPane as parent to
+     * show JInternalFrame and PANewFileSetting for dispose after action
+     * completed
+     *
+     * @param parent set PANewFileSetting parent
+     * @param self set PANewFileSetting which perform action
+     */
     public PANewFileSettingAction(JDesktopPane parent, PANewFileSetting self)
     {
         this.parent = parent;
@@ -41,6 +52,16 @@ public class PANewFileSettingAction implements ActionListener
         this.checkDrawingKit = false;
     }
 
+    /**
+     *
+     * Create a PANewFileSettingAction which accept JDeskropPane as parent to
+     * show JInternalFrame and PANewFileSetting for dispose after action
+     * completed
+     *
+     * @param parent set PANewFileSetting parent
+     * @param self set PANewFileSetting which perform action
+     * @param startMenu set PAStartMenu for startup
+     */
     public PANewFileSettingAction(JDesktopPane parent, PANewFileSetting self, PAStartMenu startMenu)
     {
         this.parent = parent;
@@ -67,12 +88,12 @@ public class PANewFileSettingAction implements ActionListener
         {
             HashMap<String, String> textMap = self.getFieldText();
             String fileName = textMap.get("fileName");
-            
-            if(!fileName.contains(".svg"))
-            { 
+
+            if (!fileName.contains(".svg"))
+            {
                 fileName = fileName.concat(".svg");
             }
-            
+
             String width = textMap.get("width");
             String height = textMap.get("height");
             String unit = textMap.get("unit");
@@ -92,7 +113,7 @@ public class PANewFileSettingAction implements ActionListener
                 startMenu.setVisible(false);
                 startMenu.dispose();
             }
-            
+
             for (int i = 0; i < parent.getComponentCount(); i++)
             {
                 if (parent.getComponent(i) instanceof PADrawingKit)
@@ -106,7 +127,7 @@ public class PANewFileSettingAction implements ActionListener
                 parent.add(drawingKit);
             }
         }
-        
+
         self.setVisible(false);
         self.dispose();
         PAMenuAction.NewFile.newFileSetting = null;
