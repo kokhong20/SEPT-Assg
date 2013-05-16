@@ -61,6 +61,8 @@ public class PADrawingItem
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Helvetica", 10, 12));
         title.setBounds(24, 0, 40, 20);
+        title.setBackground(new Color(40,40,40));
+        title.setOpaque(true);
         drawKitPanel.add(title);
     }
 
@@ -128,7 +130,7 @@ public class PADrawingItem
         button.setIcon(imgIcon);
         button.setBackground(new Color(40, 40, 40));
         button.setContentAreaFilled(false);
-        button.setOpaque(false);
+        button.setOpaque(true);
         button.setBorder(null);
         button.setToolTipText(toolTip);
         button.setBounds(x, y, maxWidth, maxHeight);
@@ -140,7 +142,7 @@ public class PADrawingItem
         button.setIcon(imgIcon);
         button.setBackground(new Color(40, 40, 40));
         button.setContentAreaFilled(false);
-        button.setOpaque(false);
+        button.setOpaque(true);
         button.setBorder(null);
         button.setToolTipText(toolTip);
         button.setBounds(x, y, maxWidth, maxHeight);

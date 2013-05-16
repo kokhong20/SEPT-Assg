@@ -29,8 +29,8 @@ import org.w3c.dom.Node;
  */
 public class PAFileChooserAction implements ActionListener
 {
-    private int svgWidth;
-    private int svgHeight;
+//    private int svgWidth;
+//    private int svgHeight;
     public BufferedImage svgImage;
     private JDesktopPane parent;
     private JFileChooser fileChooser;
@@ -136,8 +136,8 @@ public class PAFileChooserAction implements ActionListener
     {
         Node svgNode = svgDoc.getElementsByTagName("svg").item(0);
         PASVGTag svgTag = new PASVGTag(svgNode);
-        svgWidth = (int) svgTag.getWidth();
-        svgHeight = (int) svgTag.getHeight();
+//        svgWidth = (int) svgTag.getWidth();
+//        svgHeight = (int) svgTag.getHeight();
         LinkedList<PASVGElement> elementCollection = PASVGImport.readSVGElements(svgDoc);
         PASVGContainer svgContainer = new PASVGContainer(svgFile, svgTag, fileName, elementCollection);
 

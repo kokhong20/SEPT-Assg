@@ -40,7 +40,7 @@ public class PANewFileSetting extends JInternalFrame
     private JTextField fileNameField;
     private JTextField widthField;
     private JTextField heightField;
-    private JComboBox unitSelection;
+    private JComboBox<Object> unitSelection;
     private JDesktopPane parent;
     private PAStartMenu startMenu;
     private String[] unitList =

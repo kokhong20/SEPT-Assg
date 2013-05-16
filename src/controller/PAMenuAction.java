@@ -628,7 +628,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ZoomIn extends PAMenuAction
     {
-        private JButton button;
+        //private JButton button;
         private PASVGPanel drawPanel;
 
         public ZoomIn(PASVGPanel drawPanel)
@@ -641,7 +641,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_PLUS, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
@@ -668,7 +668,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class ZoomOut extends PAMenuAction
     {
-        private JButton button;
+        //private JButton button;
         private PASVGPanel drawPanel;
 
         public ZoomOut(PASVGPanel drawPanel)
@@ -681,7 +681,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_MINUS, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
@@ -728,7 +728,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class GroupAction extends PAMenuAction
     {
-        private JButton button;
+        //private JButton button;
         private PASVGPanel drawPanel;
 
         public GroupAction(PASVGPanel drawPanel)
@@ -741,7 +741,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_G, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
@@ -770,7 +770,7 @@ public abstract class PAMenuAction extends AbstractAction
 
     public static class UnGroupAction extends PAMenuAction
     {
-        private JButton button;
+        //private JButton button;
         private PASVGPanel drawPanel;
 
         public UnGroupAction(PASVGPanel drawPanel)
@@ -783,7 +783,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             super(KeyEvent.VK_G, Event.SHIFT_MASK, "");
             this.drawPanel = drawPanel;
-            this.button = button;
+            //this.button = button;
         }
 
         @Override
