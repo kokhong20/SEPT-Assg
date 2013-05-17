@@ -248,7 +248,7 @@ public class PAMenuBar extends JMenuBar
         /*
          * 
          */
-        Set<String> languageSet = PASystem.getAllResources();
+        Set<String> languageSet = PASystem.getLanguages();
         Iterator<String> languageIterator = languageSet.iterator();
         languages = new JMenuItem[languageSet.size()];
         int index = 0;

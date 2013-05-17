@@ -5,6 +5,8 @@ import java.awt.Event;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -20,24 +22,25 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
-    private static LinkedHashMap<String, ResourceBundle> allResources;
+	private static LinkedHashMap<String, Locale> languages;
+	
+	static
+	{
+		languages = new LinkedHashMap<>();
+		languages.put("English (US)", Locale.US);
+		languages.put("Malay (Malaysia)", new Locale("ms", "MY"));
+//		languages.put("Japanese", Locale.JAPAN);
+		languages.put("Mandarin (Simplified)", Locale.CHINA);
+		languages.put("Mandarin (Traditional)", Locale.TAIWAN);
+//		languages.put("Tamil", new Locale("", ""));
+//		languages.put("Korean", new Locale("", ""));
+//		languages.put("Thai", new Locale("", ""));
+		languages.put("French", Locale.FRANCE);
+//		languages.put("Spanish", new Locale("", ""));
+		setCurrentResource("English (US)");
+	}
 
-    static
-    {
-        allResources = new LinkedHashMap<String, ResourceBundle>();
-        allResources.put("English (US)", ResourceBundle.getBundle("resources/PA_en_US"));
-        allResources.put("Malay (Malaysia)", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Japanese", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Mandarin (Simplified)", ResourceBundle.getBundle("resources/PA_zh_CN"));
-        allResources.put("Mandarin (Traditional)", ResourceBundle.getBundle("resources/PA_zh_TW"));
-        allResources.put("Tamil", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Korean", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("Thai", ResourceBundle.getBundle("resources/PA_ms_MY"));
-        allResources.put("French", ResourceBundle.getBundle("resources/PA_fr_FR"));
-        allResources.put("Spanish", ResourceBundle.getBundle("resources/PA_ms_MY"));
-    }
-
-    private static ResourceBundle currentResource = ResourceBundle.getBundle("resources/PA_zh_TW");
+    private static ResourceBundle currentResource;
     public static String currentOS = System.getProperty("os.name").toLowerCase();
     public static int keyMask = setKeyMask();
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -48,11 +51,11 @@ public class PASystem
     private static final double dotsPerInch = screenResolution * screenRatio;
 
     /**
-     * @return the key of allResources
-     */
-    public static Set<String> getAllResources()
+     * @return the key of languages
+     */    
+    public static Set<String> getLanguages()
     {
-        return allResources.keySet();
+    	return languages.keySet();
     }
 
     /**
@@ -62,7 +65,18 @@ public class PASystem
      */
     public static void setCurrentResource(String language)
     {
-        currentResource = allResources.get(language);
+    	if(currentResource == null)
+    	{
+    		try
+    		{
+    			currentResource = ResourceBundle.getBundle("resources.PA", Locale.getDefault());
+    			return;
+    		}
+    		catch(MissingResourceException e)
+    		{
+    		}
+    	}
+    	currentResource = ResourceBundle.getBundle("resources.PA", languages.get(language));
     }
 
     /**
