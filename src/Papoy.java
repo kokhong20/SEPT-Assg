@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
  * @author KokHong
  *
  */
-public class Main
+public class Papoy
 {
     public static void main(final String[] args)
     {    	
