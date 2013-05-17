@@ -145,14 +145,14 @@ public class PAStartMenu extends JInternalFrame
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/NewFileHover.png";
-                setImageIcon(imgPath, newFileButton, "Open File");
+                setImageIcon(imgPath, newFileButton, "New File");
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/NewFile.png";
-                setImageIcon(imgPath, newFileButton, "Open File");
+                setImageIcon(imgPath, newFileButton, "New File");
             }
 
         });
