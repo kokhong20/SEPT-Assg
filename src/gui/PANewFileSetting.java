@@ -28,7 +28,7 @@ import model.PAUnit;
  * <p>
  * Setting for creating a new file
  * </p>
- * 
+ *
  * @author LiHao
  */
 public class PANewFileSetting extends JInternalFrame
@@ -47,13 +47,15 @@ public class PANewFileSetting extends JInternalFrame
     private JDesktopPane parent;
     private PAStartMenu startMenu;
     private String[] unitList =
-    { "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%" };
+    {
+        "em", "ex", "px", "in", "cm", "mm", "pt", "pc", "%"
+    };
 
     /**
      * <p>
      * Create an instance of New File Setting
      * </p>
-     * 
+     *
      */
     public PANewFileSetting()
     {
@@ -67,9 +69,8 @@ public class PANewFileSetting extends JInternalFrame
      * <p>
      * create an instance of new file setting with JDektopPane s the parameter
      * </p>
-     * 
-     * @param parent
-     *            the desktop pane
+     *
+     * @param parent the desktop pane
      */
     public PANewFileSetting(JDesktopPane parent)
     {
@@ -87,11 +88,9 @@ public class PANewFileSetting extends JInternalFrame
      * create an instance of new file setting with a JDesktopPane and a start
      * menu
      * </p>
-     * 
-     * @param parent
-     *            the desktop pane
-     * @param startMenu
-     *            the start menu
+     *
+     * @param parent the desktop pane
+     * @param startMenu the start menu
      */
     public PANewFileSetting(JDesktopPane parent, PAStartMenu startMenu)
     {
@@ -106,11 +105,11 @@ public class PANewFileSetting extends JInternalFrame
     }
 
     /**
-     * 
+     *
      * <p>
      * get the text of the fields
      * </p>
-     * 
+     *
      * @return the textMap
      */
     public HashMap getFieldText()
@@ -147,7 +146,7 @@ public class PANewFileSetting extends JInternalFrame
      * <p>
      * update the document when object is added
      * </p>
-     * 
+     *
      * @param svgContainer
      */
     public void updateDocument(PASVGContainer svgContainer)
@@ -158,8 +157,20 @@ public class PANewFileSetting extends JInternalFrame
         fileNameField.setEditable(false);
         String oriWidth = Double.toString(svgTag.getWidth());
         String oriHeight = Double.toString(svgTag.getHeight());
-        double convtWidth = PAUnit.changeUnit(oriWidth, svgTag.getUnit());
-        double convtHeight = PAUnit.changeUnit(oriHeight, svgTag.getUnit());
+        double convtWidth = 0, convtHeight = 0;
+        
+        if (svgTag.getUnit() != null)
+        {
+            convtWidth = PAUnit.changeUnit(oriWidth, svgTag.getUnit());
+            convtHeight = PAUnit.changeUnit(oriHeight, svgTag.getUnit());
+        }
+        
+        else
+        {
+            convtWidth = Double.parseDouble(oriWidth);
+            convtHeight = Double.parseDouble(oriHeight);
+        }
+
         widthField.setText(Double.toString(convtWidth));
         heightField.setText(Double.toString(convtHeight));
 
@@ -176,7 +187,7 @@ public class PANewFileSetting extends JInternalFrame
      * <p>
      * add action to the text fied of the new file setting
      * </p>
-     * 
+     *
      * @param svgTag
      * @param drawPanel
      */
@@ -270,9 +281,9 @@ public class PANewFileSetting extends JInternalFrame
                 .addComponent(heightField)
                 .addComponent(unitSelection)
                 .addGroup(
-                        layout.createSequentialGroup()
-                                .addComponent(cancelButton)
-                                .addComponent(okButton)));
+                layout.createSequentialGroup()
+                .addComponent(cancelButton)
+                .addComponent(okButton)));
 
         layout.setHorizontalGroup(hGroup);
 
