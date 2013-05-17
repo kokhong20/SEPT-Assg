@@ -1,6 +1,3 @@
-
-//import java.util.Locale;
-
 import gui.PARootView;
 
 import javax.swing.SwingUtilities;

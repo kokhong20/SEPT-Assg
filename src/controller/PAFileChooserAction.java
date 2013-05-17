@@ -154,7 +154,7 @@ public class PAFileChooserAction implements ActionListener
      *
      * @param svgDoc set generated doc
      * @param svgFile set file opened
-     * @return
+     * @return a svgContainer
      */
     public PASVGContainer setUpContainer(Document svgDoc, File svgFile)
     {

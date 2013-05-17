@@ -22,7 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class PASystem
 {
-	private static LinkedHashMap<String, Locale> languages;
+	private final static LinkedHashMap<String, Locale> languages;
 	
 	static
 	{
