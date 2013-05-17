@@ -166,6 +166,7 @@ public abstract class PAMenuAction extends AbstractAction
                     newFileSetting = new PANewFileSetting(parent);
                 }
 
+                newFileSetting.setClosable(false);
                 parent.add(newFileSetting);
             }
 
@@ -249,7 +250,7 @@ public abstract class PAMenuAction extends AbstractAction
                 fileChooser.setFileFilter(xmlFilter);
                 fileChooser.setFileFilter(svgFilter);
                 fileChooser.setFileFilter(allFilter);
-                fcInternal.setClosable(true);
+                fcInternal.setClosable(false);
                 fcInternal.setResizable(false);
                 fcInternal.add(fileChooser);
                 fcInternal.pack();
@@ -342,7 +343,7 @@ public abstract class PAMenuAction extends AbstractAction
                             .getHeight()) / 2;
                     Point startPoint = new Point(startX, startY);
                     fcInternal.setLocation(startPoint);
-                    fcInternal.setClosable(true);
+                    fcInternal.setClosable(false);
                     fcInternal.setResizable(false);
                     fcInternal.setVisible(true);
                     parent.add(fcInternal);
@@ -393,6 +394,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             File svgFile = null;
             PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
+            
             if (fcInternal == null)
             {
                 fcInternal = new JInternalFrame(PASystem.getWord("SaveAs"));
@@ -424,7 +426,7 @@ public abstract class PAMenuAction extends AbstractAction
                         .getHeight()) / 2;
                 Point startPoint = new Point(startX, startY);
                 fcInternal.setLocation(startPoint);
-                fcInternal.setClosable(true);
+                fcInternal.setClosable(false);
                 fcInternal.setResizable(false);
                 fcInternal.setVisible(true);
                 parent.add(fcInternal);
