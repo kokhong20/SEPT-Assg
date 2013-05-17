@@ -5,6 +5,7 @@ import gui.PAMenuBar;
 import gui.PANewFileSetting;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
+import static controller.PASelectCursorAction.elementTemp;
 
 import java.awt.Dimension;
 import java.awt.Event;
@@ -394,7 +395,7 @@ public abstract class PAMenuAction extends AbstractAction
         {
             File svgFile = null;
             PASVGContainer svgContainer = mainFrame.svgPanel.svgContainer;
-            
+
             if (fcInternal == null)
             {
                 fcInternal = new JInternalFrame(PASystem.getWord("SaveAs"));
@@ -559,11 +560,13 @@ public abstract class PAMenuAction extends AbstractAction
             PASVGPanel drawPanel = mainFrame.svgPanel;
             PASelectCursorAction selectAllAction = new PASelectCursorAction(
                     drawPanel, virtualButton, mainFrame.attributeBar);
-            int panelWidth = drawPanel.getWidth();
-            int panelHeight = drawPanel.getHeight();
-            selectAllAction.startSelect = new Point(0, 0);
-            selectAllAction.endSelect = new Point(panelWidth, panelHeight);
-            selectAllAction.drawBoundsForElements();
+            
+            elementTemp.addAll(drawPanel.elementCollection);
+            for (int i = 0; i < drawPanel.elementCollection.size(); i++)
+            {
+                PASVGElement element = drawPanel.elementCollection.get(i);
+                selectAllAction.drawBoundsChecking(element);
+            }
             drawPanel.repaint();
         }
 

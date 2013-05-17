@@ -71,9 +71,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
     public void setShapeAttributes()
     {
         fill = shapeBar.fillCheck.isSelected() ? shapeBar.fillButton
-                .getBackground() : PAColor.DEFAULT_FILL;
+                .getBackground() : new Color(0,0,0,0);
         stroke = shapeBar.strokeCheck.isSelected() ? shapeBar.strokeButton
-                .getBackground() : PAColor.DEFAULT_FILL;
+                .getBackground() :  new Color(0,0,0,0);
         strokeWidth = shapeBar.strokeWidthBox.isEnabled() ? (Double) shapeBar.strokeWidthBox
                 .getValue() : PAUnit.DEFAULT_STROKE_WIDTH;
     }
