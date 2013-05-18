@@ -107,7 +107,7 @@ public class PAStartMenu extends JInternalFrame
         {
             public JMenu add(JMenu c)
             {
-                c = new JMenu("Close");
+                c = new JMenu(PASystem.getWord("Exit"));
                 c.setAction(new ExitProgram(parent));
                 return c;
             }
@@ -127,14 +127,14 @@ public class PAStartMenu extends JInternalFrame
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/OpenImageHover.png";
-                setImageIcon(imgPath, openFileButton, "Open File");
+                setImageIcon(imgPath, openFileButton, PASystem.getWord("OpenFile"));
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/OpenImage.png";
-                setImageIcon(imgPath, openFileButton, "Open File");
+                setImageIcon(imgPath, openFileButton, PASystem.getWord("OpenFile"));
             }
 
         });
@@ -145,14 +145,14 @@ public class PAStartMenu extends JInternalFrame
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/NewFileHover.png";
-                setImageIcon(imgPath, newFileButton, "New File");
+                setImageIcon(imgPath, newFileButton, PASystem.getWord("NewFile"));
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
                 String imgPath = "resources/NewFile.png";
-                setImageIcon(imgPath, newFileButton, "New File");
+                setImageIcon(imgPath, newFileButton, PASystem.getWord("NewFile"));
             }
 
         });
@@ -161,8 +161,8 @@ public class PAStartMenu extends JInternalFrame
         OpenFile openAction = new OpenFile(parent, this);
         newFileButton.setAction(newAction);
         openFileButton.setAction(openAction);
-        setImageIcon("resources/OpenImage.png", openFileButton, "Open File");
-        setImageIcon("resources/NewFile.png", newFileButton, "New File");
+        setImageIcon("resources/OpenImage.png", openFileButton, PASystem.getWord("OpenFile"));
+        setImageIcon("resources/NewFile.png", newFileButton, PASystem.getWord("NewFile"));
         openFileButton.setBounds(380, 235, 164, 122);
         newFileButton.setBounds(100, 235, 122, 122);
         mainPanel.add(openFileButton);

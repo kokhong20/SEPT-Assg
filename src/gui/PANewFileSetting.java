@@ -74,7 +74,7 @@ public class PANewFileSetting extends JInternalFrame
      */
     public PANewFileSetting(JDesktopPane parent)
     {
-        super("New");
+        super(PASystem.getWord("New"));
         this.parent = parent;
         initialize();
         customize();
@@ -94,7 +94,7 @@ public class PANewFileSetting extends JInternalFrame
      */
     public PANewFileSetting(JDesktopPane parent, PAStartMenu startMenu)
     {
-        super("New");
+        super(PASystem.getWord("New"));
         this.parent = parent;
         this.startMenu = startMenu;
         initialize();
@@ -212,13 +212,13 @@ public class PANewFileSetting extends JInternalFrame
         widthField = setUpTextField();
         heightField = setUpTextField();
         unitSelection = new JComboBox<Object>(unitList);
-        cancelButton = new JButton("Cancel");
-        okButton = new JButton("OK");
+        cancelButton = new JButton(PASystem.getWord("Cancel"));
+        okButton = new JButton(PASystem.getWord("OK"));
 
-        fileName = setUpLabel("Name: ");
-        width = setUpLabel("Width: ");
-        height = setUpLabel("Height: ");
-        unit = setUpLabel("Unit: ");
+        fileName = setUpLabel(PASystem.getWord("Name") + ": ");
+        width = setUpLabel(PASystem.getWord("Width") + ": ");
+        height = setUpLabel(PASystem.getWord("Height") + ": ");
+        unit = setUpLabel(PASystem.getWord("Unit") + ": ");
     }
 
     private void customize()
@@ -236,7 +236,8 @@ public class PANewFileSetting extends JInternalFrame
 
     private void setAction()
     {
-        okButton.setActionCommand("OK");
+        okButton.setActionCommand(
+        		"OK");
         cancelButton.setActionCommand("CANCEL");
         PANewFileSettingAction newFileSettingAction;
 

@@ -69,8 +69,8 @@ public class PAShapeBar extends JPanel
         // JCheckBox
         fillCheck = new JCheckBox();
         strokeCheck = new JCheckBox();
-        attrItems.createCheckBox(fillCheck, "Fill:", Color.WHITE);
-        attrItems.createCheckBox(strokeCheck, "Stroke:", Color.WHITE);
+        attrItems.createCheckBox(fillCheck, PASystem.getWord("Fill") + ":", Color.WHITE);
+        attrItems.createCheckBox(strokeCheck, PASystem.getWord("Stroke") + ":", Color.WHITE);
 
         // JSpinner
         strokeWidthBox = new JSpinner();
@@ -95,9 +95,9 @@ public class PAShapeBar extends JPanel
     {
         // strokecheck
         StrokeCheckAction strokeCheckAction = new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
-                                                      "Stroke", strokeCheck, strokeWidthBox);
+        		PASystem.getWord("Stroke"), strokeCheck, strokeWidthBox);
         // fillcheck
-        FillCheckAction fillCheckAction = new FillCheckAction(mainFrame.getParentView(), fillButton, "Fill",
+        FillCheckAction fillCheckAction = new FillCheckAction(mainFrame.getParentView(), fillButton, PASystem.getWord("Fill"),
                                                   fillCheck);
 
     }

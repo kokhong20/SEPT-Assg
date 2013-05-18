@@ -5,12 +5,16 @@ import controller.PAMenuAction;
 import controller.PADrawingShapeAction;
 import controller.PAFillBucketAction;
 import controller.PASelectCursorAction;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
+
+import model.PASystem;
 
 /**
  * 
@@ -64,7 +68,7 @@ public class PADrawingItem
      */
     private void addTitle()
     {
-        title = new JLabel("Tools");
+        title = new JLabel(PASystem.getWord("Tools"));
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Helvetica", 10, 12));
         title.setBounds(24, 0, 40, 20);
@@ -117,19 +121,19 @@ public class PADrawingItem
     public static void setUpButton()
     {
         setToggleButtonAttribute("resources/select.png", selectCursor,
-                "Select Cursor", 40, 20);
-        setToggleButtonAttribute("resources/line.png", line, "Line", 40, 100);
-        setToggleButtonAttribute("resources/rect.png", rectangle, "Rectangle",
+        		PASystem.getWord("SelectCursor"), 40, 20);
+        setToggleButtonAttribute("resources/line.png", line, PASystem.getWord("Line"), 40, 100);
+        setToggleButtonAttribute("resources/rect.png", rectangle, PASystem.getWord("Rectangle"),
                 0, 140);
         setToggleButtonAttribute("resources/circle 30x30.png", circle,
-                "Circle", 40, 140);
-        setButtonAttribute("resources/zoomin.png", zoomIn, "Zoom In", 0, 60);
-        setButtonAttribute("resources/zoomout.png", zoomOut, "Zoom Out", 40, 60);
-        setButtonAttribute("resources/group.png", group, "Group", 0, 180);
-        setButtonAttribute("resources/ungroup.png", ungroup, "Ungroup", 40, 180);
+        		PASystem.getWord("Circle"), 40, 140);
+        setButtonAttribute("resources/zoomin.png", zoomIn, PASystem.getWord("ZoomIn"), 0, 60);
+        setButtonAttribute("resources/zoomout.png", zoomOut, PASystem.getWord("ZoomOut"), 40, 60);
+        setButtonAttribute("resources/group.png", group, PASystem.getWord("Group"), 0, 180);
+        setButtonAttribute("resources/ungroup.png", ungroup, PASystem.getWord("Ungroup"), 40, 180);
         setToggleButtonAttribute("resources/cursor.png", handCursor,
-                "Hand Cursor", 0, 20);
-        setToggleButtonAttribute("resources/fill 30x30.png", fill, "Fill", 0,
+        		PASystem.getWord("HandCursor"), 0, 20);
+        setToggleButtonAttribute("resources/fill 30x30.png", fill, PASystem.getWord("Fill"), 0,
                 100);
     }
 
