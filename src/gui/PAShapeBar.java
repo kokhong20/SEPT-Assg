@@ -18,8 +18,10 @@ import controller.PAShapeBarAction.StrokeCheckAction;
  * 
  * @author KokHong
  * @since 1.1
- * <p>This class creates a PAShapeBar for shape attributes 
- * fill, stroke and stroke width</p>
+ *        <p>
+ *        This class creates a PAShapeBar for shape attributes fill, stroke and
+ *        stroke width
+ *        </p>
  */
 public class PAShapeBar extends JPanel
 {
@@ -35,7 +37,8 @@ public class PAShapeBar extends JPanel
     /**
      * constructor to define PAShapeBar for PAMainFrame
      * 
-     * @param mainFrame PAMainFrame
+     * @param mainFrame
+     *            PAMainFrame
      */
     public PAShapeBar(PAMainFrame mainFrame)
     {
@@ -69,8 +72,10 @@ public class PAShapeBar extends JPanel
         // JCheckBox
         fillCheck = new JCheckBox();
         strokeCheck = new JCheckBox();
-        attrItems.createCheckBox(fillCheck, PASystem.getWord("Fill") + ":", Color.WHITE);
-        attrItems.createCheckBox(strokeCheck, PASystem.getWord("Stroke") + ":", Color.WHITE);
+        attrItems.createCheckBox(fillCheck, PASystem.getWord("Fill") + ":",
+                Color.WHITE);
+        attrItems.createCheckBox(strokeCheck, PASystem.getWord("Stroke") + ":",
+                Color.WHITE);
 
         // JSpinner
         strokeWidthBox = new JSpinner();
@@ -94,11 +99,13 @@ public class PAShapeBar extends JPanel
     private void addAction()
     {
         // strokecheck
-        StrokeCheckAction strokeCheckAction = new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
-        		PASystem.getWord("Stroke"), strokeCheck, strokeWidthBox);
+        // StrokeCheckAction strokeCheckAction =
+        new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
+                PASystem.getWord("Stroke"), strokeCheck, strokeWidthBox);
         // fillcheck
-        FillCheckAction fillCheckAction = new FillCheckAction(mainFrame.getParentView(), fillButton, PASystem.getWord("Fill"),
-                                                  fillCheck);
+        // FillCheckAction fillCheckAction =
+        new FillCheckAction(mainFrame.getParentView(), fillButton,
+                PASystem.getWord("Fill"), fillCheck);
 
     }
 

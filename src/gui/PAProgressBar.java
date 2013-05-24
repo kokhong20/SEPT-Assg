@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.FlowLayout;
-import java.beans.PropertyChangeEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,7 +10,6 @@ public class PAProgressBar
 {
     static JFrame progressFrame;
     static JLabel progressLabel;
-    static JProgressBar progressBar;
 
     public PAProgressBar()
     {
@@ -22,30 +20,52 @@ public class PAProgressBar
     private void init()
     {
         progressFrame = new JFrame("Translating...");
-        progressLabel = new JLabel("0% completed...");
-        progressBar = new JProgressBar(0, 100);
+        progressLabel = new JLabel("Translating");
         progressFrame.setLayout(new FlowLayout());
     }
 
     private void setUp()
     {
-        System.out.println(progressBar);
-        progressFrame.setSize(500, 250);
-        progressBar.setValue(0);
-        progressBar.setStringPainted(true);
-
-        progressFrame.add(progressBar);
         progressFrame.add(progressLabel);
-        progressBar.setVisible(true);
         progressFrame.setVisible(true);
-
+        progressFrame.setSize(300, 300);
     }
 
-    public static void setProgress(int add)
+    public void changeText()
     {
-        System.out.println(add);
-        System.out.println(progressBar);
-        progressBar.setValue(add);
-        progressLabel.setText(String.format("%d%% completed...", add));
+
+        switch (progressLabel.getText())
+        {
+        case "Translating....":
+        {
+            progressLabel.setText("Translating");
+            break;
+        }
+        case "Translating":
+        {
+            progressLabel.setText("Translating.");
+            break;
+        }
+        case "Translating.":
+        {
+            progressLabel.setText("Translating..");
+            break;
+        }
+        case "Translating..":
+        {
+            progressLabel.setText("Translating...");
+            break;
+        }
+        case "Translating...":
+        {
+            progressLabel.setText("Translating....");
+            break;
+        }
+        }
+
+    }
+    public void dispose()
+    {
+        progressFrame.dispose();
     }
 }

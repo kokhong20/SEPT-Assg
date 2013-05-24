@@ -31,13 +31,14 @@ public class PATranslate
 
     public static List<String> translate(Language constant)
     {
+        
         text = readText();
         List<String> translate = new ArrayList<String>();
         int i = 0, size;
         size = text.size();
         try
         {
-
+            
             while (i < size)
             {
                 // This is my ID and API key for the library
@@ -51,9 +52,8 @@ public class PATranslate
                 translate.add(Translate.execute(text.get(i), Language.ENGLISH,
                         constant));
                 System.out.println(translate.get(i));
-
                 i++;
-                progressBar.setProgress((i * 100 / size));
+                progressBar.changeText();
 
             }
             return translate;
@@ -78,6 +78,7 @@ public class PATranslate
                 text.add(line);
                 line = in.readLine();
             }
+            in.close();
             return text;
         }
         catch (FileNotFoundException e)
@@ -94,13 +95,15 @@ public class PATranslate
     public static void main(String[] args)
     {
         List<String> test = new ArrayList<String>();
-        test = translate(Language.CHINESE_TRADITIONAL);
-
+        
+        test = translate(Language.CATALAN);
+        
         List<String> label = new ArrayList<String>();
         List<String> output = new ArrayList<String>();
-
+        
         try
         {
+            
             BufferedReader in;
             in = new BufferedReader(new FileReader(new File(
                     "src/resources/PA_label")));
@@ -110,30 +113,18 @@ public class PATranslate
                 label.add(line);
                 line = in.readLine();
             }
+            in.close();
+            for (int i = 0; i < test.size(); i++)
+            {
+                String write;
+                write = label.get(i);
+                write = write.concat("=");
+                write = write.concat(test.get(i));
 
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+                output.add(write);
 
-        for (int i = 0; i < test.size(); i++)
-        {
-            String write;
-            write = label.get(i);
-            write = write.concat("=");
-            write = write.concat(test.get(i));
+            }
 
-            output.add(write);
-
-        }
-
-        try
-        {
             File file = new File("src/resources/hi.abc");
             file.createNewFile();
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -144,17 +135,23 @@ public class PATranslate
                 bw.write(output.get(i));
                 bw.write('\n');
             }
+            
             bw.close();
+
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        
         for (int i = 0; i < output.size(); i++)
         {
             System.out.println(output.get(i));
         }
+        progressBar.dispose();
     }
 }

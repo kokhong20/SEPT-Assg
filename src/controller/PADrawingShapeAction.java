@@ -21,7 +21,7 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JToggleButton;
 import model.PACircle;
-import model.PAColor;
+//import model.PAColor;
 import model.PALine;
 import model.PARectangle;
 import model.PASVGElement;
