@@ -6,10 +6,14 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +57,8 @@ public class PATranslate
 
                 translate.add(Translate.execute(text.get(i), Language.ENGLISH,
                         constant));
-                System.out.println(translate.get(i));
+                System.out.println(Translate.execute(text.get(i), Language.ENGLISH,
+                        constant));
                 i++;
                 progressBar.changeText();
 
@@ -123,6 +128,7 @@ public class PATranslate
             for (int i = 0; i < test.size(); i++)
             {
                 String write;
+                
                 write = label.get(i);
                 write = write.concat("=");
                 write = write.concat(test.get(i));
@@ -255,20 +261,20 @@ public class PATranslate
                 break;
             }
             fName = fName.concat(".properties");
-            String fPath = "src/resources/";
+            String fPath = "bin/resources/";
             fPath = fPath.concat(fName);
             File file = new File(fPath);
             file.createNewFile();
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            PrintWriter writer = new PrintWriter(fw, true);
+            Writer out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file), "UTF-8"));
 
             for (int i = 0; i < output.size(); i++)
             {
-                writer.write(output.get(i));
-                writer.write('\n');
+                out.write(output.get(i));
+                out.write('\n');
             }
 
-            writer.close();
+            out.close();
 
         }
         catch (FileNotFoundException e)

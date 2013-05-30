@@ -3,12 +3,13 @@ package gui;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-public class PAProgressBar
+public class PAProgressBar extends JInternalFrame
 {
-    static JFrame progressFrame;
+    static JInternalFrame progressFrame;
     static JLabel progressLabel;
 
     public PAProgressBar()
@@ -19,7 +20,7 @@ public class PAProgressBar
 
     private void init()
     {
-        progressFrame = new JFrame("Translating...");
+        progressFrame = new JInternalFrame("Translating...");
         progressLabel = new JLabel("Translating");
         progressFrame.setLayout(new FlowLayout());
     }
@@ -28,7 +29,7 @@ public class PAProgressBar
     {
         progressFrame.add(progressLabel);
         progressFrame.setVisible(true);
-        progressFrame.setSize(300, 300);
+        progressFrame.setSize(200, 100);
     }
 
     public void changeText()
