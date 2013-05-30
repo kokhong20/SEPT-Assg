@@ -14,6 +14,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.memetix.mst.language.Language;
+
 /**
  * @author bryantylai
  * @since 1.1
@@ -27,12 +29,32 @@ public class PASystem
 	static
 	{
 		languages = new LinkedHashMap<>();
+		languages.put("Bulgarian", new Locale("bg","BG"));
+		languages.put("Czech", new Locale("cz","CZ"));
+		languages.put("Danish", new Locale("da","DK"));
+		languages.put("Dutch", new Locale("nl","NL"));
+		
 		languages.put("English (US)", Locale.US);
+		languages.put("Estonian", new Locale("et","ET"));
+		languages.put("Finnish", new Locale("fi","FI"));
+		languages.put("German", new Locale("de","DE"));
+		languages.put("Greek", new Locale("el","EL"));
+		languages.put("Hungarian", new Locale("hu","HU"));
+		languages.put("Italian", new Locale("it","IT"));
+		
 		languages.put("Malay (Malaysia)", new Locale("ms", "MY"));
+		
 //		languages.put("Japanese", Locale.JAPAN);
 		languages.put("Mandarin (Simplified)", Locale.CHINA);
 		languages.put("Mandarin (Traditional)", Locale.TAIWAN);
-//		languages.put("Tamil", new Locale("", ""));
+		languages.put("Norwegian", new Locale("no","NO"));
+		languages.put("Polish", new Locale("pl","PL"));
+		languages.put("Portugese", new Locale("pt","PT"));
+		languages.put("Russian", new Locale("ru","RU"));
+		languages.put("Spanish", new Locale("es","ES"));
+		languages.put("Thai", new Locale("th","TH"));
+		languages.put("Turkish", new Locale("tr","TR"));
+		//		languages.put("Tamil", new Locale("", ""));
 //		languages.put("Korean", new Locale("", ""));
 //		languages.put("Thai", new Locale("", ""));
 		languages.put("French", Locale.FRANCE);
@@ -65,17 +87,89 @@ public class PASystem
      */
     public static void setCurrentResource(String language)
     {
-    	if(currentResource == null)
-    	{
+        Language temp;
+    	temp = Language.ENGLISH;
     		try
     		{
+    		    switch(language)
+    		    {
+    		    case "Bulgarian":
+    		        temp = Language.BULGARIAN;
+    		        break;
+    		    case "Czech":
+    		        temp = Language.CZECH;
+    		        break;
+    		    case "Danish":
+    		        temp = Language.DANISH;
+    		        break;
+    		    case "Dutch":
+    		        temp = Language.DUTCH;
+    		        break;
+    		    case "Estonian":
+    		        temp = Language.ESTONIAN;
+    		        break;
+    		    case "Finnish":
+    		        temp = Language.FINNISH;
+    		        break;
+    		    case "French":
+    		        temp = Language.FRENCH;
+    		        break;
+    		    case "German":
+    		        temp = Language.GERMAN;
+    		        break;
+    		    case "Greek":
+    		        temp = Language.GREEK;
+    		        break;
+    		    case "Hungarian":
+    		        temp = Language.HUNGARIAN;
+    		        break;
+    		    case "Italian":
+    		        temp = Language.ITALIAN;
+    		        break;
+    		    case "Norwegian":
+    		        temp = Language.NORWEGIAN;
+    		        break;
+    		    case "Polish":
+    		        temp = Language.POLISH;
+    		        break;
+    		    case "Portugese":
+    		        temp = Language.PORTUGUESE;
+    		        break;
+    		    case "Russian":
+    		        temp = Language.RUSSIAN;
+    		        break;
+    		    case "Spanish":
+    		        temp = Language.SPANISH;
+    		        break;
+    		    case "Thai":
+    		        temp = Language.THAI;
+    		        break;
+    		    case "Turkish":
+    		        temp = Language.TURKISH;
+    		        break;
+    		    default:
+    		        temp = Language.ENGLISH;
+    		        break;
+    		        
+    		    }
+
+    		    if(currentResource == null)
+    	        {
     			currentResource = ResourceBundle.getBundle("resources.PA", Locale.getDefault());
+    			
     			return;
+    	        }
+    		    else
+    		    {
+    		        PATranslate.run(temp);
+    		        currentResource = ResourceBundle.getBundle("resources.PA", Locale.getDefault());
+    		    }
     		}
     		catch(MissingResourceException e)
     		{
+    		    
     		}
-    	}
+    	
     	currentResource = ResourceBundle.getBundle("resources.PA", languages.get(language));
     }
 
@@ -88,6 +182,7 @@ public class PASystem
     public static String getWord(String key)
     {
         return currentResource.getString(key);
+        
     }
 
     /**

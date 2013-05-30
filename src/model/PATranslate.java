@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import com.memetix.mst.translate.Translate;
 public class PATranslate
 {
     static List<String> text = new ArrayList<String>();
-    static PAProgressBar progressBar = new PAProgressBar();
+    static PAProgressBar progressBar;
 
     public static List<String> translate(Language constant)
     {
@@ -93,15 +94,19 @@ public class PATranslate
         return null;
     }
 
-    public void run(Language change)
+    public static void run(Language change)
     {
+        System.out.println(progressBar);
+
+        progressBar = new PAProgressBar();
+
         List<String> test = new ArrayList<String>();
 
         test = translate(change);
 
         List<String> label = new ArrayList<String>();
         List<String> output = new ArrayList<String>();
-
+        System.out.println(change);
         try
         {
 
@@ -130,100 +135,140 @@ public class PATranslate
             {
             case ARABIC:
                 fName = "PA_ar_AR";
+                break;
             case BULGARIAN:
                 fName = "PA_bg_BG";
+                break;
             case CATALAN:
                 fName = "PA_ca_CA";
+                break;
             case CHINESE_SIMPLIFIED:
                 fName = "PA_zh_CN";
+                break;
             case CHINESE_TRADITIONAL:
                 fName = "PA_zh_TW";
+                break;
             case CZECH:
                 fName = "PA_cs_CZ";
+                break;
             case DANISH:
                 fName = "PA_da_DK";
+                break;
             case DUTCH:
                 fName = "PA_nl_NL";
+                break;
             case ENGLISH:
                 fName = "PA_en_US";
+                break;
             case ESTONIAN:
                 fName = "PA_et_ET";
+                break;
             case FINNISH:
                 fName = "PA_fi_FI";
+                break;
             case FRENCH:
                 fName = "PA_fr_FR";
+                break;
             case GERMAN:
                 fName = "PA_de_DE";
+                break;
             case GREEK:
                 fName = "PA_el_EL";
+                break;
             case HAITIAN_CREOLE:
                 fName = "PA_ht_HT";
+                break;
             case HEBREW:
                 fName = "PA_he_HE";
+                break;
             case HINDI:
                 fName = "PA_hi_HI";
+                break;
             case HMONG_DAW:
                 fName = "PA_mww_MWW";
+                break;
             case HUNGARIAN:
                 fName = "PA_hu_HU";
+                break;
             case INDONESIAN:
                 fName = "PA_id_ID";
+                break;
             case ITALIAN:
                 fName = "PA_it_IT";
+                break;
             case JAPANESE:
                 fName = "PA_ja_JP";
+                break;
             case KOREAN:
                 fName = "PA_ko_KR";
+                break;
             case LATVIAN:
                 fName = "PA_lv_LV";
+                break;
             case LITHUANIAN:
                 fName = "PA_lt_LT";
+                break;
             case MALAY:
                 fName = "PA_ms_MY";
+                break;
             case NORWEGIAN:
                 fName = "PA_no_NO";
+                break;
             case PERSIAN:
                 fName = "PA_fa_FA";
+                break;
             case POLISH:
                 fName = "PA_pl_PL";
+                break;
             case PORTUGUESE:
                 fName = "PA_pt_PT";
+                break;
             case ROMANIAN:
                 fName = "PA_ro_RO";
+                break;
             case RUSSIAN:
                 fName = "PA_ru_RU";
+                break;
             case SLOVAK:
                 fName = "PA_sk_SK";
+                break;
             case SLOVENIAN:
                 fName = "PA_sl_SL";
+                break;
             case SPANISH:
                 fName = "PA_es_ES";
+                break;
             case THAI:
                 fName = "PA_th_TH";
+                break;
             case TURKISH:
                 fName = "PA_tr_TR";
+                break;
             case UKRAINIAN:
                 fName = "PA_uk_UK";
+                break;
             case URDU:
                 fName = "PA_ur_UR";
+                break;
             case VIETNAMESE:
                 fName = "PA_vi_VI";
+                break;
             }
             fName = fName.concat(".properties");
-            String fPath = "src/resource";
+            String fPath = "src/resources/";
             fPath = fPath.concat(fName);
             File file = new File(fPath);
             file.createNewFile();
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter writer = new PrintWriter(fw, true);
 
             for (int i = 0; i < output.size(); i++)
             {
-                bw.write(output.get(i));
-                bw.write('\n');
+                writer.write(output.get(i));
+                writer.write('\n');
             }
 
-            bw.close();
+            writer.close();
 
         }
         catch (FileNotFoundException e)

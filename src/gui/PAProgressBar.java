@@ -39,26 +39,31 @@ public class PAProgressBar
         case "Translating....":
         {
             progressLabel.setText("Translating");
+            progressFrame.repaint();
             break;
         }
         case "Translating":
         {
             progressLabel.setText("Translating.");
+            progressFrame.repaint();
             break;
         }
         case "Translating.":
         {
             progressLabel.setText("Translating..");
+            progressFrame.repaint();
             break;
         }
         case "Translating..":
         {
             progressLabel.setText("Translating...");
+            progressFrame.repaint();
             break;
         }
         case "Translating...":
         {
             progressLabel.setText("Translating....");
+            progressFrame.repaint();
             break;
         }
         }
