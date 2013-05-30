@@ -57,8 +57,7 @@ public class PATranslate
 
                 translate.add(Translate.execute(text.get(i), Language.ENGLISH,
                         constant));
-                System.out.println(Translate.execute(text.get(i), Language.ENGLISH,
-                        constant));
+                System.out.println(translate.get(i));
                 i++;
                 progressBar.changeText();
 
@@ -104,7 +103,7 @@ public class PATranslate
         System.out.println(progressBar);
 
         progressBar = new PAProgressBar();
-
+        
         List<String> test = new ArrayList<String>();
 
         test = translate(change);
