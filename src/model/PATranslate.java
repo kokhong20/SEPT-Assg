@@ -21,6 +21,7 @@ import javax.swing.JDesktopPane;
 
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
+import java.util.Locale;
 
 /**
  * 
@@ -100,10 +101,11 @@ public class PATranslate
         return null;
     }
 
-    public static void run(Language change, JDesktopPane parent)
+    public static Locale run(Language change, JDesktopPane parent)
     {
         System.out.println(progressBar);
 
+        String fName = "";
         progressBar = new PAProgressBar();
         parent.add(progressBar);
         
@@ -138,7 +140,7 @@ public class PATranslate
                 output.add(write);
 
             }
-            String fName = "";
+            
             switch (change)
             {
             case ARABIC:
@@ -269,6 +271,21 @@ public class PATranslate
             file.createNewFile();
             Writer out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file), "UTF-8"));
+            
+
+            for (int i = 0; i < output.size(); i++)
+            {
+                out.write(output.get(i));
+                out.write('\n');
+            }
+            
+            fPath = "src/resources/";
+            fPath = fPath.concat(fName);
+            file = new File(fPath);
+            file.createNewFile();
+            out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file), "UTF-8"));
+            
 
             for (int i = 0; i < output.size(); i++)
             {
@@ -293,5 +310,9 @@ public class PATranslate
             System.out.println(output.get(i));
         }
         progressBar.dispose();
+        
+        String[] s = fName.replace(".properties", "").split("_");
+        
+        return new Locale(s[1], s[2]);
     }
 }

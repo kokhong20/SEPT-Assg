@@ -21,17 +21,16 @@ import com.memetix.mst.language.Language;
 /**
  * @author bryantylai
  * @since 1.1
- *        <p>
- *        This class is for the settings based on screen and operating system of
- *        the user's machine
- *        </p>
+ * <p>
+ * This class is for the settings based on screen and operating system of the
+ * user's machine
+ * </p>
  */
-public class PASystem
-{
+public class PASystem {
+
     private final static LinkedHashMap<String, Locale> languages;
 
-    static
-    {
+    static {
         languages = new LinkedHashMap<>();
         languages.put("Bulgarian", new Locale("bg", "BG"));
         languages.put("Czech", new Locale("cz", "CZ"));
@@ -81,143 +80,126 @@ public class PASystem
     /**
      * @return the key of languages
      */
-    public static Set<String> getLanguages()
-    {
+    public static Set<String> getLanguages() {
         return languages.keySet();
     }
 
     /**
      * Change current ResourceBundle based on language set
-     * 
-     * @param language
-     *            the language set by user
+     *
+     * @param language the language set by user
      */
-    public static void setCurrentResource(String language, JDesktopPane parent)
-    {
-        Language temp;
-        temp = Language.ENGLISH;
-
-        try
-        {
-            switch (language)
-            {
-            case "Bulgarian":
-                temp = Language.BULGARIAN;
-                break;
-            case "Czech":
-                temp = Language.CZECH;
-                break;
-            case "Danish":
-                temp = Language.DANISH;
-                break;
-            case "Dutch":
-                temp = Language.DUTCH;
-                break;
-            case "Estonian":
-                temp = Language.ESTONIAN;
-                break;
-            case "Finnish":
-                temp = Language.FINNISH;
-                break;
-            case "French":
-                temp = Language.FRENCH;
-                break;
-            case "German":
-                temp = Language.GERMAN;
-                break;
-            case "Greek":
-                temp = Language.GREEK;
-                break;
-            case "Hungarian":
-                temp = Language.HUNGARIAN;
-                break;
-            case "Italian":
-                temp = Language.ITALIAN;
-                break;
-            case "Norwegian":
-                temp = Language.NORWEGIAN;
-                break;
-            case "Polish":
-                temp = Language.POLISH;
-                break;
-            case "Portugese":
-                temp = Language.PORTUGUESE;
-                break;
-            case "Russian":
-                temp = Language.RUSSIAN;
-                break;
-            case "Spanish":
-                temp = Language.SPANISH;
-                break;
-            case "Thai":
-                temp = Language.THAI;
-                break;
-            case "Turkish":
-                temp = Language.TURKISH;
-                break;
-            default:
-                temp = Language.ENGLISH;
-                break;
-
-            }
-
-            if (currentResource == null)
-            {
-                currentResource = ResourceBundle.getBundle("resources.PA",
-                        Locale.getDefault());
-
-                return;
-            }
-            else
-            {
-
-                if (ResourceBundle.getBundle("resources.PA",
-                        languages.get(language)) == ResourceBundle.getBundle("resources.PA",
-                                Locale.getDefault()))
-                {
-                    PATranslate.run(temp, parent);
-//                    currentResource = ResourceBundle.getBundle("resources.PA",
-//                            languages.get(language));
-
-                    
-
-                }
-                currentResource = ResourceBundle.getBundle("resources.PA",
-                        languages.get(language));
-            }
-        }
-        catch (MissingResourceException e)
-        {
-
-        }
-        currentResource = ResourceBundle.getBundle("resources.PA",
-                languages.get(language));
-    }
-
-    public static void setDefaultResource(String language)
-    {
+    public static void setCurrentResource(String language, JDesktopPane parent) {
+        Language temp = Language.ENGLISH;
         
+        // First run
+        if(currentResource == null)
+        {
+            try
+            {
+                currentResource = ResourceBundle.getBundle("resources.PA", Locale.getDefault());
+            }
+            catch(MissingResourceException e)
+            {         
+                setDefaultResource("English (US)");
+            }
+        }
+        else
+        {                    
+            switch (language) {
+                        case "Bulgarian":
+                            temp = Language.BULGARIAN;
+                            break;
+                        case "Czech":
+                            temp = Language.CZECH;
+                            break;
+                        case "Danish":
+                            temp = Language.DANISH;
+                            break;
+                        case "Dutch":
+                            temp = Language.DUTCH;
+                            break;
+                        case "Estonian":
+                            temp = Language.ESTONIAN;
+                            break;
+                        case "Finnish":
+                            temp = Language.FINNISH;
+                            break;
+                        case "French":
+                            temp = Language.FRENCH;
+                            break;
+                        case "German":
+                            temp = Language.GERMAN;
+                            break;
+                        case "Greek":
+                            temp = Language.GREEK;
+                            break;
+                        case "Hungarian":
+                            temp = Language.HUNGARIAN;
+                            break;
+                        case "Italian":
+                            temp = Language.ITALIAN;
+                            break;
+                        case "Norwegian":
+                            temp = Language.NORWEGIAN;
+                            break;
+                        case "Polish":
+                            temp = Language.POLISH;
+                            break;
+                        case "Portugese":
+                            temp = Language.PORTUGUESE;
+                            break;
+                        case "Russian":
+                            temp = Language.RUSSIAN;
+                            break;
+                        case "Spanish":
+                            temp = Language.SPANISH;
+                            break;
+                        case "Thai":
+                            temp = Language.THAI;
+                            break;
+                        case "Turkish":
+                            temp = Language.TURKISH;
+                            break;
+                        default:
+                            temp = Language.ENGLISH;
+                            break;
+            }
+            
+            try
+            {
+                Locale locale = PATranslate.run(temp, parent);
+                ResourceBundle.clearCache();
+                currentResource = ResourceBundle.getBundle("resources.PA", locale);
+            }
+            catch(MissingResourceException e)
+            {
+                setDefaultResource("English (US)");
+            }        
+        }
+    }
+
+    public static void setDefaultResource(String language) {
+
         currentResource = ResourceBundle.getBundle("resources.PA",
                 languages.get(language));
     }
+
     /**
      * Get the word based on current ResourceBundle
-     * 
+     *
      * @param key
      * @return the translated word
      */
-    public static String getWord(String key)
-    {
+    public static String getWord(String key) {
 
+//        currentResource.
         String show = null;
-        try
-        {
+        try {
             String load = currentResource.getString(key);
             byte[] convert = load.getBytes("ISO-8859-1");
             show = new String(convert, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -228,78 +210,64 @@ public class PASystem
     /**
      * @return the currentOS
      */
-    public static String getCurrentOS()
-    {
+    public static String getCurrentOS() {
         return currentOS;
     }
 
     /**
      * @return the toolkit
      */
-    public static Toolkit getToolkit()
-    {
+    public static Toolkit getToolkit() {
         return toolkit;
     }
 
     /**
      * @return the screenDimension
      */
-    public static Dimension getScreenDimension()
-    {
+    public static Dimension getScreenDimension() {
         return screenDimension;
     }
 
     /**
      * @return the screenResolution
      */
-    public static int getScreenResolution()
-    {
+    public static int getScreenResolution() {
         return screenResolution;
     }
 
     /**
      * @return the screenSize
      */
-    public static double getScreenSize()
-    {
+    public static double getScreenSize() {
         return screenSize;
     }
 
     /**
      * @return the screenRatio
      */
-    public static double getScreenRatio()
-    {
+    public static double getScreenRatio() {
         return screenRatio;
     }
 
     /**
      * @return the dotsPerInch
      */
-    public static double getDotsPerInch()
-    {
+    public static double getDotsPerInch() {
         return dotsPerInch;
     }
 
     /**
      * Concat name of selected file with path based on current OS
-     * 
-     * @param path
-     *            the path leading to the selected file
-     * @param selectedFile
-     *            the file selected from JFileChooser
+     *
+     * @param path the path leading to the selected file
+     * @param selectedFile the file selected from JFileChooser
      * @return a concatenated path
      */
-    public static String setPath(String path, File selectedFile)
-    {
-        if (path.endsWith(":\\"))
-        {
+    public static String setPath(String path, File selectedFile) {
+        if (path.endsWith(":\\")) {
             return path += selectedFile.getName();
-        }
-        else
-        {
-            if (currentOS.indexOf("mac") >= 0)
-            {
+        } else {
+            if (currentOS.indexOf("mac") >= 0) {
                 return path += "//" + selectedFile.getName();
             }
 
@@ -309,13 +277,11 @@ public class PASystem
 
     /**
      * Set Key mask based on currentOS
-     * 
+     *
      * @return mask constant based on currentOS
      */
-    public static int setKeyMask()
-    {
-        if (currentOS.indexOf("mac") >= 0)
-        {
+    public static int setKeyMask() {
+        if (currentOS.indexOf("mac") >= 0) {
             return Event.META_MASK;
         }
 
@@ -325,10 +291,8 @@ public class PASystem
     /**
      * Set the look and feel of system based on currentOS
      */
-    public static void setLookandFeel()
-    {
-        if (currentOS.indexOf("mac") >= 0)
-        {
+    public static void setLookandFeel() {
+        if (currentOS.indexOf("mac") >= 0) {
             // macos use its own menubar
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty(
@@ -336,31 +300,21 @@ public class PASystem
                     "My Application");
         }
 
-        try
-        {
-            if (currentOS.indexOf("mac") >= 0)
-            {
+        try {
+            if (currentOS.indexOf("mac") >= 0) {
                 UIManager.setLookAndFeel(UIManager
                         .getSystemLookAndFeelClassName());
-            }
-            else
-            {
+            } else {
                 for (LookAndFeelInfo info : UIManager
-                        .getInstalledLookAndFeels())
-                {
-                    if ("Nimbus".equals(info.getName()))
-                    {
+                        .getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
                         UIManager.setLookAndFeel(info.getClassName());
                         break;
                     }
                 }
             }
-        }
-        catch (ClassNotFoundException | InstantiationException
-                | IllegalAccessException | UnsupportedLookAndFeelException ex)
-        {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             System.err.println(ex.getMessage());
         }
     }
-
 }
