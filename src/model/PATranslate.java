@@ -17,6 +17,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDesktopPane;
+
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 
@@ -98,11 +100,12 @@ public class PATranslate
         return null;
     }
 
-    public static void run(Language change)
+    public static void run(Language change, JDesktopPane parent)
     {
         System.out.println(progressBar);
 
         progressBar = new PAProgressBar();
+        parent.add(progressBar);
         
         List<String> test = new ArrayList<String>();
 

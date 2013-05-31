@@ -11,6 +11,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.JDesktopPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -62,9 +63,9 @@ public class PASystem
         // languages.put("Thai", new Locale("", ""));
         languages.put("French", Locale.FRANCE);
         // languages.put("Spanish", new Locale("", ""));
-        setCurrentResource("English (US)");
+        setDefaultResource("English (US)");
     }
-
+    private JDesktopPane parent;
     private static ResourceBundle currentResource;
     public static String currentOS = System.getProperty("os.name")
             .toLowerCase();
@@ -91,10 +92,11 @@ public class PASystem
      * @param language
      *            the language set by user
      */
-    public static void setCurrentResource(String language)
+    public static void setCurrentResource(String language, JDesktopPane parent)
     {
         Language temp;
         temp = Language.ENGLISH;
+
         try
         {
             switch (language)
@@ -168,20 +170,36 @@ public class PASystem
             }
             else
             {
-                PATranslate.run(temp);
+
+                if (ResourceBundle.getBundle("resources.PA",
+                        languages.get(language)) == ResourceBundle.getBundle("resources.PA",
+                                Locale.getDefault()))
+                {
+                    PATranslate.run(temp, parent);
+//                    currentResource = ResourceBundle.getBundle("resources.PA",
+//                            languages.get(language));
+
+                    
+
+                }
                 currentResource = ResourceBundle.getBundle("resources.PA",
-                        Locale.getDefault());
+                        languages.get(language));
             }
         }
         catch (MissingResourceException e)
         {
 
         }
-
         currentResource = ResourceBundle.getBundle("resources.PA",
                 languages.get(language));
     }
 
+    public static void setDefaultResource(String language)
+    {
+        
+        currentResource = ResourceBundle.getBundle("resources.PA",
+                languages.get(language));
+    }
     /**
      * Get the word based on current ResourceBundle
      * 

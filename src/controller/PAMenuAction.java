@@ -1135,6 +1135,7 @@ public abstract class PAMenuAction extends AbstractAction
     {
         private PAMenuBar menuBar;
         private String languageToSet;
+        private JDesktopPane parent;
 
         /**
          *
@@ -1144,18 +1145,19 @@ public abstract class PAMenuAction extends AbstractAction
          * @param menuBar set PAMenuBar want to change language
          * @param languageToSet set language want to change
          */
-        public LanguageAction(PAMenuBar menuBar, String languageToSet)
+        public LanguageAction(PAMenuBar menuBar, String languageToSet, JDesktopPane parent)
         {
             super(languageToSet);
             this.menuBar = menuBar;
             this.languageToSet = languageToSet;
+            this.parent = parent;
         }
 
         @Override
         public void actionPerformed(ActionEvent e)
         {
             // TODO Auto-generated method stub
-            PASystem.setCurrentResource(languageToSet);
+            PASystem.setCurrentResource(languageToSet, parent);
             /*
              * e.GetSource() returns a null, dunno why?
              */
