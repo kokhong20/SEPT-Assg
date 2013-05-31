@@ -324,7 +324,7 @@ public class PAMenuBar extends JMenuBar
         for (JMenuItem menuItems : languages)
         {
             menuItems.setAction(new PAMenuAction.LanguageAction(this, menuItems
-                    .getText()));
+                    .getText(), parent));
         }
         /*
          * 
