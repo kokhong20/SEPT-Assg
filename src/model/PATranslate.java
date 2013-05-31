@@ -13,11 +13,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
@@ -102,18 +105,42 @@ public class PATranslate
 
     public static void run(Language change, JDesktopPane parent)
     {
-        System.out.println(progressBar);
+        
+        int timeout = 100;
+        InetAddress[] addresses;
+        try
+        {
+            addresses = InetAddress.getAllByName("www.google.com");
+            for (InetAddress address : addresses)
+            {
+                if (address.isReachable(timeout))
+                    System.out.printf("%s is reachable%n", address);
 
+            }
+        }
+        catch (UnknownHostException e1)
+        {
+            // TODO Auto-generated catch block
+            JOptionPane.showMessageDialog(parent, "No connected to internet .....");
+            return;
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("hi there"  + progressBar);
         progressBar = new PAProgressBar();
         parent.add(progressBar);
-        
-        List<String> test = new ArrayList<String>();
+        System.out.println("transate + abr" + progressBar);
 
-        test = translate(change);
+        List<String> translated = new ArrayList<String>();
+
+        translated = translate(change);
 
         List<String> label = new ArrayList<String>();
         List<String> output = new ArrayList<String>();
-        System.out.println(change);
+        System.out.println("translate " + change);
         try
         {
 
@@ -126,14 +153,18 @@ public class PATranslate
                 label.add(line);
                 line = in.readLine();
             }
+            
             in.close();
-            for (int i = 0; i < test.size(); i++)
+            
+            
+            
+            for (int i = 0; i < translated.size(); i++)
             {
                 String write;
-                
+
                 write = label.get(i);
                 write = write.concat("=");
-                write = write.concat(test.get(i));
+                write = write.concat(translated.get(i));
 
                 output.add(write);
 
@@ -270,6 +301,7 @@ public class PATranslate
             Writer out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file), "UTF-8"));
 
+
             for (int i = 0; i < output.size(); i++)
             {
                 out.write(output.get(i));
@@ -288,10 +320,10 @@ public class PATranslate
             e.printStackTrace();
         }
 
-        for (int i = 0; i < output.size(); i++)
-        {
-            System.out.println(output.get(i));
-        }
+//        for (int i = 0; i < output.size(); i++)
+//        {
+//            System.out.println(output.get(i));
+//        }
         progressBar.dispose();
     }
 }

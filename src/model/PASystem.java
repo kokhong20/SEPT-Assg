@@ -33,6 +33,7 @@ public class PASystem
     static
     {
         languages = new LinkedHashMap<>();
+        
         languages.put("Bulgarian", new Locale("bg", "BG"));
         languages.put("Czech", new Locale("cz", "CZ"));
         languages.put("Danish", new Locale("da", "DK"));
@@ -94,6 +95,7 @@ public class PASystem
      */
     public static void setCurrentResource(String language, JDesktopPane parent)
     {
+        System.out.println("come in");
         Language temp;
         temp = Language.ENGLISH;
 
@@ -170,25 +172,26 @@ public class PASystem
             }
             else
             {
-
+                System.out.println("wrtffffffff" + languages.get(language));
                 if (ResourceBundle.getBundle("resources.PA",
                         languages.get(language)) == ResourceBundle.getBundle("resources.PA",
                                 Locale.getDefault()))
                 {
                     PATranslate.run(temp, parent);
-//                    currentResource = ResourceBundle.getBundle("resources.PA",
-//                            languages.get(language));
-
                     
+                    currentResource = ResourceBundle.getBundle("resources.PA",
+                            languages.get(language));
 
                 }
                 currentResource = ResourceBundle.getBundle("resources.PA",
                         languages.get(language));
+                System.out.println("gg" + ResourceBundle.getBundle("resources.PA",
+                        languages.get(language)).getLocale());
             }
         }
         catch (MissingResourceException e)
         {
-
+            e.printStackTrace();
         }
         currentResource = ResourceBundle.getBundle("resources.PA",
                 languages.get(language));
@@ -212,6 +215,7 @@ public class PASystem
         String show = null;
         try
         {
+            System.out.println("system " + currentResource.getLocale());
             String load = currentResource.getString(key);
             byte[] convert = load.getBytes("ISO-8859-1");
             show = new String(convert, "UTF-8");
