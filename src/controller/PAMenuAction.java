@@ -3,6 +3,7 @@ package controller;
 import gui.PAMainFrame;
 import gui.PAMenuBar;
 import gui.PANewFileSetting;
+import gui.PAProgressBar;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
 import static controller.PASelectCursorAction.elementTemp;
@@ -1157,11 +1158,21 @@ public abstract class PAMenuAction extends AbstractAction
         public void actionPerformed(ActionEvent e)
         {
             // TODO Auto-generated method stub
-            PASystem.setCurrentResource(languageToSet, parent);
-            /*
-             * e.GetSource() returns a null, dunno why?
-             */
-            menuBar.resetText();
+            Thread t1 = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    PASystem.setCurrentResource(languageToSet, parent);
+                    /*
+                     * e.GetSource() returns a null, dunno why?
+                     */
+                    menuBar.resetText();
+                }
+
+            });
+            t1.start();
+
         }
 
     }

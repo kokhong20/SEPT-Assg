@@ -168,9 +168,17 @@ public class PASystem {
             
             try
             {
+                if(ResourceBundle.getBundle("resources.PA", languages.get(language)) == ResourceBundle.getBundle("resources.PA", Locale.getDefault()))
+                {
                 Locale locale = PATranslate.run(temp, parent);
                 ResourceBundle.clearCache();
                 currentResource = ResourceBundle.getBundle("resources.PA", locale);
+                }
+                else
+                {
+                    currentResource = ResourceBundle.getBundle("resources.PA", languages.get(language));
+                }
+                
             }
             catch(MissingResourceException e)
             {
