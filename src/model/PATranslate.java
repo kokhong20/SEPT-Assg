@@ -7,8 +7,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.InetAddress;
@@ -45,17 +46,11 @@ public class PATranslate
             @Override
             public void run()
             {
-
-
-
                 PAProgressBar progressBar = new PAProgressBar();
                 parent.add(progressBar);
 
 //                progressBar.setVisible(true);
 //                progressBar.setSize(200, 200);
-                System.out.println(parent);
-                System.out.println(progressBar);
-                System.out.println("good");
                 //JOptionPane.showMessageDialog(parent, "Click OK to start translate","Translation", JOptionPane.PLAIN_MESSAGE);
             }
 
@@ -74,7 +69,6 @@ public class PATranslate
         {
             if (parent.getComponent(i) instanceof PAProgressBar && parent.getComponent(i) != null)
             {
-                System.out.println("asdasdad + " + parent.getComponent(i));
                 progressBar = (PAProgressBar) parent.getComponent(i);
                 progressBar.toFront();
             }
@@ -120,8 +114,10 @@ public class PATranslate
         {
 
             BufferedReader in;
-            in = new BufferedReader(new FileReader(new File(
-                    "src/resources/PA_label")));
+//            in = new BufferedReader(new FileReader(new File(
+//                    "src/resources/PA_label")));
+            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("resources/PA_label");
+            in = new BufferedReader(new InputStreamReader(input));
             String line = in.readLine();
             while (line != null)
             {
@@ -265,7 +261,7 @@ public class PATranslate
                     break;
             }
             fName = fName.concat(".properties");
-            String fPath = "bin/resources/";
+            String fPath = "resources/";
             fPath = fPath.concat(fName);
             File file = new File(fPath);
             file.createNewFile();
@@ -337,7 +333,6 @@ public class PATranslate
 
                 translate.add(Translate.execute(text.get(i), Language.ENGLISH,
                         constant));
-                System.out.println(translate.get(i));
                 i++;
                 progressBar.changeText();
 
@@ -356,8 +351,10 @@ public class PATranslate
         text.clear();
         try
         {
-            BufferedReader in = new BufferedReader(new FileReader(new File(
-                    "src/resources/PA_text")));
+            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("resources/PA_text");
+//            BufferedReader in = new BufferedReader(new FileReader(new File(
+//                    input)));
+            BufferedReader in = new BufferedReader(new InputStreamReader(input));
             String line = in.readLine();
             while (line != null)
             {
