@@ -7,6 +7,7 @@ import gui.PAProgressBar;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
 import static controller.PASelectCursorAction.elementTemp;
+import gui.PADrawingItem;
 
 import java.awt.Dimension;
 import java.awt.Event;
@@ -1168,6 +1169,7 @@ public abstract class PAMenuAction extends AbstractAction
                      * e.GetSource() returns a null, dunno why?
                      */
                     menuBar.resetText();
+                    PADrawingItem.resetDrawingItemText();
                 }
 
             });

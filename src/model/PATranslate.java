@@ -85,7 +85,7 @@ public class PATranslate
             }
         }
 
-        int timeout = 1000;
+        int timeout = 100;
         InetAddress[] addresses;
         try
         {
@@ -100,6 +100,7 @@ public class PATranslate
         catch (UnknownHostException e1)
         {
             // TODO Auto-generated catch block
+            progressBar.dispose();
             JOptionPane.showMessageDialog(parent,
                     "Not connected to internet .....");
             return new Locale("en", "US");
@@ -107,6 +108,7 @@ public class PATranslate
         catch (IOException e)
         {
             // TODO Auto-generated catch block
+            System.out.println("aoa bni");
             e.printStackTrace();
         }
 

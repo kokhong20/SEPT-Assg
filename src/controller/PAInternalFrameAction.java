@@ -5,20 +5,28 @@ import gui.PAMainFrame;
 import gui.PAMenuBar;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import model.PASystem;
 
 /**
  *
  * @author LiHao
  * @since 2 May 2013
- * <p>This class creates a PAInternalFrameAction to set action performed when the 
- * internal frame is activated(focused)</p>
+ * <p>This class creates a PAInternalFrameAction to set action performed when
+ * the internal frame is activated(focused)</p>
  */
 public class PAInternalFrameAction extends InternalFrameAdapter
 {
     private PAMainFrame mainFrame;
+    private String selectCursorText;
+    private String lineText;
+    private String rectangleText;
+    private String circleText;
+    private String handText;
+    private String fillText;
 
     /**
      * This constructor accepts a PAMainFrame object
+     *
      * @param mainFrame PAMainFrame
      */
     public PAInternalFrameAction(PAMainFrame mainFrame)
@@ -35,36 +43,42 @@ public class PAInternalFrameAction extends InternalFrameAdapter
 
         if (PADrawingItem.buttonSelected != null)
         {
-            switch (PADrawingItem.buttonSelected.getToolTipText())
+            selectCursorText = PASystem.getWord("SelectCursor");
+            lineText = PASystem.getWord("Line");
+            rectangleText = PASystem.getWord("Rectangle");
+            circleText = PASystem.getWord("Circle");
+            handText = PASystem.getWord("HandCursor");
+            fillText = PASystem.getWord("Fill");
+
+            if (PADrawingItem.buttonSelected.getToolTipText().equals(selectCursorText))
             {
-                case "Select Cursor":
-                    PADrawingItem.selectCursor.doClick();
-                    PADrawingItem.selectCursor.doClick();
-                    break;
-
-                case "Line":
-                    PADrawingItem.line.doClick();
-                    PADrawingItem.line.doClick();
-                    break;
-
-                case "Rectangle":
-                    PADrawingItem.rectangle.doClick();
-                    PADrawingItem.rectangle.doClick();
-                    break;
-
-                case "Circle":
-                    PADrawingItem.circle.doClick();
-                    PADrawingItem.circle.doClick();
-                    break;
-                
-                case "Hand Cursor":
-                    PADrawingItem.handCursor.doClick();
-                    PADrawingItem.handCursor.doClick();
-                    break;
-                    
-                case "Fill":
-                    PADrawingItem.fill.doClick();
-                    PADrawingItem.fill.doClick();
+                PADrawingItem.selectCursor.doClick();
+                PADrawingItem.selectCursor.doClick();
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(lineText))
+            {
+                PADrawingItem.line.doClick();
+                PADrawingItem.line.doClick();
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(rectangleText))
+            {
+                PADrawingItem.rectangle.doClick();
+                PADrawingItem.rectangle.doClick();
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(circleText))
+            {
+                PADrawingItem.circle.doClick();
+                PADrawingItem.circle.doClick();
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(handText))
+            {
+                PADrawingItem.handCursor.doClick();
+                PADrawingItem.handCursor.doClick();
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(fillText))
+            {
+                PADrawingItem.fill.doClick();
+                PADrawingItem.fill.doClick();
             }
         }
     }
@@ -74,4 +88,5 @@ public class PAInternalFrameAction extends InternalFrameAdapter
     {
         PAMenuBar.removeUpdatedAction();
     }
+
 }

@@ -17,13 +17,13 @@ import javax.swing.JToggleButton;
 import model.PASystem;
 
 /**
- * 
+ *
  * @author KokHong
  * @since 1.1
- *        <p>
- *        This is the component inside the Drawing Kit
- *        </p>
- * 
+ * <p>
+ * This is the component inside the Drawing Kit
+ * </p>
+ *
  */
 public class PADrawingItem
 {
@@ -42,15 +42,14 @@ public class PADrawingItem
     private static final int maxHeight = 40;
     private PADrawingKit drawKitPanel;
     private PAMainFrame mainFrame;
-    private JLabel title;
+    public static JLabel title;
 
     /**
      * <p>
      * construct to define this PADrawingKitButton for the PADrawingKit
      * </p>
-     * 
-     * @param drawKitPanel
-     *            the initialized PADrawingKit
+     *
+     * @param drawKitPanel the initialized PADrawingKit
      */
     public PADrawingItem(PADrawingKit drawKitPanel)
     {
@@ -116,40 +115,35 @@ public class PADrawingItem
      * <p>
      * Set up all the component in the Drawing Kit
      * </p>
-     * 
+     *
      */
     public static void setUpButton()
     {
         setToggleButtonAttribute("resources/select.png", selectCursor,
-        		PASystem.getWord("SelectCursor"), 40, 20);
+                PASystem.getWord("SelectCursor"), 40, 20);
         setToggleButtonAttribute("resources/line.png", line, PASystem.getWord("Line"), 40, 100);
         setToggleButtonAttribute("resources/rect.png", rectangle, PASystem.getWord("Rectangle"),
                 0, 140);
         setToggleButtonAttribute("resources/circle 30x30.png", circle,
-        		PASystem.getWord("Circle"), 40, 140);
+                PASystem.getWord("Circle"), 40, 140);
         setButtonAttribute("resources/zoomin.png", zoomIn, PASystem.getWord("ZoomIn"), 0, 60);
         setButtonAttribute("resources/zoomout.png", zoomOut, PASystem.getWord("ZoomOut"), 40, 60);
         setButtonAttribute("resources/group.png", group, PASystem.getWord("Group"), 0, 180);
         setButtonAttribute("resources/ungroup.png", ungroup, PASystem.getWord("Ungroup"), 40, 180);
         setToggleButtonAttribute("resources/cursor.png", handCursor,
-        		PASystem.getWord("HandCursor"), 0, 20);
+                PASystem.getWord("HandCursor"), 0, 20);
         setToggleButtonAttribute("resources/fill 30x30.png", fill, PASystem.getWord("Fill"), 0,
                 100);
     }
 
     /**
      * set an image icon, tool tip and position for a JButton
-     * 
-     * @param imgPath
-     *            url path to the image
-     * @param button
-     *            a JButton
-     * @param toolTip
-     *            String to set for toolTip
-     * @param x
-     *            X position for set bounds
-     * @param y
-     *            Y position for set bounds
+     *
+     * @param imgPath url path to the image
+     * @param button a JButton
+     * @param toolTip String to set for toolTip
+     * @param x X position for set bounds
+     * @param y Y position for set bounds
      */
     private static void setToggleButtonAttribute(String imgPath,
             JToggleButton button, String toolTip, int x, int y)
@@ -181,9 +175,8 @@ public class PADrawingItem
      * <p>
      * Add action to the component of Drawing Kit
      * </p>
-     * 
-     * @param mainFrame
-     *            the Active Main Frame
+     *
+     * @param mainFrame the Active Main Frame
      */
     public static void addAction(PAMainFrame mainFrame)
     {
@@ -236,6 +229,28 @@ public class PADrawingItem
         PAFillBucketAction fillAction = new PAFillBucketAction(
                 mainFrame.svgPanel, fill, mainFrame.attributeBar);
         fill.setAction(fillAction);
+    }
+
+    public static void resetDrawingItemText()
+    {
+        try
+        {
+            fill.setToolTipText(PASystem.getWord("Fill"));
+            handCursor.setToolTipText(PASystem.getWord("HandCursor"));
+            selectCursor.setToolTipText(PASystem.getWord("SelectCursor"));
+            line.setToolTipText(PASystem.getWord("Line"));
+            rectangle.setToolTipText(PASystem.getWord("Rectangle"));
+            circle.setToolTipText(PASystem.getWord("Circle"));
+            group.setToolTipText(PASystem.getWord("Group"));
+            ungroup.setToolTipText(PASystem.getWord("Ungroup"));
+            zoomIn.setToolTipText(PASystem.getWord("ZoomIn"));
+            zoomOut.setToolTipText(PASystem.getWord("ZoomOut"));
+            title.setText(PASystem.getWord("Tools"));
+        }
+        catch (NullPointerException e)
+        {
+        }
+
     }
 
 }

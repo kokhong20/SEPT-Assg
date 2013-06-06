@@ -22,9 +22,10 @@ import model.PASVGContainer;
 import model.PASVGElement;
 import model.PARectangle;
 import model.PASVGGroup;
+import model.PASystem;
 
 /**
- * 
+ *
  * @author KokHong
  * @since 1.1
  * <p>This class creates a PASVGPanel for create a JPanel to draw and display
@@ -41,7 +42,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * constructor to accepts a PASVGContainer
-     * 
+     *
      * @param svgContainer PASVGContainer
      */
     public PASVGPanel(PASVGContainer svgContainer)
@@ -55,6 +56,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Get image scale
+     *
      * @return return image scale
      */
     public double getScale()
@@ -64,6 +66,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Get SVG width
+     *
      * @return return svg width
      */
     public int getSVGWidth()
@@ -73,6 +76,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Get SVG height
+     *
      * @return return svg height
      */
     public int getSVGHeight()
@@ -82,6 +86,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Redraw image with scale for zoom in and out action
+     *
      * @param scale image scale
      */
     public void zoomInOutSVG(double scale)
@@ -95,6 +100,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Redraw image only
+     *
      * @param scale image scale
      */
     public void reDrawImage(double scale)
@@ -208,7 +214,8 @@ public class PASVGPanel extends JPanel
 
     /**
      * draw Graphics to JPanel
-     * @param g Graphics 
+     *
+     * @param g Graphics
      */
     @Override
     public void paintComponent(Graphics g)
@@ -220,10 +227,15 @@ public class PASVGPanel extends JPanel
 
         if (startDrag != null && endDrag != null)
         {
-            switch (buttonSelected.getToolTipText())
+            String selectCursorText = PASystem.getWord("SelectCursor");
+            String lineText = PASystem.getWord("Line");
+            String rectangleText = PASystem.getWord("Rectangle");
+            String circleText = PASystem.getWord("Circle");
+
+
+            if (PADrawingItem.buttonSelected.getToolTipText().equals(selectCursorText)
+                    || PADrawingItem.buttonSelected.getToolTipText().equals(rectangleText))
             {
-            case "Rectangle":
-            case "Select Cursor":
                 g2d.setPaint(new Color(180, 180, 180, 80));
 
                 Rectangle2D.Double rect = makeRectangle(
@@ -232,9 +244,9 @@ public class PASVGPanel extends JPanel
                         (int) ((endDrag.x) * scale),
                         (int) ((endDrag.y) * scale));
                 g2d.fill(rect);
-                break;
-
-            case "Line":
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(lineText))
+            {
                 g2d.setColor(new Color(180, 180, 180, 80));
                 g2d.setStroke(new BasicStroke(2));
                 Line2D.Double line = makeLine((int) ((startDrag.x) * scale),
@@ -242,9 +254,9 @@ public class PASVGPanel extends JPanel
                         (int) ((endDrag.x) * scale),
                         (int) ((endDrag.y) * scale));
                 g2d.draw(line);
-                break;
-
-            case "Circle":
+            }
+            else if (PADrawingItem.buttonSelected.getToolTipText().equals(circleText))
+            {
                 g2d.setPaint(new Color(180, 180, 180, 80));
                 Ellipse2D.Double circle = makeCircle(
                         (int) ((startDrag.x) * scale),
@@ -252,8 +264,6 @@ public class PASVGPanel extends JPanel
                         (int) ((endDrag.x) * scale),
                         (int) ((endDrag.y) * scale));
                 g2d.fill(circle);
-                break;
-
             }
         }
 
@@ -262,6 +272,7 @@ public class PASVGPanel extends JPanel
 
     /**
      * Make a rectangle with 4 coordinates
+     *
      * @param x1 start x position
      * @param y1 start y position
      * @param x2 end x position
