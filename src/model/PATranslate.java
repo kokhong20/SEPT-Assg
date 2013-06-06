@@ -108,8 +108,7 @@ public class PATranslate
         catch (IOException e)
         {
             // TODO Auto-generated catch block
-            System.out.println("aoa bni");
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
         String fName = "";
