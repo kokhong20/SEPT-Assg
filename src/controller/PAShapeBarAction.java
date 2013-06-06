@@ -184,7 +184,7 @@ public abstract class PAShapeBarAction extends AbstractAction
         {
             button.setAction(this);
             checkBox.setAction(this);
-            checkBox.setText("Fill:");
+            checkBox.setText(title);
         }
 
     }
@@ -238,7 +238,7 @@ public abstract class PAShapeBarAction extends AbstractAction
         {
             button.setAction(this);
             checkBox.setAction(this);
-            checkBox.setText("Stroke:");
+            checkBox.setText(title);
         }
 
     }

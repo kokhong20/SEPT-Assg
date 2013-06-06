@@ -31,7 +31,7 @@ public class PAShapeBar extends JPanel
     private static final long serialVersionUID = 1474246142443123659L;
     private PAMainFrame mainFrame;
     public JButton strokeButton, fillButton;
-    public JCheckBox fillCheck, strokeCheck;
+    public static JCheckBox fillCheck, strokeCheck;
     public JSpinner strokeWidthBox;
 
     /**
@@ -76,7 +76,7 @@ public class PAShapeBar extends JPanel
                 Color.WHITE);
         attrItems.createCheckBox(strokeCheck, PASystem.getWord("Stroke") + ":",
                 Color.WHITE);
-
+System.out.println("ABBB" + fillCheck.getText());
         // JSpinner
         strokeWidthBox = new JSpinner();
         attrItems.createSpinner(strokeWidthBox, new Dimension(50, 20),
@@ -101,11 +101,12 @@ public class PAShapeBar extends JPanel
         // strokecheck
         // StrokeCheckAction strokeCheckAction =
         new StrokeCheckAction(mainFrame.getParentView(), strokeButton,
-                PASystem.getWord("Stroke"), strokeCheck, strokeWidthBox);
+                strokeCheck.getText(), strokeCheck, strokeWidthBox);
         // fillcheck
         // FillCheckAction fillCheckAction =
         new FillCheckAction(mainFrame.getParentView(), fillButton,
-                PASystem.getWord("Fill"), fillCheck);
+                fillCheck.getText(), fillCheck);
+        
 
     }
 
@@ -128,6 +129,19 @@ public class PAShapeBar extends JPanel
         this.add(Box.createRigidArea(new Dimension(5, 0)));
         this.add(strokeButton);
 
+    }
+    
+    public static void resetShapeBarText()
+    {
+        try
+        {
+            fillCheck.setText(PASystem.getWord("Fill"));
+            strokeCheck.setText(PASystem.getWord("Stroke"));
+            
+        }
+        catch (NullPointerException e)
+        {
+        }
     }
 
 }

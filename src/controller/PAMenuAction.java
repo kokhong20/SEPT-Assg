@@ -8,6 +8,7 @@ import gui.PASVGPanel;
 import gui.PAStartMenu;
 import static controller.PASelectCursorAction.elementTemp;
 import gui.PADrawingItem;
+import gui.PAShapeBar;
 
 import java.awt.Dimension;
 import java.awt.Event;
@@ -1170,6 +1171,7 @@ public abstract class PAMenuAction extends AbstractAction
                      */
                     menuBar.resetText();
                     PADrawingItem.resetDrawingItemText();
+                    PAShapeBar.resetShapeBarText();
                 }
 
             });
