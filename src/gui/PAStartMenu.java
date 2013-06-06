@@ -12,8 +12,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -79,10 +79,10 @@ public class PAStartMenu extends JInternalFrame
             {
                 try
                 {
-                    Image background = ImageIO.read(new File(
-                            "resources/background.png"));
-                    Image img = ImageIO
-                            .read(new File("resources/MainLogo2.png"));
+                    URL backgroundURL = getClass().getResource("/resources/background.png");
+                    URL mainLogoURL = getClass().getResource("/resources/MainLogo2.png");
+                    Image background = ImageIO.read(backgroundURL);
+                    Image img = ImageIO.read(mainLogoURL);
                     g.drawImage(background, 0, 0, 650, 450, null);
                     g.drawImage(img, 149, 20, 352, 157, null);
                 }
@@ -105,6 +105,7 @@ public class PAStartMenu extends JInternalFrame
     {
         return new JMenuBar()
         {
+            @Override
             public JMenu add(JMenu c)
             {
                 c = new JMenu(PASystem.getWord("Exit"));
@@ -126,14 +127,14 @@ public class PAStartMenu extends JInternalFrame
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
-                String imgPath = "resources/OpenImageHover.png";
+                String imgPath = "/resources/OpenImageHover.png";
                 setImageIcon(imgPath, openFileButton, PASystem.getWord("OpenFile"));
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
-                String imgPath = "resources/OpenImage.png";
+                String imgPath = "/resources/OpenImage.png";
                 setImageIcon(imgPath, openFileButton, PASystem.getWord("OpenFile"));
             }
 
@@ -144,14 +145,14 @@ public class PAStartMenu extends JInternalFrame
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt)
             {
-                String imgPath = "resources/NewFileHover.png";
+                String imgPath = "/resources/NewFileHover.png";
                 setImageIcon(imgPath, newFileButton, PASystem.getWord("NewFile"));
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt)
             {
-                String imgPath = "resources/NewFile.png";
+                String imgPath = "/resources/NewFile.png";
                 setImageIcon(imgPath, newFileButton, PASystem.getWord("NewFile"));
             }
 
@@ -161,8 +162,8 @@ public class PAStartMenu extends JInternalFrame
         OpenFile openAction = new OpenFile(parent, this);
         newFileButton.setAction(newAction);
         openFileButton.setAction(openAction);
-        setImageIcon("resources/OpenImage.png", openFileButton, PASystem.getWord("OpenFile"));
-        setImageIcon("resources/NewFile.png", newFileButton, PASystem.getWord("NewFile"));
+        setImageIcon("/resources/OpenImage.png", openFileButton, PASystem.getWord("OpenFile"));
+        setImageIcon("/resources/NewFile.png", newFileButton, PASystem.getWord("NewFile"));
         openFileButton.setBounds(380, 235, 164, 122);
         newFileButton.setBounds(100, 235, 122, 122);
         mainPanel.add(openFileButton);
@@ -171,7 +172,7 @@ public class PAStartMenu extends JInternalFrame
 
     private void setImageIcon(String imgPath, JButton button, String toolTip)
     {
-        ImageIcon imgIcon = new ImageIcon(imgPath);
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource(imgPath));
         button.setIcon(imgIcon);
         button.setBackground(new Color(40, 40, 40));
         button.setContentAreaFilled(false);

@@ -8,51 +8,46 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 import java.util.Locale;
 
 /**
- * 
+ *
  * @author SaiHoo
- * 
- *         <p>
- *         To translate the language with the word to another language
- *         </p>
- * 
+ *
+ * <p>
+ * To translate the language with the word to another language
+ * </p>
+ *
  */
 public class PATranslate
 {
-    static List<String> text = new ArrayList<String>();
+    static List<String> text = new ArrayList<>();
     static PAProgressBar progressBar;
 
     public static Locale run(Language change, final JDesktopPane parent)
     {
-        
+
         Thread t1 = new Thread(new Runnable()
         {
             @Override
             public void run()
             {
-                
 
-                
+
+
                 PAProgressBar progressBar = new PAProgressBar();
                 parent.add(progressBar);
 
@@ -77,7 +72,7 @@ public class PATranslate
         }
         for (int i = 0; i < parent.getComponentCount(); i++)
         {
-            if (parent.getComponent(i) instanceof PAProgressBar && parent.getComponent(i)!= null)
+            if (parent.getComponent(i) instanceof PAProgressBar && parent.getComponent(i) != null)
             {
                 System.out.println("asdasdad + " + parent.getComponent(i));
                 progressBar = (PAProgressBar) parent.getComponent(i);
@@ -93,7 +88,9 @@ public class PATranslate
             for (InetAddress address : addresses)
             {
                 if (address.isReachable(timeout))
+                {
                     System.out.printf("%s is reachable%n", address);
+                }
 
             }
         }
@@ -146,126 +143,126 @@ public class PATranslate
 
             switch (change)
             {
-            case ARABIC:
-                fName = "PA_ar_AR";
-                break;
-            case BULGARIAN:
-                fName = "PA_bg_BG";
-                break;
-            case CATALAN:
-                fName = "PA_ca_CA";
-                break;
-            case CHINESE_SIMPLIFIED:
-                fName = "PA_zh_CN";
-                break;
-            case CHINESE_TRADITIONAL:
-                fName = "PA_zh_TW";
-                break;
-            case CZECH:
-                fName = "PA_cs_CZ";
-                break;
-            case DANISH:
-                fName = "PA_da_DK";
-                break;
-            case DUTCH:
-                fName = "PA_nl_NL";
-                break;
-            case ENGLISH:
-                fName = "PA_en_US";
-                break;
-            case ESTONIAN:
-                fName = "PA_et_ET";
-                break;
-            case FINNISH:
-                fName = "PA_fi_FI";
-                break;
-            case FRENCH:
-                fName = "PA_fr_FR";
-                break;
-            case GERMAN:
-                fName = "PA_de_DE";
-                break;
-            case GREEK:
-                fName = "PA_el_EL";
-                break;
-            case HAITIAN_CREOLE:
-                fName = "PA_ht_HT";
-                break;
-            case HEBREW:
-                fName = "PA_he_HE";
-                break;
-            case HINDI:
-                fName = "PA_hi_HI";
-                break;
-            case HMONG_DAW:
-                fName = "PA_mww_MWW";
-                break;
-            case HUNGARIAN:
-                fName = "PA_hu_HU";
-                break;
-            case INDONESIAN:
-                fName = "PA_id_ID";
-                break;
-            case ITALIAN:
-                fName = "PA_it_IT";
-                break;
-            case JAPANESE:
-                fName = "PA_ja_JP";
-                break;
-            case KOREAN:
-                fName = "PA_ko_KR";
-                break;
-            case LATVIAN:
-                fName = "PA_lv_LV";
-                break;
-            case LITHUANIAN:
-                fName = "PA_lt_LT";
-                break;
-            case MALAY:
-                fName = "PA_ms_MY";
-                break;
-            case NORWEGIAN:
-                fName = "PA_no_NO";
-                break;
-            case PERSIAN:
-                fName = "PA_fa_FA";
-                break;
-            case POLISH:
-                fName = "PA_pl_PL";
-                break;
-            case PORTUGUESE:
-                fName = "PA_pt_PT";
-                break;
-            case ROMANIAN:
-                fName = "PA_ro_RO";
-                break;
-            case RUSSIAN:
-                fName = "PA_ru_RU";
-                break;
-            case SLOVAK:
-                fName = "PA_sk_SK";
-                break;
-            case SLOVENIAN:
-                fName = "PA_sl_SL";
-                break;
-            case SPANISH:
-                fName = "PA_es_ES";
-                break;
-            case THAI:
-                fName = "PA_th_TH";
-                break;
-            case TURKISH:
-                fName = "PA_tr_TR";
-                break;
-            case UKRAINIAN:
-                fName = "PA_uk_UK";
-                break;
-            case URDU:
-                fName = "PA_ur_UR";
-                break;
-            case VIETNAMESE:
-                fName = "PA_vi_VI";
-                break;
+                case ARABIC:
+                    fName = "PA_ar_AR";
+                    break;
+                case BULGARIAN:
+                    fName = "PA_bg_BG";
+                    break;
+                case CATALAN:
+                    fName = "PA_ca_CA";
+                    break;
+                case CHINESE_SIMPLIFIED:
+                    fName = "PA_zh_CN";
+                    break;
+                case CHINESE_TRADITIONAL:
+                    fName = "PA_zh_TW";
+                    break;
+                case CZECH:
+                    fName = "PA_cs_CZ";
+                    break;
+                case DANISH:
+                    fName = "PA_da_DK";
+                    break;
+                case DUTCH:
+                    fName = "PA_nl_NL";
+                    break;
+                case ENGLISH:
+                    fName = "PA_en_US";
+                    break;
+                case ESTONIAN:
+                    fName = "PA_et_ET";
+                    break;
+                case FINNISH:
+                    fName = "PA_fi_FI";
+                    break;
+                case FRENCH:
+                    fName = "PA_fr_FR";
+                    break;
+                case GERMAN:
+                    fName = "PA_de_DE";
+                    break;
+                case GREEK:
+                    fName = "PA_el_EL";
+                    break;
+                case HAITIAN_CREOLE:
+                    fName = "PA_ht_HT";
+                    break;
+                case HEBREW:
+                    fName = "PA_he_HE";
+                    break;
+                case HINDI:
+                    fName = "PA_hi_HI";
+                    break;
+                case HMONG_DAW:
+                    fName = "PA_mww_MWW";
+                    break;
+                case HUNGARIAN:
+                    fName = "PA_hu_HU";
+                    break;
+                case INDONESIAN:
+                    fName = "PA_id_ID";
+                    break;
+                case ITALIAN:
+                    fName = "PA_it_IT";
+                    break;
+                case JAPANESE:
+                    fName = "PA_ja_JP";
+                    break;
+                case KOREAN:
+                    fName = "PA_ko_KR";
+                    break;
+                case LATVIAN:
+                    fName = "PA_lv_LV";
+                    break;
+                case LITHUANIAN:
+                    fName = "PA_lt_LT";
+                    break;
+                case MALAY:
+                    fName = "PA_ms_MY";
+                    break;
+                case NORWEGIAN:
+                    fName = "PA_no_NO";
+                    break;
+                case PERSIAN:
+                    fName = "PA_fa_FA";
+                    break;
+                case POLISH:
+                    fName = "PA_pl_PL";
+                    break;
+                case PORTUGUESE:
+                    fName = "PA_pt_PT";
+                    break;
+                case ROMANIAN:
+                    fName = "PA_ro_RO";
+                    break;
+                case RUSSIAN:
+                    fName = "PA_ru_RU";
+                    break;
+                case SLOVAK:
+                    fName = "PA_sk_SK";
+                    break;
+                case SLOVENIAN:
+                    fName = "PA_sl_SL";
+                    break;
+                case SPANISH:
+                    fName = "PA_es_ES";
+                    break;
+                case THAI:
+                    fName = "PA_th_TH";
+                    break;
+                case TURKISH:
+                    fName = "PA_tr_TR";
+                    break;
+                case UKRAINIAN:
+                    fName = "PA_uk_UK";
+                    break;
+                case URDU:
+                    fName = "PA_ur_UR";
+                    break;
+                case VIETNAMESE:
+                    fName = "PA_vi_VI";
+                    break;
             }
             fName = fName.concat(".properties");
             String fPath = "bin/resources/";
@@ -316,7 +313,7 @@ public class PATranslate
 
         return new Locale(s[1], s[2]);
     }
-    
+
     public static List<String> translate(Language constant)
     {
 
@@ -380,6 +377,5 @@ public class PATranslate
         }
         return null;
     }
-
 
 }

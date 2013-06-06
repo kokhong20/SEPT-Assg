@@ -27,6 +27,16 @@ import model.PASystem;
  */
 public class PADrawingItem
 {
+    public static ImageIcon selectIcon;
+    public static ImageIcon rectIcon;
+    public static ImageIcon lineIcon;
+    public static ImageIcon circleIcon;
+    public static ImageIcon handIcon;
+    public static ImageIcon zoomInIcon;
+    public static ImageIcon zoomOutIcon;
+    public static ImageIcon groupIcon;
+    public static ImageIcon ungroupIcon;
+    public static ImageIcon fillIcon;
     public static JToggleButton buttonSelected;
     public static JButton zoomIn;
     public static JButton zoomOut;
@@ -55,11 +65,26 @@ public class PADrawingItem
     {
         this.drawKitPanel = drawKitPanel;
         mainFrame = drawKitPanel.mainFrame;
+        createIcon();
         createButton();
         addAction(mainFrame);
         setUpButton();
         addButton();
         addTitle();
+    }
+
+    private void createIcon()
+    {
+        selectIcon = new ImageIcon(getClass().getResource("/resources/select.png"));
+        rectIcon = new ImageIcon(getClass().getResource("/resources/rect.png"));
+        lineIcon = new ImageIcon(getClass().getResource("/resources/line.png"));
+        circleIcon = new ImageIcon(getClass().getResource("/resources/circle 30x30.png"));
+        handIcon = new ImageIcon(getClass().getResource("/resources/cursor.png"));
+        zoomInIcon = new ImageIcon(getClass().getResource("/resources/zoomin.png"));
+        zoomOutIcon = new ImageIcon(getClass().getResource("/resources/zoomout.png"));
+        groupIcon = new ImageIcon(getClass().getResource("/resources/group.png"));
+        ungroupIcon = new ImageIcon(getClass().getResource("/resources/ungroup.png"));
+        fillIcon = new ImageIcon(getClass().getResource("/resources/fill 30x30.png"));
     }
 
     /**
@@ -119,21 +144,16 @@ public class PADrawingItem
      */
     public static void setUpButton()
     {
-        setToggleButtonAttribute("resources/select.png", selectCursor,
-                PASystem.getWord("SelectCursor"), 40, 20);
-        setToggleButtonAttribute("resources/line.png", line, PASystem.getWord("Line"), 40, 100);
-        setToggleButtonAttribute("resources/rect.png", rectangle, PASystem.getWord("Rectangle"),
-                0, 140);
-        setToggleButtonAttribute("resources/circle 30x30.png", circle,
-                PASystem.getWord("Circle"), 40, 140);
-        setButtonAttribute("resources/zoomin.png", zoomIn, PASystem.getWord("ZoomIn"), 0, 60);
-        setButtonAttribute("resources/zoomout.png", zoomOut, PASystem.getWord("ZoomOut"), 40, 60);
-        setButtonAttribute("resources/group.png", group, PASystem.getWord("Group"), 0, 180);
-        setButtonAttribute("resources/ungroup.png", ungroup, PASystem.getWord("Ungroup"), 40, 180);
-        setToggleButtonAttribute("resources/cursor.png", handCursor,
-                PASystem.getWord("HandCursor"), 0, 20);
-        setToggleButtonAttribute("resources/fill 30x30.png", fill, PASystem.getWord("Fill"), 0,
-                100);
+        setToggleButtonAttribute(selectIcon, selectCursor, PASystem.getWord("SelectCursor"), 40, 20);
+        setToggleButtonAttribute(lineIcon, line, PASystem.getWord("Line"), 40, 100);
+        setToggleButtonAttribute(rectIcon, rectangle, PASystem.getWord("Rectangle"), 0, 140);
+        setToggleButtonAttribute(circleIcon, circle, PASystem.getWord("Circle"), 40, 140);
+        setButtonAttribute(zoomInIcon, zoomIn, PASystem.getWord("ZoomIn"), 0, 60);
+        setButtonAttribute(zoomOutIcon, zoomOut, PASystem.getWord("ZoomOut"), 40, 60);
+        setButtonAttribute(groupIcon, group, PASystem.getWord("Group"), 0, 180);
+        setButtonAttribute(ungroupIcon, ungroup, PASystem.getWord("Ungroup"), 40, 180);
+        setToggleButtonAttribute(handIcon, handCursor, PASystem.getWord("HandCursor"), 0, 20);
+        setToggleButtonAttribute(fillIcon, fill, PASystem.getWord("Fill"), 0, 100);
     }
 
     /**
@@ -145,10 +165,9 @@ public class PADrawingItem
      * @param x X position for set bounds
      * @param y Y position for set bounds
      */
-    private static void setToggleButtonAttribute(String imgPath,
+    private static void setToggleButtonAttribute(ImageIcon imgIcon,
             JToggleButton button, String toolTip, int x, int y)
     {
-        ImageIcon imgIcon = new ImageIcon(imgPath);
         button.setIcon(imgIcon);
         button.setBackground(new Color(40, 40, 40));
         button.setContentAreaFilled(false);
@@ -158,10 +177,9 @@ public class PADrawingItem
         button.setBounds(x, y, maxWidth, maxHeight);
     }
 
-    private static void setButtonAttribute(String imgPath, JButton button,
+    private static void setButtonAttribute(ImageIcon imgIcon, JButton button,
             String toolTip, int x, int y)
     {
-        ImageIcon imgIcon = new ImageIcon(imgPath);
         button.setIcon(imgIcon);
         button.setBackground(new Color(40, 40, 40));
         button.setContentAreaFilled(false);
