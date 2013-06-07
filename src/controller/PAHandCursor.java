@@ -18,9 +18,9 @@ import javax.swing.JViewport;
  * <p>
  * This set the action of Hand Cursor inside the Drawing kit
  * </p>
- * 
+ *
  * @author SaiHoo
- * 
+ *
  */
 public class PAHandCursor extends PADrawingShapeAction
 {

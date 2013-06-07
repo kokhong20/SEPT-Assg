@@ -6,13 +6,12 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextField;
 
 /**
- * 
+ *
  * @author SaiHoo
  * @version 1.1
  * @since 1.1
- * 
+ *
  */
-
 public abstract class PATextFieldFormatter implements KeyListener
 {
     protected JTextField textField;
@@ -21,16 +20,15 @@ public abstract class PATextFieldFormatter implements KeyListener
     {
         this.textField = textField;
     }
-    
-    
+
     public static class PANameFormatter extends PATextFieldFormatter
     {
-
         public PANameFormatter(JTextField textField)
         {
             super(textField);
         }
 
+        @Override
         public void keyPressed(KeyEvent ke)
         {
 
@@ -43,7 +41,6 @@ public abstract class PATextFieldFormatter implements KeyListener
                 textField.setEditable(false);
                 java.awt.Toolkit.getDefaultToolkit().beep();
             }
-
             else
             {
                 textField.setEditable(true);
@@ -70,7 +67,6 @@ public abstract class PATextFieldFormatter implements KeyListener
                 textField.setEditable(false);
                 java.awt.Toolkit.getDefaultToolkit().beep();
             }
-
             else
             {
                 textField.setEditable(true);
@@ -80,11 +76,9 @@ public abstract class PATextFieldFormatter implements KeyListener
         }
 
     }
-    
-    
+
     public static class PANumberFormatter extends PATextFieldFormatter
     {
-
         public PANumberFormatter(JTextField textField)
         {
             super(textField);
@@ -146,6 +140,4 @@ public abstract class PATextFieldFormatter implements KeyListener
         }
 
     }
-
 }
-

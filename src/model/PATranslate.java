@@ -48,10 +48,6 @@ public class PATranslate
             {
                 PAProgressBar progressBar = new PAProgressBar();
                 parent.add(progressBar);
-
-//                progressBar.setVisible(true);
-//                progressBar.setSize(200, 200);
-                //JOptionPane.showMessageDialog(parent, "Click OK to start translate","Translation", JOptionPane.PLAIN_MESSAGE);
             }
 
         });
@@ -60,10 +56,10 @@ public class PATranslate
         {
             Thread.sleep(500);
         }
-        catch (InterruptedException e2)
+        catch (InterruptedException ex)
         {
             // TODO Auto-generated catch block
-            e2.printStackTrace();
+            System.err.println(ex.getMessage());
         }
         for (int i = 0; i < parent.getComponentCount(); i++)
         {
@@ -83,7 +79,6 @@ public class PATranslate
             {
                 if (address.isReachable(timeout))
                 {
-                    System.out.printf("%s is reachable%n", address);
                 }
 
             }
@@ -103,19 +98,17 @@ public class PATranslate
         }
 
         String fName = "";
-        List<String> test = new ArrayList<String>();
+        List<String> test = new ArrayList<>();
 
         test = translate(change);
 
-        List<String> label = new ArrayList<String>();
-        List<String> output = new ArrayList<String>();
-        System.out.println(change);
+        List<String> label = new ArrayList<>();
+        List<String> output = new ArrayList<>();
+        
         try
         {
 
             BufferedReader in;
-//            in = new BufferedReader(new FileReader(new File(
-//                    "src/resources/PA_label")));
             InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("resources/PA_label");
             in = new BufferedReader(new InputStreamReader(input));
             String line = in.readLine();
@@ -290,19 +283,15 @@ public class PATranslate
             out.close();
 
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException ex)
         {
-            e.printStackTrace();
+            System.err.println(ex.getMessage());
         }
-        catch (IOException e)
+        catch (IOException ex)
         {
-            e.printStackTrace();
+            System.err.println(ex.getMessage());
         }
 
-//        for (int i = 0; i < output.size(); i++)
-//        {
-//            System.out.println(output.get(i));
-//        }
         progressBar.dispose();
 
         String[] s = fName.replace(".properties", "").split("_");
@@ -314,7 +303,7 @@ public class PATranslate
     {
 
         text = readText();
-        List<String> translate = new ArrayList<String>();
+        List<String> translate = new ArrayList<>();
         int i = 0, size;
         size = text.size();
         try
@@ -339,9 +328,9 @@ public class PATranslate
             }
             return translate;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            e.printStackTrace();
+            System.err.println(ex.getMessage());
         }
         return null;
     }
@@ -352,25 +341,24 @@ public class PATranslate
         try
         {
             InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("resources/PA_text");
-//            BufferedReader in = new BufferedReader(new FileReader(new File(
-//                    input)));
-            BufferedReader in = new BufferedReader(new InputStreamReader(input));
-            String line = in.readLine();
-            while (line != null)
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(input)))
             {
-                text.add(line);
-                line = in.readLine();
+                String line = in.readLine();
+                while (line != null)
+                {
+                    text.add(line);
+                    line = in.readLine();
+                }
             }
-            in.close();
             return text;
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException ex)
         {
-            e.printStackTrace();
+            System.err.println(ex.getMessage());
         }
-        catch (IOException e)
+        catch (IOException ex)
         {
-            e.printStackTrace();
+            System.err.println(ex.getMessage());
         }
         return null;
     }

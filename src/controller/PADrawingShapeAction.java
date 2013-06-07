@@ -21,7 +21,6 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JToggleButton;
 import model.PACircle;
-//import model.PAColor;
 import model.PALine;
 import model.PARectangle;
 import model.PASVGElement;
@@ -71,9 +70,9 @@ public abstract class PADrawingShapeAction extends AbstractAction
     public void setShapeAttributes()
     {
         fill = PAShapeBar.fillCheck.isSelected() ? shapeBar.fillButton
-                .getBackground() : new Color(0,0,0,0);
+                .getBackground() : new Color(0, 0, 0, 0);
         stroke = PAShapeBar.strokeCheck.isSelected() ? shapeBar.strokeButton
-                .getBackground() :  new Color(0,0,0,0);
+                .getBackground() : new Color(0, 0, 0, 0);
         strokeWidth = shapeBar.strokeWidthBox.isEnabled() ? (Double) shapeBar.strokeWidthBox
                 .getValue() : PAUnit.DEFAULT_STROKE_WIDTH;
     }

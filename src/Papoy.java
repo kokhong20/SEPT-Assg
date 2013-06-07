@@ -1,3 +1,4 @@
+
 import gui.PARootView;
 
 import javax.swing.SwingUtilities;
@@ -11,7 +12,7 @@ import javax.swing.SwingUtilities;
 public class Papoy
 {
     public static void main(final String[] args)
-    {    	
+    {
         SwingUtilities.invokeLater(new Runnable()
         {
             @Override

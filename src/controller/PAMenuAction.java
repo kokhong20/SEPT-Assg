@@ -3,7 +3,6 @@ package controller;
 import gui.PAMainFrame;
 import gui.PAMenuBar;
 import gui.PANewFileSetting;
-import gui.PAProgressBar;
 import gui.PASVGPanel;
 import gui.PAStartMenu;
 import static controller.PASelectCursorAction.elementTemp;
@@ -563,7 +562,7 @@ public abstract class PAMenuAction extends AbstractAction
             PASVGPanel drawPanel = mainFrame.svgPanel;
             PASelectCursorAction selectAllAction = new PASelectCursorAction(
                     drawPanel, virtualButton, mainFrame.attributeBar);
-            
+
             elementTemp.addAll(drawPanel.elementCollection);
             for (int i = 0; i < drawPanel.elementCollection.size(); i++)
             {
