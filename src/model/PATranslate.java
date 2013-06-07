@@ -261,7 +261,7 @@ public class PATranslate
                     break;
             }
             fName = fName.concat(".properties");
-            String fPath = "resources/";
+            String fPath = "bin/resources/";
             fPath = fPath.concat(fName);
             File file = new File(fPath);
             file.createNewFile();

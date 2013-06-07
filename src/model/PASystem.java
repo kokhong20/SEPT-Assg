@@ -1,5 +1,7 @@
 package model;
 
+import gui.PAProgressBar;
+
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Toolkit;
@@ -32,8 +34,8 @@ public class PASystem {
 
     static {
         languages = new LinkedHashMap<>();
-        languages.put("Bulgarian", new Locale("bg", "BG"));
-        languages.put("Czech", new Locale("cz", "CZ"));
+        //languages.put("Bulgarian", new Locale("bg", "BG"));
+        languages.put("Czech", new Locale("cs", "CZ"));
         languages.put("Danish", new Locale("da", "DK"));
         languages.put("Dutch", new Locale("nl", "NL"));
 
@@ -168,14 +170,37 @@ public class PASystem {
             
             try
             {
-                if(ResourceBundle.getBundle("resources.PA", languages.get(language)) == ResourceBundle.getBundle("resources.PA", Locale.getDefault()))
+                if(language == "English (US)")
+                {
+                    currentResource = ResourceBundle.getBundle("resources.PA", languages.get(language));
+                }
+                else if(ResourceBundle.getBundle("resources.PA", languages.get(language)) == ResourceBundle.getBundle("resources.PA", Locale.getDefault()))
                 {
                 Locale locale = PATranslate.run(temp, parent);
                 ResourceBundle.clearCache();
                 currentResource = ResourceBundle.getBundle("resources.PA", locale);
                 }
+
                 else
                 {
+                    
+                    PAProgressBar progressBar = new PAProgressBar();
+                    parent.add(progressBar);
+                    System.out.println(language);
+                    for (int i=0;i<30;i++)
+                    {
+                        progressBar.changeText();
+                        try
+                        {
+                            Thread.sleep(200);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    progressBar.dispose();
                     currentResource = ResourceBundle.getBundle("resources.PA", languages.get(language));
                 }
                 
